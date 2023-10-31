@@ -7,6 +7,8 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseButton;
     [SerializeField] private GameObject pauseMenu;
+
+    [SerializeField] private GameObject map;
     public void Pause(){
         Time.timeScale=0f;
         pauseButton.SetActive(false);
@@ -21,5 +23,6 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale=1f;
         pauseButton.SetActive(true);
         pauseMenu.SetActive(false);
+        map.SetActive(true);
     }
 }

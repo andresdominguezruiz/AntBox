@@ -12,6 +12,8 @@ public class GenerationTilemap : MonoBehaviour
     public Tilemap dirtMap;
     public Tile dirt;
 
+    private List<Vector3Int> path=new List<Vector3Int>();
+
     public float originX=-5.5f;
     public int width=21;
     public int height=13;
@@ -28,14 +30,13 @@ public class GenerationTilemap : MonoBehaviour
 
     private System.Random random = new System.Random();
 
-    void Awake(){
-        dirtMap.ClearAllTiles();
-    }
 
     void Start()
     {
-        fillTilemap();
-        createRandomPath();
+        if(path.Count==0){
+            fillTilemap();
+            createRandomPath();
+        }
 
         
     }
@@ -45,7 +46,7 @@ public class GenerationTilemap : MonoBehaviour
         //CUANDO AUMENTE EL TAMAÑO DEL MAPA, MODIFICAR LÍMITES
         for(int i=0;i<=width;i++){
             for(int j=0;j<=height;j++){
-                dirtMap.SetTile(new Vector3Int(i,j,0),dirt);
+                dirtMap.SetTile(new Vector3Int(i,j,1),dirt);
             }
         }
     }
@@ -53,7 +54,7 @@ public class GenerationTilemap : MonoBehaviour
     void createRandomPath()
     {
         int exit=width/2;
-        Vector3Int actualTile=new Vector3Int(exit, height, 0);
+        Vector3Int actualTile=new Vector3Int(exit, height, 1);
         dirtMap.SetTile(actualTile,null);
         for(int i=0;i<3;i++){
             actualTile.y--;
@@ -79,7 +80,7 @@ public class GenerationTilemap : MonoBehaviour
                 }
 
                 if(nextTileSelected && dirtMap.GetTile(actualTile)!=null){
-                    Debug.Log("SE HA HECHO"+actualTile);
+                    path.Add(actualTile);
                     dirtMap.SetTile(actualTile,null);
                     pathSize--;
                 }
