@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Dirt
   - Stone
+  - Queen
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - Limits
   - Map
   - camera
-  - 
-  - 
+  - Queen
+  - Ant
   - 
   - 
   - 

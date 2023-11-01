@@ -12,6 +12,8 @@ public class GenerationTilemap : MonoBehaviour
     public Tilemap dirtMap;
     public Tile dirt;
 
+    public GameObject queen;
+
     private List<Vector3Int> path=new List<Vector3Int>();
 
     public float originX=-5.5f;
@@ -36,6 +38,7 @@ public class GenerationTilemap : MonoBehaviour
         if(path.Count==0){
             fillTilemap();
             createRandomPath();
+            placeQueen();
         }
 
         
@@ -49,6 +52,15 @@ public class GenerationTilemap : MonoBehaviour
                 dirtMap.SetTile(new Vector3Int(i,j,1),dirt);
             }
         }
+    }
+
+    void placeQueen(){
+        int v=random.Next(0,path.Count-1);
+        queen.transform.position=dirtMap.CellToWorld(path[v]);
+        path.Remove(path[v]);
+        AntGenerator antGenerator=queen.transform.GetComponent<AntGenerator>();
+        antGenerator.placeAntsIn(path,dirtMap);
+
     }
 
     void createRandomPath()
@@ -80,6 +92,7 @@ public class GenerationTilemap : MonoBehaviour
                 }
 
                 if(nextTileSelected && dirtMap.GetTile(actualTile)!=null){
+                    Debug.Log(actualTile);
                     path.Add(actualTile);
                     dirtMap.SetTile(actualTile,null);
                     pathSize--;
