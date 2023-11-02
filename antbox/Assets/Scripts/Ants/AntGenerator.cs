@@ -9,6 +9,7 @@ public class AntGenerator : MonoBehaviour
 
     public int initialSize=5;
 
+
     private System.Random random = new System.Random();
 
 
@@ -16,6 +17,7 @@ public class AntGenerator : MonoBehaviour
         for(int i=0;i<initialSize;i++){
             int v=random.Next(0,path.Count-1);
             GameObject newAnt=Instantiate(ant,map.CellToWorld(path[v]),Quaternion.identity);
+            newAnt.AddComponent<AntStats>();
             path.Remove(path[v]);
         }
     }
