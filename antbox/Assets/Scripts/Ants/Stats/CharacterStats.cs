@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -66,6 +67,23 @@ public class CharacterStats : MonoBehaviour
 
     public void SetActualThirst(int thirst){
         actualThirst=thirst;
+    }
+
+    public String GetTextHP(){
+        String text=maxHP.ToString()+'/'+actualHP.ToString();
+        return text;
+    }
+    public string GetTextHunger(){
+        String text=maxHunger.ToString()+'/'+actualHunger.ToString();
+        return text;
+    }
+    public string GetTextThirst(){
+        String text=maxThirst.ToString()+'/'+actualThirst.ToString();
+        return text;
+    }
+
+    public string GetTextAge(){
+        return age.ToString();
     }
 
     public void InitVariables(){

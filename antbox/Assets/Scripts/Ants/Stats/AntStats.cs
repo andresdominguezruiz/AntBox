@@ -14,6 +14,10 @@ public class AntStats : CharacterStats
 
     [SerializeField] private int actualEnergy;
 
+    public string GetEnergyText(){
+        return maxEnergy.ToString()+"/"+actualEnergy.ToString();
+    }
+
 
     public void SetEnergy(int energy){
         actualEnergy=energy;
