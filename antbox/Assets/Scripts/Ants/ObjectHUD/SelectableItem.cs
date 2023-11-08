@@ -6,6 +6,9 @@ using UnityEngine;
 public class SelectableItem : MonoBehaviour
 {
     public bool isSelected=false;
+    public bool canBeSelected=true;
+
+    public GameObject moveMenu;
 
     public static List<SelectableItem> selectableItems=new List<SelectableItem>();
     public UIManager itemUI;
@@ -13,8 +16,20 @@ public class SelectableItem : MonoBehaviour
         selectableItems.Add(this);
     }
 
+    public void MakeEveryoneUnselectable(){
+        for(int i=0;i<selectableItems.Count;i++){
+            selectableItems[i].canBeSelected=false;
+        }
+    }
+
+    public void MakeEveryoneSelectable(){
+        for(int i=0;i<selectableItems.Count;i++){
+            selectableItems[i].canBeSelected=true;
+        }
+    }
+
     void Update(){
-        if(isSelected){
+        if(isSelected && canBeSelected){
             itemUI.ShowInfo();
         }else{
             if(itemUI!=null){
@@ -24,9 +39,17 @@ public class SelectableItem : MonoBehaviour
     }
 
     void OnMouseDown() {
-        isSelected=true;
-        foreach(SelectableItem item in selectableItems){
-            if(item!=this) item.isSelected=false;
+        if(canBeSelected){
+            isSelected=true;
+            if(!itemUI.isQueen){
+                MoveMenu menu=moveMenu.GetComponent<MoveMenu>();
+                menu.SetSelectedAnt(this.gameObject);
+            }
+            foreach(SelectableItem item in selectableItems){
+                if(item!=this){
+                    item.isSelected=false;
+                } 
+        }
         }
     }
 

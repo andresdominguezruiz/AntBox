@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI nameText;
 
+
     void Update(){
         if(!isQueen){
             AntStats antStats=this.gameObject.GetComponentInParent<AntStats>();
@@ -27,6 +28,7 @@ public class UIManager : MonoBehaviour
             UpdateCanvasWithQueenStats(queenStats,this.transform.parent.name);
         }
     }
+
 
 
 

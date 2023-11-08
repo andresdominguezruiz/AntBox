@@ -58,10 +58,6 @@ public class GenerationTilemap : MonoBehaviour
         int v=random.Next(0,path.Count-1);
         queen.transform.position=dirtMap.CellToWorld(path[v]);
         queen.AddComponent<QueenStats>();
-        queen.GetComponentInChildren<UIManager>().UpdateCanvasWithQueenStats(queen.GetComponent<QueenStats>(),queen.name);
-        queen.AddComponent<SelectableItem>();
-        queen.GetComponent<SelectableItem>().SetUIManager(queen.GetComponentInChildren<UIManager>());
-        queen.GetComponentInChildren<UIManager>().HideInfo();
         path.Remove(path[v]);
         AntGenerator antGenerator=queen.transform.GetComponent<AntGenerator>();
         antGenerator.placeAntsIn(path,dirtMap);
