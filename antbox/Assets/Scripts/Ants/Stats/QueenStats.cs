@@ -7,6 +7,7 @@ public class QueenStats : CharacterStats
 
     private void Start(){
         InitVariables();
+        this.timeLastFrame=0f;
     }
 
 }

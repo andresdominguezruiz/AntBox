@@ -38,7 +38,7 @@ public class GenerationTilemap : MonoBehaviour
         if(path.Count==0){
             fillTilemap();
             createRandomPath();
-            placeQueen();
+            placeQueenAndAnts();
         }
 
         
@@ -54,7 +54,7 @@ public class GenerationTilemap : MonoBehaviour
         }
     }
 
-    void placeQueen(){
+    void placeQueenAndAnts(){
         int v=random.Next(0,path.Count-1);
         queen.transform.position=dirtMap.CellToWorld(path[v]);
         queen.AddComponent<QueenStats>();
@@ -93,7 +93,6 @@ public class GenerationTilemap : MonoBehaviour
                 }
 
                 if(nextTileSelected && dirtMap.GetTile(actualTile)!=null){
-                    Debug.Log(actualTile);
                     path.Add(actualTile);
                     dirtMap.SetTile(actualTile,null);
                     pathSize--;

@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI hpText; // Referencia al objeto Text para mostrar el nombre.
     public TextMeshProUGUI hungerText; // Referencia al objeto Text para mostrar la descripción.
     public TextMeshProUGUI thirstText; // Referencia al objeto Text para mostrar las estadísticas.
+
     public bool isQueen=false;
 
     public TextMeshProUGUI energyText;
@@ -17,6 +18,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI ageText;
 
     public TextMeshProUGUI nameText;
+
 
 
     void Update(){

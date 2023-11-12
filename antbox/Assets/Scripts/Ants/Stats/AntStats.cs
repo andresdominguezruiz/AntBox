@@ -31,6 +31,7 @@ public class AntStats : CharacterStats
     private void Start(){
         InitOtherVariables();
         InitVariables();
+        this.timeLastFrame=0f;
     }
 
     public void InitOtherVariables(){

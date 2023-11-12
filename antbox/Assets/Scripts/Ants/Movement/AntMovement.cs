@@ -6,20 +6,26 @@ public class AntMovement : MonoBehaviour
 {
     public float speed=0.5f;
 
+    public bool inUse=false;
+
     private Navigator navigator;
     void Start()
     {
         this.navigator=FindObjectOfType<Navigator>();
     }
 
+    public void CanMoveTheAnt(){
+        inUse=true;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0)){
+        if(Input.GetMouseButtonDown(0) && inUse){
             var screen=Input.mousePosition;
             var world=Camera.main.ScreenToWorldPoint(screen);
             world.z=1;
-            var path=new List<Vector3>();
+            var path=this.navigator.GetPath(this.gameObject.transform.position,world);
             path.Add(world);
 
             StopAllCoroutines();
@@ -32,7 +38,7 @@ public class AntMovement : MonoBehaviour
             var origin=this.transform.position;
             float percent=0;
             while(percent<1f){
-                this.transform.position=Vector3.Lerp(origin,target,percent);
+                this.transform.position=Vector2.Lerp(origin,target,percent);
                 percent+=Time.deltaTime*this.speed;
                 yield return null;
             }
