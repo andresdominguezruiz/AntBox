@@ -3,19 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Dirt
+  - Stone
+  - Queen
+  - Selectable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Dirt
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Limits
+  - Map
+  - camera
+  - Queen
+  - Ant
   - 
   - 
   - 
@@ -40,4 +44,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Map
+    uniqueID: 2943850649
+    locked: 0
+  - name: camera
+    uniqueID: 3063318973
     locked: 0
