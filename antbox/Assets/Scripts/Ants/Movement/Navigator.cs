@@ -10,7 +10,13 @@ public class Navigator : MonoBehaviour
     public Tilemap map;
     private List<Vector3> path;
 
+    private GameObject selectedAnt;
+
     public bool mapWasUpdated=false;
+
+    public void SetSelectedAnt(GameObject ant){
+        selectedAnt=ant;
+    }
     void Start()
     {
         UpdateDistanceMap();
@@ -50,11 +56,11 @@ public class Navigator : MonoBehaviour
 
     Vector3 ToGlobal(Vector3Int local){
         var f_local=new Vector3(local.x,local.y,1);
-        return f_local+this.transform.position+this.map.localBounds.min;
+        return f_local+this.selectedAnt.transform.position+this.map.localBounds.min;
     }
 
     Vector3 ToGlobal(Vector3 local){
-        return local+this.transform.position+this.map.localBounds.min;
+        return local+this.selectedAnt.transform.position+this.map.localBounds.min;
     }
 
     private void GetPathUsingLocalCoordinates(Vector3Int localStart,Vector3Int localTarget){

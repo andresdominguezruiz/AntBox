@@ -38,6 +38,7 @@ public class MoveMenu : MonoBehaviour
             var world=Camera.main.ScreenToWorldPoint(screen);
             world.z=1;
             Debug.Log("Mi hormiga z"+selectedAnt.transform.position.z);
+            this.navigator.SetSelectedAnt(selectedAnt);
             var path=this.navigator.GetPath(selectedAnt.transform.position,world);
             path.Add(world);
 
@@ -61,6 +62,7 @@ public class MoveMenu : MonoBehaviour
                 yield return null;
             }
         }
+        this.navigator.SetSelectedAnt(null);
     }
 
     public void SetSelectedAnt(GameObject ant){
