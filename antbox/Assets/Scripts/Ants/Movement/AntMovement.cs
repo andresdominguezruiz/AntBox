@@ -25,8 +25,12 @@ public class AntMovement : MonoBehaviour
             var screen=Input.mousePosition;
             var world=Camera.main.ScreenToWorldPoint(screen);
             world.z=1;
-            var path=this.navigator.GetPath(this.gameObject.transform.position,world);
+            this.navigator.SetSelectedAnt(this.gameObject);
+            List<Vector3> path=this.navigator.GetPath(this.gameObject.transform.position,world);
             path.Add(world);
+            foreach(Vector3 p in path){
+                Debug.Log(p);
+            }
 
             StopAllCoroutines();
             StartCoroutine(this.RunPath(path));
@@ -43,5 +47,6 @@ public class AntMovement : MonoBehaviour
                 yield return null;
             }
         }
+        this.navigator.SetSelectedAnt(null);
     }
 }
