@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.AI.Navigation;
+using NavMeshPlus.Components;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -10,6 +10,7 @@ public class GenerationTilemap : MonoBehaviour
     // Start is called before the first frame update
 
     public Tilemap dirtMap;
+    public GameObject navMesh;
     public Tile dirt;
 
     public GameObject queen;
@@ -40,6 +41,9 @@ public class GenerationTilemap : MonoBehaviour
             createRandomPath();
             placeQueenAndAnts();
         }
+        NavMeshSurface n=navMesh.GetComponent<NavMeshSurface>();
+        Debug.Log(n!=null);
+        if(n!=null){n.BuildNavMesh();}
 
         
     }
@@ -49,7 +53,8 @@ public class GenerationTilemap : MonoBehaviour
         //CUANDO AUMENTE EL TAMAÑO DEL MAPA, MODIFICAR LÍMITES
         for(int i=0;i<=width;i++){
             for(int j=0;j<=height;j++){
-                dirtMap.SetTile(new Vector3Int(i,j,1),dirt);
+                dirtMap.SetTile(new Vector3Int(i,j,0),dirt);
+                TileBase tile=dirtMap.GetTile(new Vector3Int(i,j,0));
             }
         }
     }
@@ -67,7 +72,7 @@ public class GenerationTilemap : MonoBehaviour
     void createRandomPath()
     {
         int exit=width/2;
-        Vector3Int actualTile=new Vector3Int(exit, height, 1);
+        Vector3Int actualTile=new Vector3Int(exit, height, 0);
         dirtMap.SetTile(actualTile,null);
         for(int i=0;i<3;i++){
             actualTile.y--;

@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
 public class MoveMenu : MonoBehaviour
@@ -13,19 +15,24 @@ public class MoveMenu : MonoBehaviour
     [SerializeField] private GameObject cancelActionButton;
 
     [SerializeField] private GameObject selectedAnt;
+    public float minX=-5.5f;
+    public float maxX=7f;
+    public float minY=-3.5f;
+    public float maxY=3f;
 
     public float speed=0.5f;
 
-    private Navigator navigator;
+    private NavMeshAgent agent;
 
     // Start is called before the first frame update
 
     void Start()
     {
-        this.navigator=FindObjectOfType<Navigator>();
+        
     }
     public void StartMoveMenu()
     {
+        this.agent=selectedAnt.GetComponent<NavMeshAgent>();
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
         moveMenu.gameObject.SetActive(true);
         consoleText.text=selectedAnt.name+"-Select an accessible area";
@@ -34,36 +41,19 @@ public class MoveMenu : MonoBehaviour
 
     void Update(){
         if(Input.GetMouseButtonDown(0)){
-            var screen=Input.mousePosition;
-            var world=Camera.main.ScreenToWorldPoint(screen);
-            world.z=1;
-            Debug.Log("Mi hormiga z"+selectedAnt.transform.position.z);
-            this.navigator.SetSelectedAnt(selectedAnt);
-            var path=this.navigator.GetPath(selectedAnt.transform.position,world);
-            path.Add(world);
-
-            StopAllCoroutines();
-            StartCoroutine(this.RunPath(path));
-            //FinishMoveMenu();
-
-        }
-
-    }
-    IEnumerator RunPath(List<Vector3> path){
-        foreach(var target in path){
-            var origin=selectedAnt.transform.position;
-            Debug.Log("target:"+target);
-            Debug.Log("local:"+origin);
-            Debug.Log(path.Count);
-            float percent=0;
-            while(percent<1f){
-                selectedAnt.transform.position=Vector3.Lerp(origin,target,percent);
-                percent+=Time.deltaTime*this.speed;
-                yield return null;
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
+            if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
+            (hit.collider==null || !hit.collider.CompareTag("Dirt"))){
+                this.agent.SetDestination(mousePos);
+                FinishMoveMenu();
             }
+
         }
-        this.navigator.SetSelectedAnt(null);
+
     }
+
 
     public void SetSelectedAnt(GameObject ant){
         selectedAnt=ant;
@@ -72,6 +62,8 @@ public class MoveMenu : MonoBehaviour
     // Update is called once per frame
     public void FinishMoveMenu()
     {
+        
+        this.agent=null;
         moveMenu.SetActive(false);
         selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
         consoleText.text="Waiting . . .";

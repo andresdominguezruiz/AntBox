@@ -1,52 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Tilemaps;
 
 public class AntMovement : MonoBehaviour
 {
-    public float speed=0.5f;
+    public bool canMoveAuto=true;
 
-    public bool inUse=false;
+    public HashSet<Vector3> availablePath=new HashSet<Vector3>();
 
-    private Navigator navigator;
-    void Start()
-    {
-        this.navigator=FindObjectOfType<Navigator>();
+    private System.Random random = new System.Random();
+
+    public void AddPath(List<Vector3Int> path,Tilemap destructablePath){
+        foreach(Vector3Int localPosition in path){
+            Vector3 worldPosition=destructablePath.CellToWorld(localPosition);
+            availablePath.Add(worldPosition);
+        }
     }
 
-    public void CanMoveTheAnt(){
-        inUse=true;
+    void Update(){
+        SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
+        if(canMoveAuto || (!item.isSelected && item.canBeSelected)){
+            StartCoroutine(this.AutomaticMovement());
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetMouseButtonDown(0) && inUse){
-            var screen=Input.mousePosition;
-            var world=Camera.main.ScreenToWorldPoint(screen);
-            world.z=1;
-            this.navigator.SetSelectedAnt(this.gameObject);
-            List<Vector3> path=this.navigator.GetPath(this.gameObject.transform.position,world);
-            path.Add(world);
-            foreach(Vector3 p in path){
-                Debug.Log(p);
-            }
-
+    void OnMouseDown(){
+        //si lo he seleccionado y se puede seleccionar==> parar corutina
+        //si lo he seleccionado pero no se puede seleccionar==> nada
+        SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
+        if(item.isSelected && item.canBeSelected){
+            //StopAllCoroutines para todas las corutinas DEL SCRIPT, no de todos
             StopAllCoroutines();
-            StartCoroutine(this.RunPath(path));
+            NavMeshAgent agent=this.gameObject.GetComponent<NavMeshAgent>();
+            agent.SetDestination(this.transform.position);
+            canMoveAuto=false;
         }
     }
 
-    IEnumerator RunPath(List<Vector3> path){
-        foreach(var target in path){
-            var origin=this.transform.position;
-            float percent=0;
-            while(percent<1f){
-                this.transform.position=Vector2.Lerp(origin,target,percent);
-                percent+=Time.deltaTime*this.speed;
-                yield return null;
-            }
+    
+    IEnumerator AutomaticMovement(){
+        NavMeshAgent agent=this.gameObject.GetComponent<NavMeshAgent>();
+        while(canMoveAuto){
+            int v=random.Next(0,availablePath.Count-1);
+            Vector3 randomPosition=availablePath.ToList<Vector3>()[v];
+            agent.SetDestination(randomPosition);
+            yield return null;
         }
-        this.navigator.SetSelectedAnt(null);
     }
 }
