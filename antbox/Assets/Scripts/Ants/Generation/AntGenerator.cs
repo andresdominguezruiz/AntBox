@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
@@ -27,13 +28,21 @@ public class AntGenerator : MonoBehaviour
         for(int i=0;i<initialSize;i++){
             int v=random.Next(0,path.Count-1);
             GameObject newAnt=Instantiate(ant,map.CellToWorld(path[v]),Quaternion.identity,ant.transform.parent);
+            newAnt.transform.position=new Vector3(newAnt.transform.position.x,newAnt.transform.position.y,0);
+            NavMeshAgent agent=newAnt.GetComponent<NavMeshAgent>();
+            agent.updateRotation = false;
+            agent.updateUpAxis = false;
             newAnt.name="Ant-"+i;
             newAnt.AddComponent<AntStats>();
             newAnt.GetComponentInChildren<UIManager>().UpdateCanvasWithAntStats(newAnt.GetComponent<AntStats>(),newAnt.name);
             newAnt.AddComponent<SelectableItem>();
+            newAnt.GetComponent<SelectableItem>().AddPath(path,map);
             newAnt.GetComponent<SelectableItem>().SetUIManager(newAnt.GetComponentInChildren<UIManager>());
             newAnt.GetComponent<SelectableItem>().moveMenu=moveMenu;
             newAnt.GetComponentInChildren<UIManager>().HideInfo();
+            //newAnt.AddComponent<AntMovement>();
+            //newAnt.GetComponent<AntMovement>().AddPath(path,map);
+            //AÑADIR ESTE COMPONENTE CUANDO TODAS LAS ACCIONES ESTÉN ACABADAS
             path.Remove(path[v]);
         }
         Destroy(ant);

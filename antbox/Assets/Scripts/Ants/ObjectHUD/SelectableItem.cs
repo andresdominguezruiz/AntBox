@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Tilemaps;
 
 public class SelectableItem : MonoBehaviour
 {
@@ -11,9 +14,29 @@ public class SelectableItem : MonoBehaviour
     public GameObject moveMenu;
 
     public static List<SelectableItem> selectableItems=new List<SelectableItem>();
+    public static HashSet<Vector3> availablePath=new HashSet<Vector3>();
+
+    private System.Random random = new System.Random();
+    
     public UIManager itemUI;
+
+    public void AddPath(List<Vector3Int> path,Tilemap destructablePath){
+        foreach(Vector3Int localPosition in path){
+            Vector3 worldPosition=destructablePath.CellToWorld(localPosition);
+            availablePath.Add(worldPosition);
+        }
+    }
     void Start(){
         selectableItems.Add(this);
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+        if (collision.gameObject.CompareTag("Ant") || collision.gameObject.CompareTag("Queen"))
+        {
+            // Ignora la colisión
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider, true);
+        }
     }
 
     public void MakeEveryoneUnselectable(){
@@ -36,6 +59,7 @@ public class SelectableItem : MonoBehaviour
                 itemUI.HideInfo();
             }
         }
+
     }
 
     void OnMouseDown() {
@@ -56,6 +80,10 @@ public class SelectableItem : MonoBehaviour
 
     public void SetUIManager(UIManager ui){
         itemUI=ui;
+    }
+
+    public UIManager GetUIManager(){
+        return itemUI;
     }
 
     
