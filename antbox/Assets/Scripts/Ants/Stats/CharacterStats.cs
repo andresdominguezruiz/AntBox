@@ -10,7 +10,9 @@ public class CharacterStats : MonoBehaviour
     public float timeLastFrame;
 
 
-    [SerializeField] private static int growingTime=20; //Cada t tiempo real, se considera una semana
+    [SerializeField] private static int growingTime=20; //Cada t tiempo real, se considera un día
+
+    private int counterOfSecons=0;
 
     //LIMITS FOR VARIABLES----------------------
     [SerializeField] protected int MIN_HP=40;
@@ -40,6 +42,11 @@ public class CharacterStats : MonoBehaviour
     
     void Update(){
         if(Time.time -timeLastFrame>=1.0f){
+            counterOfSecons++;
+            if(counterOfSecons==growingTime){
+                age++;
+                counterOfSecons=0;
+            }
             UpdateStats();
             timeLastFrame=Time.time;
         }
@@ -53,10 +60,10 @@ public class CharacterStats : MonoBehaviour
             Destroy(this.gameObject);
         }else{
             bool needToCheckHP=false;
-            if(Time.deltaTime%growingTime==0) age++;
             if(actualHunger>0 && actualThirst>0){
                 actualHunger--;
                 actualThirst--;
+                Heal(1);
             }else if(actualHunger>0){
                 actualHunger--;
                 actualHP--;
@@ -113,7 +120,8 @@ public class CharacterStats : MonoBehaviour
     }
 
     public void Heal(int extraHp){
-        SetActualHP(actualHP+extraHp);
+        if(extraHp+actualHP>maxHP) SetActualHP(maxHP);
+        else SetActualHP(extraHp+actualHP);
     }
 
     public void SetActualHP(int hp){
