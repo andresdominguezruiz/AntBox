@@ -48,6 +48,8 @@ public class CharacterStats : MonoBehaviour
 
     void UpdateStats(){
         if(isDead){
+            SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
+            item.isSelected=false;
             Destroy(this.gameObject);
         }else{
             bool needToCheckHP=false;
