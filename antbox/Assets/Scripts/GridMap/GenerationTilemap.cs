@@ -11,6 +11,8 @@ public class GenerationTilemap : MonoBehaviour
 
     public Tilemap dirtMap;
     public GameObject navMesh;
+
+    public GameObject farms;
     public Tile dirt;
 
     public GameObject queen;
@@ -37,9 +39,10 @@ public class GenerationTilemap : MonoBehaviour
     void Start()
     {
         if(path.Count==0){
-            fillTilemap();
-            createRandomPath();
-            placeQueenAndAnts();
+            FillTilemap();
+            CreateRandomPath();
+            PlaceQueenAndAnts();
+            PlaceFarms();
         }
         NavMeshSurface n=navMesh.GetComponent<NavMeshSurface>();
         Debug.Log(n!=null);
@@ -48,7 +51,12 @@ public class GenerationTilemap : MonoBehaviour
         
     }
 
-    void fillTilemap(){
+    void PlaceFarms(){
+        FarmGenerator generator=farms.GetComponent<FarmGenerator>();
+        generator.InitializeGeneratorAndPlaceFarms(path);
+    }
+
+    void FillTilemap(){
         dirtMap.gameObject.transform.position=new Vector3(originX,originY,0);
         //CUANDO AUMENTE EL TAMAÑO DEL MAPA, MODIFICAR LÍMITES
         for(int i=0;i<=width;i++){
@@ -59,7 +67,7 @@ public class GenerationTilemap : MonoBehaviour
         }
     }
 
-    void placeQueenAndAnts(){
+    void PlaceQueenAndAnts(){
         int v=random.Next(0,path.Count-1);
         queen.transform.position=dirtMap.CellToWorld(path[v]);
         queen.AddComponent<QueenStats>();
@@ -69,7 +77,7 @@ public class GenerationTilemap : MonoBehaviour
 
     }
 
-    void createRandomPath()
+    void CreateRandomPath()
     {
         int exit=width/2;
         Vector3Int actualTile=new Vector3Int(exit, height, 0);

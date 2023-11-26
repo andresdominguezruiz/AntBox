@@ -6,12 +6,17 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
+
+public enum ItemType{
+    ANT,QUEEN,FARM
+}
 public class SelectableItem : MonoBehaviour
 {
     public bool isSelected=false;
     public bool canBeSelected=true;
 
     public GameObject moveMenu;
+    public GameObject farmMenu;
 
     public static List<SelectableItem> selectableItems=new List<SelectableItem>();
     public static HashSet<Vector3> availablePath=new HashSet<Vector3>();
@@ -20,11 +25,50 @@ public class SelectableItem : MonoBehaviour
     
     public UIManager itemUI;
 
+    public UIFarmManager farmUI;
+
+    private ItemType type;
+
+    public List<FarmStats> GetAllFarms(){
+        List<FarmStats> list=new List<FarmStats>();
+        foreach(SelectableItem item in selectableItems){
+            if(item.type.Equals(ItemType.FARM)) list.Add(item.gameObject.GetComponent<FarmStats>());
+        }
+        return list;
+    }
+
+    
+
     public void AddPath(List<Vector3Int> path,Tilemap destructablePath){
         foreach(Vector3Int localPosition in path){
             Vector3 worldPosition=destructablePath.CellToWorld(localPosition);
             availablePath.Add(worldPosition);
         }
+    }
+    //USAR ESTE METODO CUANDO VAYAS A AÑADIR UN NUEVO ELEMENTO SELECCIONABLE
+    public void InitSelectableItem(List<Vector3Int> path,Tilemap destructableMap
+    ,GameObject moveMenu,GameObject farmMenu,ItemType itemType){
+        AddPath(path,destructableMap);
+        if(itemType.Equals(ItemType.FARM)){
+            SetUIFarmManager(this.gameObject.GetComponentInChildren<UIFarmManager>());
+            farmUI.HideInfo();
+            type=ItemType.FARM;
+
+
+        }
+        else if(itemType.Equals(ItemType.ANT)){
+            SetUIManager(this.gameObject.GetComponentInChildren<UIManager>());
+            itemUI.HideInfo();
+            this.moveMenu=moveMenu;
+            this.farmMenu=farmMenu;
+            type=ItemType.ANT;
+        }else{
+            SetUIManager(this.gameObject.GetComponentInChildren<UIManager>());
+            itemUI.HideInfo();
+            type=ItemType.QUEEN;
+
+        }
+
     }
     void Start(){
         selectableItems.Add(this);
@@ -36,6 +80,15 @@ public class SelectableItem : MonoBehaviour
         {
             // Ignora la colisión
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider, true);
+        }
+    }
+    public void MakeEveryoneUnselectableButPrepareFarms(){
+        for(int i=0;i<selectableItems.Count;i++){
+            selectableItems[i].canBeSelected=false;
+            if(selectableItems[i].gameObject.GetComponent<FarmStats>()!=null){
+                FarmStats stats=selectableItems[i].gameObject.GetComponent<FarmStats>();
+
+            }
         }
     }
 
@@ -53,10 +106,16 @@ public class SelectableItem : MonoBehaviour
 
     void Update(){
         if(isSelected && canBeSelected){
-            itemUI.ShowInfo();
+            if(itemUI!=null){
+                itemUI.ShowInfo();
+            }else if(farmUI!=null){
+                farmUI.ShowInfo();
+            }
         }else{
             if(itemUI!=null){
                 itemUI.HideInfo();
+            }else if(farmUI!=null){
+                farmUI.HideInfo();
             }
         }
 
@@ -65,9 +124,11 @@ public class SelectableItem : MonoBehaviour
     void OnMouseDown() {
         if(canBeSelected){
             isSelected=true;
-            if(!itemUI.isQueen){
+            if(itemUI!=null && !itemUI.isQueen){
                 MoveMenu menu=moveMenu.GetComponent<MoveMenu>();
                 menu.SetSelectedAnt(this.gameObject);
+                FarmingMenu otherMenu=farmMenu.GetComponent<FarmingMenu>();
+                otherMenu.SetSelectedAnt(this.gameObject);
             }
             foreach(SelectableItem item in selectableItems){
                 if(item!=this){
@@ -80,6 +141,10 @@ public class SelectableItem : MonoBehaviour
 
     public void SetUIManager(UIManager ui){
         itemUI=ui;
+    }
+
+    public void SetUIFarmManager(UIFarmManager ui){
+        farmUI=ui;
     }
 
     public UIManager GetUIManager(){

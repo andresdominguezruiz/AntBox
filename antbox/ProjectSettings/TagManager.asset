@@ -9,6 +9,7 @@ TagManager:
   - Queen
   - Selectable
   - Ant
+  - Farm
   layers:
   - Default
   - TransparentFX
