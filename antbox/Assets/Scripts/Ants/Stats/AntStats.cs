@@ -15,9 +15,11 @@ public class AntStats : CharacterStats
     private ActualAction action=ActualAction.NOTHING;
     [SerializeField] protected int MIN_ENERGY=50;
     [SerializeField] protected int MAX_ENERGY=200;
+    [SerializeField] protected int ENERGY_PER_AGE=5;
 
     [SerializeField] protected int MIN_FARMING_SPEED=50; //es porcentual la velocidad
     [SerializeField] protected int MAX_FARMING_SPEED=200;
+    [SerializeField] protected int FARMING_SPEED_PER_AGE=10;
 
 
     //----------------------------------------------------

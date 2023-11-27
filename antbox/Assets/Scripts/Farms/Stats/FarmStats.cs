@@ -104,13 +104,24 @@ public class FarmStats : MonoBehaviour
     public void AddAntToFarm(GameObject item){
         antsOfFarm.Add(item);
     }
-
-    void OnCollisionEnter2D(Collision2D other){
+    public void OnTriggerEnter2D(Collider2D other)
+    {
         GameObject item=other.gameObject;
         Debug.Log("Name:"+item.name);
         if(item.CompareTag("Ant") && item.GetComponent<AntStats>().GetAction().Equals(ActualAction.FARMING)
          && antsOfFarm.Contains(item)){
             antsWorkingInFarm.Add(item);
+         } 
+    }
+
+
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        GameObject item=collision.gameObject;
+        Debug.Log("Name:"+item.name);
+        if(item.CompareTag("Ant") && item.GetComponent<AntStats>().GetAction().Equals(ActualAction.FARMING)
+         && antsOfFarm.Contains(item)){
+            if(!antsWorkingInFarm.Contains(item)) antsWorkingInFarm.Add(item);
          } 
     }
 }

@@ -17,13 +17,16 @@ public class CharacterStats : MonoBehaviour
     //LIMITS FOR VARIABLES----------------------
     [SerializeField] protected int MIN_HP=40;
     [SerializeField] protected int MAX_HP=60;
+    [SerializeField] protected int HP_PER_AGE=2;
 
     [SerializeField] protected int MIN_HUNGER=50;
     [SerializeField] protected int MAX_HUNGER=100;
+    [SerializeField] protected int HUNGER_PER_AGE=5;
 
     [SerializeField] protected int MIN_THIRST=50;
 
     [SerializeField] protected int MAX_THIRST=100;
+    [SerializeField] protected int THIRST_PER_AGE=5;
 
 
     //----------------------------
@@ -39,12 +42,14 @@ public class CharacterStats : MonoBehaviour
     [SerializeField] private int age;
 
     [SerializeField] private bool isDead=false;
+    [SerializeField] private int adultAge=3;
     
     void Update(){
         if(Time.time -timeLastFrame>=1.0f){
             counterOfSecons++;
             if(counterOfSecons==growingTime){
                 age++;
+                //UpdateStatsPerAge();
                 counterOfSecons=0;
             }
             UpdateStats();
@@ -52,6 +57,13 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
+    void UpdateStatsPerAge(){
+        if(age<=adultAge){
+            maxHP+=HP_PER_AGE;
+            maxHunger+=HUNGER_PER_AGE;
+            maxThirst+=THIRST_PER_AGE;
+        }
+    }
 
     void UpdateStats(){
         if(isDead){

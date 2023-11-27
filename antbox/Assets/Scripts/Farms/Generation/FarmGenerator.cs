@@ -96,7 +96,7 @@ public class FarmGenerator : MonoBehaviour
     private List<Vector3Int> GetCoverageOfFarm(Vector3Int position){
         List<Vector3Int> list=new List<Vector3Int>();
         for(int i=-2;i<=2;i++){
-            for(int j=-2;j<=-2;j++){
+            for(int j=-2;j<=2;j++){
                 list.Add(new Vector3Int(position.x+i,position.y+j,position.z));
             }
         }
