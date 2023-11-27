@@ -26,4 +26,10 @@ public class ContainerData : MonoBehaviour
         foodText.text="F:"+FOOD_CONTAINER;
         waterText.text="W:"+WATER_CONTAINER;
     }
+
+    public void AddResources(int value,Type type){
+        Debug.Log("añadidio");
+        if(type.Equals(Type.FOOD)) FOOD_CONTAINER+=value;
+        else WATER_CONTAINER+=value;
+    }
 }
