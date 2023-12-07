@@ -21,12 +21,17 @@ public class AntStats : CharacterStats
     [SerializeField] protected int MAX_FARMING_SPEED=200;
     [SerializeField] protected int FARMING_SPEED_PER_AGE=10;
 
+    [SerializeField] protected int MIN_DIGGING_SPEED=10; //es porcentual la velocidad
+    [SerializeField] protected int MAX_DIGGING_SPEED=50;
+    [SerializeField] protected int DIGGING_SPEED_PER_AGE=5;
+
 
     //----------------------------------------------------
     [SerializeField] private int maxEnergy;
 
     [SerializeField] private int actualEnergy;
     [SerializeField] private float farmingSpeed;
+    [SerializeField] private float diggingSpeed;
     //TODO: Cuando tengamos juego base, mejorar stats para que cada hormiga sea buena en algo
 
     public float GetFarminSpeed(){
@@ -40,12 +45,20 @@ public class AntStats : CharacterStats
         action=ActualAction.FARMING;
     }
 
+    public void StartDigging(){
+        action=ActualAction.DIGGING;
+    }
+
     public void DoNothing(){
         action=ActualAction.NOTHING;
     }
 
     public string GetEnergyText(){
         return maxEnergy.ToString()+"/"+actualEnergy.ToString();
+    }
+
+    public float GetDiggingSpeed(){
+        return diggingSpeed;
     }
 
 
@@ -67,7 +80,9 @@ public class AntStats : CharacterStats
     public void InitOtherVariables(){
         int randomEnergy=random.Next(MIN_ENERGY,MAX_ENERGY);
         int randomSpeed=random.Next(MIN_FARMING_SPEED,MAX_FARMING_SPEED);
+        int randomDigging=random.Next(MIN_DIGGING_SPEED,MAX_DIGGING_SPEED);
         farmingSpeed=(float)(randomSpeed*1.0/100);
+        diggingSpeed=(float)(randomDigging*1.0/100);
         maxEnergy=randomEnergy;
         SetEnergy(randomEnergy);
 

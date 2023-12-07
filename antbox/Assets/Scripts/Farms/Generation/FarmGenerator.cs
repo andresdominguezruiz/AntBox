@@ -69,7 +69,7 @@ public class FarmGenerator : MonoBehaviour
         newWaterFarm.GetComponent<FarmStats>().InitWaterFarm(false);
         newWaterFarm.GetComponentInChildren<UIFarmManager>().UpdateCanvasWithFarmStats(newWaterFarm.GetComponent<FarmStats>());
         newWaterFarm.AddComponent<SelectableItem>();
-        newWaterFarm.GetComponent<SelectableItem>().InitSelectableItem(availablePath,map,null,null,ItemType.FARM);
+        newWaterFarm.GetComponent<SelectableItem>().InitSelectableItem(availablePath,map,null,null,null,ItemType.FARM);
         waterFarms.Add(newWaterFarm);
     }
 
@@ -80,7 +80,7 @@ public class FarmGenerator : MonoBehaviour
         newFoodFarm.GetComponent<FarmStats>().InitFoodFarm(false);
         newFoodFarm.GetComponentInChildren<UIFarmManager>().UpdateCanvasWithFarmStats(newFoodFarm.GetComponent<FarmStats>());
         newFoodFarm.AddComponent<SelectableItem>();
-        newFoodFarm.GetComponent<SelectableItem>().InitSelectableItem(availablePath,map,null,null,ItemType.FARM);
+        newFoodFarm.GetComponent<SelectableItem>().InitSelectableItem(availablePath,map,null,null,null,ItemType.FARM);
         foodFarms.Add(newFoodFarm);
     }
 

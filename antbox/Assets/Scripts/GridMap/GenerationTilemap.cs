@@ -18,6 +18,7 @@ public class GenerationTilemap : MonoBehaviour
     public GameObject queen;
 
     private List<Vector3Int> path=new List<Vector3Int>();
+    private HashSet<Vector3Int> excavablePath=new HashSet<Vector3Int>();
 
     public float originX=-5.5f;
     public int width=21;
@@ -41,14 +42,43 @@ public class GenerationTilemap : MonoBehaviour
         if(path.Count==0){
             FillTilemap();
             CreateRandomPath();
-            PlaceQueenAndAnts();
             PlaceFarms();
+            ObtainExcavableTiles();
+            PlaceQueenAndAnts();
+            //TODO: Revisar cantidad de tiles == null del path
+            Debug.Log(excavablePath.Count);
         }
         NavMeshSurface n=navMesh.GetComponent<NavMeshSurface>();
         Debug.Log(n!=null);
         if(n!=null){n.BuildNavMesh();}
 
         
+    }
+    void ObtainExcavableTiles(){
+        foreach(Vector3Int tile in path){
+            List<Vector3Int> coverage=NextToDirtPositions(tile,dirtMap);
+            foreach(Vector3Int position in coverage){
+                excavablePath.Add(position);
+            }
+        }
+    }
+    public HashSet<Vector3Int> GetExcavableTiles(){
+        return excavablePath;
+    }
+    public List<Vector3Int> NextToDirtPositions(Vector3Int tile,Tilemap dirtMap){
+        List<Vector3Int> list=new List<Vector3Int>();
+        if(dirtMap.GetTile(tile)==null){
+            Vector3Int left=new Vector3Int(tile.x-1,tile.y,tile.z);
+            Vector3Int right=new Vector3Int(tile.x+1,tile.y,tile.z);
+            Vector3Int up=new Vector3Int(tile.x,tile.y+1,tile.z);
+            Vector3Int down=new Vector3Int(tile.x,tile.y-1,tile.z);
+            List<Vector3Int> options=new List<Vector3Int>{left,right,up,down};
+            foreach(Vector3Int option in options){
+                if(dirtMap.GetTile(option)!=null) list.Add(option);
+            }
+        }
+        return list;
+
     }
 
     void PlaceFarms(){
@@ -69,10 +99,10 @@ public class GenerationTilemap : MonoBehaviour
 
     void PlaceQueenAndAnts(){
         int v=random.Next(0,path.Count-1);
-        queen.transform.position=dirtMap.CellToWorld(path[v]);
+        queen.transform.position=new Vector3(dirtMap.CellToWorld(path[v]).x,dirtMap.CellToWorld(path[v]).y,0f);
         queen.AddComponent<QueenStats>();
         path.Remove(path[v]);
-        AntGenerator antGenerator=queen.transform.GetComponent<AntGenerator>();
+        AntGenerator antGenerator=queen.GetComponent<AntGenerator>();
         antGenerator.placeAntsIn(path,dirtMap);
 
     }
@@ -82,9 +112,11 @@ public class GenerationTilemap : MonoBehaviour
         int exit=width/2;
         Vector3Int actualTile=new Vector3Int(exit, height, 0);
         dirtMap.SetTile(actualTile,null);
+        path.Add(actualTile);
         for(int i=0;i<3;i++){
             actualTile.y--;
             dirtMap.SetTile(actualTile,null);
+            path.Add(actualTile);
         }
         while(pathSize>0){
             bool nextTileSelected=false;

@@ -46,7 +46,8 @@ public class MoveMenu : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
             if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
             (hit.collider==null || !hit.collider.CompareTag("Dirt"))){
-                this.agent.SetDestination(mousePos);
+                Vector3Int selectedTile=map.WorldToCell(mousePos);
+                this.agent.SetDestination(map.GetCellCenterWorld(selectedTile));
                 FinishMoveMenu();
             }
 

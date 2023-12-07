@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 
 public enum AvailableActions{
-    EAT,DRINK,SLEEP,GROW,DIG,MOVE,CANCEL_ACTION
+    EAT,DRINK,SLEEP,GROW,DIG,MOVE,CANCEL_ACTION,CHANGE_DIRECTIONS
 }
 public class UIManager : MonoBehaviour
 {
@@ -23,6 +26,7 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI farminSpeedText;
+    public TextMeshProUGUI diggingSpeedText;
 
     public GameObject eatButton;
     public GameObject drinkButton;
@@ -30,13 +34,25 @@ public class UIManager : MonoBehaviour
     public GameObject cancelButton;
     public GameObject moveButton;
     public GameObject farmingButton;
-    //falta el botón de dig
+    public GameObject upButton;
+    public GameObject downButton;
+    public GameObject rightButton;
+    public GameObject leftButton;
+    
+    public GameObject digButton;
 
     
-    public List<AvailableActions> availableActionsWhenIsDiggingOrFarming=new List<AvailableActions>{
+    public List<AvailableActions> availableActionsWhenIsFarming=new List<AvailableActions>{
         AvailableActions.DRINK,
         AvailableActions.EAT,
         AvailableActions.CANCEL_ACTION};
+    
+    public List<AvailableActions> availableActionsWhenIsDigging=new List<AvailableActions>{
+        AvailableActions.DRINK,
+        AvailableActions.EAT,
+        AvailableActions.CANCEL_ACTION,
+        AvailableActions.CHANGE_DIRECTIONS
+    };
     
     public List<AvailableActions> availableActionsWhenIsDoingNothing=new List<AvailableActions>{
         AvailableActions.DRINK,
@@ -48,6 +64,52 @@ public class UIManager : MonoBehaviour
     
     public List<AvailableActions> availableActionsWhenItsSleeping=new List<AvailableActions>{
         AvailableActions.CANCEL_ACTION};
+
+    
+    public void CancelAntAction(){
+        AntStats stats=this.gameObject.GetComponentInParent<AntStats>();
+        if(stats.GetAction().Equals(ActualAction.FARMING)) CancelFarming(stats);
+        else if(stats.GetAction().Equals(ActualAction.DIGGING)) CancelDigging(stats);
+    }
+
+    public void GoLeft(){
+        ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
+        ex.Left();
+    }
+    public void GoRight(){
+        ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
+        ex.Right();
+    }
+    public void GoUp(){
+        ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
+        ex.Up();
+    }
+    public void GoDown(){
+        ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
+        ex.Down();
+    }
+
+    public void CancelDigging(AntStats antStats){
+        antStats.gameObject.GetComponent<NavMeshAgent>().enabled=true;
+        antStats.gameObject.GetComponent<ExcavationMovement>().StopDigging();
+        antStats.DoNothing();
+    }
+
+    
+    public void CancelFarming(AntStats stats){
+        FarmStats[] allFarms=FindObjectsOfType<FarmStats>();
+        foreach(FarmStats farm in allFarms){
+            if(farm.antsOfFarm.Contains(stats.gameObject)){
+                farm.antsOfFarm.Remove(stats.gameObject);
+                farm.antsWorkingInFarm.Remove(stats.gameObject);
+                stats.DoNothing();
+                stats.gameObject.GetComponent<NavMeshAgent>().isStopped=false;
+                stats.gameObject.GetComponent<NavMeshAgent>().SetDestination(this.gameObject.transform.position);
+                Debug.Log("He cancelado, ahora su estado es "+stats.GetAction());
+                break;
+            }
+        }
+    }
 
 
     void Update(){
@@ -62,18 +124,23 @@ public class UIManager : MonoBehaviour
     }
 
     void ShowAvailableButtonsForAnt(AntStats stats){
-        if(stats.GetAction().Equals(ActualAction.FARMING) || stats.GetAction().Equals(ActualAction.DIGGING)){
-            ProcessAvailableActions(availableActionsWhenIsDiggingOrFarming,stats);
+        if(stats.GetAction().Equals(ActualAction.FARMING)){
+            ProcessAvailableActions(availableActionsWhenIsFarming,stats);
         }else if(stats.GetAction().Equals(ActualAction.NOTHING)){
             ProcessAvailableActions(availableActionsWhenIsDoingNothing,stats);
+        }else if(stats.GetAction().Equals(ActualAction.DIGGING)){
+            ProcessAvailableActions(availableActionsWhenIsDigging,stats);
         }else{
             ProcessAvailableActions(availableActionsWhenItsSleeping,stats);
         }
     }
 
 
+
     void ProcessAvailableActions(List<AvailableActions> availableActions,AntStats stats){
-        List<GameObject> allButtons=new List<GameObject>{farmingButton,eatButton,drinkButton,sleepButton,moveButton,cancelButton};
+        List<GameObject> allButtons=new List<GameObject>{farmingButton,eatButton,drinkButton
+        ,sleepButton,moveButton,cancelButton,digButton,upButton,rightButton,leftButton,downButton};
+        ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
         foreach(AvailableActions availableAction in availableActions){
             if(availableAction.Equals(AvailableActions.GROW)){
                 allButtons.Remove(farmingButton);
@@ -82,7 +149,25 @@ public class UIManager : MonoBehaviour
                 allButtons.Remove(moveButton);
                 moveButton.SetActive(true);
             }else if(availableAction.Equals(AvailableActions.DIG)){
-                //TODO: Añadir lineas cuando exista el botón de excavar
+                allButtons.Remove(digButton);
+                digButton.SetActive(true);
+            }else if( availableAction.Equals(AvailableActions.CHANGE_DIRECTIONS)&& ex.IsDigging()){
+                    if(ex.CanGoLeft()){
+                        allButtons.Remove(leftButton);
+                        leftButton.SetActive(true);
+                    }
+                    if(ex.CanGoRight()){
+                        allButtons.Remove(rightButton);
+                        leftButton.SetActive(true);
+                    }
+                    if(ex.CanGoDown()){
+                        allButtons.Remove(downButton);
+                        downButton.SetActive(true);
+                    }
+                    if(ex.CanGoUp()){
+                        allButtons.Remove(upButton);
+                        upButton.SetActive(true);
+                    }
             }else if(availableAction.Equals(AvailableActions.SLEEP)){
                 //TODO: Añadir lineas cuando exista el botón de dormir
             }else if(availableAction.Equals(AvailableActions.EAT)){
@@ -130,6 +215,7 @@ public class UIManager : MonoBehaviour
         energyText.text="Energy:"+antStats.GetEnergyText();
         nameText.text="Name:"+name;
         farminSpeedText.text="Farming Speed:"+antStats.GetFarminSpeed();
+        diggingSpeedText.text="Digging Speed:"+antStats.GetDiggingSpeed();
     }
     public void UpdateCanvasWithQueenStats(QueenStats queenStats,string name){
         hpText.text="HP:"+queenStats.GetTextHP();
