@@ -15,6 +15,7 @@ public class ExcavationMovement : MonoBehaviour
     //Utilizar para seguir excavando
     private Direction actualDirection=Direction.NONE;
     private GameObject ant;
+    private Vector3Int selectedTile;
     private Vector3Int actualTile;
     public Vector3 direction= new Vector3(0,0,0);
     private Vector3Int routeTile;
@@ -28,6 +29,7 @@ public class ExcavationMovement : MonoBehaviour
     public void StopDigging(){
         direction=new Vector3(0,0,0);
         canDig=false;
+        isDigging=false;
     }
 
     public void InitComponent(Tilemap map){
@@ -65,6 +67,7 @@ public class ExcavationMovement : MonoBehaviour
         //destination guarda el punto medio entre el centro del tile objetivo y el tile de la ruta (asi no falla)
         //el navmeshagent
         ant.gameObject.GetComponent<NavMeshAgent>().SetDestination(destructableMap.GetCellCenterWorld(routeTile));
+        selectedTile=selectedDestructableTile;
         direction=selectedDestructableTile-selectedRoute;
         actualDirection=ParseVectorToDirection(direction);
         canDig=true;
@@ -79,7 +82,7 @@ public class ExcavationMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Dirt") && isDigging)
         {
-            // Ignora la colisión
+            //poniendo al final false haces lo contrario, obligas a que no ignore las colisiones
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.collider, false);
         }
     }
@@ -109,11 +112,11 @@ public class ExcavationMovement : MonoBehaviour
     {
         if(canDig){
             actualTile=destructableMap.WorldToCell(ant.transform.position);
-            if(actualTile.x==routeTile.x && actualTile.y==routeTile.y && !isDigging){
+            NavMeshAgent agent=ant.GetComponent<NavMeshAgent>();
+            if(agent.destination.Equals(destructableMap.GetCellCenterWorld(routeTile)) && !isDigging){
                 StartDiggingAndFirstDirection();
             }
             if(isDigging){
-                NavMeshAgent agent=ant.GetComponent<NavMeshAgent>();
                 agent.enabled=false;
                 ant.transform.position=ant.transform.position+direction*1.5f*Time.deltaTime;
             }
