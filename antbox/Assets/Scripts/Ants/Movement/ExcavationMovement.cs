@@ -20,6 +20,10 @@ public class ExcavationMovement : MonoBehaviour
     public Vector3 direction= new Vector3(0,0,0);
     private Vector3Int routeTile;
     public bool isDigging=false;
+    [SerializeField] private static int digTime=10; //Cada t tiempo real, se considera un día
+
+    private int counterOfSecons=0;
+    public float timeLastFrame;
     [SerializeField] private Tilemap destructableMap;
 
     public bool IsDigging(){
@@ -113,14 +117,36 @@ public class ExcavationMovement : MonoBehaviour
         if(canDig){
             actualTile=destructableMap.WorldToCell(ant.transform.position);
             NavMeshAgent agent=ant.GetComponent<NavMeshAgent>();
-            if(agent.destination.Equals(destructableMap.GetCellCenterWorld(routeTile)) && !isDigging){
+            if(actualTile.x==routeTile.x && actualTile.y==routeTile.y && !isDigging){
                 StartDiggingAndFirstDirection();
             }
             if(isDigging){
-                agent.enabled=false;
-                ant.transform.position=ant.transform.position+direction*1.5f*Time.deltaTime;
+                DigTile();
+                if(destructableMap.GetTile(selectedTile)==null){
+
+                }
             }
 
         }
+    }
+    void DigTile(){
+        if(Time.time -timeLastFrame>=1.0f){
+            counterOfSecons++;
+            if(counterOfSecons==digTime/3){
+                
+            }else if(counterOfSecons==digTime*2/3){
+
+            }else if(counterOfSecons==3*digTime/4){
+
+            }
+            if(counterOfSecons==digTime){
+                counterOfSecons=0;
+                destructableMap.SetTile(selectedTile,null);
+
+                
+            }
+            timeLastFrame=Time.time;
+        }
+
     }
 }
