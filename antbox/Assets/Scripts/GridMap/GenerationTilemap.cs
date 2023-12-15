@@ -113,7 +113,11 @@ public class GenerationTilemap : MonoBehaviour
 
     public void AddWalkableTile(Vector3Int position){
         path.Add(position);
+        List<Vector3Int> coverage=NextToDirtPositions(position,dirtMap);
         excavablePath.Remove(position);
+        foreach(Vector3Int pos in coverage){
+            excavablePath.Add(pos);
+        }
     }
 
     void CreateRandomPath()
