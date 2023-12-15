@@ -48,11 +48,15 @@ public class GenerationTilemap : MonoBehaviour
             //TODO: Revisar cantidad de tiles == null del path
             Debug.Log(excavablePath.Count);
         }
+        BakeMap();
+
+        
+    }
+
+    public void BakeMap(){
         NavMeshSurface n=navMesh.GetComponent<NavMeshSurface>();
         Debug.Log(n!=null);
         if(n!=null){n.BuildNavMesh();}
-
-        
     }
     void ObtainExcavableTiles(){
         foreach(Vector3Int tile in path){
@@ -105,6 +109,11 @@ public class GenerationTilemap : MonoBehaviour
         AntGenerator antGenerator=queen.GetComponent<AntGenerator>();
         antGenerator.placeAntsIn(path,dirtMap);
 
+    }
+
+    public void AddWalkableTile(Vector3Int position){
+        path.Add(position);
+        excavablePath.Remove(position);
     }
 
     void CreateRandomPath()

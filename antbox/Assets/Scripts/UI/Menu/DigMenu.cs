@@ -41,6 +41,8 @@ public class DigMenu : MonoBehaviour
     }
     public void StartDigMenu()
     {
+        GenerationTilemap generationTilemap=FindFirstObjectByType<GenerationTilemap>();
+        generationTilemap.BakeMap();
         this.agent=selectedAnt.GetComponent<NavMeshAgent>();
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
         digMenu.gameObject.SetActive(true);

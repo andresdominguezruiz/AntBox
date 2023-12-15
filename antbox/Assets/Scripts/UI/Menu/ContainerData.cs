@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class ContainerData : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class ContainerData : MonoBehaviour
 
     public TextMeshProUGUI foodText;
     public TextMeshProUGUI waterText;
+    public Tile dirtTile;
+    public Tile stoneTile;
+    public Tile diggingDirtTile1;
+    public Tile diggingDirtTile2;
+    public Tile diggingDirtTile3;
     // Start is called before the first frame update
     void Start()
     {
