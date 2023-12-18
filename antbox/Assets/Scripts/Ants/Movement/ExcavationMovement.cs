@@ -25,6 +25,7 @@ public class ExcavationMovement : MonoBehaviour
     private float counterOfSecons=0;
     public float timeLastFrame;
     [SerializeField] private Tilemap destructableMap;
+     public static List<ExcavationMovement> itemsWhoDig=new List<ExcavationMovement>();
 
     private ContainerData containerData;
 
@@ -114,6 +115,7 @@ public class ExcavationMovement : MonoBehaviour
     {
         ant=this.gameObject;
         containerData=FindFirstObjectByType<ContainerData>();
+        itemsWhoDig.Add(this);
         
     }
 
@@ -127,7 +129,8 @@ public class ExcavationMovement : MonoBehaviour
             if(actualTile.x==routeTile.x && actualTile.y==routeTile.y && !isDigging){
                 StartDiggingAndFirstDirection();
             }
-            if(isDigging){
+            List<ExcavationMovement> itemsWhoDigSameTile=itemsWhoDig.FindAll(item=> item.selectedTile.Equals(this.selectedTile) && item.isDigging);
+            if(isDigging){//TODO: Condición para que sólo una hormiga ejecute DigTile
                 DigTile();
                 if(destructableMap.GetTile(selectedTile)==null){
                     isDigging=false;
@@ -141,13 +144,20 @@ public class ExcavationMovement : MonoBehaviour
     }
     void DigTile(){
         if(Time.time -timeLastFrame>=1.0f){
-            counterOfSecons+=ant.GetComponent<AntStats>().GetDiggingSpeed();
-            if(counterOfSecons<=digTime/4){
-                destructableMap.SetTile(selectedTile,containerData.diggingDirtTile1);
-            }else if(counterOfSecons>digTime/4 && counterOfSecons<=digTime*2/4){
-                destructableMap.SetTile(selectedTile,containerData.diggingDirtTile2);
-            }else if(counterOfSecons>digTime*2/4 && counterOfSecons<=digTime*3/4){
-                destructableMap.SetTile(selectedTile,containerData.diggingDirtTile3);
+            //Estas 3 líneas permiten la excavación múltiple
+            List<ExcavationMovement> itemsWhoDigSameTile=itemsWhoDig.FindAll(item=> item.selectedTile.Equals(this.selectedTile) && item.isDigging);
+            foreach(ExcavationMovement item in itemsWhoDigSameTile){
+                counterOfSecons+=item.ant.GetComponent<AntStats>().GetDiggingSpeed();
+            }
+            DigMenu menu=FindObjectOfType<DigMenu>(false);
+            if(menu==null){//Cuando el dig menu no activo, cambiar tiles
+                if(counterOfSecons<=digTime/4){
+                    destructableMap.SetTile(selectedTile,containerData.diggingDirtTile1);
+                }else if(counterOfSecons>digTime/4 && counterOfSecons<=digTime*2/4){
+                    destructableMap.SetTile(selectedTile,containerData.diggingDirtTile2);
+                }else if(counterOfSecons>digTime*2/4 && counterOfSecons<=digTime*3/4){
+                    destructableMap.SetTile(selectedTile,containerData.diggingDirtTile3);
+            }
             }
             if(counterOfSecons>=digTime){
                 counterOfSecons=0;
@@ -155,6 +165,9 @@ public class ExcavationMovement : MonoBehaviour
                 GenerationTilemap generationTilemap=FindFirstObjectByType<GenerationTilemap>();
                 generationTilemap.AddWalkableTile(selectedTile);
                 generationTilemap.BakeMap();
+                if(menu!=null && menu.isSelectingDestructableTile){
+                    menu.PreparingSelectableTiles();
+            }
 
                 
             }

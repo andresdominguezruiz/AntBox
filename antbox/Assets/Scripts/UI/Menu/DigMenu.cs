@@ -31,15 +31,10 @@ public class DigMenu : MonoBehaviour
     public float speed=0.5f;
 
     public bool areMoreRutes=false;
+    public bool isSelectingDestructableTile=false;
 
     private NavMeshAgent agent;
 
-    // Start is called before the first frame update
-
-    void Start()
-    {
-        
-    }
     public void StartDigMenu()
     {
         GenerationTilemap generationTilemap=FindFirstObjectByType<GenerationTilemap>();
@@ -51,9 +46,10 @@ public class DigMenu : MonoBehaviour
         selectedAnt.GetComponent<SelectableItem>().MakeEveryoneUnselectable();
         excavablePath=FindObjectOfType<GenerationTilemap>().GetExcavableTiles();
         PreparingSelectableTiles();
+        isSelectingDestructableTile=true;
         Debug.Log(excavablePath.Count);
     }
-    void PreparingSelectableTiles(){
+    public void PreparingSelectableTiles(){
         foreach(Vector3Int pos in excavablePath){
             destructableMap.SetTile(pos,selectable);
         }
@@ -114,6 +110,7 @@ public class DigMenu : MonoBehaviour
                 Debug.Log(selectedTile);
                 selectedDestructableTile=selectedTile;
                 if(excavablePath.Contains(selectedTile)){
+                    isSelectingDestructableTile=false;
                     List<Vector3Int> availableRutes=GetAdjacentTileOfDiggableTile(destructableMap,selectedTile);
                     if(availableRutes.Count!=1){
                         StartSelectRouteMenu(availableRutes,selectedTile);
