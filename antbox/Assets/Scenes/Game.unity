@@ -15647,6 +15647,7 @@ MonoBehaviour:
   maxY: 3
   speed: 0.5
   areMoreRutes: 0
+  isSelectingDestructableTile: 0
 --- !u!1 &1657315994
 GameObject:
   m_ObjectHideFlags: 0

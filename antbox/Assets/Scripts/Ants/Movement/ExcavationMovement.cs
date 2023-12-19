@@ -22,6 +22,7 @@ public class ExcavationMovement : MonoBehaviour
     public bool isDigging=false;
     [SerializeField] private static int digTime=5; //Cada t tiempo real, se considera un día
 
+
     private float counterOfSecons=0;
     public float timeLastFrame;
     [SerializeField] private Tilemap destructableMap;
@@ -100,6 +101,7 @@ public class ExcavationMovement : MonoBehaviour
     public void StartDiggingAndFirstDirection(){
         isDigging=true;
         direction=selectedTile-routeTile;
+        if(destructableMap.GetTile(selectedTile)==null) selectedTile+=direction;
         
     }
 
@@ -128,9 +130,8 @@ public class ExcavationMovement : MonoBehaviour
             NavMeshAgent agent=ant.GetComponent<NavMeshAgent>();
             if(actualTile.x==routeTile.x && actualTile.y==routeTile.y && !isDigging){
                 StartDiggingAndFirstDirection();
-            }
-            List<ExcavationMovement> itemsWhoDigSameTile=itemsWhoDig.FindAll(item=> item.selectedTile.Equals(this.selectedTile) && item.isDigging);
-            if(isDigging){//TODO: Condición para que sólo una hormiga ejecute DigTile
+            }  
+            if(isDigging){
                 DigTile();
                 if(destructableMap.GetTile(selectedTile)==null){
                     isDigging=false;
