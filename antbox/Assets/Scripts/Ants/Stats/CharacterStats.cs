@@ -7,6 +7,10 @@ using UnityEngine.Analytics;
 public class CharacterStats : MonoBehaviour
 {
     private System.Random random = new System.Random();
+
+    public System.Random GetRandom(){
+        return random;
+    }
     public float timeLastFrame;
 
 
@@ -165,7 +169,8 @@ public class CharacterStats : MonoBehaviour
         return age.ToString();
     }
 
-    public void InitVariables(){
+    public void InitVariables(System.Random random){
+        this.random=random;
         int randomHP=random.Next(MIN_HP,MAX_HP);
         int randomHunger=random.Next(MIN_HUNGER,MAX_HUNGER);
         int randomThirst=random.Next(MIN_THIRST,MAX_THIRST);

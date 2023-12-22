@@ -14,16 +14,21 @@ public class GenerationTilemap : MonoBehaviour
 
     public GameObject farms;
     public Tile dirt;
+    public Tile stone;
 
     public GameObject queen;
+
+    private List<TileData> allTilesOfMap=new List<TileData>();
 
     private List<Vector3Int> path=new List<Vector3Int>();
     private HashSet<Vector3Int> excavablePath=new HashSet<Vector3Int>();
 
-    public float originX=-5.5f;
-    public int width=21;
-    public int height=13;
-    public float originY=-3.5f;
+    
+
+    public float originX=-6.0f;
+    public int width=23;
+    public int height=15;
+    public float originY=-4f;
 
     public int leftCounter=7;
     public int rightCounter=7;
@@ -36,6 +41,9 @@ public class GenerationTilemap : MonoBehaviour
 
     private System.Random random = new System.Random();
 
+    public System.Random GetRandom(){
+        return random;
+    }
 
     void Start()
     {
@@ -51,6 +59,14 @@ public class GenerationTilemap : MonoBehaviour
         BakeMap();
 
         
+    }
+    void CreateAllTilesData(){
+        for(int i=0;i<=width;i++){
+            for(int j=0;j<=height;j++){
+                TileBase tile=dirtMap.GetTile(new Vector3Int(i,j,0));
+
+            }
+        }
     }
 
     public void BakeMap(){
@@ -87,7 +103,7 @@ public class GenerationTilemap : MonoBehaviour
 
     void PlaceFarms(){
         FarmGenerator generator=farms.GetComponent<FarmGenerator>();
-        generator.InitializeGeneratorAndPlaceFarms(path);
+        generator.InitializeGeneratorAndPlaceFarms(path,random);
     }
 
     void FillTilemap(){
@@ -95,19 +111,26 @@ public class GenerationTilemap : MonoBehaviour
         //CUANDO AUMENTE EL TAMAÑO DEL MAPA, MODIFICAR LÍMITES
         for(int i=0;i<=width;i++){
             for(int j=0;j<=height;j++){
-                dirtMap.SetTile(new Vector3Int(i,j,0),dirt);
-                TileBase tile=dirtMap.GetTile(new Vector3Int(i,j,0));
+                if(isALimit(i,j)){
+                    dirtMap.SetTile(new Vector3Int(i,j,0),stone);
+                }else{
+                    dirtMap.SetTile(new Vector3Int(i,j,0),dirt);
+                }
             }
         }
+    }
+    private bool isALimit(int i,int j){
+        return i==0 || j==0 || i==width || j==height;
     }
 
     void PlaceQueenAndAnts(){
         int v=random.Next(0,path.Count-1);
         queen.transform.position=new Vector3(dirtMap.CellToWorld(path[v]).x,dirtMap.CellToWorld(path[v]).y,0f);
         queen.AddComponent<QueenStats>();
+        queen.GetComponent<QueenStats>().InitQueenStats(random);
         path.Remove(path[v]);
         AntGenerator antGenerator=queen.GetComponent<AntGenerator>();
-        antGenerator.placeAntsIn(path,dirtMap);
+        antGenerator.placeAntsIn(path,dirtMap,random);
 
     }
 

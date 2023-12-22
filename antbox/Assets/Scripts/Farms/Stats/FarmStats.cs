@@ -46,17 +46,18 @@ public class FarmStats : MonoBehaviour
     }
 
 
-    public void InitWaterFarm(bool isBroken){
+    public void InitWaterFarm(bool isBroken,System.Random random){
         type=Type.WATER;
-        InitValues(isBroken);
+        InitValues(isBroken,random);
     }
 
-    public void InitFoodFarm(bool isBroken){
+    public void InitFoodFarm(bool isBroken,System.Random random){
         type=Type.FOOD;
-        InitValues(isBroken);
+        InitValues(isBroken,random);
     }
 
-    private void InitValues(bool isBroken){
+    private void InitValues(bool isBroken,System.Random random){
+        this.random=random;
         actualCapacity=maxCapacity;
         timePerCycleConsumed=0;
         this.broken=isBroken;

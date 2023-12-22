@@ -22,7 +22,7 @@ public class AntGenerator : MonoBehaviour
     private System.Random random = new System.Random();
 
 
-    public void placeAntsIn(List<Vector3Int> path,Tilemap map){
+    public void placeAntsIn(List<Vector3Int> path,Tilemap map,System.Random random){
         GameObject queen=this.gameObject;
         queen.GetComponentInChildren<UIManager>().UpdateCanvasWithQueenStats(queen.GetComponent<QueenStats>(),queen.name);
         queen.AddComponent<SelectableItem>();
@@ -39,6 +39,7 @@ public class AntGenerator : MonoBehaviour
             newAnt.transform.position=new Vector3(newAnt.transform.position.x,newAnt.transform.position.y,0f);
             newAnt.transform.localPosition=new Vector3(newAnt.transform.localPosition.x,newAnt.transform.localPosition.y,0f);
             newAnt.AddComponent<AntStats>();
+            newAnt.GetComponent<AntStats>().InitAntStats(random);
             newAnt.GetComponentInChildren<UIManager>().UpdateCanvasWithAntStats(newAnt.GetComponent<AntStats>(),newAnt.name);
             newAnt.AddComponent<SelectableItem>();
             newAnt.GetComponent<SelectableItem>().InitSelectableItem(path,map,moveMenu,farmingMenu,digMenu,ItemType.ANT);

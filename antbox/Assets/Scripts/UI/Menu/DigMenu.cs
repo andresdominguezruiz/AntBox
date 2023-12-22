@@ -49,6 +49,7 @@ public class DigMenu : MonoBehaviour
         isSelectingDestructableTile=true;
         Debug.Log(excavablePath.Count);
     }
+    //ESTE MÉTODO DEVUELVE LAS POSICIONES EXCAVABLES SELECCIONABLES
     public void PreparingSelectableTiles(){
         foreach(Vector3Int pos in excavablePath){
             destructableMap.SetTile(pos,selectable);
@@ -59,6 +60,7 @@ public class DigMenu : MonoBehaviour
             destructableMap.SetTile(pos,dirt);
         }
     }
+    //ESTE MÉTODO DEVUELVE LAS POSIBLES RUTAS DE UNA POSICION EXCAVABLE
     public List<Vector3Int> GetAdjacentTileOfDiggableTile(Tilemap map,Vector3Int selectedAndDiggableTile){
         Vector3Int left=new Vector3Int(selectedAndDiggableTile.x-1,selectedAndDiggableTile.y,selectedAndDiggableTile.z);
         Vector3Int right=new Vector3Int(selectedAndDiggableTile.x+1,selectedAndDiggableTile.y,selectedAndDiggableTile.z);

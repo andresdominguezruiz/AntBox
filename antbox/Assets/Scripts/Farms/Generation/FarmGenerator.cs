@@ -23,7 +23,8 @@ public class FarmGenerator : MonoBehaviour
 
 
 
-    public void InitializeGeneratorAndPlaceFarms(List<Vector3Int> path){
+    public void InitializeGeneratorAndPlaceFarms(List<Vector3Int> path,System.Random random){
+        this.random=random;
         availablePath=path;
         FarmPlacerInGrid(true);
         FarmPlacerInGrid(false);
@@ -48,13 +49,15 @@ public class FarmGenerator : MonoBehaviour
         DestroyAroundFarmAndAddCoverage(position,map);
     }
 
-    private bool CanBePlaceFarmInPosition(Vector3Int position){
+    public bool CanBePlaceFarmInPosition(Vector3Int position){
         List<Vector3Int> myCoverage= GetCoverageOfFarm(position);
         //ESTA HECHO DE TAL FORMA QUE HAYA DOS CELDAS DE DIFERENCIA CON CADA GRANJA
         //, DE ESTA FORMA CADA COBERTURA DE CADA GRANJA SE DISTINGUE EN LA INTERFAZ
         bool res=true;
+        Tilemap map=dirtMap.GetComponent<Tilemap>();
+        TileBase stone=FindObjectOfType<ContainerData>().stoneTile;
         foreach(Vector3Int pos in myCoverage){
-            if(coveredPositions.Contains(pos)){
+            if(coveredPositions.Contains(pos) || stone.Equals(map.GetTile(pos))){
                 res=false;
                 break;
             }
@@ -66,7 +69,7 @@ public class FarmGenerator : MonoBehaviour
         GameObject newWaterFarm=Instantiate(waterFarmBase,map.CellToWorld(position),Quaternion.identity,waterFarmBase.transform.parent);
         newWaterFarm.name="WaterFarm-"+waterFarms.Count;
         newWaterFarm.AddComponent<FarmStats>();
-        newWaterFarm.GetComponent<FarmStats>().InitWaterFarm(false);
+        newWaterFarm.GetComponent<FarmStats>().InitWaterFarm(false,random);
         newWaterFarm.GetComponentInChildren<UIFarmManager>().UpdateCanvasWithFarmStats(newWaterFarm.GetComponent<FarmStats>());
         newWaterFarm.AddComponent<SelectableItem>();
         newWaterFarm.GetComponent<SelectableItem>().InitSelectableItem(availablePath,map,null,null,null,ItemType.FARM);
@@ -77,7 +80,7 @@ public class FarmGenerator : MonoBehaviour
         GameObject newFoodFarm=Instantiate(foodFarmBase,map.CellToWorld(position),Quaternion.identity,foodFarmBase.transform.parent);
         newFoodFarm.name="FoodFarm-"+foodFarms.Count;
         newFoodFarm.AddComponent<FarmStats>();
-        newFoodFarm.GetComponent<FarmStats>().InitFoodFarm(false);
+        newFoodFarm.GetComponent<FarmStats>().InitFoodFarm(false,random);
         newFoodFarm.GetComponentInChildren<UIFarmManager>().UpdateCanvasWithFarmStats(newFoodFarm.GetComponent<FarmStats>());
         newFoodFarm.AddComponent<SelectableItem>();
         newFoodFarm.GetComponent<SelectableItem>().InitSelectableItem(availablePath,map,null,null,null,ItemType.FARM);

@@ -158,7 +158,7 @@ public class UIManager : MonoBehaviour
                     }
                     if(ex.CanGoRight()){
                         allButtons.Remove(rightButton);
-                        leftButton.SetActive(true);
+                        rightButton.SetActive(true);
                     }
                     if(ex.CanGoDown()){
                         allButtons.Remove(downButton);

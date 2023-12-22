@@ -11,7 +11,7 @@ public enum ActualAction{
 public class AntStats : CharacterStats
 {
     //------------------------------------
-    private System.Random random = new System.Random();
+
     private ActualAction action=ActualAction.NOTHING;
     [SerializeField] protected int MIN_ENERGY=50;
     [SerializeField] protected int MAX_ENERGY=200;
@@ -70,17 +70,19 @@ public class AntStats : CharacterStats
         SetEnergy(actualEnergy-cost);
 
     }
+    public void InitAntStats(System.Random random){
+        InitVariables(random);
+        InitOtherVariables();
+    }
 
     private void Start(){
-        InitOtherVariables();
-        InitVariables();
         this.timeLastFrame=0f;
     }
 
     public void InitOtherVariables(){
-        int randomEnergy=random.Next(MIN_ENERGY,MAX_ENERGY);
-        int randomSpeed=random.Next(MIN_FARMING_SPEED,MAX_FARMING_SPEED);
-        int randomDigging=random.Next(MIN_DIGGING_SPEED,MAX_DIGGING_SPEED);
+        int randomEnergy=GetRandom().Next(MIN_ENERGY,MAX_ENERGY);
+        int randomSpeed=GetRandom().Next(MIN_FARMING_SPEED,MAX_FARMING_SPEED);
+        int randomDigging=GetRandom().Next(MIN_DIGGING_SPEED,MAX_DIGGING_SPEED);
         farmingSpeed=(float)(randomSpeed*1.0/100);
         diggingSpeed=(float)(randomDigging*1.0/100);
         maxEnergy=randomEnergy;

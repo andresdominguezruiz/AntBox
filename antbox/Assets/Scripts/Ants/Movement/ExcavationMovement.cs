@@ -74,7 +74,7 @@ public class ExcavationMovement : MonoBehaviour
         counterOfSecons=0;
     }
     public bool CanGoLeft(){
-        return destructableMap.GetTile(routeTile+Vector3Int.left)!=null ;
+        return destructableMap.GetTile(routeTile+Vector3Int.left)!=null;
     }
     public bool CanGoRight(){
         return destructableMap.GetTile(routeTile+Vector3Int.right)!=null;
@@ -123,6 +123,16 @@ public class ExcavationMovement : MonoBehaviour
 
 
     // Update is called once per frame
+
+    void NextPositionsAfterDig(){
+        selectedTile=selectedTile+direction;
+        routeTile=routeTile+direction;
+        while(destructableMap.GetTile(selectedTile)==null){
+            selectedTile+=direction;
+            routeTile+=direction;
+        }
+    }
+
     void Update()
     {
         if(canDig){
@@ -135,8 +145,7 @@ public class ExcavationMovement : MonoBehaviour
                 DigTile();
                 if(destructableMap.GetTile(selectedTile)==null){
                     isDigging=false;
-                    selectedTile=selectedTile+direction;
-                    routeTile=routeTile+direction;
+                    NextPositionsAfterDig();//TODO:Poner límite para evitar tardar mucho en elegir siguiente tile
                     agent.SetDestination(destructableMap.GetCellCenterWorld(routeTile));
                 }
             }
