@@ -70,6 +70,7 @@ public class CharacterStats : MonoBehaviour
     }
 
     void UpdateStats(){
+        AntStats antStats=this.gameObject.GetComponent<AntStats>();
         if(isDead){
             SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
             item.isSelected=false;
@@ -98,6 +99,13 @@ public class CharacterStats : MonoBehaviour
             }else{
                 actualHP-=2;
                 needToCheckHP=true;
+            }
+
+            if(antStats!=null){
+                if(antStats.GetAction().Equals(ActualAction.SLEEPING)){
+                    antStats.ApplyEnergyCost(-1*antStats.GetRecoverSpeed());
+                    if(antStats.IsFullOfEnergy()) antStats.CancelAntAction();
+                }
             }
 
             if(needToCheckHP) CheckHP();

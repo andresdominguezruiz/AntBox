@@ -28,7 +28,7 @@ public class FarmStats : MonoBehaviour
     [SerializeField] private int timeNeededToRepair=60;
 
     [SerializeField] private int energyCostToRepair=40;
-    [SerializeField] private int energyCostOfCycle=4;
+    [SerializeField] public int energyCostOfCycle=20;
 
     [SerializeField] private int maxCapacity=4;
     public int actualCapacity;
@@ -90,6 +90,20 @@ public class FarmStats : MonoBehaviour
                 ContainerData container=FindObjectOfType<ContainerData>();
                 container.AddResources(random.Next(MIN_RESOURCES,MAX_RESOURCES),type);
                 timePerCycleConsumed=0f;
+                if(antsWorkingInFarm.Count>0){
+                    List<AntStats> list=new List<AntStats>();
+                    foreach(GameObject ant in antsWorkingInFarm){
+                        AntStats stats=ant.GetComponent<AntStats>();
+                        stats.ApplyEnergyCost(energyCostOfCycle);
+                        if(stats.GetActualEnergy()<energyCostOfCycle){
+                            list.Add(stats);
+                        }
+                    }
+                    //Si iteras sobre una colección a la vez que lo modificas, da error, es por eso que separo
+                    foreach(AntStats antStats in list){
+                        antStats.CancelAntAction();
+                    }
+                }
             }
             timeLastFrame=Time.time;
         }

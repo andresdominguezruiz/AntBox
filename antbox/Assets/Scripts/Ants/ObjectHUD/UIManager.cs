@@ -70,6 +70,12 @@ public class UIManager : MonoBehaviour
         AntStats stats=this.gameObject.GetComponentInParent<AntStats>();
         if(stats.GetAction().Equals(ActualAction.FARMING)) CancelFarming(stats);
         else if(stats.GetAction().Equals(ActualAction.DIGGING)) CancelDigging(stats);
+        else if(stats.GetAction().Equals(ActualAction.SLEEPING)) CancelSleeping(stats);
+    }
+
+    public void CancelSleeping(AntStats stats){
+        stats.DoNothing();
+
     }
 
     public void GoLeft(){
@@ -93,6 +99,12 @@ public class UIManager : MonoBehaviour
         antStats.gameObject.GetComponent<NavMeshAgent>().enabled=true;
         antStats.gameObject.GetComponent<ExcavationMovement>().StopDigging();
         antStats.DoNothing();
+    }
+
+    public void StartToSleep(){
+        AntStats stats=this.gameObject.GetComponentInParent<AntStats>();
+        stats.GoToSleep();
+
     }
 
     
@@ -141,14 +153,15 @@ public class UIManager : MonoBehaviour
         List<GameObject> allButtons=new List<GameObject>{farmingButton,eatButton,drinkButton
         ,sleepButton,moveButton,cancelButton,digButton,upButton,rightButton,leftButton,downButton};
         ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
+        FarmStats farm=FindFirstObjectByType<FarmStats>();
         foreach(AvailableActions availableAction in availableActions){
-            if(availableAction.Equals(AvailableActions.GROW)){
+            if(availableAction.Equals(AvailableActions.GROW) && farm!=null && stats.GetActualEnergy()>=farm.energyCostOfCycle){
                 allButtons.Remove(farmingButton);
                 farmingButton.SetActive(true);
             }else if(availableAction.Equals(AvailableActions.MOVE)){
                 allButtons.Remove(moveButton);
                 moveButton.SetActive(true);
-            }else if(availableAction.Equals(AvailableActions.DIG)){
+            }else if(availableAction.Equals(AvailableActions.DIG) && ex.CanDig()){
                 allButtons.Remove(digButton);
                 digButton.SetActive(true);
             }else if( availableAction.Equals(AvailableActions.CHANGE_DIRECTIONS)&& ex.IsDigging()){
@@ -169,7 +182,8 @@ public class UIManager : MonoBehaviour
                         upButton.SetActive(true);
                     }
             }else if(availableAction.Equals(AvailableActions.SLEEP)){
-                //TODO: Añadir lineas cuando exista el botón de dormir
+                allButtons.Remove(sleepButton);
+                sleepButton.SetActive(true);
             }else if(availableAction.Equals(AvailableActions.EAT)){
                 allButtons.Remove(eatButton);
                 eatButton.SetActive(true);

@@ -9,6 +9,7 @@ public class UIFarmManager : MonoBehaviour
     public TextMeshProUGUI capacityText;
     public TextMeshProUGUI typeText;
     public TextMeshProUGUI cycle;
+    public TextMeshProUGUI energyCostText;
 
 
 
@@ -30,6 +31,7 @@ public class UIFarmManager : MonoBehaviour
         capacityText.text="Capacity:"+(stats.GetMaxCapacity()-stats.antsOfFarm.Count)+"/"+stats.GetMaxCapacity();
         typeText.text="Type:"+stats.GetTypeText();
         cycle.text="Cycle:"+stats.GetTimePerCycle()+"/"+stats.timePerCycleConsumed;
+        energyCostText.text="EnergyCost:"+stats.energyCostOfCycle;
     }
 
 

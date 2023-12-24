@@ -21,10 +21,17 @@ public class TileData
 
     private static GenerationTilemap generationTilemap;
     private GiftType gift=GiftType.NOTHING;
+    private int energyCostToDig=2;
     private static ContainerData containerData;
+
+    public List<AntStats> antsDiggingSameTile=new List<AntStats>();
 
     public TileType GetTileType(){
         return tileType;
+    }
+
+    public int GetEnergyCostToDig(){
+        return energyCostToDig;
     }
 
 //LOS CONSTRUCTORES NO SIRVEN CON MOHOBEHAVIOR, TIENES QUE HACER ADDCOMPONENT
@@ -63,6 +70,8 @@ public class TileData
 
     public void DiggingTile(AntStats antStats,bool isMenuDigInUse){
         actualResistance-=antStats.GetDiggingSpeed();
+        antStats.ApplyEnergyCost(energyCostToDig);
+        if(!antsDiggingSameTile.Contains(antStats)) antsDiggingSameTile.Add(antStats);
         ProcessStateOfTile(isMenuDigInUse);
     }
 
@@ -83,6 +92,13 @@ public class TileData
             
         }else if(tileType.Equals(TileType.STONE) && actualResistance<=0f){
             actualResistance=maxResistance;
+        }
+        List<AntStats> antsWithoutEnoughEnergy=new List<AntStats>();
+        foreach(AntStats ant in antsDiggingSameTile){
+            if(ant.GetActualEnergy()<energyCostToDig) antsWithoutEnoughEnergy.Add(ant);
+        }
+        foreach(AntStats ant in antsWithoutEnoughEnergy){
+            ant.CancelAntAction();
         }
     }
 

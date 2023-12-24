@@ -36,6 +36,14 @@ public class ExcavationMovement : MonoBehaviour
         direction=new Vector3Int(0,0,0);
         canDig=false;
         isDigging=false;
+        GenerationTilemap generation=FindObjectOfType<GenerationTilemap>();
+        TileData tileData=generation.GetTileData(selectedTile);
+        tileData.antsDiggingSameTile.Remove(this.gameObject.GetComponent<AntStats>());
+    }
+    public bool CanDig(){
+        GenerationTilemap generation=FindObjectOfType<GenerationTilemap>();
+        TileData tileData=generation.GetTileData(selectedTile);
+        return this.gameObject.GetComponent<AntStats>().GetActualEnergy()>=tileData.GetEnergyCostToDig();
     }
 
     public void InitComponent(Tilemap map){
