@@ -28,7 +28,7 @@ public class FarmStats : MonoBehaviour
     [SerializeField] private int timeNeededToRepair=60;
 
     [SerializeField] private int energyCostToRepair=40;
-    [SerializeField] public int energyCostOfCycle=20;
+    [SerializeField] public int energyCostOfCycle=2;
 
     [SerializeField] private int maxCapacity=4;
     public int actualCapacity;
@@ -86,11 +86,7 @@ public class FarmStats : MonoBehaviour
                 sumSpeed+=ant.GetComponent<AntStats>().GetFarminSpeed();
             }
             timePerCycleConsumed+=sumSpeed;
-            if(timePerCycleConsumed>=timePerCycle){
-                ContainerData container=FindObjectOfType<ContainerData>();
-                container.AddResources(random.Next(MIN_RESOURCES,MAX_RESOURCES),type);
-                timePerCycleConsumed=0f;
-                if(antsWorkingInFarm.Count>0){
+            if(antsWorkingInFarm.Count>0){
                     List<AntStats> list=new List<AntStats>();
                     foreach(GameObject ant in antsWorkingInFarm){
                         AntStats stats=ant.GetComponent<AntStats>();
@@ -104,6 +100,10 @@ public class FarmStats : MonoBehaviour
                         antStats.CancelAntAction();
                     }
                 }
+            if(timePerCycleConsumed>=timePerCycle){
+                ContainerData container=FindObjectOfType<ContainerData>();
+                container.AddResources(random.Next(MIN_RESOURCES,MAX_RESOURCES),type);
+                timePerCycleConsumed=0f;
             }
             timeLastFrame=Time.time;
         }
