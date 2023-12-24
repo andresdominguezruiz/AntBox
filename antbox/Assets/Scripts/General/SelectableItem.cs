@@ -17,6 +17,7 @@ public class SelectableItem : MonoBehaviour
 
     public GameObject moveMenu;
     public GameObject farmMenu;
+    public GameObject digMenu;
 
     public static List<SelectableItem> selectableItems=new List<SelectableItem>();
     public static HashSet<Vector3> availablePath=new HashSet<Vector3>();
@@ -47,7 +48,7 @@ public class SelectableItem : MonoBehaviour
     }
     //USAR ESTE METODO CUANDO VAYAS A AÑADIR UN NUEVO ELEMENTO SELECCIONABLE
     public void InitSelectableItem(List<Vector3Int> path,Tilemap destructableMap
-    ,GameObject moveMenu,GameObject farmMenu,ItemType itemType){
+    ,GameObject moveMenu,GameObject farmMenu,GameObject digMenu,ItemType itemType){
         AddPath(path,destructableMap);
         if(itemType.Equals(ItemType.FARM)){
             SetUIFarmManager(this.gameObject.GetComponentInChildren<UIFarmManager>());
@@ -61,6 +62,7 @@ public class SelectableItem : MonoBehaviour
             itemUI.HideInfo();
             this.moveMenu=moveMenu;
             this.farmMenu=farmMenu;
+            this.digMenu=digMenu;
             type=ItemType.ANT;
         }else{
             SetUIManager(this.gameObject.GetComponentInChildren<UIManager>());
@@ -129,6 +131,8 @@ public class SelectableItem : MonoBehaviour
                 menu.SetSelectedAnt(this.gameObject);
                 FarmingMenu otherMenu=farmMenu.GetComponent<FarmingMenu>();
                 otherMenu.SetSelectedAnt(this.gameObject);
+                DigMenu dig=digMenu.GetComponent<DigMenu>();
+                dig.SetSelectedAnt(this.gameObject);
             }
             foreach(SelectableItem item in selectableItems){
                 if(item!=this){

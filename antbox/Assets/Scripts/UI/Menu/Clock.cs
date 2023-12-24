@@ -10,11 +10,16 @@ public class Clock : MonoBehaviour
     public int day=0;
 
 
-    [SerializeField] private static int growingTime=20; //Cada t tiempo real, se considera un día
+    public static int growingTime=24; //Cada t tiempo real, se considera un día
 
     private int counterOfSecons=0;
 
     public TextMeshProUGUI text;
+
+    public int GetCounterOfSecons(){
+        return counterOfSecons;
+    }
+    
     // Start is called before the first frame update
     void Start()
     {

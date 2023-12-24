@@ -75,7 +75,8 @@ public class FarmingMenu : MonoBehaviour
             (hit.collider!=null && hit.collider.CompareTag("Farm"))){
                 FarmStats farm=hit.collider.gameObject.GetComponent<FarmStats>();
                 if(farm.CanAntWorkInHere()){
-                    this.agent.SetDestination(mousePos);
+                    Vector3Int selectedTile=map.WorldToCell(mousePos);
+                    this.agent.SetDestination(map.GetCellCenterWorld(selectedTile));
                     selectedAnt.GetComponent<AntStats>().StartFarming();
                     farm.AddAntToFarm(selectedAnt);
                     FinishFarmingMenu();

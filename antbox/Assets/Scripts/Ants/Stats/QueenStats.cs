@@ -5,8 +5,10 @@ using UnityEngine;
 public class QueenStats : CharacterStats
 {
 
+    public void InitQueenStats(System.Random random){
+        InitVariables(random);
+    }
     private void Start(){
-        InitVariables();
         this.timeLastFrame=0f;
     }
 

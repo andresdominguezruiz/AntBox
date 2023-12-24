@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 76f8cd1784cb3d8429414028928787f8
+guid: 014ae69c44ade2b41b1b1ac65de6ad08
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: block_0
+      name: dig_block_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,20 +118,41 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6241df75f34c9948a3bbc5edac48f93
-      internalID: 1805455903
+      spriteID: b33b8b801611acb4bbee602df38c319e
+      internalID: -1382074970
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: block_1
+      name: dig_block_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff88127113b072848aa7a83cc932f1b6
+      internalID: 2128513238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dig_block_2
       rect:
         serializedVersion: 2
         x: 0
@@ -139,14 +160,14 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b9221ce3d42429541bda88702de36fa6
-      internalID: -2024096307
+      spriteID: 3e382c5c2139e514d8cb6709bb14936d
+      internalID: 352428759
       vertices: []
       indices: 
       edges: []
@@ -162,8 +183,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      block_0: 1805455903
-      block_1: -2024096307
+      dig_block_0: -1382074970
+      dig_block_1: 2128513238
+      dig_block_2: 352428759
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
