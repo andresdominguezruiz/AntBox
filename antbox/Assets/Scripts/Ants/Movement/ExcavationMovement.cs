@@ -12,8 +12,6 @@ public class ExcavationMovement : MonoBehaviour
 {
     // Start is called before the first frame update
     private bool canDig=false;
-    //Utilizar para seguir excavando
-    private Direction actualDirection=Direction.NONE;
     private GameObject ant;
     private Vector3Int selectedTile;
     private Vector3Int actualTile;
@@ -94,7 +92,7 @@ public class ExcavationMovement : MonoBehaviour
         ant.gameObject.GetComponent<NavMeshAgent>().SetDestination(destructableMap.GetCellCenterWorld(routeTile));
         selectedTile=selectedDestructableTile;
         direction=selectedDestructableTile-selectedRoute;
-        Debug.Log(direction);
+        Debug.Log("initial dir:"+direction);
         canDig=true;
     }
 
@@ -105,14 +103,6 @@ public class ExcavationMovement : MonoBehaviour
         
     }
 
-    public void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Dirt") && isDigging)
-        {
-            //poniendo al final false haces lo contrario, obligas a que no ignore las colisiones
-            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other.collider, false);
-        }
-    }
     void Start()
     {
         ant=this.gameObject;
@@ -125,11 +115,20 @@ public class ExcavationMovement : MonoBehaviour
     // Update is called once per frame
 
     void NextPositionsAfterDig(){
-        selectedTile=selectedTile+direction;
-        routeTile=routeTile+direction;
-        while(destructableMap.GetTile(selectedTile)==null){
+        GenerationTilemap generation=FindObjectOfType<GenerationTilemap>();
+        destructableMap=generation.dirtMap;
+        NavMeshAgent agent=ant.GetComponent<NavMeshAgent>();
+        for(int i=0;i<=7;i++){
             selectedTile+=direction;
             routeTile+=direction;
+            Debug.Log(ant.GetComponentInChildren<UIManager>()==null);
+            Debug.Log(ant.name+" esta buscando");
+            if(generation.GetTileOfTilesData(selectedTile)!=null) break;
+        }
+        if(generation.GetTileOfTilesData(selectedTile)==null){
+            this.gameObject.GetComponent<AntStats>().StopDigging();
+        }else{
+            agent.SetDestination(generation.dirtMap.GetCellCenterWorld(routeTile));
         }
     }
 
@@ -137,54 +136,42 @@ public class ExcavationMovement : MonoBehaviour
     {
         if(canDig){
             actualTile=destructableMap.WorldToCell(ant.transform.position);
-            NavMeshAgent agent=ant.GetComponent<NavMeshAgent>();
+            
             if(actualTile.x==routeTile.x && actualTile.y==routeTile.y && !isDigging){
                 StartDiggingAndFirstDirection();
             }  
             if(isDigging){
-                DigTile();
+
+                if(destructableMap.GetTile(selectedTile)!=null) DigTile();
                 if(destructableMap.GetTile(selectedTile)==null){
+                    DigMenu menu=FindObjectOfType<DigMenu>(false);
+                    GenerationTilemap generationTilemap=FindFirstObjectByType<GenerationTilemap>();
+                    generationTilemap.AddWalkableTile(selectedTile);
+                    generationTilemap.BakeMap();
+                    if(menu!=null && menu.isSelectingDestructableTile){
+                        menu.PreparingSelectableTiles();
+                    }
                     isDigging=false;
                     NextPositionsAfterDig();//TODO:Poner límite para evitar tardar mucho en elegir siguiente tile
-                    agent.SetDestination(destructableMap.GetCellCenterWorld(routeTile));
                 }
             }
 
         }
     }
     void DigTile(){
-        if(Time.time -timeLastFrame>=1.0f){
-            //Estas 3 líneas permiten la excavación múltiple
-            List<ExcavationMovement> itemsWhoDigSameTile=itemsWhoDig.FindAll(item=> item.selectedTile.Equals(this.selectedTile) && item.isDigging);
-            foreach(ExcavationMovement item in itemsWhoDigSameTile){
-                counterOfSecons+=item.ant.GetComponent<AntStats>().GetDiggingSpeed();
-            }
-            DigMenu menu=FindObjectOfType<DigMenu>(false);
-            if(menu==null){//Cuando el dig menu no activo, cambiar tiles
-                if(counterOfSecons<=digTime/4){
-                    destructableMap.SetTile(selectedTile,containerData.diggingDirtTile1);
-                }else if(counterOfSecons>digTime/4 && counterOfSecons<=digTime*2/4){
-                    destructableMap.SetTile(selectedTile,containerData.diggingDirtTile2);
-                }else if(counterOfSecons>digTime*2/4 && counterOfSecons<=digTime*3/4){
-                    destructableMap.SetTile(selectedTile,containerData.diggingDirtTile3);
-            }
-            }
-            if(counterOfSecons>=digTime){
-                counterOfSecons=0;
-                destructableMap.SetTile(selectedTile,null);
-                GenerationTilemap generationTilemap=FindFirstObjectByType<GenerationTilemap>();
-                generationTilemap.AddWalkableTile(selectedTile);
-                generationTilemap.BakeMap();
-                if(menu!=null && menu.isSelectingDestructableTile){
-                    menu.PreparingSelectableTiles();
-            }
-
-                
-            }
+        GenerationTilemap generationTilemap=FindFirstObjectByType<GenerationTilemap>();
+        TileData tileData=generationTilemap.GetTileData(selectedTile);
+        DigMenu menu=FindObjectOfType<DigMenu>(false);
+        if(tileData!=null){
+            if(Time.time -timeLastFrame>=1.0f){
+            tileData.DiggingTile(ant.GetComponent<AntStats>(),menu!=null);
+            Debug.Log("RESISTANCE:"+tileData.actualResistance);
             timeLastFrame=Time.time;
+        }
         }
 
     }
 
     
 }
+

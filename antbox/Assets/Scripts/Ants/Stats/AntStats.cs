@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 public enum ActualAction{
@@ -40,6 +41,11 @@ public class AntStats : CharacterStats
 
     public ActualAction GetAction(){
         return action;
+    }
+    public void StopDigging(){
+        this.gameObject.GetComponent<NavMeshAgent>().enabled=true;
+        this.gameObject.GetComponent<ExcavationMovement>().StopDigging();
+        this.DoNothing();
     }
     public void StartFarming(){
         action=ActualAction.FARMING;

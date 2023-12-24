@@ -23,10 +23,10 @@ public class DigMenu : MonoBehaviour
     private HashSet<Vector3Int> excavablePath;
     private Vector3Int selectedDestructableTile;
     private List<Vector3Int> routes=new List<Vector3Int>();
-    public float minX=-5.5f;
-    public float maxX=7f;
-    public float minY=-3.5f;
-    public float maxY=3f;
+    public float minX=-6f;
+    public float maxX=8f;
+    public float minY=-4f;
+    public float maxY=4f;
 
     public float speed=0.5f;
 
@@ -56,8 +56,9 @@ public class DigMenu : MonoBehaviour
         }
     }
     void RollBackDirtTiles(){
+        GenerationTilemap generationTilemap=FindObjectOfType<GenerationTilemap>();
         foreach(Vector3Int pos in excavablePath){
-            destructableMap.SetTile(pos,dirt);
+            destructableMap.SetTile(pos,generationTilemap.GetTileOfTilesData(pos));
         }
     }
     //ESTE MÉTODO DEVUELVE LAS POSIBLES RUTAS DE UNA POSICION EXCAVABLE

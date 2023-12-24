@@ -18,7 +18,7 @@ public class GenerationTilemap : MonoBehaviour
 
     public GameObject queen;
 
-    private List<TileData> allTilesOfMap=new List<TileData>();
+    private Dictionary<Vector3Int,TileData> allTilesOfMap=new Dictionary<Vector3Int, TileData>();
 
     private List<Vector3Int> path=new List<Vector3Int>();
     private HashSet<Vector3Int> excavablePath=new HashSet<Vector3Int>();
@@ -45,6 +45,20 @@ public class GenerationTilemap : MonoBehaviour
         return random;
     }
 
+    public Tile GetTileOfTilesData(Vector3Int position){
+        Tile tile=null;
+        bool result=allTilesOfMap.TryGetValue(position,out TileData data);
+        if(result==true && data.GetTileType().Equals(TileType.DIRT)) tile=data.GetTileByStateAndType();
+        else if(result==true && data.GetTileType().Equals(TileType.STONE)) tile=stone;
+        return tile;
+    }
+    public TileData GetTileData(Vector3Int position){
+        TileData tileData=null;
+        bool result=allTilesOfMap.TryGetValue(position,out TileData data);
+        if(result==true) tileData=data;
+        return tileData;
+    }
+
     void Start()
     {
         if(path.Count==0){
@@ -53,18 +67,22 @@ public class GenerationTilemap : MonoBehaviour
             PlaceFarms();
             ObtainExcavableTiles();
             PlaceQueenAndAnts();
+            CreateAllTilesData();
             //TODO: Revisar cantidad de tiles == null del path
-            Debug.Log(excavablePath.Count);
         }
         BakeMap();
 
         
     }
     void CreateAllTilesData(){
+        ContainerData containerData=FindObjectOfType<ContainerData>();
         for(int i=0;i<=width;i++){
             for(int j=0;j<=height;j++){
-                TileBase tile=dirtMap.GetTile(new Vector3Int(i,j,0));
-
+                Vector3Int pos=new Vector3Int(i,j,0);
+                TileBase tile=dirtMap.GetTile(pos);
+                if(tile==null) allTilesOfMap.Add(pos,new TileData(pos,TileType.EMPTY,random,this,containerData));
+                else if(tile.Equals(dirt)) allTilesOfMap.Add(pos,new TileData(pos,TileType.DIRT,random,this,containerData));
+                else if(tile.Equals(stone)) allTilesOfMap.Add(pos,new TileData(pos,TileType.STONE,random,this,containerData));
             }
         }
     }
@@ -104,6 +122,10 @@ public class GenerationTilemap : MonoBehaviour
     void PlaceFarms(){
         FarmGenerator generator=farms.GetComponent<FarmGenerator>();
         generator.InitializeGeneratorAndPlaceFarms(path,random);
+    }
+
+    public FarmGenerator GetFarmGenerator(){
+        return FindFirstObjectByType<FarmGenerator>();
     }
 
     void FillTilemap(){

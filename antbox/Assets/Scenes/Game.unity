@@ -9648,7 +9648,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Stop farming
+  m_text: Stop action
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14693,9 +14693,9 @@ MonoBehaviour:
   selectable: {fileID: 11400000, guid: aa9021d17d7452948a3494a86a893595, type: 2}
   dirt: {fileID: 11400000, guid: 688c7339aed22cc4e99701686f999f4b, type: 2}
   route: {fileID: 11400000, guid: f92ae495c29311f44a240ea4fefad8d5, type: 2}
-  minX: -5.5
+  minX: -6
   maxX: 7
-  minY: -3.5
+  minY: -4
   maxY: 3
   speed: 0.5
   areMoreRutes: 0

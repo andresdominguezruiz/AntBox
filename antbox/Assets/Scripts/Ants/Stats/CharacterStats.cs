@@ -73,6 +73,13 @@ public class CharacterStats : MonoBehaviour
         if(isDead){
             SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
             item.isSelected=false;
+            FarmStats[] farms=FindObjectsOfType<FarmStats>();
+            foreach(FarmStats farm in farms){
+                if(farm.antsOfFarm.Contains(this.gameObject)){
+                    farm.antsOfFarm.Remove(this.gameObject);
+                    farm.antsWorkingInFarm.Remove(this.gameObject);
+                }
+            }
             Destroy(this.gameObject);
         }else{
             bool needToCheckHP=false;
