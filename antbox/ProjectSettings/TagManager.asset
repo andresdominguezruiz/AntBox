@@ -8,6 +8,8 @@ TagManager:
   - Stone
   - Queen
   - Selectable
+  - Ant
+  - Farm
   layers:
   - Default
   - TransparentFX
@@ -46,8 +48,5 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: Map
-    uniqueID: 2943850649
-    locked: 0
-  - name: camera
-    uniqueID: 3063318973
+    uniqueID: 2110902267
     locked: 0

@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
+
+public enum AvailableActions{
+    EAT,DRINK,SLEEP,GROW,DIG,MOVE,CANCEL_ACTION,CHANGE_DIRECTIONS
+}
 public class UIManager : MonoBehaviour
 {
     public GameObject infoCanvas; // Referencia al objeto Canvas de tu UI.
@@ -18,16 +25,178 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI ageText;
 
     public TextMeshProUGUI nameText;
+    public TextMeshProUGUI farminSpeedText;
+    public TextMeshProUGUI diggingSpeedText;
 
+    public GameObject eatButton;
+    public GameObject drinkButton;
+    public GameObject sleepButton;
+    public GameObject cancelButton;
+    public GameObject moveButton;
+    public GameObject farmingButton;
+    public GameObject upButton;
+    public GameObject downButton;
+    public GameObject rightButton;
+    public GameObject leftButton;
+    
+    public GameObject digButton;
+
+    
+    public List<AvailableActions> availableActionsWhenIsFarming=new List<AvailableActions>{
+        AvailableActions.DRINK,
+        AvailableActions.EAT,
+        AvailableActions.CANCEL_ACTION};
+    
+    public List<AvailableActions> availableActionsWhenIsDigging=new List<AvailableActions>{
+        AvailableActions.DRINK,
+        AvailableActions.EAT,
+        AvailableActions.CANCEL_ACTION,
+        AvailableActions.CHANGE_DIRECTIONS
+    };
+    
+    public List<AvailableActions> availableActionsWhenIsDoingNothing=new List<AvailableActions>{
+        AvailableActions.DRINK,
+        AvailableActions.EAT,
+        AvailableActions.SLEEP,
+        AvailableActions.GROW,
+        AvailableActions.DIG,
+        AvailableActions.MOVE};
+    
+    public List<AvailableActions> availableActionsWhenItsSleeping=new List<AvailableActions>{
+        AvailableActions.CANCEL_ACTION};
+
+    
+    public void CancelAntAction(){
+        AntStats stats=this.gameObject.GetComponentInParent<AntStats>();
+        if(stats.GetAction().Equals(ActualAction.FARMING)) CancelFarming(stats);
+        else if(stats.GetAction().Equals(ActualAction.DIGGING)) CancelDigging(stats);
+        else if(stats.GetAction().Equals(ActualAction.SLEEPING)) CancelSleeping(stats);
+    }
+
+    public void CancelSleeping(AntStats stats){
+        stats.DoNothing();
+
+    }
+
+    public void GoLeft(){
+        ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
+        ex.Left();
+    }
+    public void GoRight(){
+        ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
+        ex.Right();
+    }
+    public void GoUp(){
+        ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
+        ex.Up();
+    }
+    public void GoDown(){
+        ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
+        ex.Down();
+    }
+
+    public void CancelDigging(AntStats antStats){
+        antStats.gameObject.GetComponent<NavMeshAgent>().enabled=true;
+        antStats.gameObject.GetComponent<ExcavationMovement>().StopDigging();
+        antStats.DoNothing();
+    }
+
+    public void StartToSleep(){
+        AntStats stats=this.gameObject.GetComponentInParent<AntStats>();
+        stats.GoToSleep();
+
+    }
+
+    
+    public void CancelFarming(AntStats stats){
+        FarmStats[] allFarms=FindObjectsOfType<FarmStats>();
+        foreach(FarmStats farm in allFarms){
+            if(farm.antsOfFarm.Contains(stats.gameObject)){
+                farm.antsOfFarm.Remove(stats.gameObject);
+                farm.antsWorkingInFarm.Remove(stats.gameObject);
+                stats.DoNothing();
+                stats.gameObject.GetComponent<NavMeshAgent>().isStopped=false;
+                stats.gameObject.GetComponent<NavMeshAgent>().SetDestination(this.gameObject.transform.position);
+                Debug.Log("He cancelado, ahora su estado es "+stats.GetAction());
+                break;
+            }
+        }
+    }
 
 
     void Update(){
         if(!isQueen){
             AntStats antStats=this.gameObject.GetComponentInParent<AntStats>();
             UpdateCanvasWithAntStats(antStats,this.transform.parent.name);
+            ShowAvailableButtonsForAnt(antStats);
         }else{
             QueenStats queenStats=this.gameObject.GetComponentInParent<QueenStats>();
             UpdateCanvasWithQueenStats(queenStats,this.transform.parent.name);
+        }
+    }
+
+    void ShowAvailableButtonsForAnt(AntStats stats){
+        if(stats.GetAction().Equals(ActualAction.FARMING)){
+            ProcessAvailableActions(availableActionsWhenIsFarming,stats);
+        }else if(stats.GetAction().Equals(ActualAction.NOTHING)){
+            ProcessAvailableActions(availableActionsWhenIsDoingNothing,stats);
+        }else if(stats.GetAction().Equals(ActualAction.DIGGING)){
+            ProcessAvailableActions(availableActionsWhenIsDigging,stats);
+        }else{
+            ProcessAvailableActions(availableActionsWhenItsSleeping,stats);
+        }
+    }
+
+
+
+    void ProcessAvailableActions(List<AvailableActions> availableActions,AntStats stats){
+        List<GameObject> allButtons=new List<GameObject>{farmingButton,eatButton,drinkButton
+        ,sleepButton,moveButton,cancelButton,digButton,upButton,rightButton,leftButton,downButton};
+        ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
+        FarmStats farm=FindFirstObjectByType<FarmStats>();
+        foreach(AvailableActions availableAction in availableActions){
+            if(availableAction.Equals(AvailableActions.GROW) && farm!=null && stats.GetActualEnergy()>=farm.energyCostOfCycle){
+                allButtons.Remove(farmingButton);
+                farmingButton.SetActive(true);
+            }else if(availableAction.Equals(AvailableActions.MOVE)){
+                allButtons.Remove(moveButton);
+                moveButton.SetActive(true);
+            }else if(availableAction.Equals(AvailableActions.DIG) && ex.CanDig()){
+                allButtons.Remove(digButton);
+                digButton.SetActive(true);
+            }else if( availableAction.Equals(AvailableActions.CHANGE_DIRECTIONS)&& ex.IsDigging()){
+                    if(ex.CanGoLeft()){
+                        allButtons.Remove(leftButton);
+                        leftButton.SetActive(true);
+                    }
+                    if(ex.CanGoRight()){
+                        allButtons.Remove(rightButton);
+                        rightButton.SetActive(true);
+                    }
+                    if(ex.CanGoDown()){
+                        allButtons.Remove(downButton);
+                        downButton.SetActive(true);
+                    }
+                    if(ex.CanGoUp()){
+                        allButtons.Remove(upButton);
+                        upButton.SetActive(true);
+                    }
+            }else if(availableAction.Equals(AvailableActions.SLEEP)){
+                allButtons.Remove(sleepButton);
+                sleepButton.SetActive(true);
+            }else if(availableAction.Equals(AvailableActions.EAT)){
+                allButtons.Remove(eatButton);
+                eatButton.SetActive(true);
+            }else if(availableAction.Equals(AvailableActions.DRINK)){
+                allButtons.Remove(drinkButton);
+                drinkButton.SetActive(true);
+            }else if(availableAction.Equals(AvailableActions.CANCEL_ACTION)){
+                allButtons.Remove(cancelButton);
+                cancelButton.SetActive(true);
+            }
+        }
+        foreach(GameObject notAvailableButton in allButtons){
+            notAvailableButton.SetActive(false);
         }
     }
 
@@ -59,6 +228,8 @@ public class UIManager : MonoBehaviour
         ageText.text="Age:"+antStats.GetTextAge();
         energyText.text="Energy:"+antStats.GetEnergyText();
         nameText.text="Name:"+name;
+        farminSpeedText.text="Farming Speed:"+antStats.GetFarminSpeed();
+        diggingSpeedText.text="Digging Speed:"+antStats.GetDiggingSpeed();
     }
     public void UpdateCanvasWithQueenStats(QueenStats queenStats,string name){
         hpText.text="HP:"+queenStats.GetTextHP();

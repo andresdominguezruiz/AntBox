@@ -7,21 +7,30 @@ using UnityEngine.Analytics;
 public class CharacterStats : MonoBehaviour
 {
     private System.Random random = new System.Random();
+
+    public System.Random GetRandom(){
+        return random;
+    }
     public float timeLastFrame;
 
 
-    [SerializeField] private static int growingTime=20; //Cada t tiempo real, se considera una semana
+    [SerializeField] private static int growingTime=20; //Cada t tiempo real, se considera un día
+
+    private int counterOfSecons=0;
 
     //LIMITS FOR VARIABLES----------------------
     [SerializeField] protected int MIN_HP=40;
     [SerializeField] protected int MAX_HP=60;
+    [SerializeField] protected int HP_PER_AGE=2;
 
     [SerializeField] protected int MIN_HUNGER=50;
     [SerializeField] protected int MAX_HUNGER=100;
+    [SerializeField] protected int HUNGER_PER_AGE=5;
 
     [SerializeField] protected int MIN_THIRST=50;
 
     [SerializeField] protected int MAX_THIRST=100;
+    [SerializeField] protected int THIRST_PER_AGE=5;
 
 
     //----------------------------
@@ -37,24 +46,48 @@ public class CharacterStats : MonoBehaviour
     [SerializeField] private int age;
 
     [SerializeField] private bool isDead=false;
+    [SerializeField] private int adultAge=3;
     
     void Update(){
         if(Time.time -timeLastFrame>=1.0f){
+            counterOfSecons++;
+            if(counterOfSecons==growingTime){
+                age++;
+                //UpdateStatsPerAge();
+                counterOfSecons=0;
+            }
             UpdateStats();
             timeLastFrame=Time.time;
         }
     }
 
+    void UpdateStatsPerAge(){
+        if(age<=adultAge){
+            maxHP+=HP_PER_AGE;
+            maxHunger+=HUNGER_PER_AGE;
+            maxThirst+=THIRST_PER_AGE;
+        }
+    }
 
     void UpdateStats(){
+        AntStats antStats=this.gameObject.GetComponent<AntStats>();
         if(isDead){
+            SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
+            item.isSelected=false;
+            FarmStats[] farms=FindObjectsOfType<FarmStats>();
+            foreach(FarmStats farm in farms){
+                if(farm.antsOfFarm.Contains(this.gameObject)){
+                    farm.antsOfFarm.Remove(this.gameObject);
+                    farm.antsWorkingInFarm.Remove(this.gameObject);
+                }
+            }
             Destroy(this.gameObject);
         }else{
             bool needToCheckHP=false;
-            if(Time.deltaTime%growingTime==0) age++;
             if(actualHunger>0 && actualThirst>0){
                 actualHunger--;
                 actualThirst--;
+                Heal(1);
             }else if(actualHunger>0){
                 actualHunger--;
                 actualHP--;
@@ -66,6 +99,13 @@ public class CharacterStats : MonoBehaviour
             }else{
                 actualHP-=2;
                 needToCheckHP=true;
+            }
+
+            if(antStats!=null){
+                if(antStats.GetAction().Equals(ActualAction.SLEEPING)){
+                    antStats.ApplyEnergyCost(-1*antStats.GetRecoverSpeed());
+                    if(antStats.IsFullOfEnergy()) antStats.CancelAntAction();
+                }
             }
 
             if(needToCheckHP) CheckHP();
@@ -111,7 +151,8 @@ public class CharacterStats : MonoBehaviour
     }
 
     public void Heal(int extraHp){
-        SetActualHP(actualHP+extraHp);
+        if(extraHp+actualHP>maxHP) SetActualHP(maxHP);
+        else SetActualHP(extraHp+actualHP);
     }
 
     public void SetActualHP(int hp){
@@ -143,7 +184,8 @@ public class CharacterStats : MonoBehaviour
         return age.ToString();
     }
 
-    public void InitVariables(){
+    public void InitVariables(System.Random random){
+        this.random=random;
         int randomHP=random.Next(MIN_HP,MAX_HP);
         int randomHunger=random.Next(MIN_HUNGER,MAX_HUNGER);
         int randomThirst=random.Next(MIN_THIRST,MAX_THIRST);

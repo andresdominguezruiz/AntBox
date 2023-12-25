@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using NavMeshPlus.Components;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -10,16 +10,25 @@ public class GenerationTilemap : MonoBehaviour
     // Start is called before the first frame update
 
     public Tilemap dirtMap;
+    public GameObject navMesh;
+
+    public GameObject farms;
     public Tile dirt;
+    public Tile stone;
 
     public GameObject queen;
 
-    private List<Vector3Int> path=new List<Vector3Int>();
+    private Dictionary<Vector3Int,TileData> allTilesOfMap=new Dictionary<Vector3Int, TileData>();
 
-    public float originX=-5.5f;
-    public int width=21;
-    public int height=13;
-    public float originY=-3.5f;
+    private List<Vector3Int> path=new List<Vector3Int>();
+    private HashSet<Vector3Int> excavablePath=new HashSet<Vector3Int>();
+
+    
+
+    public float originX=-6.0f;
+    public int width=23;
+    public int height=15;
+    public float originY=-4f;
 
     public int leftCounter=7;
     public int rightCounter=7;
@@ -32,46 +41,140 @@ public class GenerationTilemap : MonoBehaviour
 
     private System.Random random = new System.Random();
 
+    public System.Random GetRandom(){
+        return random;
+    }
+
+    public Tile GetTileOfTilesData(Vector3Int position){
+        Tile tile=null;
+        bool result=allTilesOfMap.TryGetValue(position,out TileData data);
+        if(result==true && data.GetTileType().Equals(TileType.DIRT)) tile=data.GetTileByStateAndType();
+        else if(result==true && data.GetTileType().Equals(TileType.STONE)) tile=stone;
+        return tile;
+    }
+    public TileData GetTileData(Vector3Int position){
+        TileData tileData=null;
+        bool result=allTilesOfMap.TryGetValue(position,out TileData data);
+        if(result==true) tileData=data;
+        return tileData;
+    }
 
     void Start()
     {
         if(path.Count==0){
-            fillTilemap();
-            createRandomPath();
-            placeQueenAndAnts();
+            FillTilemap();
+            CreateRandomPath();
+            PlaceFarms();
+            ObtainExcavableTiles();
+            PlaceQueenAndAnts();
+            CreateAllTilesData();
+            //TODO: Revisar cantidad de tiles == null del path
         }
+        BakeMap();
 
         
     }
-
-    void fillTilemap(){
-        dirtMap.gameObject.transform.position=new Vector3(originX,originY,0);
-        //CUANDO AUMENTE EL TAMAÑO DEL MAPA, MODIFICAR LÍMITES
+    void CreateAllTilesData(){
+        ContainerData containerData=FindObjectOfType<ContainerData>();
         for(int i=0;i<=width;i++){
             for(int j=0;j<=height;j++){
-                dirtMap.SetTile(new Vector3Int(i,j,1),dirt);
+                Vector3Int pos=new Vector3Int(i,j,0);
+                TileBase tile=dirtMap.GetTile(pos);
+                if(tile==null) allTilesOfMap.Add(pos,new TileData(pos,TileType.EMPTY,random,this,containerData));
+                else if(tile.Equals(dirt)) allTilesOfMap.Add(pos,new TileData(pos,TileType.DIRT,random,this,containerData));
+                else if(tile.Equals(stone)) allTilesOfMap.Add(pos,new TileData(pos,TileType.STONE,random,this,containerData));
             }
         }
     }
 
-    void placeQueenAndAnts(){
-        int v=random.Next(0,path.Count-1);
-        queen.transform.position=dirtMap.CellToWorld(path[v]);
-        queen.AddComponent<QueenStats>();
-        path.Remove(path[v]);
-        AntGenerator antGenerator=queen.transform.GetComponent<AntGenerator>();
-        antGenerator.placeAntsIn(path,dirtMap);
+    public void BakeMap(){
+        NavMeshSurface n=navMesh.GetComponent<NavMeshSurface>();
+        Debug.Log(n!=null);
+        if(n!=null){n.BuildNavMesh();}
+    }
+    void ObtainExcavableTiles(){
+        foreach(Vector3Int tile in path){
+            List<Vector3Int> coverage=NextToDirtPositions(tile,dirtMap);
+            foreach(Vector3Int position in coverage){
+                excavablePath.Add(position);
+            }
+        }
+    }
+    public HashSet<Vector3Int> GetExcavableTiles(){
+        return excavablePath;
+    }
+    public List<Vector3Int> NextToDirtPositions(Vector3Int tile,Tilemap dirtMap){
+        List<Vector3Int> list=new List<Vector3Int>();
+        if(dirtMap.GetTile(tile)==null){
+            Vector3Int left=new Vector3Int(tile.x-1,tile.y,tile.z);
+            Vector3Int right=new Vector3Int(tile.x+1,tile.y,tile.z);
+            Vector3Int up=new Vector3Int(tile.x,tile.y+1,tile.z);
+            Vector3Int down=new Vector3Int(tile.x,tile.y-1,tile.z);
+            List<Vector3Int> options=new List<Vector3Int>{left,right,up,down};
+            foreach(Vector3Int option in options){
+                if(dirtMap.GetTile(option)!=null) list.Add(option);
+            }
+        }
+        return list;
 
     }
 
-    void createRandomPath()
+    void PlaceFarms(){
+        FarmGenerator generator=farms.GetComponent<FarmGenerator>();
+        generator.InitializeGeneratorAndPlaceFarms(path,random);
+    }
+
+    public FarmGenerator GetFarmGenerator(){
+        return FindFirstObjectByType<FarmGenerator>();
+    }
+
+    void FillTilemap(){
+        dirtMap.gameObject.transform.position=new Vector3(originX,originY,0);
+        //CUANDO AUMENTE EL TAMAÑO DEL MAPA, MODIFICAR LÍMITES
+        for(int i=0;i<=width;i++){
+            for(int j=0;j<=height;j++){
+                if(isALimit(i,j)){
+                    dirtMap.SetTile(new Vector3Int(i,j,0),stone);
+                }else{
+                    dirtMap.SetTile(new Vector3Int(i,j,0),dirt);
+                }
+            }
+        }
+    }
+    private bool isALimit(int i,int j){
+        return i==0 || j==0 || i==width || j==height;
+    }
+
+    void PlaceQueenAndAnts(){
+        int v=random.Next(0,path.Count-1);
+        queen.transform.position=new Vector3(dirtMap.CellToWorld(path[v]).x,dirtMap.CellToWorld(path[v]).y,0f);
+        queen.AddComponent<QueenStats>();
+        queen.GetComponent<QueenStats>().InitQueenStats(random);
+        path.Remove(path[v]);
+        AntGenerator antGenerator=queen.GetComponent<AntGenerator>();
+        antGenerator.placeAntsIn(path,dirtMap,random);
+
+    }
+
+    public void AddWalkableTile(Vector3Int position){
+        path.Add(position);
+        List<Vector3Int> coverage=NextToDirtPositions(position,dirtMap);
+        excavablePath.Remove(position);
+        foreach(Vector3Int pos in coverage){
+            excavablePath.Add(pos);
+        }
+    }
+
+    void CreateRandomPath()
     {
         int exit=width/2;
-        Vector3Int actualTile=new Vector3Int(exit, height, 1);
+        Vector3Int actualTile=new Vector3Int(exit, height, 0);
         dirtMap.SetTile(actualTile,null);
+        path.Add(actualTile);
         for(int i=0;i<3;i++){
             actualTile.y--;
             dirtMap.SetTile(actualTile,null);
+            path.Add(actualTile);
         }
         while(pathSize>0){
             bool nextTileSelected=false;
