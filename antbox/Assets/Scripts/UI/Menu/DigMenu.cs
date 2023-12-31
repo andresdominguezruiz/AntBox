@@ -41,6 +41,8 @@ public class DigMenu : MonoBehaviour
         generationTilemap.BakeMap();
         this.agent=selectedAnt.GetComponent<NavMeshAgent>();
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
+        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
+        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectable();
         digMenu.gameObject.SetActive(true);
         consoleText.text=selectedAnt.name+"-Select the start of your excavation";
         selectedAnt.GetComponent<SelectableItem>().MakeEveryoneUnselectable();
@@ -170,5 +172,7 @@ public class DigMenu : MonoBehaviour
         selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
         consoleText.text="Waiting . . .";
         selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
+        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
+        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
     }
 }

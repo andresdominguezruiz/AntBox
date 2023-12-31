@@ -11,6 +11,9 @@ TagManager:
   - Ant
   - Farm
   - CardPlatform
+  - UseButton
+  - CancelButton
+  - CardData
   layers:
   - Default
   - TransparentFX

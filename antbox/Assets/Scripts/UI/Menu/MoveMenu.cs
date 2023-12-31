@@ -33,6 +33,8 @@ public class MoveMenu : MonoBehaviour
     public void StartMoveMenu()
     {
         this.agent=selectedAnt.GetComponent<NavMeshAgent>();
+        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
+        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectable();
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
         moveMenu.gameObject.SetActive(true);
         consoleText.text=selectedAnt.name+"-Select an accessible area";
@@ -69,6 +71,8 @@ public class MoveMenu : MonoBehaviour
         selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
         consoleText.text="Waiting . . .";
         selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
+        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
+        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
     }
     
 }
