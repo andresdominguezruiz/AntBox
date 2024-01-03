@@ -8,11 +8,13 @@ using UnityEngine.UI;
 public class CardDisplay : MonoBehaviour
 {
     // Start is called before the first frame update
+    private System.Random random = new System.Random();
     public Card card;
     public Image image;
     public TextMeshProUGUI cardName;
     public TextMeshProUGUI cardDescription;
     public GameObject infoCanvas;
+    public GameObject activityMenu;
     public bool canBeSelected=true;
     void Start()
     {
@@ -22,11 +24,24 @@ public class CardDisplay : MonoBehaviour
         HideInfo();
         
     }
+    public Activity[] GenerateActivitiesPerComplexity(){
+        //TODO:Añadir complejidad dependiendo de los efectos de la carta
+        Activity[] allActivities=Resources.LoadAll<Activity>("Activities");
+        Activity[] activities=new Activity[3];
+        for(int i=0;i<3;i++){
+            int v=random.Next(0,allActivities.Length);
+            activities[i]=allActivities[v];
+        }
+        return activities;
+
+    }
 
     public void UseCard(){
         Debug.Log("Aplicado");
-        //ToDo:Aplicar actividad
+        ActivityMenu activityMenu=FindObjectOfType<ActivityMenu>(true);
+        activityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesPerComplexity());
         ContainerData containerData=FindObjectOfType<ContainerData>();
+        containerData.executableActions=card.actions;
         containerData.RemoveCardFromHand(this);
     }
     public void ShowCardData(){

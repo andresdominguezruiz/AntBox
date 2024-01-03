@@ -12,6 +12,8 @@ public class ContainerData : MonoBehaviour
     private System.Random random = new System.Random();
     public List<CardDisplay> cardsInHand=new List<CardDisplay>();
     public GameObject cardPlatform;
+    public GameObject activityMenu;
+    public List<Action> executableActions;
     public int foodValue=24;
     public int waterValue=24;
     //PUEDES AÑADIR EL GAMEOBJECT QUE CONTIENE EL COMPONENTE TAMBIEN
@@ -54,6 +56,24 @@ public class ContainerData : MonoBehaviour
             cardData.transform.position=new Vector3(cardDataTemplate.transform.position.x+35f*cardsInHand.IndexOf(card),cardDataTemplate.transform.position.y,0);
         }
     }
+
+    public void ProcessEvaluation(bool[] evaluation,bool isBoss){
+        double result=0.0;
+        foreach(bool point in evaluation){
+            if(point) result+=evaluation.Length/10.0;
+        }
+        if(result>=0.5){
+            
+        }
+        else if(result<0.5 && isBoss){
+            //TODO:Si evaluación es negativa y es jefe, pillar carta negativa aleatoria y ejecutarla
+        }
+        SelectableItem anyItem=FindObjectOfType<SelectableItem>();
+        if(anyItem!=null){
+            anyItem.MakeEveryoneSelectable();
+        }
+        cardTemplate.MakeEveryCardSelectable();
+    }
     public void RemoveCardFromHand(CardDisplay cardDisplay){
         if(cardsInHand.Contains(cardDisplay)){
             cardsInHand.Remove(cardDisplay);
@@ -70,6 +90,7 @@ public class ContainerData : MonoBehaviour
         //Esto puede servir para hacer test, tenlo en cuenta
         CardDisplay newCard=Instantiate<CardDisplay>(cardTemplate,cardTemplate.transform.position,Quaternion.identity,cardPlatform.transform);
         newCard.card=allCards[v];
+        newCard.activityMenu=activityMenu;
         GameObject newCardData=newCard.transform.Find("Data").gameObject;
         GameObject cardDataTemplate=cardTemplate.transform.Find("Data").gameObject;
         GameObject newCardHUD=newCard.transform.Find("HUD").gameObject;
