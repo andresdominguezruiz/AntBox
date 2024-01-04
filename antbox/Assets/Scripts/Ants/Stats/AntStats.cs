@@ -57,6 +57,9 @@ public class AntStats : CharacterStats
     public int GetActualEnergy(){
         return actualEnergy;
     }
+    public int GetMaxEnergy(){
+        return maxEnergy;
+    }
     public bool IsFullOfEnergy(){
         return actualEnergy==maxEnergy;
     }

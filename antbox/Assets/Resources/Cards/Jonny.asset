@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 204ab161c44cac84986d93c2d6eb5924, type: 3}
-  m_Name: Poxo
+  m_Name: Jonny
   m_EditorClassIdentifier: 
-  name: Poxo
-  description: Alimenta una hormiga
+  name: Enjambre
+  description: Incrementa capacidad
   artWorks: {fileID: 0}
   type: 0
   actions:
   - uses: 1
-    type: 0
+    type: 1
     destination: 5
-    farmEffect: 3
-    containerEffect: 2
-    characterEffect: 7
-    interactionType: 3
+    farmEffect: 1
+    containerEffect: 0
+    characterEffect: 0
+    interactionType: 0

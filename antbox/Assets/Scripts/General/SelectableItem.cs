@@ -51,14 +51,14 @@ public class SelectableItem : MonoBehaviour
     ,GameObject moveMenu,GameObject farmMenu,GameObject digMenu,ItemType itemType){
         AddPath(path,destructableMap);
         if(itemType.Equals(ItemType.FARM)){
-            SetUIFarmManager(this.gameObject.GetComponentInChildren<UIFarmManager>());
+            SetUIFarmManager(this.gameObject.GetComponentInChildren<UIFarmManager>(true));
             farmUI.HideInfo();
             type=ItemType.FARM;
 
 
         }
         else if(itemType.Equals(ItemType.ANT)){
-            SetUIManager(this.gameObject.GetComponentInChildren<UIManager>());
+            SetUIManager(this.gameObject.GetComponentInChildren<UIManager>(true));
             itemUI.HideInfo();
             this.moveMenu=moveMenu;
             this.farmMenu=farmMenu;
@@ -66,7 +66,7 @@ public class SelectableItem : MonoBehaviour
             type=ItemType.ANT;
         }
         else{
-            SetUIManager(this.gameObject.GetComponentInChildren<UIManager>());
+            SetUIManager(this.gameObject.GetComponentInChildren<UIManager>(true));
             itemUI.HideInfo();
             type=ItemType.QUEEN;
 

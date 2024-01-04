@@ -20,4 +20,7 @@ MonoBehaviour:
   - uses: 1
     type: 0
     destination: 0
-    updateEffect: 5
+    farmEffect: 3
+    containerEffect: 2
+    characterEffect: 7
+    interactionType: 3

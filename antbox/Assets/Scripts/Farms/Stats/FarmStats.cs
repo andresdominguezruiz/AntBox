@@ -44,6 +44,22 @@ public class FarmStats : MonoBehaviour
     public int GetTimePerCycle(){
         return timePerCycle;
     }
+    public void ProcessUpdateEffectOfAction(Action actualAction){
+        if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.FARM_CYCLE_DOWN)){
+            int newTimePerCycle=this.timePerCycle-timePerCycle*20/100;
+            if(newTimePerCycle>=10) this.timePerCycle=newTimePerCycle; //ESTO SE HACE PARA PONER UN LÍMITE
+        }
+        else if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.MORE_CAPACITY) && this.maxCapacity<=8){
+            this.maxCapacity++;
+        }
+        else if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.FARM_RESOURCES_UP)){
+            this.MIN_RESOURCES+=3;
+            this.MAX_RESOURCES+=3;
+        }
+    }
+    public Type GetTypeOfFarm(){
+        return type;
+    }
 
 
     public void InitWaterFarm(bool isBroken,System.Random random){

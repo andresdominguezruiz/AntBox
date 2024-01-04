@@ -44,6 +44,25 @@ public class ContainerData : MonoBehaviour
         cardText.text="Cards:"+cardsInHand.Count+"/10";
 
     }
+    public void ProcessUpdateEffectOfAction(Action actualAction){
+        if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.MORE_FOOD)){
+            AddResources(10,Type.FOOD);
+        }
+        else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.MORE_WATER)){
+            AddResources(10,Type.WATER);
+        }
+        else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.MORE_EVERYTHING)){
+            AddResources(10,Type.WATER);
+            AddResources(10,Type.FOOD);
+        }else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.DOUBLE_FOOD)){
+            AddResources(FOOD_CONTAINER,Type.FOOD);
+        }else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.DOUBLE_WATER)){
+            AddResources(WATER_CONTAINER,Type.WATER);
+        }else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.DOUBLE_EVERYTHING)){
+            AddResources(FOOD_CONTAINER,Type.FOOD);
+            AddResources(WATER_CONTAINER,Type.WATER);
+        }
+    }
 
     public void AddResources(int value,Type type){
         if(type.Equals(Type.FOOD)) FOOD_CONTAINER+=value;
@@ -63,7 +82,8 @@ public class ContainerData : MonoBehaviour
             if(point) result+=evaluation.Length/10.0;
         }
         if(result>=0.5){
-            
+            ActionMenu actionMenu=FindObjectOfType<ActionMenu>(true);
+            actionMenu.InitVictoryActions(executableActions);
         }
         else if(result<0.5 && isBoss){
             //TODO:Si evaluación es negativa y es jefe, pillar carta negativa aleatoria y ejecutarla
@@ -101,7 +121,6 @@ public class ContainerData : MonoBehaviour
         newCardData.transform.localScale=cardDataTemplate.transform.localScale+new Vector3(0.5f,0.5f,0.5f);
         newCard.gameObject.SetActive(true);
         cardsInHand.Add(newCard);
-        Debug.Log(cardsInHand.Count);
         
     }
 }
