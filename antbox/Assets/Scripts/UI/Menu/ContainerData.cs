@@ -88,11 +88,16 @@ public class ContainerData : MonoBehaviour
         else if(result<0.5 && isBoss){
             //TODO:Si evaluación es negativa y es jefe, pillar carta negativa aleatoria y ejecutarla
         }
-        SelectableItem anyItem=FindObjectOfType<SelectableItem>();
-        if(anyItem!=null){
-            anyItem.MakeEveryoneSelectable();
+        else{ //Si el resultado a sido negativo, vuelve a la normalidad
+            GoBackToGameAfterActivity();
         }
-        cardTemplate.MakeEveryCardSelectable();
+    }
+    public void GoBackToGameAfterActivity(){
+        SelectableItem anyItem=FindObjectOfType<SelectableItem>();
+            if(anyItem!=null){
+                anyItem.MakeEveryoneSelectable();
+            }
+            cardTemplate.MakeEveryCardSelectable();
     }
     public void RemoveCardFromHand(CardDisplay cardDisplay){
         if(cardsInHand.Contains(cardDisplay)){

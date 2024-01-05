@@ -9,6 +9,7 @@ public class ActionMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI consoleText;
     private int index;
     private bool isChoosing=false;
+    private int actualUses=0;
     void Start()
     {
         
@@ -20,12 +21,67 @@ public class ActionMenu : MonoBehaviour
         if(!isChoosing && index>actions.Count-1){
             FinishActionMenu();
         }
+        else if(isChoosing && index<=actions.Count-1){
+            bool result=MakeActionByChoosingItem();
+            if(result){
+                Action actualAction=actions[index];
+                actualUses--;
+                    if(actualUses<=0){
+                        isChoosing=false;
+                        index++;
+                        if(index>actions.Count-1) FinishActionMenu();
+                        else ProcessActualAction();
+                    }
+                    else{
+                        consoleText.text="Choose "+actualUses+" "
+                        +actualAction.destination.ToString()+" to "+actualAction.type.ToString();
+                    }
+            }
+        }
         
+    }
+
+    bool MakeActionByChoosingItem(){
+        bool res=false;
+        Action actualAction=actions[index];
+        if(Input.GetMouseButtonDown(0)){
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
+            if(hit.collider!=null){
+                bool correctExecution=false;
+                if((hit.collider.CompareTag("Ant") && 
+                (actualAction.destination.Equals(Destination.ANT) || actualAction.destination.Equals(Destination.ANTHILL)))
+                || (hit.collider.CompareTag("Queen") && (actualAction.destination.Equals(Destination.QUEEN)
+                 || actualAction.destination.Equals(Destination.ANTHILL)))){
+
+                    CharacterStats ant=hit.collider.gameObject.GetComponent<CharacterStats>();
+                    ant.ProcessUpdateEffectOfAction(actualAction);
+                    correctExecution=true;
+                }else if(hit.collider.CompareTag("Farm") && (actualAction.destination.Equals(Destination.FARM)
+                 || actualAction.destination.Equals(Destination.FOOD_FARM)
+                  || actualAction.destination.Equals(Destination.WATER_FARM))){
+                    
+                    FarmStats farmStats=hit.collider.gameObject.GetComponent<FarmStats>();
+                    if((actualAction.destination.Equals(Destination.FOOD_FARM) && farmStats.GetTypeOfFarm().Equals(Type.FOOD))
+                    || (actualAction.destination.Equals(Destination.WATER_FARM) && farmStats.GetTypeOfFarm().Equals(Type.WATER))
+                    || actualAction.destination.Equals(Destination.FARM)){
+                        farmStats.ProcessUpdateEffectOfAction(actualAction);
+                        correctExecution=true;
+                    }
+                  }
+                res=correctExecution;
+            }
+        }
+        return res;
     }
     void FinishActionMenu(){
         this.actions=null;
         index=0;
         this.gameObject.SetActive(false);
+        ContainerData containerData=FindObjectOfType<ContainerData>(false);
+        containerData.GoBackToGameAfterActivity();
+        consoleText.text="Waiting...";
     }
 
     public void InitVictoryActions(List<Action> actions){
@@ -40,9 +96,10 @@ public class ActionMenu : MonoBehaviour
         Action actualAction=actions[index];
         if(actualAction.type.Equals(ActionType.UPDATE)) ApplyUpdateAction(actualAction);
         else if(actualAction.type.Equals(ActionType.ADD)) ApplyAddAction(actualAction);
-
-        index++;
-        if(!(index>actions.Count-1)) ProcessActualAction();
+        if(!isChoosing){
+            index++;
+            if(!(index>actions.Count-1)) ProcessActualAction();
+        }
     }
     //2 NIVEL
     void ApplyUpdateAction(Action actualAction){
@@ -52,7 +109,25 @@ public class ActionMenu : MonoBehaviour
                 else if(actualAction.interactionType.Equals(InteractionType.ALL)) UpdateAll(actualAction);
             }
         }
+        else{
+            PrepareToUpdateByChoosingItem(actualAction);
+        }
     }
+    void PrepareToUpdateByChoosingItem(Action actualAction){
+        isChoosing=true;
+        actualUses=actualAction.uses;
+        consoleText.text="Choose "+actualAction.uses+" "
+        +actualAction.destination.ToString()+" to "+actualAction.type.ToString();
+        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>(false);
+        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectable();
+        SelectableItem item=FindObjectOfType<SelectableItem>(false);
+        if(item!=null){
+            item.MakeEveryoneUnselectableAndUnselected();
+        }
+
+    }
+
+    //3 NIVEL
     void UpdateAll(Action actualAction){
         if(actualAction.destination.Equals(Destination.ANT)){
             AntStats[] antStats=FindObjectsOfType<AntStats>(false);

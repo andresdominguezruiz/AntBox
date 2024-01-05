@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 204ab161c44cac84986d93c2d6eb5924, type: 3}
-  m_Name: Poxo
+  m_Name: New Card
   m_EditorClassIdentifier: 
-  name: Poxo
-  description: Alimenta una hormiga
+  name: Fenix
+  description: Resetea edad de hormiga seleccionada
   artWorks: {fileID: 0}
   type: 0
   actions:
-  - uses: 3
+  - uses: 2
     type: 1
     destination: 0
     farmEffect: 3

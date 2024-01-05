@@ -109,10 +109,10 @@ public class SelectableItem : MonoBehaviour
 
     public void HideAllInfo(){
         for(int i=0;i<selectableItems.Count;i++){
-            if(selectableItems[i].gameObject.GetComponentInChildren<UIManager>()!=null){
-                selectableItems[i].gameObject.GetComponentInChildren<UIManager>().HideInfo();
-            }else if(selectableItems[i].gameObject.GetComponentInChildren<UIFarmManager>()!=null){
-                selectableItems[i].gameObject.GetComponentInChildren<UIFarmManager>().HideInfo();
+            if(selectableItems[i].gameObject.GetComponentInChildren<UIManager>(true)!=null){
+                selectableItems[i].gameObject.GetComponentInChildren<UIManager>(true).HideInfo();
+            }else if(selectableItems[i].gameObject.GetComponentInChildren<UIFarmManager>(true)!=null){
+                selectableItems[i].gameObject.GetComponentInChildren<UIFarmManager>(true).HideInfo();
             }
         }
     }

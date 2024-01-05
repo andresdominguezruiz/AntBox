@@ -14,7 +14,7 @@ public class CharacterStats : MonoBehaviour
     public float timeLastFrame;
 
 
-    [SerializeField] private static int growingTime=20; //Cada t tiempo real, se considera un día
+    [SerializeField] private static int growingTime=24; //Cada t tiempo real, se considera un día
 
     private int counterOfSecons=0;
 
