@@ -28,8 +28,27 @@ public class FarmGenerator : MonoBehaviour
         availablePath=path;
         FarmPlacerInGrid(true);
         FarmPlacerInGrid(false);
-        Destroy(waterFarmBase);
-        Destroy(foodFarmBase);
+        waterFarmBase.SetActive(false);
+        foodFarmBase.SetActive(false);
+    }
+
+    public void AddNewFarm(){
+            double randomT=random.NextDouble();
+            if(randomT>=0.5){
+                FarmPlacerInGrid(false);
+            }else{
+                FarmPlacerInGrid(true);
+            }
+
+    }
+
+    public void AddNewFarm(Type farmType){
+        if(farmType.Equals(Type.FOOD)){
+            FarmPlacerInGrid(false);
+        }
+        else{
+            FarmPlacerInGrid(true);
+        }
 
     }
 
@@ -70,10 +89,11 @@ public class FarmGenerator : MonoBehaviour
         newWaterFarm.name="WaterFarm-"+waterFarms.Count;
         newWaterFarm.AddComponent<FarmStats>();
         newWaterFarm.GetComponent<FarmStats>().InitWaterFarm(false,random);
-        newWaterFarm.GetComponentInChildren<UIFarmManager>().UpdateCanvasWithFarmStats(newWaterFarm.GetComponent<FarmStats>());
+        newWaterFarm.GetComponentInChildren<UIFarmManager>(true).UpdateCanvasWithFarmStats(newWaterFarm.GetComponent<FarmStats>());
         newWaterFarm.AddComponent<SelectableItem>();
         newWaterFarm.GetComponent<SelectableItem>().InitSelectableItem(availablePath,map,null,null,null,ItemType.FARM);
         waterFarms.Add(newWaterFarm);
+        newWaterFarm.SetActive(true);
     }
 
     private void PlaceFoodFarm(Tilemap map,Vector3Int position){
@@ -81,10 +101,11 @@ public class FarmGenerator : MonoBehaviour
         newFoodFarm.name="FoodFarm-"+foodFarms.Count;
         newFoodFarm.AddComponent<FarmStats>();
         newFoodFarm.GetComponent<FarmStats>().InitFoodFarm(false,random);
-        newFoodFarm.GetComponentInChildren<UIFarmManager>().UpdateCanvasWithFarmStats(newFoodFarm.GetComponent<FarmStats>());
+        newFoodFarm.GetComponentInChildren<UIFarmManager>(true).UpdateCanvasWithFarmStats(newFoodFarm.GetComponent<FarmStats>());
         newFoodFarm.AddComponent<SelectableItem>();
         newFoodFarm.GetComponent<SelectableItem>().InitSelectableItem(availablePath,map,null,null,null,ItemType.FARM);
         foodFarms.Add(newFoodFarm);
+        newFoodFarm.SetActive(true);
     }
 
     private List<Vector3Int> GetAdjacentPositionsFromPositionOfFarm(Vector3Int position){

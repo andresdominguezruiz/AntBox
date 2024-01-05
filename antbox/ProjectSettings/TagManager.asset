@@ -10,6 +10,10 @@ TagManager:
   - Selectable
   - Ant
   - Farm
+  - CardPlatform
+  - UseButton
+  - CancelButton
+  - CardData
   layers:
   - Default
   - TransparentFX
@@ -49,4 +53,7 @@ TagManager:
     locked: 0
   - name: Map
     uniqueID: 2110902267
+    locked: 0
+  - name: New Layer 2
+    uniqueID: 19504081
     locked: 0

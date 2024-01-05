@@ -14,7 +14,7 @@ public class CharacterStats : MonoBehaviour
     public float timeLastFrame;
 
 
-    [SerializeField] private static int growingTime=20; //Cada t tiempo real, se considera un día
+    [SerializeField] private static int growingTime=24; //Cada t tiempo real, se considera un día
 
     private int counterOfSecons=0;
 
@@ -111,6 +111,14 @@ public class CharacterStats : MonoBehaviour
             if(needToCheckHP) CheckHP();
         }
     }
+    public void EatWithoutCost(int foodValue){
+        if(maxHunger<actualHunger+foodValue) SetActualHunger(maxHunger);
+        else SetActualHunger(actualHunger+foodValue);
+    }
+    public void DrinkWithoutCost(int waterValue){
+        if(maxThirst<actualThirst+waterValue) SetActualThirst(maxThirst);
+        else SetActualThirst(actualThirst+waterValue);
+    }
 
     public void Eat(ContainerData container){
         if(container.FOOD_CONTAINER>0){
@@ -149,10 +157,18 @@ public class CharacterStats : MonoBehaviour
     public void TakeDamage(int damage){
         SetActualHP(actualHP-damage);
     }
+    public void IncrementHP(int extraHP){
+        maxHP+=extraHP;
+        Heal(maxHP);
+    }
 
     public void Heal(int extraHp){
         if(extraHp+actualHP>maxHP) SetActualHP(maxHP);
         else SetActualHP(extraHp+actualHP);
+    }
+
+    public int GetMaxHP(){
+        return maxHP;
     }
 
     public void SetActualHP(int hp){
@@ -182,6 +198,34 @@ public class CharacterStats : MonoBehaviour
 
     public string GetTextAge(){
         return age.ToString();
+    }
+
+    public void ProcessUpdateEffectOfAction(Action actualAction){
+        AntStats stats=this.gameObject.GetComponent<AntStats>();
+        if(!actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.NONE)){
+            if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.HP_UP)) {
+                //Incrementa segun porcentaje de la hormiga
+                this.IncrementHP(this.GetMaxHP()/5);
+            }
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESET_AGE)){
+                this.age=0;
+            }
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.FEED)){
+                this.EatWithoutCost(maxHunger/2);
+            }
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.HYDRATE)){
+                this.DrinkWithoutCost(maxThirst/2);
+            }
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_ENERGY) && stats!=null){
+                stats.SetEnergy(stats.GetMaxEnergy());
+            }
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_EVERYTHING)){
+                this.SetActualHP(maxHP);
+                this.SetActualHunger(maxHunger);
+                this.SetActualThirst(maxThirst);
+                if(stats!=null) stats.SetEnergy(stats.GetMaxEnergy());
+            }
+        }
     }
 
     public void InitVariables(System.Random random){

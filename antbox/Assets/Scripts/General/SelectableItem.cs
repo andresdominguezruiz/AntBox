@@ -51,21 +51,22 @@ public class SelectableItem : MonoBehaviour
     ,GameObject moveMenu,GameObject farmMenu,GameObject digMenu,ItemType itemType){
         AddPath(path,destructableMap);
         if(itemType.Equals(ItemType.FARM)){
-            SetUIFarmManager(this.gameObject.GetComponentInChildren<UIFarmManager>());
+            SetUIFarmManager(this.gameObject.GetComponentInChildren<UIFarmManager>(true));
             farmUI.HideInfo();
             type=ItemType.FARM;
 
 
         }
         else if(itemType.Equals(ItemType.ANT)){
-            SetUIManager(this.gameObject.GetComponentInChildren<UIManager>());
+            SetUIManager(this.gameObject.GetComponentInChildren<UIManager>(true));
             itemUI.HideInfo();
             this.moveMenu=moveMenu;
             this.farmMenu=farmMenu;
             this.digMenu=digMenu;
             type=ItemType.ANT;
-        }else{
-            SetUIManager(this.gameObject.GetComponentInChildren<UIManager>());
+        }
+        else{
+            SetUIManager(this.gameObject.GetComponentInChildren<UIManager>(true));
             itemUI.HideInfo();
             type=ItemType.QUEEN;
 
@@ -97,6 +98,22 @@ public class SelectableItem : MonoBehaviour
     public void MakeEveryoneUnselectable(){
         for(int i=0;i<selectableItems.Count;i++){
             selectableItems[i].canBeSelected=false;
+        }
+    }
+    public void MakeEveryoneUnselectableAndUnselected(){
+        for(int i=0;i<selectableItems.Count;i++){
+            selectableItems[i].canBeSelected=false;
+            if(selectableItems[i].isSelected)selectableItems[i].isSelected=false;
+        }
+    }
+
+    public void HideAllInfo(){
+        for(int i=0;i<selectableItems.Count;i++){
+            if(selectableItems[i].gameObject.GetComponentInChildren<UIManager>(true)!=null){
+                selectableItems[i].gameObject.GetComponentInChildren<UIManager>(true).HideInfo();
+            }else if(selectableItems[i].gameObject.GetComponentInChildren<UIFarmManager>(true)!=null){
+                selectableItems[i].gameObject.GetComponentInChildren<UIFarmManager>(true).HideInfo();
+            }
         }
     }
 
@@ -150,6 +167,8 @@ public class SelectableItem : MonoBehaviour
     public void SetUIFarmManager(UIFarmManager ui){
         farmUI=ui;
     }
+
+
 
     public UIManager GetUIManager(){
         return itemUI;

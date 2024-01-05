@@ -9,9 +9,15 @@ public class ContainerData : MonoBehaviour
     public int FOOD_CONTAINER=20;
     public int WATER_CONTAINER=20;
     public int maxCards=10;
-    public List<string> cards=new List<string>();
+    private System.Random random = new System.Random();
+    public List<CardDisplay> cardsInHand=new List<CardDisplay>();
+    public GameObject cardPlatform;
+    public GameObject activityMenu;
+    public List<Action> executableActions;
     public int foodValue=24;
     public int waterValue=24;
+    //PUEDES AÑADIR EL GAMEOBJECT QUE CONTIENE EL COMPONENTE TAMBIEN
+    public CardDisplay cardTemplate;
 
     public TextMeshProUGUI foodText;
     public TextMeshProUGUI waterText;
@@ -26,6 +32,7 @@ public class ContainerData : MonoBehaviour
     {
         foodText.text="F:"+FOOD_CONTAINER;
         waterText.text="W:"+WATER_CONTAINER;
+        cardText.text="Cards:"+cardsInHand.Count+"/10";
         
     }
 
@@ -34,11 +41,91 @@ public class ContainerData : MonoBehaviour
     {
         foodText.text="F:"+FOOD_CONTAINER;
         waterText.text="W:"+WATER_CONTAINER;
+        cardText.text="Cards:"+cardsInHand.Count+"/10";
+
+    }
+    public void ProcessUpdateEffectOfAction(Action actualAction){
+        if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.MORE_FOOD)){
+            AddResources(10,Type.FOOD);
+        }
+        else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.MORE_WATER)){
+            AddResources(10,Type.WATER);
+        }
+        else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.MORE_EVERYTHING)){
+            AddResources(10,Type.WATER);
+            AddResources(10,Type.FOOD);
+        }else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.DOUBLE_FOOD)){
+            AddResources(FOOD_CONTAINER,Type.FOOD);
+        }else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.DOUBLE_WATER)){
+            AddResources(WATER_CONTAINER,Type.WATER);
+        }else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.DOUBLE_EVERYTHING)){
+            AddResources(FOOD_CONTAINER,Type.FOOD);
+            AddResources(WATER_CONTAINER,Type.WATER);
+        }
     }
 
     public void AddResources(int value,Type type){
-        Debug.Log("añadidio");
         if(type.Equals(Type.FOOD)) FOOD_CONTAINER+=value;
         else WATER_CONTAINER+=value;
+    }
+    public void RelocateCardsInHand(){
+        GameObject cardDataTemplate=cardTemplate.transform.Find("Data").gameObject;
+        foreach(CardDisplay card in cardsInHand){
+            GameObject cardData=card.transform.Find("Data").gameObject;
+            cardData.transform.position=new Vector3(cardDataTemplate.transform.position.x+35f*cardsInHand.IndexOf(card),cardDataTemplate.transform.position.y,0);
+        }
+    }
+
+    public void ProcessEvaluation(bool[] evaluation,bool isBoss){
+        double result=0.0;
+        foreach(bool point in evaluation){
+            if(point) result+=evaluation.Length/10.0;
+        }
+        if(result>=0.5){
+            ActionMenu actionMenu=FindObjectOfType<ActionMenu>(true);
+            actionMenu.InitVictoryActions(executableActions);
+        }
+        else if(result<0.5 && isBoss){
+            //TODO:Si evaluación es negativa y es jefe, pillar carta negativa aleatoria y ejecutarla
+        }
+        else{ //Si el resultado a sido negativo, vuelve a la normalidad
+            GoBackToGameAfterActivity();
+        }
+    }
+    public void GoBackToGameAfterActivity(){
+        SelectableItem anyItem=FindObjectOfType<SelectableItem>();
+            if(anyItem!=null){
+                anyItem.MakeEveryoneSelectable();
+            }
+            cardTemplate.MakeEveryCardSelectable();
+    }
+    public void RemoveCardFromHand(CardDisplay cardDisplay){
+        if(cardsInHand.Contains(cardDisplay)){
+            cardsInHand.Remove(cardDisplay);
+            Destroy(cardDisplay.gameObject);
+            RelocateCardsInHand();
+
+        }
+    }
+
+    public void AddNewCard(){
+        Card[] allCards=Resources.LoadAll<Card>("Cards");
+        int v=random.Next(0,allCards.Length);
+        //OJO,para buscar datos con Resources, debe existir la carpeta Resources
+        //Esto puede servir para hacer test, tenlo en cuenta
+        CardDisplay newCard=Instantiate<CardDisplay>(cardTemplate,cardTemplate.transform.position,Quaternion.identity,cardPlatform.transform);
+        newCard.card=allCards[v];
+        newCard.activityMenu=activityMenu;
+        GameObject newCardData=newCard.transform.Find("Data").gameObject;
+        GameObject cardDataTemplate=cardTemplate.transform.Find("Data").gameObject;
+        GameObject newCardHUD=newCard.transform.Find("HUD").gameObject;
+        GameObject cardHUDTemplate=cardTemplate.transform.Find("HUD").gameObject;
+        newCardHUD.transform.localScale=cardHUDTemplate.transform.localScale+new Vector3(0.65f,0.65f,0.7f);
+        newCardHUD.transform.position=cardHUDTemplate.transform.position;
+        newCardData.transform.position=new Vector3(cardDataTemplate.transform.position.x+35f*cardsInHand.Count,cardDataTemplate.transform.position.y,0);
+        newCardData.transform.localScale=cardDataTemplate.transform.localScale+new Vector3(0.5f,0.5f,0.5f);
+        newCard.gameObject.SetActive(true);
+        cardsInHand.Add(newCard);
+        
     }
 }

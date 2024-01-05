@@ -118,6 +118,10 @@ public class GenerationTilemap : MonoBehaviour
         return list;
 
     }
+    public void AddNewAnt(){
+        AntGenerator antGenerator=FindObjectOfType<AntGenerator>(false);
+        antGenerator.PlaceOneAnt(dirtMap);
+    }
 
     void PlaceFarms(){
         FarmGenerator generator=farms.GetComponent<FarmGenerator>();

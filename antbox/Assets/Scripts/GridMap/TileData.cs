@@ -81,6 +81,7 @@ public class TileData
     }
 
     void ProcessGift(){
+        containerData.AddNewCard();
 
     }
     void ProcessStateOfTile(bool isMenuDigInUse){
@@ -89,6 +90,7 @@ public class TileData
         }
         if(tileType.Equals(TileType.DIRT) && actualResistance<=0f){
             generationTilemap.dirtMap.SetTile(tilePosition,null);
+            ProcessGift();
             
         }else if(tileType.Equals(TileType.STONE) && actualResistance<=0f){
             actualResistance=maxResistance;
