@@ -11,6 +11,7 @@ public class ContainerData : MonoBehaviour
     public int maxCards=10;
     private System.Random random = new System.Random();
     public List<CardDisplay> cardsInHand=new List<CardDisplay>();
+    private FarmGenerator farmGenerator;
     public GameObject cardPlatform;
     public GameObject activityMenu;
     public List<Action> executableActions;
@@ -21,6 +22,9 @@ public class ContainerData : MonoBehaviour
 
     public TextMeshProUGUI foodText;
     public TextMeshProUGUI waterText;
+
+    public TextMeshProUGUI foodLimitText;
+    public TextMeshProUGUI waterLimitText;
     public TextMeshProUGUI cardText;
     public Tile dirtTile;
     public Tile stoneTile;
@@ -30,10 +34,22 @@ public class ContainerData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        farmGenerator=FindObjectOfType<FarmGenerator>();
         foodText.text="F:"+FOOD_CONTAINER;
         waterText.text="W:"+WATER_CONTAINER;
         cardText.text="Cards:"+cardsInHand.Count+"/10";
+        foodLimitText.text=farmGenerator.foodFarms.Count+"/"+farmGenerator.GetMaxNumberOfFarms();
+        waterLimitText.text=farmGenerator.waterFarms.Count+"/"+farmGenerator.GetMaxNumberOfFarms();
         
+    }
+    public bool CanAddNewCard(){
+        return cardsInHand.Count<maxCards;
+    }
+    public void AddNewFarm(Type farmType){
+        FarmGenerator generator=FindObjectOfType<FarmGenerator>();
+        if(generator!=null){
+            generator.AddNewFarm(farmType);
+        }
     }
 
     // Update is called once per frame
@@ -42,6 +58,8 @@ public class ContainerData : MonoBehaviour
         foodText.text="F:"+FOOD_CONTAINER;
         waterText.text="W:"+WATER_CONTAINER;
         cardText.text="Cards:"+cardsInHand.Count+"/10";
+        foodLimitText.text=farmGenerator.foodFarms.Count+"/"+farmGenerator.GetMaxNumberOfFarms();
+        waterLimitText.text=farmGenerator.waterFarms.Count+"/"+farmGenerator.GetMaxNumberOfFarms();
 
     }
     public void ProcessUpdateEffectOfAction(Action actualAction){

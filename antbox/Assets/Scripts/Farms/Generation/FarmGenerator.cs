@@ -16,9 +16,14 @@ public class FarmGenerator : MonoBehaviour
 
     public List<GameObject> waterFarms;
     public List<GameObject> foodFarms;
+    [SerializeField] private int maxNumberOfFarms=5;
     private List<Vector3Int> coveredPositions=new List<Vector3Int>();
 
     private List<Vector3Int> availablePath;
+
+    public int GetMaxNumberOfFarms(){
+        return maxNumberOfFarms;
+    }
     
 
 
@@ -34,19 +39,19 @@ public class FarmGenerator : MonoBehaviour
 
     public void AddNewFarm(){
             double randomT=random.NextDouble();
-            if(randomT>=0.5){
+            if(randomT>=0.5 && foodFarms.Count<maxNumberOfFarms){
                 FarmPlacerInGrid(false);
-            }else{
+            }else if(randomT<0.5 && waterFarms.Count<maxNumberOfFarms){
                 FarmPlacerInGrid(true);
             }
 
     }
 
     public void AddNewFarm(Type farmType){
-        if(farmType.Equals(Type.FOOD)){
+        if(farmType.Equals(Type.FOOD) && foodFarms.Count<maxNumberOfFarms){
             FarmPlacerInGrid(false);
         }
-        else{
+        else if(farmType.Equals(Type.WATER) && waterFarms.Count<maxNumberOfFarms){
             FarmPlacerInGrid(true);
         }
 

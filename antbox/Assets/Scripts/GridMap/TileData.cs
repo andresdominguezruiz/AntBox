@@ -58,9 +58,10 @@ public class TileData
     }
 
     void UpdateGift(double randomValue){
-        if(randomValue<=0.7){
+        if(randomValue<=0.4){
             gift=GiftType.NOTHING;
-        }else if(randomValue>0.7 && randomValue<=0.8 && generationTilemap.GetFarmGenerator().CanBePlaceFarmInPosition(tilePosition)){
+        }else if(randomValue>0.6 && randomValue<=0.7 && generationTilemap.GetFarmGenerator().CanBePlaceFarmInPosition(tilePosition)
+         && !tileType.Equals(TileType.STONE)){
             double v= random.NextDouble();
             gift=v<=0.5?GiftType.WATER_FARM:GiftType.FOOD_FARM;
         }else{
@@ -81,7 +82,13 @@ public class TileData
     }
 
     void ProcessGift(){
-        containerData.AddNewCard();
+        if(this.gift.Equals(GiftType.CARD) && containerData.CanAddNewCard()){
+            containerData.AddNewCard();
+        }else if(this.gift.Equals(GiftType.FOOD_FARM)){
+            containerData.AddNewFarm(Type.FOOD);
+        }else if(this.gift.Equals(GiftType.WATER_FARM)){
+            containerData.AddNewFarm(Type.WATER);
+        }
 
     }
     void ProcessStateOfTile(bool isMenuDigInUse){
@@ -94,6 +101,8 @@ public class TileData
             
         }else if(tileType.Equals(TileType.STONE) && actualResistance<=0f){
             actualResistance=maxResistance;
+            ProcessGift();
+            UpdateGift(random.NextDouble());
         }
         List<AntStats> antsWithoutEnoughEnergy=new List<AntStats>();
         foreach(AntStats ant in antsDiggingSameTile){
