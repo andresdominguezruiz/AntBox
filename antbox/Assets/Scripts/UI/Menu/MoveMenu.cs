@@ -69,7 +69,11 @@ public class MoveMenu : MonoBehaviour
         this.agent=null;
         moveMenu.SetActive(false);
         selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
-        consoleText.text="Waiting . . .";
+        Clock clock=FindObjectOfType<Clock>();
+        if(clock!=null){
+            clock.UpdateMessageOfConsoleByEvent();
+            consoleText.text=clock.messageOfEvent;
+        }
         selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
         if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();

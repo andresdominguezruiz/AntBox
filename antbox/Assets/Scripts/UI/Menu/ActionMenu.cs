@@ -29,6 +29,7 @@ public class ActionMenu : MonoBehaviour
                     if(actualUses<=0){
                         isChoosing=false;
                         index++;
+                        Time.timeScale=1f;
                         if(index>actions.Count-1) FinishActionMenu();
                         else ProcessActualAction();
                     }
@@ -77,14 +78,16 @@ public class ActionMenu : MonoBehaviour
     }
     void FinishActionMenu(){
         this.actions=null;
+        Time.timeScale=1f;
         index=0;
         this.gameObject.SetActive(false);
         ContainerData containerData=FindObjectOfType<ContainerData>(false);
         containerData.GoBackToGameAfterActivity();
-        consoleText.text="Waiting...";
+        Clock clock=FindObjectOfType<Clock>();
+        if(clock!=null) consoleText.text=clock.messageOfEvent;
     }
 
-    public void InitVictoryActions(List<Action> actions){
+    public void InitActions(List<Action> actions){
         this.actions=actions;
         index=0;
         this.gameObject.SetActive(true);
@@ -96,9 +99,30 @@ public class ActionMenu : MonoBehaviour
         Action actualAction=actions[index];
         if(actualAction.type.Equals(ActionType.UPDATE)) ApplyUpdateAction(actualAction);
         else if(actualAction.type.Equals(ActionType.ADD)) ApplyAddAction(actualAction);
+        else if(actualAction.type.Equals(ActionType.DELETE)) ApplyDeleteAction(actualAction);
         if(!isChoosing){
             index++;
             if(!(index>actions.Count-1)) ProcessActualAction();
+        }
+    }
+
+    //2 NIVEL
+    void ApplyDeleteAction(Action actualAction){
+        for(int i=0;i<actualAction.uses;i++){
+                //SOLO VA A SER DE MOMENTO BORRADOS DE HORMIGAS:
+                DeleteAny(actualAction);
+            }
+    }
+    //3 NIVEL
+    void DeleteAny(Action actualAction){
+        if(actualAction.destination.Equals(Destination.ANT)){
+            AntStats[] antStats=FindObjectsOfType<AntStats>(false);
+            foreach(AntStats ant in antStats){
+                if(!ant.IsDead()){
+                    ant.Die();
+                    break;
+                }
+            }
         }
     }
     //2 NIVEL
@@ -115,6 +139,7 @@ public class ActionMenu : MonoBehaviour
     }
     void PrepareToUpdateByChoosingItem(Action actualAction){
         isChoosing=true;
+        Time.timeScale=0f;
         actualUses=actualAction.uses;
         consoleText.text="Choose "+actualAction.uses+" "
         +actualAction.destination.ToString()+" to "+actualAction.type.ToString();

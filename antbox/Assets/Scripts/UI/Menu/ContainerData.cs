@@ -31,7 +31,22 @@ public class ContainerData : MonoBehaviour
     public Tile diggingDirtTile1;
     public Tile diggingDirtTile2;
     public Tile diggingDirtTile3;
+
+    public TextMeshProUGUI counterOfExamsText;
+    public TextMeshProUGUI counterOfPassedExamsText;
+    public TextMeshProUGUI counterOfFailedExamsText;
+
+    public int counterOfExams=0;
+    public int counterOfPassedExams=0;
+    public int counterOfFailedExams=0;
     // Start is called before the first frame update
+
+    void UpdateCountersOfExams(){
+        counterOfExamsText.text="TOTAL EXAMS: "+counterOfExams;
+        counterOfPassedExamsText.text="PASSED EXAMS: "+counterOfPassedExams;
+        counterOfFailedExamsText.text="FAILED EXAMS: "+counterOfFailedExams;
+
+    }
     void Start()
     {
         farmGenerator=FindObjectOfType<FarmGenerator>();
@@ -93,18 +108,41 @@ public class ContainerData : MonoBehaviour
             cardData.transform.position=new Vector3(cardDataTemplate.transform.position.x+35f*cardsInHand.IndexOf(card),cardDataTemplate.transform.position.y,0);
         }
     }
+    void AnalyseResultToUpdateCounters(double result)
+    {
+        if(result>=0.5) counterOfPassedExams++;
+        else counterOfFailedExams++;
+        counterOfExams++;
+        UpdateCountersOfExams();
+
+    }
 
     public void ProcessEvaluation(bool[] evaluation,bool isBoss){
         double result=0.0;
         foreach(bool point in evaluation){
-            if(point) result+=evaluation.Length/10.0;
+            if(point) result+=1/(evaluation.Length*1.0);
         }
-        if(result>=0.5){
+        if(isBoss){
+            AnalyseResultToUpdateCounters(result);
+            Clock clock=FindObjectOfType<Clock>();
+            if(clock!=null){
+                clock.GoBackToNothingEvent();
+                clock.UpdateMessageOfConsoleByEvent();
+                clock.eventTypeText.text=clock.eventType.ToString();
+            }
+        } 
+        if(result>=0.5 && !isBoss){
             ActionMenu actionMenu=FindObjectOfType<ActionMenu>(true);
-            actionMenu.InitVictoryActions(executableActions);
+            actionMenu.InitActions(executableActions);
         }
         else if(result<0.5 && isBoss){
             //TODO:Si evaluación es negativa y es jefe, pillar carta negativa aleatoria y ejecutarla
+            Card[] allCards=Resources.LoadAll<Card>("Cards/PowerDowns");
+            int v=random.Next(0,allCards.Length);
+            Card badCard=allCards[v];
+            executableActions=badCard.actions;
+            ActionMenu actionMenu=FindObjectOfType<ActionMenu>(true);
+            actionMenu.InitActions(executableActions);
         }
         else{ //Si el resultado a sido negativo, vuelve a la normalidad
             GoBackToGameAfterActivity();
@@ -127,7 +165,7 @@ public class ContainerData : MonoBehaviour
     }
 
     public void AddNewCard(){
-        Card[] allCards=Resources.LoadAll<Card>("Cards");
+        Card[] allCards=Resources.LoadAll<Card>("Cards/PowerUps");
         int v=random.Next(0,allCards.Length);
         //OJO,para buscar datos con Resources, debe existir la carpeta Resources
         //Esto puede servir para hacer test, tenlo en cuenta
