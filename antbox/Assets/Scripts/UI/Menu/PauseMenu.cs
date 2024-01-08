@@ -16,6 +16,7 @@ public class PauseMenu : MonoBehaviour
     }
 
     public void Quit(){
+        StatisticsOfGame.Instance.ResetData();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
     }
 

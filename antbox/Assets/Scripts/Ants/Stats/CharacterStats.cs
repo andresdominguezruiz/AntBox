@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
+using UnityEngine.SceneManagement;
 
 public class CharacterStats : MonoBehaviour
 {
@@ -96,6 +97,7 @@ public class CharacterStats : MonoBehaviour
                 }
             }
             Destroy(this.gameObject);
+            IsEndOfGame();
         }else{
             bool needToCheckHP=false;
             if(actualHunger>0 && actualThirst>0){
@@ -128,6 +130,8 @@ public class CharacterStats : MonoBehaviour
                     if(antStats.IsFullOfEnergy()) antStats.CancelAntAction();
                 }
             }
+            if(actualThirst<0) actualThirst=0;
+            if(actualHunger<0) actualHunger=0;
 
             if(needToCheckHP) CheckHP();
         }
@@ -144,11 +148,9 @@ public class CharacterStats : MonoBehaviour
     public void Eat(ContainerData container){
         if(container.FOOD_CONTAINER>0){
             container.FOOD_CONTAINER--;
-            Debug.Log("ha comido");
             if(maxHunger<actualHunger+container.foodValue) SetActualHunger(maxHunger);
             else SetActualHunger(actualHunger+container.foodValue);
         }else{
-            Debug.Log("no ha comido");
         }
     }
     public void Drink(ContainerData container){
@@ -156,6 +158,14 @@ public class CharacterStats : MonoBehaviour
             container.WATER_CONTAINER--;
             if(maxThirst<actualThirst+container.waterValue) SetActualThirst(maxThirst);
             else SetActualThirst(actualThirst+container.waterValue);
+        }
+    }
+
+    public void IsEndOfGame(){
+        QueenStats queen=FindObjectOfType<QueenStats>(false);
+        AntStats anyAnt=FindObjectOfType<AntStats>(false);
+        if(queen==null || anyAnt==null){
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
         }
     }
 

@@ -18,7 +18,7 @@ public class GenerationTilemap : MonoBehaviour
 
     public GameObject queen;
 
-    private Dictionary<Vector3Int,TileData> allTilesOfMap=new Dictionary<Vector3Int, TileData>();
+    public Dictionary<Vector3Int,TileData> allTilesOfMap=new Dictionary<Vector3Int, TileData>();
 
     private List<Vector3Int> path=new List<Vector3Int>();
     private HashSet<Vector3Int> excavablePath=new HashSet<Vector3Int>();
@@ -94,10 +94,13 @@ public class GenerationTilemap : MonoBehaviour
     }
     void ObtainExcavableTiles(){
         foreach(Vector3Int tile in path){
-            List<Vector3Int> coverage=NextToDirtPositions(tile,dirtMap);
-            foreach(Vector3Int position in coverage){
+            AddNextToDirtPositionsOfPosition(tile,dirtMap);
+        }
+    }
+    public void AddNextToDirtPositionsOfPosition(Vector3Int pos,Tilemap map){
+        List<Vector3Int> coverage=NextToDirtPositions(pos,map);
+        foreach(Vector3Int position in coverage){
                 excavablePath.Add(position);
-            }
         }
     }
     public HashSet<Vector3Int> GetExcavableTiles(){

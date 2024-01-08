@@ -49,6 +49,7 @@ public class Clock : MonoBehaviour
             counterOfSecons++;
             if(counterOfSecons==growingTime){
                 day++;
+                StatisticsOfGame.Instance.counterOfDays++;
                 if(day%daysForNextEvent==0){
                     FinishPastEventAndIniciateNewEvent();
                     eventTypeText.text=eventType.ToString();
@@ -76,7 +77,6 @@ public class Clock : MonoBehaviour
         }else{
             GoBackToNothingEvent();
         }
-        ProcessExam();
         UpdateMessageOfConsoleByEvent();
     }
 

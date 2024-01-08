@@ -36,15 +36,12 @@ public class ContainerData : MonoBehaviour
     public TextMeshProUGUI counterOfPassedExamsText;
     public TextMeshProUGUI counterOfFailedExamsText;
 
-    public int counterOfExams=0;
-    public int counterOfPassedExams=0;
-    public int counterOfFailedExams=0;
     // Start is called before the first frame update
 
     void UpdateCountersOfExams(){
-        counterOfExamsText.text="TOTAL EXAMS: "+counterOfExams;
-        counterOfPassedExamsText.text="PASSED EXAMS: "+counterOfPassedExams;
-        counterOfFailedExamsText.text="FAILED EXAMS: "+counterOfFailedExams;
+        counterOfExamsText.text="TOTAL EXAMS: "+StatisticsOfGame.Instance.counterOfExams;
+        counterOfPassedExamsText.text="PASSED EXAMS: "+StatisticsOfGame.Instance.counterOfPassedExams;
+        counterOfFailedExamsText.text="FAILED EXAMS: "+StatisticsOfGame.Instance.counterOfFailedExams;
 
     }
     void Start()
@@ -60,10 +57,10 @@ public class ContainerData : MonoBehaviour
     public bool CanAddNewCard(){
         return cardsInHand.Count<maxCards;
     }
-    public void AddNewFarm(Type farmType){
+    public void AddNewFarm(Type farmType,Vector3Int tilePosition){
         FarmGenerator generator=FindObjectOfType<FarmGenerator>();
         if(generator!=null){
-            generator.AddNewFarm(farmType);
+            generator.AddNewFarmInValidPosition(farmType,tilePosition);
         }
     }
 
@@ -108,12 +105,18 @@ public class ContainerData : MonoBehaviour
             cardData.transform.position=new Vector3(cardDataTemplate.transform.position.x+35f*cardsInHand.IndexOf(card),cardDataTemplate.transform.position.y,0);
         }
     }
-    void AnalyseResultToUpdateCounters(double result)
+    void AnalyseResultToUpdateCounters(double result,bool isExam)
     {
-        if(result>=0.5) counterOfPassedExams++;
-        else counterOfFailedExams++;
-        counterOfExams++;
-        UpdateCountersOfExams();
+        if(isExam){
+            if(result>=0.5) StatisticsOfGame.Instance.counterOfPassedExams++;
+            else StatisticsOfGame.Instance.counterOfFailedExams++;
+            StatisticsOfGame.Instance.counterOfExams++;
+            UpdateCountersOfExams();
+        }else{
+            if(result>=0.5) StatisticsOfGame.Instance.counterOfCorrectCards++;
+            else StatisticsOfGame.Instance.counterOfFailedCards++;
+            StatisticsOfGame.Instance.counterOfUsedCards++;
+        }
 
     }
 
@@ -122,8 +125,8 @@ public class ContainerData : MonoBehaviour
         foreach(bool point in evaluation){
             if(point) result+=1/(evaluation.Length*1.0);
         }
+        AnalyseResultToUpdateCounters(result,isBoss);
         if(isBoss){
-            AnalyseResultToUpdateCounters(result);
             Clock clock=FindObjectOfType<Clock>();
             if(clock!=null){
                 clock.GoBackToNothingEvent();
