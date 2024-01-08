@@ -47,6 +47,20 @@ public class CharacterStats : MonoBehaviour
 
     [SerializeField] private bool isDead=false;
     [SerializeField] private int adultAge=3;
+    private Clock clockOfGame;
+
+    public Clock GetClockOfGame(){
+        return clockOfGame;
+    }
+
+    public void SetClockOfGame(Clock clock){
+        clockOfGame=clock;
+    }
+
+    public bool IsDead(){
+        return isDead;
+    }
+
     
     void Update(){
         if(Time.time -timeLastFrame>=1.0f){
@@ -85,15 +99,22 @@ public class CharacterStats : MonoBehaviour
         }else{
             bool needToCheckHP=false;
             if(actualHunger>0 && actualThirst>0){
-                actualHunger--;
-                actualThirst--;
+                if(clockOfGame!=null && !clockOfGame.eventType.Equals(EventType.WINTER)){
+                    actualHunger--;
+                    actualThirst--;
+                }else{
+                    actualHunger-=3;
+                    actualThirst-=3;
+                }
                 Heal(1);
             }else if(actualHunger>0){
-                actualHunger--;
+                if(clockOfGame!=null && !clockOfGame.eventType.Equals(EventType.WINTER)) actualHunger--;
+                else actualHunger-=3;
                 actualHP--;
                 needToCheckHP=true;
             }else if(actualThirst>0){
-                actualThirst--;
+                if(clockOfGame!=null && !clockOfGame.eventType.Equals(EventType.WINTER)) actualThirst--;
+                else actualThirst-=3;
                 actualHP--;
                 needToCheckHP=true;
             }else{
@@ -229,6 +250,8 @@ public class CharacterStats : MonoBehaviour
     }
 
     public void InitVariables(System.Random random){
+        Clock clock=FindObjectOfType<Clock>();
+        SetClockOfGame(clock);
         this.random=random;
         int randomHP=random.Next(MIN_HP,MAX_HP);
         int randomHunger=random.Next(MIN_HUNGER,MAX_HUNGER);

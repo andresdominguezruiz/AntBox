@@ -24,11 +24,13 @@ public class CardDisplay : MonoBehaviour
         HideInfo();
         
     }
-    public Activity[] GenerateActivitiesPerComplexity(){
+    public Activity[] GenerateActivitiesPerComplexity(bool isBoss){
         //TODO:Añadir complejidad dependiendo de los efectos de la carta
         Activity[] allActivities=Resources.LoadAll<Activity>("Activities");
-        Activity[] activities=new Activity[3];
-        for(int i=0;i<3;i++){
+        int n=1;
+        if(isBoss) n=10;
+        Activity[] activities=new Activity[n];
+        for(int i=0;i<n;i++){
             int v=random.Next(0,allActivities.Length);
             activities[i]=allActivities[v];
         }
@@ -37,9 +39,8 @@ public class CardDisplay : MonoBehaviour
     }
 
     public void UseCard(){
-        Debug.Log("Aplicado");
         ActivityMenu activityMenu=FindObjectOfType<ActivityMenu>(true);
-        activityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesPerComplexity());
+        activityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesPerComplexity(false),false);
         ContainerData containerData=FindObjectOfType<ContainerData>();
         containerData.executableActions=card.actions;
         containerData.RemoveCardFromHand(this);
@@ -55,7 +56,6 @@ public class CardDisplay : MonoBehaviour
             ui.HideInfo();
         }
         SelectableItem anyItem=FindObjectOfType<SelectableItem>();
-        Debug.Log("Name:"+anyItem.name);
         if(anyItem!=null){
             anyItem.MakeEveryoneUnselectableAndUnselected();
         }

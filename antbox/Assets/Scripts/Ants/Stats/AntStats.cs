@@ -117,7 +117,8 @@ public class AntStats : CharacterStats
     }
 
     public void ApplyEnergyCost(int cost){
-        SetEnergy(actualEnergy-cost);
+        if(!GetClockOfGame().eventType.Equals(EventType.SUMMER) || cost<0)SetEnergy(actualEnergy-cost);
+        else SetEnergy(actualEnergy-2*cost);
 
     }
     public void InitAntStats(System.Random random){
