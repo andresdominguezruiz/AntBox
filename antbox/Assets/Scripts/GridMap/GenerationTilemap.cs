@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using NavMeshPlus.Components;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -154,6 +155,11 @@ public class GenerationTilemap : MonoBehaviour
 
     void PlaceQueenAndAnts(){
         int v=random.Next(0,path.Count-1);
+        int cont=0;
+        while(!CanPlaceQueenInTilePosition(path[v]) && cont<5){
+            v=random.Next(0,path.Count-1);
+            cont++;
+        }
         queen.transform.position=new Vector3(dirtMap.CellToWorld(path[v]).x,dirtMap.CellToWorld(path[v]).y,0f);
         queen.AddComponent<QueenStats>();
         queen.GetComponent<QueenStats>().InitQueenStats(random);
@@ -161,6 +167,33 @@ public class GenerationTilemap : MonoBehaviour
         AntGenerator antGenerator=queen.GetComponent<AntGenerator>();
         antGenerator.placeAntsIn(path,dirtMap,random);
 
+    }
+
+    public bool CanPlaceQueenInTilePosition(Vector3Int position){
+        FarmStats[] allFarms=FindObjectsOfType<FarmStats>(false);
+        List<Vector3Int> farmPositions=new List<Vector3Int>();
+        foreach(FarmStats farm in allFarms){
+            farmPositions.Add(dirtMap.WorldToCell(farm.gameObject.transform.position));
+        }
+        List<Vector3Int> coverageOfQueen=GetCoverageOfItem(position);
+        bool res=true;
+        foreach(Vector3Int pos in coverageOfQueen){
+            if(farmPositions.Contains(pos)){
+                res=false;
+                break;
+            }
+        }
+        return res;
+    }
+
+    private List<Vector3Int> GetCoverageOfItem(Vector3Int position){
+        List<Vector3Int> list=new List<Vector3Int>();
+        for(int i=-2;i<=2;i++){
+            for(int j=-2;j<=2;j++){
+                list.Add(new Vector3Int(position.x+i,position.y+j,position.z));
+            }
+        }
+        return list;
     }
 
     public void AddWalkableTile(Vector3Int position){

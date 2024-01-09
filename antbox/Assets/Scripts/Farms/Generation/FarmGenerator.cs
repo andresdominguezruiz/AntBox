@@ -104,8 +104,10 @@ public class FarmGenerator : MonoBehaviour
         bool res=true;
         Tilemap map=dirtMap.GetComponent<Tilemap>();
         TileBase stone=FindObjectOfType<ContainerData>().stoneTile;
+        QueenStats queen=FindObjectOfType<QueenStats>(false);
         foreach(Vector3Int pos in myCoverage){
-            if(coveredPositions.Contains(pos) || stone.Equals(map.GetTile(pos))){
+            if(coveredPositions.Contains(pos) || stone.Equals(map.GetTile(pos)) ||
+            (queen!=null && map.WorldToCell(queen.gameObject.transform.position).Equals(pos))){
                 res=false;
                 break;
             }

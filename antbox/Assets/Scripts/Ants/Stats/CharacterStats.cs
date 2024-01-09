@@ -96,8 +96,8 @@ public class CharacterStats : MonoBehaviour
                     farm.antsWorkingInFarm.Remove(this.gameObject);
                 }
             }
-            Destroy(this.gameObject);
             IsEndOfGame();
+            Destroy(this.gameObject);
         }else{
             bool needToCheckHP=false;
             if(actualHunger>0 && actualThirst>0){
@@ -162,10 +162,10 @@ public class CharacterStats : MonoBehaviour
     }
 
     public void IsEndOfGame(){
-        QueenStats queen=FindObjectOfType<QueenStats>(false);
-        AntStats anyAnt=FindObjectOfType<AntStats>(false);
-        if(queen==null || anyAnt==null){
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        QueenStats queenStats=this.gameObject.GetComponent<QueenStats>();
+        AntStats[] allAnts=FindObjectsOfType<AntStats>(false);
+        if((queenStats!=null && queenStats.isDead==true) || (allAnts.Length==1 && allAnts[0].isDead==true)){
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
         }
     }
 
