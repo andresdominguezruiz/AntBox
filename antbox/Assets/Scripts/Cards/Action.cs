@@ -40,5 +40,5 @@ public class Action
     public bool NoNeedToChooseItemToApplyUpdateAction(){
         return this.interactionType.Equals(InteractionType.ALL) || this.interactionType.Equals(InteractionType.ANY);
     }
-        
+  
 }

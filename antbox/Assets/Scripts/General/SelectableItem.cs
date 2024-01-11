@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
@@ -14,6 +15,8 @@ public class SelectableItem : MonoBehaviour
 {
     public bool isSelected=false;
     public bool canBeSelected=true;
+    private Color originalColor;
+    private Color selectedColor=Color.green;
 
     public GameObject moveMenu;
     public GameObject farmMenu;
@@ -37,6 +40,7 @@ public class SelectableItem : MonoBehaviour
         }
         return list;
     }
+
 
     
 
@@ -75,6 +79,10 @@ public class SelectableItem : MonoBehaviour
     }
     void Start(){
         selectableItems.Add(this);
+        SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
+        if(sprite!=null){
+            originalColor=sprite.color;
+        }
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -88,6 +96,7 @@ public class SelectableItem : MonoBehaviour
     public void MakeEveryoneUnselectableButPrepareFarms(){
         for(int i=0;i<selectableItems.Count;i++){
             selectableItems[i].canBeSelected=false;
+            selectableItems[i].ChangeColor(selectableItems[i].originalColor);
             if(selectableItems[i].gameObject.GetComponent<FarmStats>()!=null){
                 FarmStats stats=selectableItems[i].gameObject.GetComponent<FarmStats>();
 
@@ -98,12 +107,14 @@ public class SelectableItem : MonoBehaviour
     public void MakeEveryoneUnselectable(){
         for(int i=0;i<selectableItems.Count;i++){
             selectableItems[i].canBeSelected=false;
+            selectableItems[i].ChangeColor(selectableItems[i].originalColor);
         }
     }
     public void MakeEveryoneUnselectableAndUnselected(){
         for(int i=0;i<selectableItems.Count;i++){
             selectableItems[i].canBeSelected=false;
             if(selectableItems[i].isSelected)selectableItems[i].isSelected=false;
+            selectableItems[i].ChangeColor(selectableItems[i].originalColor);
         }
     }
 
@@ -140,9 +151,19 @@ public class SelectableItem : MonoBehaviour
 
     }
 
+    void ChangeColor(Color newColor){
+        this.gameObject.GetComponentInChildren<SpriteRenderer>().color=newColor;
+        SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
+        if(sprite!=null){
+            sprite.color=newColor;
+        }
+        Debug.Log("CAMBIAR COLOR"+(sprite!=null));
+    }
+
     void OnMouseDown() {
         if(canBeSelected){
             isSelected=true;
+            ChangeColor(selectedColor);
             if(itemUI!=null && !itemUI.isQueen){
                 MoveMenu menu=moveMenu.GetComponent<MoveMenu>();
                 menu.SetSelectedAnt(this.gameObject);
@@ -154,6 +175,7 @@ public class SelectableItem : MonoBehaviour
             foreach(SelectableItem item in selectableItems){
                 if(item!=this){
                     item.isSelected=false;
+                    ChangeColor(originalColor);
                 } 
         }
         }
