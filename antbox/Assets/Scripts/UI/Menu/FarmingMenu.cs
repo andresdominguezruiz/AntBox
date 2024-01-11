@@ -44,6 +44,8 @@ public class FarmingMenu : MonoBehaviour
     public void StartFarmingMenu()
     {
         this.agent=selectedAnt.GetComponent<NavMeshAgent>();
+        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
+        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectable();
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
         farmMenu.gameObject.SetActive(true);
         consoleText.text=selectedAnt.name+"-Select an available farm";
@@ -102,7 +104,13 @@ public class FarmingMenu : MonoBehaviour
         HideStateOfFarms();
         farmMenu.SetActive(false);
         selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
-        consoleText.text="Waiting . . .";
+        Clock clock=FindObjectOfType<Clock>();
+        if(clock!=null){
+            clock.UpdateMessageOfConsoleByEvent();
+            consoleText.text=clock.messageOfEvent;
+        }
         selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
+        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
+        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
     }
 }

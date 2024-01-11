@@ -126,16 +126,21 @@ public class ExcavationMovement : MonoBehaviour
         GenerationTilemap generation=FindObjectOfType<GenerationTilemap>();
         destructableMap=generation.dirtMap;
         NavMeshAgent agent=ant.GetComponent<NavMeshAgent>();
+        TileData tileData=generation.GetTileData(selectedTile);
         for(int i=0;i<=7;i++){
             selectedTile+=direction;
             routeTile+=direction;
             Debug.Log(ant.GetComponentInChildren<UIManager>()==null);
             Debug.Log(ant.name+" esta buscando");
-            if(generation.GetTileOfTilesData(selectedTile)!=null) break;
+            if(generation.GetTileOfTilesData(selectedTile)!=null
+             && generation.GetTileData(selectedTile)!=null && !generation.GetTileData(selectedTile).GetTileType().Equals(TileType.EMPTY)) break;
         }
-        if(generation.GetTileOfTilesData(selectedTile)==null){
+        if(generation.GetTileOfTilesData(selectedTile)==null || generation.GetTileData(selectedTile)==null || generation.GetTileData(selectedTile).GetTileType().Equals(TileType.EMPTY)){
             this.gameObject.GetComponent<AntStats>().StopDigging();
         }else{
+            if(!(selectedTile-routeTile).Equals(direction)){ routeTile+=direction;
+                
+            }
             agent.SetDestination(generation.dirtMap.GetCellCenterWorld(routeTile));
         }
     }

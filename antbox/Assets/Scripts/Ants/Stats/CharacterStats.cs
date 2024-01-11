@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
+using UnityEngine.SceneManagement;
 
 public class CharacterStats : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class CharacterStats : MonoBehaviour
     public float timeLastFrame;
 
 
-    [SerializeField] private static int growingTime=20; //Cada t tiempo real, se considera un día
+    [SerializeField] private static int growingTime=24; //Cada t tiempo real, se considera un día
 
     private int counterOfSecons=0;
 
@@ -47,6 +48,20 @@ public class CharacterStats : MonoBehaviour
 
     [SerializeField] private bool isDead=false;
     [SerializeField] private int adultAge=3;
+    private Clock clockOfGame;
+
+    public Clock GetClockOfGame(){
+        return clockOfGame;
+    }
+
+    public void SetClockOfGame(Clock clock){
+        clockOfGame=clock;
+    }
+
+    public bool IsDead(){
+        return isDead;
+    }
+
     
     void Update(){
         if(Time.time -timeLastFrame>=1.0f){
@@ -81,19 +96,27 @@ public class CharacterStats : MonoBehaviour
                     farm.antsWorkingInFarm.Remove(this.gameObject);
                 }
             }
+            IsEndOfGame();
             Destroy(this.gameObject);
         }else{
             bool needToCheckHP=false;
             if(actualHunger>0 && actualThirst>0){
-                actualHunger--;
-                actualThirst--;
+                if(clockOfGame!=null && !clockOfGame.eventType.Equals(EventType.WINTER)){
+                    actualHunger--;
+                    actualThirst--;
+                }else{
+                    actualHunger-=3;
+                    actualThirst-=3;
+                }
                 Heal(1);
             }else if(actualHunger>0){
-                actualHunger--;
+                if(clockOfGame!=null && !clockOfGame.eventType.Equals(EventType.WINTER)) actualHunger--;
+                else actualHunger-=3;
                 actualHP--;
                 needToCheckHP=true;
             }else if(actualThirst>0){
-                actualThirst--;
+                if(clockOfGame!=null && !clockOfGame.eventType.Equals(EventType.WINTER)) actualThirst--;
+                else actualThirst-=3;
                 actualHP--;
                 needToCheckHP=true;
             }else{
@@ -107,19 +130,27 @@ public class CharacterStats : MonoBehaviour
                     if(antStats.IsFullOfEnergy()) antStats.CancelAntAction();
                 }
             }
+            if(actualThirst<0) actualThirst=0;
+            if(actualHunger<0) actualHunger=0;
 
             if(needToCheckHP) CheckHP();
         }
+    }
+    public void EatWithoutCost(int foodValue){
+        if(maxHunger<actualHunger+foodValue) SetActualHunger(maxHunger);
+        else SetActualHunger(actualHunger+foodValue);
+    }
+    public void DrinkWithoutCost(int waterValue){
+        if(maxThirst<actualThirst+waterValue) SetActualThirst(maxThirst);
+        else SetActualThirst(actualThirst+waterValue);
     }
 
     public void Eat(ContainerData container){
         if(container.FOOD_CONTAINER>0){
             container.FOOD_CONTAINER--;
-            Debug.Log("ha comido");
             if(maxHunger<actualHunger+container.foodValue) SetActualHunger(maxHunger);
             else SetActualHunger(actualHunger+container.foodValue);
         }else{
-            Debug.Log("no ha comido");
         }
     }
     public void Drink(ContainerData container){
@@ -127,6 +158,14 @@ public class CharacterStats : MonoBehaviour
             container.WATER_CONTAINER--;
             if(maxThirst<actualThirst+container.waterValue) SetActualThirst(maxThirst);
             else SetActualThirst(actualThirst+container.waterValue);
+        }
+    }
+
+    public void IsEndOfGame(){
+        QueenStats queenStats=this.gameObject.GetComponent<QueenStats>();
+        AntStats[] allAnts=FindObjectsOfType<AntStats>(false);
+        if((queenStats!=null && queenStats.isDead==true) || (allAnts.Length==1 && allAnts[0].isDead==true)){
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
         }
     }
 
@@ -149,10 +188,18 @@ public class CharacterStats : MonoBehaviour
     public void TakeDamage(int damage){
         SetActualHP(actualHP-damage);
     }
+    public void IncrementHP(int extraHP){
+        maxHP+=extraHP;
+        Heal(maxHP);
+    }
 
     public void Heal(int extraHp){
         if(extraHp+actualHP>maxHP) SetActualHP(maxHP);
         else SetActualHP(extraHp+actualHP);
+    }
+
+    public int GetMaxHP(){
+        return maxHP;
     }
 
     public void SetActualHP(int hp){
@@ -184,7 +231,37 @@ public class CharacterStats : MonoBehaviour
         return age.ToString();
     }
 
+    public void ProcessUpdateEffectOfAction(Action actualAction){
+        AntStats stats=this.gameObject.GetComponent<AntStats>();
+        if(!actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.NONE)){
+            if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.HP_UP)) {
+                //Incrementa segun porcentaje de la hormiga
+                this.IncrementHP(this.GetMaxHP()/5);
+            }
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESET_AGE)){
+                this.age=0;
+            }
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.FEED)){
+                this.EatWithoutCost(maxHunger/2);
+            }
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.HYDRATE)){
+                this.DrinkWithoutCost(maxThirst/2);
+            }
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_ENERGY) && stats!=null){
+                stats.SetEnergy(stats.GetMaxEnergy());
+            }
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_EVERYTHING)){
+                this.SetActualHP(maxHP);
+                this.SetActualHunger(maxHunger);
+                this.SetActualThirst(maxThirst);
+                if(stats!=null) stats.SetEnergy(stats.GetMaxEnergy());
+            }
+        }
+    }
+
     public void InitVariables(System.Random random){
+        Clock clock=FindObjectOfType<Clock>();
+        SetClockOfGame(clock);
         this.random=random;
         int randomHP=random.Next(MIN_HP,MAX_HP);
         int randomHunger=random.Next(MIN_HUNGER,MAX_HUNGER);

@@ -15,7 +15,7 @@ public class SelectableMaskManager : MonoBehaviour
 
     void Init(){
         spriteRender=this.gameObject.GetComponent<SpriteRenderer>();
-        farmStats=this.gameObject.GetComponentInParent<FarmStats>();
+        farmStats=this.gameObject.GetComponentInParent<FarmStats>(true);
     }
 
     // Update is called once per frame
@@ -33,16 +33,18 @@ public class SelectableMaskManager : MonoBehaviour
     }
 
     public void ShowRender(){
-        Init();
         this.gameObject.SetActive(true);
+        Init();
         UpdateState();
         UpdateSprite();
 
     }
 
     void UpdateState(){
-        if(farmStats.CanAntWorkInHere()) actualState=State.AVAILABLE;
-        else actualState=State.NOT_AVAILABLE;
+        if(farmStats!=null){
+            if(farmStats.CanAntWorkInHere()) actualState=State.AVAILABLE;
+            else actualState=State.NOT_AVAILABLE;
+        }
     }
 
     void UpdateSprite(){
