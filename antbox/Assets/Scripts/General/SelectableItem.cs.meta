@@ -3,7 +3,16 @@ guid: c7f23a7abb72b6c408f69b335636ec43
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - selectedWaterFarmSprite: {instanceID: 0}
+  - selectedFoodFarmSprite: {instanceID: 0}
+  - selectedQueenSprite: {instanceID: 0}
+  - selectedAntSprite: {fileID: -240151968, guid: b4723e1d48fd67e4d99fa9091949a01e, type: 3}
+  - moveMenu: {instanceID: 0}
+  - farmMenu: {instanceID: 0}
+  - digMenu: {instanceID: 0}
+  - itemUI: {instanceID: 0}
+  - farmUI: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

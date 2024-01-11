@@ -247,11 +247,11 @@ public class ActionMenu : MonoBehaviour
              || actualAction.destination.Equals(Destination.FARM)){
                 FarmGenerator farmGenerator=FindObjectOfType<FarmGenerator>();
                 if(farmGenerator!=null && actualAction.destination.Equals(Destination.FOOD_FARM)){
-                    farmGenerator.AddNewFarm(Type.FOOD);
+                    farmGenerator.AddNewFarmRandomly(Type.FOOD);
                 }else if(farmGenerator!=null && actualAction.destination.Equals(Destination.WATER_FARM)){
-                    farmGenerator.AddNewFarm(Type.WATER);
+                    farmGenerator.AddNewFarmRandomly(Type.WATER);
                 }else if(farmGenerator!=null && actualAction.destination.Equals(Destination.FARM)){
-                    farmGenerator.AddNewFarm();
+                    farmGenerator.AddNewFarmRandomly();
                 }
             }
         }

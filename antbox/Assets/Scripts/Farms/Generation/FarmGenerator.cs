@@ -31,33 +31,60 @@ public class FarmGenerator : MonoBehaviour
     public void InitializeGeneratorAndPlaceFarms(List<Vector3Int> path,System.Random random){
         this.random=random;
         availablePath=path;
-        FarmPlacerInGrid(true);
-        FarmPlacerInGrid(false);
+        FarmPlacerInGridRandomly(true);
+        FarmPlacerInGridRandomly(false);
         waterFarmBase.SetActive(false);
         foodFarmBase.SetActive(false);
     }
 
-    public void AddNewFarm(){
+    public void AddNewFarmInValidPosition(Vector3Int tilePosition){
             double randomT=random.NextDouble();
             if(randomT>=0.5 && foodFarms.Count<maxNumberOfFarms){
-                FarmPlacerInGrid(false);
+                PlaceNewFarmInPosition(tilePosition,false);
             }else if(randomT<0.5 && waterFarms.Count<maxNumberOfFarms){
-                FarmPlacerInGrid(true);
+                PlaceNewFarmInPosition(tilePosition,true);
             }
 
     }
 
-    public void AddNewFarm(Type farmType){
+    public void AddNewFarmInValidPosition(Type farmType,Vector3Int tilePosition){
         if(farmType.Equals(Type.FOOD) && foodFarms.Count<maxNumberOfFarms){
-            FarmPlacerInGrid(false);
+            PlaceNewFarmInPosition(tilePosition,false);
         }
         else if(farmType.Equals(Type.WATER) && waterFarms.Count<maxNumberOfFarms){
-            FarmPlacerInGrid(true);
+            PlaceNewFarmInPosition(tilePosition,true);
         }
 
     }
 
-    public void FarmPlacerInGrid(bool placeWaterFarm){
+    public void AddNewFarmRandomly(){
+            double randomT=random.NextDouble();
+            if(randomT>=0.5 && foodFarms.Count<maxNumberOfFarms){
+                FarmPlacerInGridRandomly(false);
+            }else if(randomT<0.5 && waterFarms.Count<maxNumberOfFarms){
+                FarmPlacerInGridRandomly(true);
+            }
+
+    }
+
+    public void AddNewFarmRandomly(Type farmType){
+        if(farmType.Equals(Type.FOOD) && foodFarms.Count<maxNumberOfFarms){
+            FarmPlacerInGridRandomly(false);
+        }
+        else if(farmType.Equals(Type.WATER) && waterFarms.Count<maxNumberOfFarms){
+            FarmPlacerInGridRandomly(true);
+        }
+
+    }
+    public void PlaceNewFarmInPosition(Vector3Int position,bool placeWaterFarm){
+        Tilemap map=dirtMap.GetComponent<Tilemap>();
+        if(placeWaterFarm) PlaceWaterFarm(map,position);
+        else PlaceFoodFarm(map,position);
+        availablePath.Remove(position);
+        DestroyAroundFarmAndAddCoverage(position,map);
+    }
+
+    public void FarmPlacerInGridRandomly(bool placeWaterFarm){
         int v=random.Next(0,availablePath.Count-1);
         Tilemap map=dirtMap.GetComponent<Tilemap>();
         Vector3Int position=availablePath[v];
@@ -67,10 +94,7 @@ public class FarmGenerator : MonoBehaviour
             position=availablePath[v];
             contBreaker++;
         }
-        if(placeWaterFarm) PlaceWaterFarm(map,position);
-        else PlaceFoodFarm(map,position);
-        availablePath.Remove(availablePath[v]);
-        DestroyAroundFarmAndAddCoverage(position,map);
+        PlaceNewFarmInPosition(position,placeWaterFarm);
     }
 
     public bool CanBePlaceFarmInPosition(Vector3Int position){
@@ -80,8 +104,10 @@ public class FarmGenerator : MonoBehaviour
         bool res=true;
         Tilemap map=dirtMap.GetComponent<Tilemap>();
         TileBase stone=FindObjectOfType<ContainerData>().stoneTile;
+        QueenStats queen=FindObjectOfType<QueenStats>(false);
         foreach(Vector3Int pos in myCoverage){
-            if(coveredPositions.Contains(pos) || stone.Equals(map.GetTile(pos))){
+            if(coveredPositions.Contains(pos) || stone.Equals(map.GetTile(pos)) ||
+            (queen!=null && map.WorldToCell(queen.gameObject.transform.position).Equals(pos))){
                 res=false;
                 break;
             }
@@ -133,11 +159,15 @@ public class FarmGenerator : MonoBehaviour
     }
 
     public void DestroyAroundFarmAndAddCoverage(Vector3Int position,Tilemap map){
+        GenerationTilemap generationTilemap=FindObjectOfType<GenerationTilemap>();
         List<Vector3Int> list=GetAdjacentPositionsFromPositionOfFarm(position);
         foreach(Vector3Int pos in list){
             if(map.GetTile(pos)!=null){
                 map.SetTile(pos,null);
                 availablePath.Add(pos);
+                generationTilemap.GetExcavableTiles().Remove(pos);
+                generationTilemap.AddNextToDirtPositionsOfPosition(pos,map);
+                
             }
         }
         List<Vector3Int> myCoverage=GetCoverageOfFarm(position);
