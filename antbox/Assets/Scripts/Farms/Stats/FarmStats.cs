@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public enum Type{
@@ -14,6 +15,12 @@ public class FarmStats : MonoBehaviour
     //LIMITS:
     [SerializeField] private int MAX_RESOURCES=5;
     [SerializeField] private int MIN_RESOURCES=1;
+    [SerializeField] private int maxTimePerCycle=40;
+    [SerializeField] private int minTimePerCycle=10;
+    [SerializeField] private int minLimitOfCapacity=2;
+    [SerializeField] private int maxLimitOfCapacity=8;
+    [SerializeField] private int maxEnergyCost=5;
+    [SerializeField] private int minEnergyCost=1;
 
     private System.Random random = new System.Random();
 
@@ -25,9 +32,6 @@ public class FarmStats : MonoBehaviour
     public float timePerCycleConsumed;
     public float timeLastFrame;
 
-    [SerializeField] private int timeNeededToRepair=60;
-
-    [SerializeField] private int energyCostToRepair=40;
     [SerializeField] public int energyCostOfCycle=2;
 
     [SerializeField] private int maxCapacity=4;
@@ -45,16 +49,26 @@ public class FarmStats : MonoBehaviour
         return timePerCycle;
     }
     public void ProcessUpdateEffectOfAction(Action actualAction){
-        if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.FARM_CYCLE_DOWN)){
-            int newTimePerCycle=this.timePerCycle-timePerCycle*20/100;
-            if(newTimePerCycle>=10) this.timePerCycle=newTimePerCycle; //ESTO SE HACE PARA PONER UN LÍMITE
+        if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.FARM_CYCLE)){
+            int newTimePerCycle=this.timePerCycle+actualAction.multiplicatorValue
+            *((this.timePerCycle+(int)actualAction.sumValue)-minTimePerCycle)/10;
+            if(newTimePerCycle>maxTimePerCycle) this.timePerCycle=maxTimePerCycle; //ESTO SE HACE PARA PONER UN LÍMITE
+            else if(newTimePerCycle<minTimePerCycle) this.timePerCycle=minTimePerCycle;
+            else this.timePerCycle=newTimePerCycle;
+            
         }
-        else if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.MORE_CAPACITY) && this.maxCapacity<=8){
-            this.maxCapacity++;
+        else if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.CAPACITY)){
+            maxCapacity=actualAction.multiplicatorValue*(maxCapacity+(int)actualAction.sumValue);
+            if(maxCapacity>maxLimitOfCapacity) maxCapacity=maxLimitOfCapacity;
+            else if(maxCapacity<minLimitOfCapacity) maxCapacity=minLimitOfCapacity;
         }
-        else if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.FARM_RESOURCES_UP)){
-            this.MIN_RESOURCES+=3;
-            this.MAX_RESOURCES+=3;
+        else if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.FARM_RESOURCES)){
+            this.MIN_RESOURCES=actualAction.multiplicatorValue*(MIN_RESOURCES+(int)actualAction.sumValue);
+            this.MAX_RESOURCES=actualAction.multiplicatorValue*(MAX_RESOURCES+(int)actualAction.sumValue);
+        }else if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.ENERGY_COST)){
+            energyCostOfCycle=actualAction.multiplicatorValue*(energyCostOfCycle+(int)actualAction.sumValue);
+            if(energyCostOfCycle<minEnergyCost) energyCostOfCycle=minEnergyCost;
+            else if(energyCostOfCycle>maxEnergyCost) energyCostOfCycle=maxEnergyCost;
         }
     }
     public Type GetTypeOfFarm(){
@@ -99,7 +113,7 @@ public class FarmStats : MonoBehaviour
             if(Time.time -timeLastFrame>=1.0f){
             float sumSpeed=0f;
             foreach(GameObject ant in antsWorkingInFarm){
-                sumSpeed+=ant.GetComponent<AntStats>().GetFarminSpeed();
+                sumSpeed+=ant.GetComponent<AntStats>().GetFarmingSpeed();
             }
             timePerCycleConsumed+=sumSpeed;
             if(antsWorkingInFarm.Count>0){

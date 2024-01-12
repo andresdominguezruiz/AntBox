@@ -19,8 +19,11 @@ MonoBehaviour:
   actions:
   - uses: 3
     type: 1
-    destination: 0
-    farmEffect: 3
-    containerEffect: 2
-    characterEffect: 0
-    interactionType: 2
+    destination: 7
+    farmEffect: 4
+    containerEffect: 5
+    characterEffect: 8
+    playerEffect: 2
+    interactionType: 0
+    multiplicatorValue: 0
+    sumValue: 0

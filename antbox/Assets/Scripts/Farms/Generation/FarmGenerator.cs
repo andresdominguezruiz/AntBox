@@ -21,6 +21,9 @@ public class FarmGenerator : MonoBehaviour
 
     private List<Vector3Int> availablePath;
 
+    public Sprite waterFarmSprite;
+    public Sprite foodFarmSprite;
+
     public int GetMaxNumberOfFarms(){
         return maxNumberOfFarms;
     }

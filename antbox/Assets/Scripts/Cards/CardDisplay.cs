@@ -38,6 +38,12 @@ public class CardDisplay : MonoBehaviour
 
     }
 
+    public void DiscardCard(){
+        ContainerData containerData=FindObjectOfType<ContainerData>();
+        containerData.RemoveCardFromHand(this);
+        containerData.GoBackToGameAfterActivity();
+    }
+
     public void UseCard(){
         ActivityMenu activityMenu=FindObjectOfType<ActivityMenu>(true);
         activityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesPerComplexity(false),false);

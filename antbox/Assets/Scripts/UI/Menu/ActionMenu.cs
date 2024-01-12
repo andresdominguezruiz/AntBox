@@ -233,6 +233,10 @@ public class ActionMenu : MonoBehaviour
             }
             if(firstWaterFarm!=null) firstWaterFarm.ProcessUpdateEffectOfAction(actualAction);
         }
+        else if(actualAction.destination.Equals(Destination.PLAYER)){
+            //ESTO SON PASIVAS DEL JUGADOR
+            Player.Instance.ProcessUpdateEffectOfAction(actualAction);
+        }
     }
 
 

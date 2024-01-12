@@ -45,7 +45,7 @@ public class Clock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.time -timeLastFrame>=1.0f){
+        if(Time.time -timeLastFrame>=(1.0f+Player.Instance.GetTimeValue())){
             counterOfSecons++;
             if(counterOfSecons==growingTime){
                 day++;
