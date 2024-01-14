@@ -120,7 +120,7 @@ public class Clock : MonoBehaviour
         cardDisplay.MakeEveryCardUnselectable();
         SelectableItem item=FindObjectOfType<SelectableItem>(false);
         item.MakeEveryoneUnselectableAndUnselected();
-        activityMenu.SetActivitiesAndStartPlaying(cardDisplay.GenerateActivitiesPerComplexity(true),true);
+        activityMenu.SetActivitiesAndStartPlaying(cardDisplay.GenerateActivitiesByComplexity(true),true);
     }
 
     private void ProcessSummer()

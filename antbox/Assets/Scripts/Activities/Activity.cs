@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum ComplexityType{
-    EASY,MEDIUM,HARD
+    VERY_EASY,EASY,MEDIUM,HARD,VERY_HARD
 }
 
 [CreateAssetMenu(fileName = "New Activity", menuName = "Activity")]

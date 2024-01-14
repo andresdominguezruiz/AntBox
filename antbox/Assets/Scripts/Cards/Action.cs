@@ -53,5 +53,18 @@ public class Action
     public bool NoNeedToChooseItemToApplyUpdateAction(){
         return this.interactionType.Equals(InteractionType.ALL) || this.interactionType.Equals(InteractionType.ANY);
     }
+
+
+    public double GetComplexityOfAction(){
+        double result=0.0;
+        for(int i=0;i<uses;i++){
+            if(!type.Equals(ActionType.UPDATE)){
+                result+=0.5;
+            }else{
+                result+=multiplicatorValue>=1?0.2*multiplicatorValue:0.2;
+            }
+        }
+        return result;
+    }
   
 }

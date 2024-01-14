@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     public static Player Instance;
 
     public HashSet<UpdateEffectOnPlayer> playerPassives=new HashSet<UpdateEffectOnPlayer>();
+    public double complexityLevelOfGame=1.0;
+    public List<Activity> knownActivities=new List<Activity>();
 
 
     private void Awake(){
@@ -19,6 +21,11 @@ public class Player : MonoBehaviour
     }
     public void ResetPlayerData(){
         playerPassives=new HashSet<UpdateEffectOnPlayer>();
+        complexityLevelOfGame=1.0;
+        ForgetActivities();
+    }
+    public void ForgetActivities(){
+        knownActivities=new List<Activity>();
     }
 
     public bool AllowNegativeAge(){

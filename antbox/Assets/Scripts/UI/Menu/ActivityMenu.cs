@@ -31,6 +31,7 @@ public class ActivityMenu : MonoBehaviour
             if(selectedButton.Equals(options[activities[index].correctAnswer])){
                 spriteAnswer.sprite=correct;
                 evaluation[index]=true;
+                Player.Instance.knownActivities.Add(activities[index]);
             }else{
                 spriteAnswer.sprite=incorrect;
                 evaluation[index]=false;

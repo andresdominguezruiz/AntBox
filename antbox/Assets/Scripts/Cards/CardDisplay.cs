@@ -1,6 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,18 +25,70 @@ public class CardDisplay : MonoBehaviour
         HideInfo();
         
     }
-    public Activity[] GenerateActivitiesPerComplexity(bool isBoss){
+    public Activity[] GenerateActivitiesByComplexity(bool isBoss){
         //TODO:Añadir complejidad dependiendo de los efectos de la carta
-        Activity[] allActivities=Resources.LoadAll<Activity>("Activities");
+        List<Activity> notKnownActivities=GetNotKnownActivitiesByComplexity(isBoss);
+        //Activity[] allActivities=Resources.LoadAll<Activity>("Activities");
         int n=1;
         if(isBoss) n=10;
+        else{
+            for(int i=0;i<=(int)Player.Instance.complexityLevelOfGame && n<=3;i++){
+                if(i%3==0) n++;
+            }
+        }
         Activity[] activities=new Activity[n];
         for(int i=0;i<n;i++){
-            int v=random.Next(0,allActivities.Length);
-            activities[i]=allActivities[v];
+            if(notKnownActivities.Count<1){
+                Player.Instance.ForgetActivities();
+                notKnownActivities=GetNotKnownActivitiesByComplexity(isBoss);
+            }
+            int v=random.Next(0,notKnownActivities.Count);
+            activities[i]=notKnownActivities[v];
+            notKnownActivities.Remove(notKnownActivities[v]);
         }
         return activities;
 
+    }
+    public List<Activity> GetNotKnownActivitiesByComplexity(bool isBoss){
+        HashSet<ComplexityType> complexityTypes=PickAreaOfComplexity(isBoss);
+        Activity[] allActivities=Resources.LoadAll<Activity>("Activities");
+        List<Activity> activitiesInComplexityRange=new List<Activity>();
+        List<Activity> notKnownActivities=new List<Activity>();
+        foreach(Activity activity in allActivities){
+            if(complexityTypes.Contains(activity.complexityType)) activitiesInComplexityRange.Add(activity);
+        }
+        foreach(Activity act in activitiesInComplexityRange){
+            if(!Player.Instance.knownActivities.Contains(act)) notKnownActivities.Add(act);
+        }
+        return notKnownActivities;
+    }
+    public HashSet<ComplexityType> PickAreaOfComplexity(bool isBoss){
+        HashSet<ComplexityType> complexitiesToSearch=new HashSet<ComplexityType>();
+        double complexity=0.0;
+        int multiplicator=2;
+        if(isBoss){
+            complexity+=Player.Instance.complexityLevelOfGame+0.1*StatisticsOfGame.Instance.counterOfCorrectCards;
+            multiplicator=3;
+        }else{
+            complexity+=card.GetComplexityOfCard(Player.Instance.complexityLevelOfGame);
+        }
+        //Para los areas de complejidad he aprovechado los indices del enumerado, ya que estos estaban ordenados
+        //, y crear otras variables para los límites me parece redundante
+        if(complexity>=(int)ComplexityType.VERY_EASY*multiplicator && complexity<(int)ComplexityType.EASY*multiplicator){
+            complexitiesToSearch.Add(ComplexityType.VERY_EASY);
+            complexitiesToSearch.Add(ComplexityType.EASY);
+        }else if(complexity>=(int)ComplexityType.EASY*multiplicator && complexity<(int)ComplexityType.MEDIUM*multiplicator){
+            complexitiesToSearch.Add(ComplexityType.EASY);
+            complexitiesToSearch.Add(ComplexityType.MEDIUM);
+        }else if(complexity>=(int)ComplexityType.MEDIUM*multiplicator && complexity<(int)ComplexityType.HARD*multiplicator){
+            complexitiesToSearch.Add(ComplexityType.MEDIUM);
+            complexitiesToSearch.Add(ComplexityType.HARD);
+        }else if(complexity>=(int)ComplexityType.HARD*multiplicator && complexity<(int)ComplexityType.VERY_HARD*multiplicator){
+            complexitiesToSearch.Add(ComplexityType.HARD);
+            complexitiesToSearch.Add(ComplexityType.VERY_HARD);
+        }else if(complexity>=(int)ComplexityType.VERY_HARD*multiplicator) complexitiesToSearch.Add(ComplexityType.VERY_HARD);
+
+        return complexitiesToSearch;
     }
 
     public void DiscardCard(){
@@ -46,7 +99,7 @@ public class CardDisplay : MonoBehaviour
 
     public void UseCard(){
         ActivityMenu activityMenu=FindObjectOfType<ActivityMenu>(true);
-        activityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesPerComplexity(false),false);
+        activityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesByComplexity(false),false);
         ContainerData containerData=FindObjectOfType<ContainerData>();
         containerData.executableActions=card.actions;
         containerData.RemoveCardFromHand(this);
