@@ -47,7 +47,7 @@ public class CharacterStats : MonoBehaviour
     [SerializeField] private int age;
 
     [SerializeField] private bool isDead=false;
-    [SerializeField] private int adultAge=3;
+    [SerializeField] private int adultAge=4;
     private Clock clockOfGame;
 
     public Clock GetClockOfGame(){
@@ -64,11 +64,11 @@ public class CharacterStats : MonoBehaviour
 
     
     void Update(){
-        if(Time.time -timeLastFrame>=1.0f){
+        if(Time.time -timeLastFrame>=(1.0f+Player.Instance.GetTimeValue())){
             counterOfSecons++;
             if(counterOfSecons==growingTime){
                 age++;
-                //UpdateStatsPerAge();
+                UpdateStatsPerAge();
                 counterOfSecons=0;
             }
             UpdateStats();
@@ -234,28 +234,48 @@ public class CharacterStats : MonoBehaviour
     public void ProcessUpdateEffectOfAction(Action actualAction){
         AntStats stats=this.gameObject.GetComponent<AntStats>();
         if(!actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.NONE)){
-            if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.HP_UP)) {
-                //Incrementa segun porcentaje de la hormiga
-                this.IncrementHP(this.GetMaxHP()/5);
+            if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.HP_LIMIT)) {
+                maxHP=actualAction.multiplicatorValue*(maxHP+(int)actualAction.sumValue);
+                if(maxHP<MIN_HP/2) maxHP=MIN_HP/2;
+                else if(maxHP>MAX_HP*2) maxHP=MAX_HP*2;
             }
-            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESET_AGE)){
-                this.age=0;
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.AGE)){
+                age=actualAction.multiplicatorValue*(age+(int)actualAction.sumValue);
+                if(age<0 && !Player.Instance.AllowNegativeAge()) age=0;
             }
             else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.FEED)){
-                this.EatWithoutCost(maxHunger/2);
+                this.EatWithoutCost(actualAction.multiplicatorValue*actualHunger+(int)actualAction.sumValue);
             }
             else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.HYDRATE)){
-                this.DrinkWithoutCost(maxThirst/2);
+                this.DrinkWithoutCost(actualAction.multiplicatorValue*actualThirst+(int)actualAction.sumValue);
             }
             else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_ENERGY) && stats!=null){
                 stats.SetEnergy(stats.GetMaxEnergy());
             }
-            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_EVERYTHING)){
-                this.SetActualHP(maxHP);
-                this.SetActualHunger(maxHunger);
-                this.SetActualThirst(maxThirst);
-                if(stats!=null) stats.SetEnergy(stats.GetMaxEnergy());
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_HP))this.SetActualHP(maxHP);
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_HUNGER))this.SetActualHunger(maxHunger);
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_THIRST)) this.SetActualThirst(maxThirst);
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.HUNGER_LIMIT)){
+                maxHunger=actualAction.multiplicatorValue*(maxHunger+(int)actualAction.sumValue);
+                if(maxHunger<MIN_HUNGER/2) maxHunger=MIN_HUNGER/2;
+                else if(maxHunger>MAX_HUNGER*2) maxHunger=MAX_HUNGER*2;
+            }else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.THIRST_LIMIT)){
+                maxThirst=actualAction.multiplicatorValue*(maxThirst+(int)actualAction.sumValue);
+                if(maxThirst<MIN_THIRST/2) maxThirst=MIN_THIRST/2;
+                else if(maxThirst>MAX_THIRST*2) maxThirst=MAX_THIRST*2;
             }
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.ENERGY_LIMIT) && stats!=null){
+                stats.SetMaxEnergy(actualAction.multiplicatorValue*(stats.GetMaxEnergy()+(int)actualAction.sumValue));
+            }
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.DIGGING_SPEED) && stats!=null){
+                stats.SetDiggingSpeed(actualAction.multiplicatorValue*(stats.GetDiggingSpeed()+actualAction.sumValue));
+            }else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.FARMING_SPEED) && stats!=null){
+                stats.SetFarmingSpeed(actualAction.multiplicatorValue*(stats.GetFarmingSpeed()+actualAction.sumValue));
+            }
+            else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RECOVER_SPEED) && stats!=null){
+                stats.SetRecoverSpeed(actualAction.multiplicatorValue*(stats.GetRecoverSpeed()+(int)actualAction.sumValue));
+            }
+
         }
     }
 

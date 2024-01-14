@@ -12,6 +12,7 @@ public class UICardManager : MonoBehaviour
     public TextMeshProUGUI cardDescription;
     public Button useButton;
     public Button cancelButton;
+    public Button discardCardButton;
 
     void Start(){
         infoCanvas=this.gameObject;
@@ -23,6 +24,7 @@ public class UICardManager : MonoBehaviour
         foreach(Button b in allButtons){
             if(b.gameObject.CompareTag("UseButton")) useButton=b;
             else if(b.gameObject.CompareTag("CancelButton")) cancelButton=b;
+            else if(b.gameObject.CompareTag("DiscardButton")) discardCardButton=b;
         }
     }
     public void Init(){
@@ -35,6 +37,7 @@ public class UICardManager : MonoBehaviour
         foreach(Button b in allButtons){
             if(b.gameObject.CompareTag("UseButton")) useButton=b;
             else if(b.gameObject.CompareTag("CancelButton")) cancelButton=b;
+            else if(b.gameObject.CompareTag("DiscardButton")) discardCardButton=b;
         }
     }
 }

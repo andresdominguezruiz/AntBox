@@ -17,24 +17,13 @@ MonoBehaviour:
   artWorks: {fileID: 21300000, guid: aaece665c0073c141ad52ab82f839178, type: 3}
   type: 0
   actions:
-  - uses: 2
+  - uses: 1
     type: 1
-    destination: 2
-    farmEffect: 1
-    containerEffect: 2
-    characterEffect: 7
-    interactionType: 2
-  - uses: 2
-    type: 1
-    destination: 3
-    farmEffect: 1
-    containerEffect: 2
-    characterEffect: 7
-    interactionType: 2
-  - uses: 2
-    type: 1
-    destination: 6
-    farmEffect: 3
-    containerEffect: 2
-    characterEffect: 6
-    interactionType: 2
+    destination: 7
+    farmEffect: 4
+    containerEffect: 5
+    characterEffect: 8
+    playerEffect: 2
+    interactionType: 0
+    multiplicatorValue: 0
+    sumValue: 0

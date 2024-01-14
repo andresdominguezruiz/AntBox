@@ -45,7 +45,7 @@ public class Clock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.time -timeLastFrame>=1.0f){
+        if(Time.time -timeLastFrame>=(1.0f+Player.Instance.GetTimeValue())){
             counterOfSecons++;
             if(counterOfSecons==growingTime){
                 day++;
@@ -120,7 +120,7 @@ public class Clock : MonoBehaviour
         cardDisplay.MakeEveryCardUnselectable();
         SelectableItem item=FindObjectOfType<SelectableItem>(false);
         item.MakeEveryoneUnselectableAndUnselected();
-        activityMenu.SetActivitiesAndStartPlaying(cardDisplay.GenerateActivitiesPerComplexity(true),true);
+        activityMenu.SetActivitiesAndStartPlaying(cardDisplay.GenerateActivitiesByComplexity(true),true);
     }
 
     private void ProcessSummer()

@@ -228,7 +228,7 @@ public class UIManager : MonoBehaviour
         ageText.text="Age:"+antStats.GetTextAge();
         energyText.text="Energy:"+antStats.GetEnergyText();
         nameText.text="Name:"+name;
-        farminSpeedText.text="Farming Speed:"+antStats.GetFarminSpeed();
+        farminSpeedText.text="Farming Speed:"+antStats.GetFarmingSpeed();
         diggingSpeedText.text="Digging Speed:"+antStats.GetDiggingSpeed();
     }
     public void UpdateCanvasWithQueenStats(QueenStats queenStats,string name){

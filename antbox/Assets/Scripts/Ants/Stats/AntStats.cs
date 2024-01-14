@@ -40,8 +40,25 @@ public class AntStats : CharacterStats
     [SerializeField] private int recoverSpeed;
     //TODO: Cuando tengamos juego base, mejorar stats para que cada hormiga sea buena en algo
 
-    public float GetFarminSpeed(){
+    public float GetFarmingSpeed(){
         return farmingSpeed;
+    }
+
+    public void SetFarmingSpeed(float speed){
+        farmingSpeed=speed;
+        if(speed>MAX_FARMING_SPEED*2) farmingSpeed=MAX_FARMING_SPEED*2;
+        else if(speed<MIN_FARMING_SPEED/2) farmingSpeed=MIN_FARMING_SPEED/2;
+    }
+    public void SetDiggingSpeed(float speed){
+        diggingSpeed=speed;
+        if(speed>MAX_DIGGING_SPEED*2) diggingSpeed=MAX_DIGGING_SPEED*2;
+        else if(speed<MIN_DIGGING_SPEED/2) diggingSpeed=MIN_DIGGING_SPEED/2;
+    }
+
+    public void SetRecoverSpeed(int speed){
+        recoverSpeed=speed;
+        if(speed>MAX_RECOVER_SPEED*2) recoverSpeed=MAX_RECOVER_SPEED*2;
+        else if(speed<MIN_RECOVER_SPEED/2) recoverSpeed=MIN_RECOVER_SPEED/2;
     }
 
     public void CancelAntAction(){
@@ -114,6 +131,11 @@ public class AntStats : CharacterStats
         if(energy<0) actualEnergy=0;
         else if(energy>maxEnergy) actualEnergy=maxEnergy;
         else actualEnergy=energy;
+    }
+    public void SetMaxEnergy(int energy){
+        if(energy<MIN_ENERGY/2) maxEnergy=MIN_ENERGY/2;
+        else if(energy>MAX_ENERGY*2) maxEnergy=MAX_ENERGY*2;
+        else maxEnergy=energy;
     }
 
     public void ApplyEnergyCost(int cost){

@@ -31,5 +31,6 @@ public class StatisticsOfGame : MonoBehaviour
         counterOfCorrectCards=0;
         counterOfFailedCards=0;
         counterOfDays=0;
+        Player.Instance.ResetPlayerData();
     }
 }

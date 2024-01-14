@@ -79,10 +79,6 @@ public class SelectableItem : MonoBehaviour
     }
     void Start(){
         selectableItems.Add(this);
-        SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
-        if(sprite!=null){
-            originalColor=sprite.color;
-        }
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -96,7 +92,6 @@ public class SelectableItem : MonoBehaviour
     public void MakeEveryoneUnselectableButPrepareFarms(){
         for(int i=0;i<selectableItems.Count;i++){
             selectableItems[i].canBeSelected=false;
-            selectableItems[i].ChangeColor(selectableItems[i].originalColor);
             if(selectableItems[i].gameObject.GetComponent<FarmStats>()!=null){
                 FarmStats stats=selectableItems[i].gameObject.GetComponent<FarmStats>();
 
@@ -107,14 +102,12 @@ public class SelectableItem : MonoBehaviour
     public void MakeEveryoneUnselectable(){
         for(int i=0;i<selectableItems.Count;i++){
             selectableItems[i].canBeSelected=false;
-            selectableItems[i].ChangeColor(selectableItems[i].originalColor);
         }
     }
     public void MakeEveryoneUnselectableAndUnselected(){
         for(int i=0;i<selectableItems.Count;i++){
             selectableItems[i].canBeSelected=false;
             if(selectableItems[i].isSelected)selectableItems[i].isSelected=false;
-            selectableItems[i].ChangeColor(selectableItems[i].originalColor);
         }
     }
 
@@ -163,7 +156,6 @@ public class SelectableItem : MonoBehaviour
     void OnMouseDown() {
         if(canBeSelected){
             isSelected=true;
-            ChangeColor(selectedColor);
             if(itemUI!=null && !itemUI.isQueen){
                 MoveMenu menu=moveMenu.GetComponent<MoveMenu>();
                 menu.SetSelectedAnt(this.gameObject);
@@ -175,7 +167,6 @@ public class SelectableItem : MonoBehaviour
             foreach(SelectableItem item in selectableItems){
                 if(item!=this){
                     item.isSelected=false;
-                    ChangeColor(originalColor);
                 } 
         }
         }

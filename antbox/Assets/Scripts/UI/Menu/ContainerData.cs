@@ -8,6 +8,8 @@ public class ContainerData : MonoBehaviour
 {
     public int FOOD_CONTAINER=20;
     public int WATER_CONTAINER=20;
+    [SerializeField] private int minNutritionalValue=10;
+    [SerializeField] private int maxNutritionalValue=60;
     public int maxCards=10;
     private System.Random random = new System.Random();
     public List<CardDisplay> cardsInHand=new List<CardDisplay>();
@@ -22,6 +24,8 @@ public class ContainerData : MonoBehaviour
 
     public TextMeshProUGUI foodText;
     public TextMeshProUGUI waterText;
+    public TextMeshProUGUI foodValueText;
+    public TextMeshProUGUI waterValueText;
 
     public TextMeshProUGUI foodLimitText;
     public TextMeshProUGUI waterLimitText;
@@ -47,11 +51,7 @@ public class ContainerData : MonoBehaviour
     void Start()
     {
         farmGenerator=FindObjectOfType<FarmGenerator>();
-        foodText.text="F:"+FOOD_CONTAINER;
-        waterText.text="W:"+WATER_CONTAINER;
-        cardText.text="Cards:"+cardsInHand.Count+"/10";
-        foodLimitText.text=farmGenerator.foodFarms.Count+"/"+farmGenerator.GetMaxNumberOfFarms();
-        waterLimitText.text=farmGenerator.waterFarms.Count+"/"+farmGenerator.GetMaxNumberOfFarms();
+        UpdateTextOfContainer();
         
     }
     public bool CanAddNewCard(){
@@ -64,33 +64,48 @@ public class ContainerData : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void UpdateTextOfContainer(){
         foodText.text="F:"+FOOD_CONTAINER;
         waterText.text="W:"+WATER_CONTAINER;
+        foodValueText.text="VALUE:"+foodValue;
+        waterValueText.text="VALUE:"+waterValue;
         cardText.text="Cards:"+cardsInHand.Count+"/10";
         foodLimitText.text=farmGenerator.foodFarms.Count+"/"+farmGenerator.GetMaxNumberOfFarms();
         waterLimitText.text=farmGenerator.waterFarms.Count+"/"+farmGenerator.GetMaxNumberOfFarms();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        UpdateTextOfContainer();
 
     }
     public void ProcessUpdateEffectOfAction(Action actualAction){
-        if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.MORE_FOOD)){
-            AddResources(10,Type.FOOD);
+        if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.FOOD)){
+            FOOD_CONTAINER=actualAction.multiplicatorValue*(FOOD_CONTAINER+(int)actualAction.sumValue);
+            if(FOOD_CONTAINER<0) FOOD_CONTAINER=0;
         }
-        else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.MORE_WATER)){
-            AddResources(10,Type.WATER);
+        else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.WATER)){
+            WATER_CONTAINER=actualAction.multiplicatorValue*(WATER_CONTAINER+(int)actualAction.sumValue);
+            if(WATER_CONTAINER<0) WATER_CONTAINER=0;
         }
-        else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.MORE_EVERYTHING)){
-            AddResources(10,Type.WATER);
-            AddResources(10,Type.FOOD);
-        }else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.DOUBLE_FOOD)){
-            AddResources(FOOD_CONTAINER,Type.FOOD);
-        }else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.DOUBLE_WATER)){
-            AddResources(WATER_CONTAINER,Type.WATER);
-        }else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.DOUBLE_EVERYTHING)){
-            AddResources(FOOD_CONTAINER,Type.FOOD);
-            AddResources(WATER_CONTAINER,Type.WATER);
+        else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.WATER_VALUE)){
+            waterValue=actualAction.multiplicatorValue*(waterValue+(int)actualAction.sumValue);
+            if(waterValue>maxNutritionalValue) waterValue=maxNutritionalValue;
+            else if(waterValue<minNutritionalValue) waterValue=minNutritionalValue;
+        }else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.FOOD_VALUE)){
+            foodValue=actualAction.multiplicatorValue*(foodValue+(int)actualAction.sumValue);
+            if(foodValue>maxNutritionalValue) foodValue=maxNutritionalValue;
+            else if(foodValue<minNutritionalValue) foodValue=minNutritionalValue;
+        }
+        else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.MIRROR)){
+            //Cambia valores nutritivos de la partida.
+            int originalValue=foodValue;
+            int container=FOOD_CONTAINER;
+            foodValue=waterValue;
+            FOOD_CONTAINER=WATER_CONTAINER;
+            waterValue=originalValue;
+            WATER_CONTAINER=container;
         }
     }
 
