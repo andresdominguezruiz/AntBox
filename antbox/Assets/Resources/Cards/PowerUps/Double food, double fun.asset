@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204ab161c44cac84986d93c2d6eb5924, type: 3}
+  m_Name: Double food, double fun
+  m_EditorClassIdentifier: 
+  name: Double food, double fun
+  description: Double your food container
+  artWorks: {fileID: 21300000, guid: 53dfe88af8478064c8f6220d8e771a6b, type: 3}
+  type: 0
+  actions:
+  - uses: 1
+    type: 1
+    destination: 1
+    farmEffect: 4
+    containerEffect: 0
+    characterEffect: 8
+    playerEffect: 0
+    interactionType: 0
+    multiplicatorValue: 2
+    sumValue: 0

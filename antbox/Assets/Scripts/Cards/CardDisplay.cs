@@ -32,7 +32,7 @@ public class CardDisplay : MonoBehaviour
         int n=1;
         if(isBoss) n=10;
         else{
-            for(int i=0;i<=(int)Player.Instance.complexityLevelOfGame && n<=3;i++){
+            for(int i=(int)Player.Instance.complexityLevelOfGame;i>0 && n<=3;i--){
                 if(i%3==0) n++;
             }
         }
