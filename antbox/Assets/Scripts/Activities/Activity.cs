@@ -14,6 +14,6 @@ public class Activity : ScriptableObject
     public Sprite optionalImage;
     public string description;
     public ComplexityType complexityType;
-    public string[] options;
+    public Sprite[] options;
     public int correctAnswer;
 }

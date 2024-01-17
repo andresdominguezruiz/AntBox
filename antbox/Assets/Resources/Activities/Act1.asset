@@ -17,8 +17,8 @@ MonoBehaviour:
   description: 
   complexityType: 1
   options:
-  - n
-  - k
-  - n+k
-  - p
+  - {fileID: 21300000, guid: a164fe4de2cabe34eaeccea63a32ac4f, type: 3}
+  - {fileID: 21300000, guid: fe57892251006904aaa7bedf6b70a4bd, type: 3}
+  - {fileID: 21300000, guid: cd3857ddca3674049958a3175971662f, type: 3}
+  - {fileID: 21300000, guid: b72bc7f62e3236a4ba6d46c0019691e2, type: 3}
   correctAnswer: 1

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
@@ -15,8 +16,8 @@ public class SelectableItem : MonoBehaviour
 {
     public bool isSelected=false;
     public bool canBeSelected=true;
-    private Color originalColor;
-    private Color selectedColor=Color.green;
+    private Color32 originalColor;
+    private Color32 selectedColor;
 
     public GameObject moveMenu;
     public GameObject farmMenu;
@@ -79,6 +80,8 @@ public class SelectableItem : MonoBehaviour
     }
     void Start(){
         selectableItems.Add(this);
+        originalColor=this.gameObject.GetComponentInChildren<SpriteRenderer>().color;
+        selectedColor=Color.green;
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -107,7 +110,10 @@ public class SelectableItem : MonoBehaviour
     public void MakeEveryoneUnselectableAndUnselected(){
         for(int i=0;i<selectableItems.Count;i++){
             selectableItems[i].canBeSelected=false;
-            if(selectableItems[i].isSelected)selectableItems[i].isSelected=false;
+            if(selectableItems[i].isSelected){
+                selectableItems[i].isSelected=false;
+                selectableItems[i].ChangeColor(originalColor);
+            }
         }
     }
 
@@ -144,18 +150,19 @@ public class SelectableItem : MonoBehaviour
 
     }
 
-    void ChangeColor(Color newColor){
-        this.gameObject.GetComponentInChildren<SpriteRenderer>().color=newColor;
+    void ChangeColor(Color32 newColor){
         SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
         if(sprite!=null){
-            sprite.color=newColor;
+            sprite.material.color=newColor;
+            if(sprite.material.color.Equals(newColor)) Debug.Log("FUNCIONA");
         }
-        Debug.Log("CAMBIAR COLOR"+(sprite!=null));
+        SpriteForAnt antSprite=this.gameObject.GetComponent<SpriteForAnt>();
     }
 
     void OnMouseDown() {
         if(canBeSelected){
             isSelected=true;
+            ChangeColor(this.selectedColor);
             if(itemUI!=null && !itemUI.isQueen){
                 MoveMenu menu=moveMenu.GetComponent<MoveMenu>();
                 menu.SetSelectedAnt(this.gameObject);
@@ -167,6 +174,7 @@ public class SelectableItem : MonoBehaviour
             foreach(SelectableItem item in selectableItems){
                 if(item!=this){
                     item.isSelected=false;
+                    item.ChangeColor(item.originalColor);
                 } 
         }
         }

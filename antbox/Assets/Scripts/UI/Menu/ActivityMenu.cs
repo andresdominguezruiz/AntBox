@@ -76,9 +76,9 @@ public class ActivityMenu : MonoBehaviour
             this.optionalImage.gameObject.SetActive(false);
         }
         int buttonIndex=0;
-        foreach(string option in nextActivity.options){
-            TextMeshProUGUI buttonText=options[buttonIndex].gameObject.GetComponentInChildren<TextMeshProUGUI>();
-            if(buttonText!=null) buttonText.text=option;
+        foreach(Sprite option in nextActivity.options){
+            Image buttonImage=options[buttonIndex].gameObject.GetComponentsInChildren<Image>()[1];
+            if(buttonImage!=null) buttonImage.sprite=option;
             buttonIndex++;
         }
     }

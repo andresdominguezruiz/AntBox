@@ -13,15 +13,20 @@ public class CardDisplay : MonoBehaviour
     public Card card;
     public Image image;
     public TextMeshProUGUI cardName;
-    public TextMeshProUGUI cardDescription;
     public GameObject infoCanvas;
     public GameObject activityMenu;
+    public RawImage littleTemplate;
+    public RawImage bigTemplate;
     public bool canBeSelected=true;
     void Start()
     {
         cardName.text=card.name;
-        cardDescription.text=card.description;
         image.sprite=card.artWorks;
+        if(card.HasPassive()){
+            littleTemplate.color=new Color32(255,0,229,255);
+            bigTemplate.color=new Color32(255,0,229,255);
+            cardName.color=new Color32(0,255,0,255);
+        }
         HideInfo();
         
     }

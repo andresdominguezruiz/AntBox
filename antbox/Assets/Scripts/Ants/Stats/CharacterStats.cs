@@ -268,9 +268,9 @@ public class CharacterStats : MonoBehaviour
                 stats.SetMaxEnergy(actualAction.multiplicatorValue*(stats.GetMaxEnergy()+(int)actualAction.sumValue));
             }
             else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.DIGGING_SPEED) && stats!=null){
-                stats.SetDiggingSpeed(actualAction.multiplicatorValue*(stats.GetDiggingSpeed()+actualAction.sumValue));
+                stats.SetDiggingSpeed((float)actualAction.multiplicatorValue*(stats.GetDiggingSpeed()+actualAction.sumValue));
             }else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.FARMING_SPEED) && stats!=null){
-                stats.SetFarmingSpeed(actualAction.multiplicatorValue*(stats.GetFarmingSpeed()+actualAction.sumValue));
+                stats.SetFarmingSpeed((float)actualAction.multiplicatorValue*(stats.GetFarmingSpeed()+actualAction.sumValue));
             }
             else if(actualAction.characterEffect.Equals(UpdateEffectOnAntOrQueen.RECOVER_SPEED) && stats!=null){
                 stats.SetRecoverSpeed(actualAction.multiplicatorValue*(stats.GetRecoverSpeed()+(int)actualAction.sumValue));

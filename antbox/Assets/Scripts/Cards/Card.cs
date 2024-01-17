@@ -26,5 +26,16 @@ public class Card : ScriptableObject {
         return result;
     }
 
+    public bool HasPassive(){
+        bool res=false;
+        foreach(Action action in actions){
+            if(action.destination.Equals(Destination.PLAYER)){
+                res=true;
+                break;
+            }
+        }
+        return res;
+    }
+
 }
 
