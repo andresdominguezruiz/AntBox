@@ -42,6 +42,10 @@ public class SelectableItem : MonoBehaviour
         return list;
     }
 
+    public void RemoveSelectableItem(){
+        selectableItems.Remove(this);
+    }
+
 
     
 
@@ -156,7 +160,6 @@ public class SelectableItem : MonoBehaviour
             sprite.material.color=newColor;
             if(sprite.material.color.Equals(newColor)) Debug.Log("FUNCIONA");
         }
-        SpriteForAnt antSprite=this.gameObject.GetComponent<SpriteForAnt>();
     }
 
     void OnMouseDown() {

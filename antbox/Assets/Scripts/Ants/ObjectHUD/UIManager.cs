@@ -27,6 +27,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI farminSpeedText;
     public TextMeshProUGUI diggingSpeedText;
+    public TextMeshProUGUI recoverSpeedText;
+
 
     public GameObject eatButton;
     public GameObject drinkButton;
@@ -230,6 +232,7 @@ public class UIManager : MonoBehaviour
         nameText.text="Name:"+name;
         farminSpeedText.text="Farming Speed:"+antStats.GetFarmingSpeed();
         diggingSpeedText.text="Digging Speed:"+antStats.GetDiggingSpeed();
+        recoverSpeedText.text="Recover Speed:"+antStats.GetRecoverSpeed();
     }
     public void UpdateCanvasWithQueenStats(QueenStats queenStats,string name){
         hpText.text="HP:"+queenStats.GetTextHP();

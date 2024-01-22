@@ -72,7 +72,9 @@ public class CardDisplay : MonoBehaviour
         double complexity=0.0;
         int multiplicator=2;
         if(isBoss){
-            complexity+=Player.Instance.complexityLevelOfGame+0.1*StatisticsOfGame.Instance.counterOfCorrectCards;
+            int result=StatisticsOfGame.Instance.counterOfCorrectCards-StatisticsOfGame.Instance.counterOfFailedCards;
+            if(result<0) result=0;
+            complexity+=Player.Instance.complexityLevelOfGame+0.25*result;
             multiplicator=3;
         }else{
             complexity+=card.GetComplexityOfCard(Player.Instance.complexityLevelOfGame);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -9,6 +10,8 @@ public class Player : MonoBehaviour
     public HashSet<UpdateEffectOnPlayer> playerPassives=new HashSet<UpdateEffectOnPlayer>();
     public double complexityLevelOfGame=1.0;
     public List<Activity> knownActivities=new List<Activity>();
+    public List<Card> cardsInHand=new List<Card>();
+    [SerializeField] private float minimunComplexity=0.5f;
 
 
     private void Awake(){
@@ -19,13 +22,34 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    public void SaveCards(List<CardDisplay> containerCards){
+        foreach(CardDisplay cardDisplay in containerCards){
+            cardsInHand.Add(cardDisplay.card);
+        }
+    }
+
+    public void GiveCardsToContainer(){
+        ContainerData containerData=FindObjectOfType<ContainerData>();
+        if(containerData!=null){
+            foreach(Card card in cardsInHand){
+                containerData.AddCard(card);
+            }
+        }
+        cardsInHand=new List<Card>();
+    }
     public void ResetPlayerData(){
         playerPassives=new HashSet<UpdateEffectOnPlayer>();
         complexityLevelOfGame=1.0;
         ForgetActivities();
+        cardsInHand=new List<Card>();
     }
+
     public void ForgetActivities(){
         knownActivities=new List<Activity>();
+    }
+    public bool CanAnthillDieByOldAge(){
+        return playerPassives.Contains(UpdateEffectOnPlayer.DISABLE_DEAD_BY_AGE);
     }
 
     public bool AllowNegativeAge(){
@@ -33,6 +57,10 @@ public class Player : MonoBehaviour
     }
     public float GetTimeValue(){
         return playerPassives.Contains(UpdateEffectOnPlayer.MAKE_TIME_SLOWER)?2f:0.0f;
+    }
+
+    public void AddComplexity(float value){
+        if(complexityLevelOfGame+value>=minimunComplexity) complexityLevelOfGame+=value;
     }
 
     public void ProcessUpdateEffectOfAction(Action actualAction){

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204ab161c44cac84986d93c2d6eb5924, type: 3}
+  m_Name: Long live to queen
+  m_EditorClassIdentifier: 
+  name: Long live the queen
+  description: Restore everything to the queen
+  artWorks: {fileID: 21300000, guid: aaece665c0073c141ad52ab82f839178, type: 3}
+  type: 0
+  actions:
+  - uses: 1
+    type: 1
+    destination: 4
+    farmEffects: []
+    containerEffects: []
+    characterEffects:
+    - characterEffect: 5
+      multiplicatorValue: 0
+      sumValue: 0
+    - characterEffect: 6
+      multiplicatorValue: 0
+      sumValue: 0
+    - characterEffect: 7
+      multiplicatorValue: 0
+      sumValue: 0
+    playerEffect: 0
+    interactionType: 0

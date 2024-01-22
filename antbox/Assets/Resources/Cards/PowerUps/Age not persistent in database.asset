@@ -20,10 +20,11 @@ MonoBehaviour:
   - uses: 1
     type: 1
     destination: 6
-    farmEffect: 4
-    containerEffect: 5
-    characterEffect: 0
+    farmEffects: []
+    containerEffects: []
+    characterEffects:
+    - characterEffect: 0
+      multiplicatorValue: -1
+      sumValue: 0
     playerEffect: 0
     interactionType: 2
-    multiplicatorValue: -1
-    sumValue: 0

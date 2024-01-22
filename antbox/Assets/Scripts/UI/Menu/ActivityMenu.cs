@@ -19,6 +19,7 @@ public class ActivityMenu : MonoBehaviour
     [SerializeField] private GameObject lightTemplate;
 
     [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField] private TextMeshProUGUI difficultyText;
     [SerializeField] private Image optionalImage;
     [SerializeField] private Button[] options;
     [SerializeField] private GameObject[] selectedAnswers;
@@ -69,6 +70,7 @@ public class ActivityMenu : MonoBehaviour
     void ProcessActivity(){
         Activity nextActivity=activities[index];
         descriptionText.text=nextActivity.description;
+        difficultyText.text="Difficulty: "+nextActivity.complexityType;
         if(nextActivity.optionalImage!=null){
             this.optionalImage.sprite=nextActivity.optionalImage;
             this.optionalImage.gameObject.SetActive(true);

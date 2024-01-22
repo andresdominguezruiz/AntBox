@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 204ab161c44cac84986d93c2d6eb5924, type: 3}
-  m_Name: Free pickaxe
+  m_Name: Potion of Infinity Age
   m_EditorClassIdentifier: 
-  name: Free pickaxe
-  description: Choose an ant to upgrade his digging speed(+0.25)
-  artWorks: {fileID: 21300000, guid: 86c194cda8cf4494886822050960897a, type: 3}
+  name: Potion of Infinity Age
+  description: For the entire game, ants cannot die due to age
+  artWorks: {fileID: 21300000, guid: af2dcb5ef107cf64ca10b89ac9eb91c0, type: 3}
   type: 0
   actions:
   - uses: 1
     type: 1
-    destination: 0
+    destination: 7
     farmEffect: 4
     containerEffect: 5
-    characterEffect: 13
-    playerEffect: 0
-    interactionType: 2
-    multiplicatorValue: 1
-    sumValue: 0.25
+    characterEffect: 8
+    playerEffect: 3
+    interactionType: 0
+    multiplicatorValue: 0
+    sumValue: 0

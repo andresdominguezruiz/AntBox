@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StatisticsOfGame : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class StatisticsOfGame : MonoBehaviour
     public int counterOfFailedCards=0;
     public int counterOfDays=0;
 
+    public int actualLevel=0;
+    public int colorIndex=0;
+    public int timeSpeed=0;
+
     private void Awake(){
         if(StatisticsOfGame.Instance==null){
             StatisticsOfGame.Instance=this;
@@ -21,7 +26,28 @@ public class StatisticsOfGame : MonoBehaviour
         else{
             Destroy(gameObject);
         }
+    }
 
+    public void NextLevel(){
+        actualLevel++;
+        colorIndex++;
+        GenerationTilemap generationTilemap=FindObjectOfType<GenerationTilemap>();
+        if(generationTilemap!=null && colorIndex>=generationTilemap.colorsForDirtMap.Count){
+            colorIndex=0;
+            if(timeSpeed<5){
+                timeSpeed++;
+            }
+        }
+        ContainerData containerData=FindObjectOfType<ContainerData>();
+        if(containerData!=null){
+            Player.Instance.SaveCards(containerData.cardsInHand);
+        }
+        SelectableItem[] items=FindObjectsOfType<SelectableItem>(false);
+        foreach(SelectableItem item in items){
+            item.RemoveSelectableItem();
+            Destroy(item.gameObject);
+        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+2);
     }
     public void ResetData(){
         counterOfExams=0;
@@ -31,6 +57,9 @@ public class StatisticsOfGame : MonoBehaviour
         counterOfCorrectCards=0;
         counterOfFailedCards=0;
         counterOfDays=0;
+        actualLevel=0;
+        colorIndex=0;
+        timeSpeed=0;
         Player.Instance.ResetPlayerData();
     }
 }

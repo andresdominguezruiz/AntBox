@@ -16,7 +16,7 @@ public enum Destination{
 }
 
 public enum UpdateEffectOnPlayer{
-    NONE,ALLOW_NEGATIVE_AGE,MAKE_TIME_SLOWER
+    NONE,ALLOW_NEGATIVE_AGE,MAKE_TIME_SLOWER,DISABLE_DEAD_BY_AGE
 }
 
 public enum UpdateEffectOnAntOrQueen{
@@ -42,13 +42,12 @@ public class Action
     public int uses=1;
     public ActionType type;
     public Destination destination;
-    public UpdateEffectOnFarm farmEffect=UpdateEffectOnFarm.NONE;
-    public UpdateEffectOnContainer containerEffect=UpdateEffectOnContainer.NONE;
-    public UpdateEffectOnAntOrQueen characterEffect=UpdateEffectOnAntOrQueen.NONE;
+    public List<FarmEffect> farmEffects=new List<FarmEffect>();
+    public List<ContainerEffect> containerEffects=new List<ContainerEffect>();
+
+    public List<CharacterEffect> characterEffects=new List<CharacterEffect>();
     public UpdateEffectOnPlayer playerEffect=UpdateEffectOnPlayer.NONE;
     public InteractionType interactionType=InteractionType.NONE;
-    public int multiplicatorValue=1;
-    public float sumValue=0f;
 
     public bool NoNeedToChooseItemToApplyUpdateAction(){
         return this.interactionType.Equals(InteractionType.ALL) || this.interactionType.Equals(InteractionType.ANY);
@@ -61,7 +60,7 @@ public class Action
             if(!type.Equals(ActionType.UPDATE)){
                 result+=0.5;
             }else{
-                result+=multiplicatorValue>=1?0.2*multiplicatorValue:0.2;
+                result+=destination.Equals(Destination.PLAYER)?1.0:0.2*(containerEffects.Count+characterEffects.Count+farmEffects.Count);
             }
         }
         return result;

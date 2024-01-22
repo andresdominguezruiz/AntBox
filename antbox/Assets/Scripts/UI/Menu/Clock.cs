@@ -45,7 +45,7 @@ public class Clock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.time -timeLastFrame>=(1.0f+Player.Instance.GetTimeValue())){
+        if(Time.time -timeLastFrame>=(1.0f+Player.Instance.GetTimeValue() - StatisticsOfGame.Instance.timeSpeed*0.1f)){
             counterOfSecons++;
             if(counterOfSecons==growingTime){
                 day++;
@@ -77,6 +77,7 @@ public class Clock : MonoBehaviour
         }else{
             GoBackToNothingEvent();
         }
+        ProcessExam(); //DECLARAR LINEA PARA TESTEAR EXAMEN
         UpdateMessageOfConsoleByEvent();
     }
 
