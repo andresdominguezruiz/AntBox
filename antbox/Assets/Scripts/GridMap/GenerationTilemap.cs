@@ -11,6 +11,7 @@ public class GenerationTilemap : MonoBehaviour
     // Start is called before the first frame update
 
     public Tilemap dirtMap;
+    public Tilemap walkableMap;
     public GameObject navMesh;
 
     public GameObject farms;
@@ -23,6 +24,20 @@ public class GenerationTilemap : MonoBehaviour
 
     private List<Vector3Int> path=new List<Vector3Int>();
     private HashSet<Vector3Int> excavablePath=new HashSet<Vector3Int>();
+    public List<Color32> colorsForDirtMap=new List<Color32>{
+        new Color32(255,255,255,255),
+        new Color32(149,255,126,255),
+        new Color32(0,255,255,255),
+        new Color32(0,196,255,255),
+        new Color32(175,170,255,255)
+    };
+    public List<Color32> colorsForWalkableMap=new List<Color32>{
+        new Color32(248,255,65,110),
+        new Color32(219,65,255,110),
+        new Color32(66,175,255,110),
+        new Color32(66,255,163,110),
+        new Color32(255,88,65,110)
+    };
 
     
 
@@ -62,6 +77,9 @@ public class GenerationTilemap : MonoBehaviour
 
     void Start()
     {
+        dirtMap.color=colorsForDirtMap[StatisticsOfGame.Instance.colorIndex];
+        walkableMap.color=colorsForWalkableMap[StatisticsOfGame.Instance.colorIndex];
+        Player.Instance.GiveCardsToContainer();
         if(path.Count==0){
             FillTilemap();
             CreateRandomPath();

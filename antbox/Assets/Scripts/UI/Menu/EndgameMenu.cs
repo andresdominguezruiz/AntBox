@@ -22,6 +22,7 @@ public class EndgameMenu : MonoBehaviour
             StatisticsOfGame.Instance.ResetData();   
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
+        PauseMenu.isPaused=false;
     }
 
     public void GoToInitialMenu(){

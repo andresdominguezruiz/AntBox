@@ -46,13 +46,13 @@ public class AntStats : CharacterStats
 
     public void SetFarmingSpeed(float speed){
         farmingSpeed=speed;
-        if(speed>MAX_FARMING_SPEED*2) farmingSpeed=MAX_FARMING_SPEED*2;
-        else if(speed<MIN_FARMING_SPEED/2) farmingSpeed=MIN_FARMING_SPEED/2;
+        if(speed>(float)MAX_FARMING_SPEED*2/100) farmingSpeed=(float)MAX_FARMING_SPEED*2/100;
+        else if(speed<(float)MIN_FARMING_SPEED/(2*100)) farmingSpeed=(float)MIN_FARMING_SPEED/(2*100);
     }
     public void SetDiggingSpeed(float speed){
         diggingSpeed=speed;
-        if(speed>MAX_DIGGING_SPEED*2) diggingSpeed=MAX_DIGGING_SPEED*2;
-        else if(speed<MIN_DIGGING_SPEED/2) diggingSpeed=MIN_DIGGING_SPEED/2;
+        if(speed>(float)MAX_DIGGING_SPEED*2/100) diggingSpeed=(float)MAX_DIGGING_SPEED*2/100;
+        else if(speed<(float)MIN_DIGGING_SPEED/(2*100)) diggingSpeed=(float)MIN_DIGGING_SPEED/(2*100);
     }
 
     public void SetRecoverSpeed(int speed){

@@ -42,7 +42,7 @@ public class DigMenu : MonoBehaviour
         this.agent=selectedAnt.GetComponent<NavMeshAgent>();
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectable();
+        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
         digMenu.gameObject.SetActive(true);
         consoleText.text=selectedAnt.name+"-Select the start of your excavation";
         selectedAnt.GetComponent<SelectableItem>().MakeEveryoneUnselectable();
@@ -80,10 +80,12 @@ public class DigMenu : MonoBehaviour
     }
 
     void Update(){
-        if(Input.GetMouseButtonDown(0) && !areMoreRutes){
-            SelectStart();
-        }else if(Input.GetMouseButtonDown(0) && areMoreRutes){
-            SelectRoute();
+        if(!PauseMenu.isPaused){
+            if(Input.GetMouseButtonDown(0) && !areMoreRutes){
+                SelectStart();
+            }else if(Input.GetMouseButtonDown(0) && areMoreRutes){
+                SelectRoute();
+        }
         }
 
     }

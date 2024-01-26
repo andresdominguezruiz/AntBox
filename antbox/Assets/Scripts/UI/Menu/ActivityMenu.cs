@@ -17,8 +17,10 @@ public class ActivityMenu : MonoBehaviour
     public Sprite incorrect;
     public int index;
     [SerializeField] private GameObject lightTemplate;
+    [SerializeField] private GameObject containerForTemplates;
 
     [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField] private TextMeshProUGUI difficultyText;
     [SerializeField] private Image optionalImage;
     [SerializeField] private Button[] options;
     [SerializeField] private GameObject[] selectedAnswers;
@@ -58,9 +60,7 @@ public class ActivityMenu : MonoBehaviour
             evaluation=new bool[activities.Length];
             for(int i=0;i<activities.Length;i++){
                 GameObject newLight=Instantiate<GameObject>(lightTemplate
-                ,lightTemplate.transform.position,Quaternion.identity,lightTemplate.transform.parent);
-                newLight.transform.position=new Vector3(lightTemplate.transform.position.x+30f*(i+1)
-                ,lightTemplate.transform.position.y-100f,lightTemplate.transform.position.z);
+                ,lightTemplate.transform.position,Quaternion.identity,containerForTemplates.transform);
                 selectedAnswers[i]=newLight;
             }
         }
@@ -69,6 +69,7 @@ public class ActivityMenu : MonoBehaviour
     void ProcessActivity(){
         Activity nextActivity=activities[index];
         descriptionText.text=nextActivity.description;
+        difficultyText.text="Difficulty: "+nextActivity.complexityType;
         if(nextActivity.optionalImage!=null){
             this.optionalImage.sprite=nextActivity.optionalImage;
             this.optionalImage.gameObject.SetActive(true);
@@ -76,9 +77,9 @@ public class ActivityMenu : MonoBehaviour
             this.optionalImage.gameObject.SetActive(false);
         }
         int buttonIndex=0;
-        foreach(string option in nextActivity.options){
-            TextMeshProUGUI buttonText=options[buttonIndex].gameObject.GetComponentInChildren<TextMeshProUGUI>();
-            if(buttonText!=null) buttonText.text=option;
+        foreach(Sprite option in nextActivity.options){
+            Image buttonImage=options[buttonIndex].gameObject.GetComponentsInChildren<Image>()[1];
+            if(buttonImage!=null) buttonImage.sprite=option;
             buttonIndex++;
         }
     }

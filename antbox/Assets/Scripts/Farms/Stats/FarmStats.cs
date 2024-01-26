@@ -48,27 +48,41 @@ public class FarmStats : MonoBehaviour
     public int GetTimePerCycle(){
         return timePerCycle;
     }
-    public void ProcessUpdateEffectOfAction(Action actualAction){
-        if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.FARM_CYCLE)){
-            int newTimePerCycle=this.timePerCycle+actualAction.multiplicatorValue
-            *((this.timePerCycle+(int)actualAction.sumValue)-minTimePerCycle)/10;
+
+    public void SetMinResources(int resources){
+        if(resources>=1 && resources<MAX_RESOURCES) MIN_RESOURCES=resources;
+    }
+    public void SetMaxResources(int resources){
+        if(resources>MIN_RESOURCES) MAX_RESOURCES=resources;
+    }
+
+    public void ApplyEffect(FarmEffect farmEffect){
+        if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.FARM_CYCLE)){
+            int newTimePerCycle=farmEffect.multiplicatorValue
+            *(this.timePerCycle+(int)farmEffect.sumValue);
             if(newTimePerCycle>maxTimePerCycle) this.timePerCycle=maxTimePerCycle; //ESTO SE HACE PARA PONER UN LÍMITE
             else if(newTimePerCycle<minTimePerCycle) this.timePerCycle=minTimePerCycle;
             else this.timePerCycle=newTimePerCycle;
             
         }
-        else if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.CAPACITY)){
-            maxCapacity=actualAction.multiplicatorValue*(maxCapacity+(int)actualAction.sumValue);
+        else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.CAPACITY)){
+            maxCapacity=farmEffect.multiplicatorValue*(maxCapacity+(int)farmEffect.sumValue);
             if(maxCapacity>maxLimitOfCapacity) maxCapacity=maxLimitOfCapacity;
             else if(maxCapacity<minLimitOfCapacity) maxCapacity=minLimitOfCapacity;
         }
-        else if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.FARM_RESOURCES)){
-            this.MIN_RESOURCES=actualAction.multiplicatorValue*(MIN_RESOURCES+(int)actualAction.sumValue);
-            this.MAX_RESOURCES=actualAction.multiplicatorValue*(MAX_RESOURCES+(int)actualAction.sumValue);
-        }else if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.ENERGY_COST)){
-            energyCostOfCycle=actualAction.multiplicatorValue*(energyCostOfCycle+(int)actualAction.sumValue);
+        else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.FARM_RESOURCES)){
+            SetMinResources(farmEffect.multiplicatorValue*(MIN_RESOURCES+(int)farmEffect.sumValue));
+            SetMaxResources(farmEffect.multiplicatorValue*(MAX_RESOURCES+(int)farmEffect.sumValue));
+        }else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.ENERGY_COST)){
+            energyCostOfCycle=farmEffect.multiplicatorValue*(energyCostOfCycle+(int)farmEffect.sumValue);
             if(energyCostOfCycle<minEnergyCost) energyCostOfCycle=minEnergyCost;
             else if(energyCostOfCycle>maxEnergyCost) energyCostOfCycle=maxEnergyCost;
+        }
+    }
+
+    public void ProcessUpdateEffectOfAction(List<FarmEffect> farmEffects){
+        foreach(FarmEffect farmEffect in farmEffects){
+            ApplyEffect(farmEffect);
         }
     }
     public Type GetTypeOfFarm(){

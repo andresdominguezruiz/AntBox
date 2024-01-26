@@ -34,7 +34,7 @@ public class MoveMenu : MonoBehaviour
     {
         this.agent=selectedAnt.GetComponent<NavMeshAgent>();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectable();
+        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
         moveMenu.gameObject.SetActive(true);
         consoleText.text=selectedAnt.name+"-Select an accessible area";
@@ -42,7 +42,7 @@ public class MoveMenu : MonoBehaviour
     }
 
     void Update(){
-        if(Input.GetMouseButtonDown(0)){
+        if(Input.GetMouseButtonDown(0) && !PauseMenu.isPaused){
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada

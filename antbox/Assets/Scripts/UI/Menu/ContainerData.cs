@@ -72,6 +72,7 @@ public class ContainerData : MonoBehaviour
         cardText.text="Cards:"+cardsInHand.Count+"/10";
         foodLimitText.text=farmGenerator.foodFarms.Count+"/"+farmGenerator.GetMaxNumberOfFarms();
         waterLimitText.text=farmGenerator.waterFarms.Count+"/"+farmGenerator.GetMaxNumberOfFarms();
+        UpdateCountersOfExams();
     }
 
     // Update is called once per frame
@@ -80,25 +81,26 @@ public class ContainerData : MonoBehaviour
         UpdateTextOfContainer();
 
     }
-    public void ProcessUpdateEffectOfAction(Action actualAction){
-        if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.FOOD)){
-            FOOD_CONTAINER=actualAction.multiplicatorValue*(FOOD_CONTAINER+(int)actualAction.sumValue);
+
+    public void ApplyEffect(ContainerEffect containerEffect){
+        if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.FOOD)){
+            FOOD_CONTAINER=containerEffect.multiplicatorValue*(FOOD_CONTAINER+(int)containerEffect.sumValue);
             if(FOOD_CONTAINER<0) FOOD_CONTAINER=0;
         }
-        else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.WATER)){
-            WATER_CONTAINER=actualAction.multiplicatorValue*(WATER_CONTAINER+(int)actualAction.sumValue);
+        else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.WATER)){
+            WATER_CONTAINER=containerEffect.multiplicatorValue*(WATER_CONTAINER+(int)containerEffect.sumValue);
             if(WATER_CONTAINER<0) WATER_CONTAINER=0;
         }
-        else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.WATER_VALUE)){
-            waterValue=actualAction.multiplicatorValue*(waterValue+(int)actualAction.sumValue);
+        else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.WATER_VALUE)){
+            waterValue=containerEffect.multiplicatorValue*(waterValue+(int)containerEffect.sumValue);
             if(waterValue>maxNutritionalValue) waterValue=maxNutritionalValue;
             else if(waterValue<minNutritionalValue) waterValue=minNutritionalValue;
-        }else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.FOOD_VALUE)){
-            foodValue=actualAction.multiplicatorValue*(foodValue+(int)actualAction.sumValue);
+        }else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.FOOD_VALUE)){
+            foodValue=containerEffect.multiplicatorValue*(foodValue+(int)containerEffect.sumValue);
             if(foodValue>maxNutritionalValue) foodValue=maxNutritionalValue;
             else if(foodValue<minNutritionalValue) foodValue=minNutritionalValue;
         }
-        else if(actualAction.containerEffect.Equals(UpdateEffectOnContainer.MIRROR)){
+        else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.MIRROR)){
             //Cambia valores nutritivos de la partida.
             int originalValue=foodValue;
             int container=FOOD_CONTAINER;
@@ -106,6 +108,11 @@ public class ContainerData : MonoBehaviour
             FOOD_CONTAINER=WATER_CONTAINER;
             waterValue=originalValue;
             WATER_CONTAINER=container;
+        }
+    }
+    public void ProcessUpdateEffectOfAction(List<ContainerEffect> containerEffects){
+        foreach(ContainerEffect effect in containerEffects){
+            ApplyEffect(effect);
         }
     }
 
@@ -123,8 +130,15 @@ public class ContainerData : MonoBehaviour
     void AnalyseResultToUpdateCounters(double result,bool isExam)
     {
         if(isExam){
-            if(result>=0.5) StatisticsOfGame.Instance.counterOfPassedExams++;
-            else StatisticsOfGame.Instance.counterOfFailedExams++;
+            if(result>=0.5){ 
+                StatisticsOfGame.Instance.counterOfPassedExams++;
+                Player.Instance.AddComplexity(1f);
+                StatisticsOfGame.Instance.NextLevel();
+            }
+            else{
+                StatisticsOfGame.Instance.counterOfFailedExams++;
+                Player.Instance.AddComplexity(-0.5f);
+            }
             StatisticsOfGame.Instance.counterOfExams++;
             UpdateCountersOfExams();
         }else{
@@ -182,13 +196,9 @@ public class ContainerData : MonoBehaviour
         }
     }
 
-    public void AddNewCard(){
-        Card[] allCards=Resources.LoadAll<Card>("Cards/PowerUps");
-        int v=random.Next(0,allCards.Length);
-        //OJO,para buscar datos con Resources, debe existir la carpeta Resources
-        //Esto puede servir para hacer test, tenlo en cuenta
+    public void AddCard(Card card){
         CardDisplay newCard=Instantiate<CardDisplay>(cardTemplate,cardTemplate.transform.position,Quaternion.identity,cardPlatform.transform);
-        newCard.card=allCards[v];
+        newCard.card=card;
         newCard.activityMenu=activityMenu;
         GameObject newCardData=newCard.transform.Find("Data").gameObject;
         GameObject cardDataTemplate=cardTemplate.transform.Find("Data").gameObject;
@@ -200,6 +210,14 @@ public class ContainerData : MonoBehaviour
         newCardData.transform.localScale=cardDataTemplate.transform.localScale+new Vector3(0.5f,0.5f,0.5f);
         newCard.gameObject.SetActive(true);
         cardsInHand.Add(newCard);
+    }
+
+    public void AddNewCard(){
+        Card[] allCards=Resources.LoadAll<Card>("Cards/ForTestingUses");
+        int v=random.Next(0,allCards.Length);
+        //OJO,para buscar datos con Resources, debe existir la carpeta Resources
+        //Esto puede servir para hacer test, tenlo en cuenta
+        AddCard(allCards[v]);
         
     }
 }

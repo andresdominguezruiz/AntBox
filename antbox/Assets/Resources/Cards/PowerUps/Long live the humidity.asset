@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204ab161c44cac84986d93c2d6eb5924, type: 3}
+  m_Name: Long live the humidity
+  m_EditorClassIdentifier: 
+  name: Long live the humidity
+  description: Add a new water farm
+  artWorks: {fileID: 21300000, guid: 9d443456e6396ea49bbbd9f9275cb4a0, type: 3}
+  type: 0
+  actions:
+  - uses: 1
+    type: 0
+    destination: 2
+    farmEffect: 4
+    containerEffect: 5
+    characterEffect: 8
+    playerEffect: 0
+    interactionType: 3
+    multiplicatorValue: 0
+    sumValue: 0

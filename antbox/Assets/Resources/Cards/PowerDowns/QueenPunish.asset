@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: QueenPunish
   description: Queen will kill 2 random ants
-  artWorks: {fileID: 0}
+  artWorks: {fileID: 21300000, guid: e909a4b580ba285458e2d25de4688773, type: 3}
   type: 1
   actions:
   - uses: 2
@@ -23,4 +23,7 @@ MonoBehaviour:
     farmEffect: 3
     containerEffect: 2
     characterEffect: 7
+    playerEffect: 0
     interactionType: 3
+    multiplicatorValue: 1
+    sumValue: 0
