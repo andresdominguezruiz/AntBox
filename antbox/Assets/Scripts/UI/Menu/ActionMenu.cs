@@ -18,26 +18,28 @@ public class ActionMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!isChoosing && index>actions.Count-1){
-            FinishActionMenu();
-        }
-        else if(isChoosing && index<=actions.Count-1){
-            bool result=MakeActionByChoosingItem();
-            if(result){
-                Action actualAction=actions[index];
-                actualUses--;
-                    if(actualUses<=0){
-                        isChoosing=false;
-                        index++;
-                        Time.timeScale=1f;
-                        if(index>actions.Count-1) FinishActionMenu();
-                        else ProcessActualAction();
-                    }
-                    else{
-                        consoleText.text="Choose "+actualUses+" "
-                        +actualAction.destination.ToString()+" to "+actualAction.type.ToString();
-                    }
+        if(!PauseMenu.isPaused){
+            if(!isChoosing && index>actions.Count-1){
+                FinishActionMenu();
             }
+            else if(isChoosing && index<=actions.Count-1){
+                bool result=MakeActionByChoosingItem();
+                if(result){
+                    Action actualAction=actions[index];
+                    actualUses--;
+                        if(actualUses<=0){
+                            isChoosing=false;
+                            index++;
+                            Time.timeScale=1f;
+                            if(index>actions.Count-1) FinishActionMenu();
+                            else ProcessActualAction();
+                        }
+                        else{
+                            consoleText.text="Choose "+actualUses+" "
+                            +actualAction.destination.ToString()+" to "+actualAction.type.ToString();
+                        }
+            }
+        }
         }
         
     }
@@ -144,7 +146,7 @@ public class ActionMenu : MonoBehaviour
         consoleText.text="Choose "+actualAction.uses+" "
         +actualAction.destination.ToString()+" to "+actualAction.type.ToString();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>(false);
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectable();
+        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
         SelectableItem item=FindObjectOfType<SelectableItem>(false);
         if(item!=null){
             item.MakeEveryoneUnselectableAndUnselected();

@@ -42,12 +42,15 @@ public class StatisticsOfGame : MonoBehaviour
         if(containerData!=null){
             Player.Instance.SaveCards(containerData.cardsInHand);
         }
+        DestroyItems();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+2);
+    }
+    public void DestroyItems(){
         SelectableItem[] items=FindObjectsOfType<SelectableItem>(false);
         foreach(SelectableItem item in items){
             item.RemoveSelectableItem();
             Destroy(item.gameObject);
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+2);
     }
     public void ResetData(){
         counterOfExams=0;
@@ -60,6 +63,7 @@ public class StatisticsOfGame : MonoBehaviour
         actualLevel=0;
         colorIndex=0;
         timeSpeed=0;
+        DestroyItems();
         Player.Instance.ResetPlayerData();
     }
 }

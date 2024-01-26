@@ -163,7 +163,8 @@ public class SelectableItem : MonoBehaviour
     }
 
     void OnMouseDown() {
-        if(canBeSelected){
+        if(!PauseMenu.isPaused){
+            if(canBeSelected){
             isSelected=true;
             ChangeColor(this.selectedColor);
             if(itemUI!=null && !itemUI.isQueen){
@@ -179,6 +180,7 @@ public class SelectableItem : MonoBehaviour
                     item.isSelected=false;
                     item.ChangeColor(item.originalColor);
                 } 
+        }
         }
         }
     }

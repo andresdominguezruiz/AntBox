@@ -45,7 +45,7 @@ public class FarmingMenu : MonoBehaviour
     {
         this.agent=selectedAnt.GetComponent<NavMeshAgent>();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectable();
+        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
         farmMenu.gameObject.SetActive(true);
         consoleText.text=selectedAnt.name+"-Select an available farm";
@@ -69,7 +69,8 @@ public class FarmingMenu : MonoBehaviour
     }
 
     void Update(){
-        if(Input.GetMouseButtonDown(0)){
+        if(!PauseMenu.isPaused){
+            if(Input.GetMouseButtonDown(0)){
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
@@ -87,6 +88,7 @@ public class FarmingMenu : MonoBehaviour
                 }
             }
 
+        }
         }
 
     }

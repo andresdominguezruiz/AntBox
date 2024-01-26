@@ -49,10 +49,17 @@ public class FarmStats : MonoBehaviour
         return timePerCycle;
     }
 
+    public void SetMinResources(int resources){
+        if(resources>=1 && resources<MAX_RESOURCES) MIN_RESOURCES=resources;
+    }
+    public void SetMaxResources(int resources){
+        if(resources>MIN_RESOURCES) MAX_RESOURCES=resources;
+    }
+
     public void ApplyEffect(FarmEffect farmEffect){
         if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.FARM_CYCLE)){
-            int newTimePerCycle=this.timePerCycle+farmEffect.multiplicatorValue
-            *((this.timePerCycle+(int)farmEffect.sumValue)-minTimePerCycle)/10;
+            int newTimePerCycle=farmEffect.multiplicatorValue
+            *(this.timePerCycle+(int)farmEffect.sumValue);
             if(newTimePerCycle>maxTimePerCycle) this.timePerCycle=maxTimePerCycle; //ESTO SE HACE PARA PONER UN LÍMITE
             else if(newTimePerCycle<minTimePerCycle) this.timePerCycle=minTimePerCycle;
             else this.timePerCycle=newTimePerCycle;
@@ -64,8 +71,8 @@ public class FarmStats : MonoBehaviour
             else if(maxCapacity<minLimitOfCapacity) maxCapacity=minLimitOfCapacity;
         }
         else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.FARM_RESOURCES)){
-            this.MIN_RESOURCES=farmEffect.multiplicatorValue*(MIN_RESOURCES+(int)farmEffect.sumValue);
-            this.MAX_RESOURCES=farmEffect.multiplicatorValue*(MAX_RESOURCES+(int)farmEffect.sumValue);
+            SetMinResources(farmEffect.multiplicatorValue*(MIN_RESOURCES+(int)farmEffect.sumValue));
+            SetMaxResources(farmEffect.multiplicatorValue*(MAX_RESOURCES+(int)farmEffect.sumValue));
         }else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.ENERGY_COST)){
             energyCostOfCycle=farmEffect.multiplicatorValue*(energyCostOfCycle+(int)farmEffect.sumValue);
             if(energyCostOfCycle<minEnergyCost) energyCostOfCycle=minEnergyCost;

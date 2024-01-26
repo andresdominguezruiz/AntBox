@@ -10,6 +10,7 @@ public class CardDisplay : MonoBehaviour
 {
     // Start is called before the first frame update
     private System.Random random = new System.Random();
+
     public Card card;
     public Image image;
     public TextMeshProUGUI cardName;
@@ -113,18 +114,19 @@ public class CardDisplay : MonoBehaviour
     }
     public void ShowCardData(){
         if(canBeSelected){
-            UIManager[] uIManagers=FindObjectsOfType<UIManager>(true);
-        foreach(UIManager ui in uIManagers){
-            ui.HideInfo();
-        }
-        UIFarmManager[] uIFarmManagers=FindObjectsOfType<UIFarmManager>(true);
-        foreach(UIFarmManager ui in uIFarmManagers){
-            ui.HideInfo();
-        }
-        SelectableItem anyItem=FindObjectOfType<SelectableItem>();
-        if(anyItem!=null){
-            anyItem.MakeEveryoneUnselectableAndUnselected();
-        }
+                UIManager[] uIManagers=FindObjectsOfType<UIManager>(true);
+                foreach(UIManager ui in uIManagers){
+                    ui.HideInfo();
+                }
+                UIFarmManager[] uIFarmManagers=FindObjectsOfType<UIFarmManager>(true);
+                foreach(UIFarmManager ui in uIFarmManagers){
+                    ui.HideInfo();
+                }
+                SelectableItem anyItem=FindObjectOfType<SelectableItem>();
+                if(anyItem!=null){
+                    anyItem.MakeEveryoneUnselectableAndUnselected();
+                }
+
         ContainerData containerData=FindObjectOfType<ContainerData>();
         foreach(CardDisplay card in containerData.cardsInHand){
             card.infoCanvas.gameObject.SetActive(false);
@@ -132,17 +134,22 @@ public class CardDisplay : MonoBehaviour
         infoCanvas.gameObject.SetActive(true);
         }
     }
-    public void HideInfo()
-    {
+
+    public void CancelCard(){
         SelectableItem anyItem=FindObjectOfType<SelectableItem>();
         if(anyItem!=null){
             anyItem.MakeEveryoneSelectable();
         }
         infoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
     }
-    public void MakeEveryCardUnselectable(){
+    public void HideInfo()
+    {
+        infoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
+    }
+    public void MakeEveryCardUnselectableAndUnselected(){
         foreach(CardDisplay cardDisplay in FindObjectsOfType<CardDisplay>()){
             cardDisplay.canBeSelected=false;
+            cardDisplay.infoCanvas.gameObject.SetActive(false);
         }
     }
     public void MakeEveryCardSelectable(){

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204ab161c44cac84986d93c2d6eb5924, type: 3}
+  m_Name: Better rainfall
+  m_EditorClassIdentifier: 
+  name: Better rainfall
+  description: Reduces the cycle time (-3) of all water farms
+  artWorks: {fileID: 21300000, guid: ea50741e21a7a1148b0bf1247c7a973c, type: 3}
+  type: 0
+  actions:
+  - uses: 1
+    type: 1
+    destination: 2
+    farmEffects:
+    - farmEffect: 0
+      multiplicatorValue: 1
+      sumValue: -3
+    containerEffects: []
+    characterEffects: []
+    playerEffect: 0
+    interactionType: 1

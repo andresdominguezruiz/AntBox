@@ -77,7 +77,7 @@ public class Clock : MonoBehaviour
         }else{
             GoBackToNothingEvent();
         }
-        ProcessExam(); //DECLARAR LINEA PARA TESTEAR EXAMEN
+        //ProcessExam(); //DECLARAR LINEA PARA TESTEAR EXAMEN
         UpdateMessageOfConsoleByEvent();
     }
 
@@ -118,7 +118,7 @@ public class Clock : MonoBehaviour
         consoleText.color=Color.red;
         ActivityMenu activityMenu=FindObjectOfType<ActivityMenu>(true);
         CardDisplay cardDisplay=FindObjectOfType<CardDisplay>(true);
-        cardDisplay.MakeEveryCardUnselectable();
+        cardDisplay.MakeEveryCardUnselectableAndUnselected();
         SelectableItem item=FindObjectOfType<SelectableItem>(false);
         item.MakeEveryoneUnselectableAndUnselected();
         activityMenu.SetActivitiesAndStartPlaying(cardDisplay.GenerateActivitiesByComplexity(true),true);

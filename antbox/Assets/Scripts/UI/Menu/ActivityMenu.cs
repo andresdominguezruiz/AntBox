@@ -17,6 +17,7 @@ public class ActivityMenu : MonoBehaviour
     public Sprite incorrect;
     public int index;
     [SerializeField] private GameObject lightTemplate;
+    [SerializeField] private GameObject containerForTemplates;
 
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private TextMeshProUGUI difficultyText;
@@ -59,9 +60,7 @@ public class ActivityMenu : MonoBehaviour
             evaluation=new bool[activities.Length];
             for(int i=0;i<activities.Length;i++){
                 GameObject newLight=Instantiate<GameObject>(lightTemplate
-                ,lightTemplate.transform.position,Quaternion.identity,lightTemplate.transform.parent);
-                newLight.transform.position=new Vector3(lightTemplate.transform.position.x+30f*(i+1)
-                ,lightTemplate.transform.position.y-100f,lightTemplate.transform.position.z);
+                ,lightTemplate.transform.position,Quaternion.identity,containerForTemplates.transform);
                 selectedAnswers[i]=newLight;
             }
         }
