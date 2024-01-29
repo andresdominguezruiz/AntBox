@@ -87,11 +87,51 @@ public class GenerationTilemap : MonoBehaviour
             ObtainExcavableTiles();
             PlaceQueenAndAnts();
             CreateAllTilesData();
-            //TODO: Revisar cantidad de tiles == null del path
+            //MakeEnemyZonesByActualLevel();
         }
         BakeMap();
 
         
+    }
+
+    void MakeEnemyZonesByActualLevel(){
+        int zones=StatisticsOfGame.Instance.actualLevel;
+        if(zones>4) zones=4;
+        for(int i=0;i<zones;i++){
+            MakeOneEnemyZone();
+        }
+    }
+    void MakeOneEnemyZone(){
+        Vector3Int initialPosition=new Vector3Int(0,0,0);
+        bool first=true;
+        while(!CanStartEnemyZoneInPosition(initialPosition) || first){
+            int randomI=random.Next(0,width+1);
+            int randomJ=random.Next(0,height+1);
+            initialPosition=new Vector3Int(randomI,randomJ,0);
+            first=false;
+        }
+        
+    }
+
+    public bool CanStartEnemyZoneInPosition(Vector3Int position){
+        bool res=dirt.Equals(dirtMap.GetTile(position));
+        //Tiene que ser dirt.Equals porque en caso de que dirtMap devuelva null, dará error.
+        if(res){
+            for(int i=-2;i<3;i++){
+                for(int j=-2;j<3;j++){
+                    Vector3Int pos=new Vector3Int(i+position.x,j+position.y,position.z);
+                    TileData tile=allTilesOfMap.GetValueOrDefault(pos);
+                    if(tile!=null && ((tile.GetTileType().Equals(TileType.EMPTY)
+                     && tile.discovered) || !tile.GetTileType().Equals(TileType.DIRT))){
+                        res=false;
+                        break;
+                     }
+                }
+                if(!res) break;
+            }
+
+        }
+        return res;
     }
     void CreateAllTilesData(){
         ContainerData containerData=FindObjectOfType<ContainerData>();
@@ -99,7 +139,7 @@ public class GenerationTilemap : MonoBehaviour
             for(int j=0;j<=height;j++){
                 Vector3Int pos=new Vector3Int(i,j,0);
                 TileBase tile=dirtMap.GetTile(pos);
-                if(tile==null) allTilesOfMap.Add(pos,new TileData(pos,TileType.EMPTY,random,this,containerData));
+                if(tile==null) allTilesOfMap.Add(pos,new TileData(true,pos,TileType.EMPTY,random,this,containerData));
                 else if(tile.Equals(dirt)) allTilesOfMap.Add(pos,new TileData(pos,TileType.DIRT,random,this,containerData));
                 else if(tile.Equals(stone)) allTilesOfMap.Add(pos,new TileData(pos,TileType.STONE,random,this,containerData));
             }

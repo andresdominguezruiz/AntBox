@@ -53,6 +53,8 @@ public class CharacterStats : MonoBehaviour
     [SerializeField] private bool isDead=false;
     [SerializeField] private int adultAge=4;
     [SerializeField] private int elderAge=8;
+    public int poisonSecons=0;
+    public bool unpoisonable=false;
     private Clock clockOfGame;
 
     public Clock GetClockOfGame(){
@@ -132,6 +134,16 @@ public class CharacterStats : MonoBehaviour
             }else{
                 actualHP-=2;
                 needToCheckHP=true;
+            }
+            if(poisonSecons>0){
+                poisonSecons--;
+                if(!unpoisonable){
+                    Heal(-actualHP*5/100); //EL VENENO LE QUITARÁ 5% DE SU VIDA
+                    needToCheckHP=true;
+                }
+                else{
+                    Heal(actualHP*5/100);
+                }
             }
 
             if(antStats!=null){
@@ -217,11 +229,19 @@ public class CharacterStats : MonoBehaviour
     }
 
     public void SetActualHunger(int hunger){
-        actualHunger=hunger;
+        if(hunger<0){
+            actualHunger=0;
+        }else{
+            actualHunger=hunger;
+        }
     }
 
     public void SetActualThirst(int thirst){
-        actualThirst=thirst;
+        if(thirst<0){
+            actualThirst=0;
+        }else{
+            actualThirst=thirst;
+        }
     }
 
     public String GetTextHP(){

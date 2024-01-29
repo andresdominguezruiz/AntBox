@@ -23,6 +23,7 @@ public class TileData
     public GiftType gift=GiftType.NOTHING;
     private int energyCostToDig=2;
     private static ContainerData containerData;
+    public bool discovered=false;
 
     public List<AntStats> antsDiggingSameTile=new List<AntStats>();
 
@@ -54,6 +55,30 @@ public class TileData
             actualResistance=maxResistance;
             UpdateGift(random.NextDouble());
         }
+
+    }
+
+    public TileData(bool discovered,Vector3Int position,TileType type,System.Random randomMap,GenerationTilemap generator,ContainerData container){
+        if(random==null){
+            random=randomMap; //Al ser static, esto debe afectar a todos los TileData
+        }
+        if(generationTilemap==null){
+            generationTilemap=generator;
+        }
+        if(containerData==null){
+            containerData=container;
+        }
+        tilePosition=position;
+        tileType=type;
+        if(tileType.Equals(TileType.EMPTY)){
+            actualResistance=0;
+            
+        }else{
+            actualResistance=maxResistance;
+            UpdateGift(random.NextDouble());
+        }
+
+        this.discovered=discovered;
 
     }
 

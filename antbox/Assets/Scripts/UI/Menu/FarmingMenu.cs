@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
@@ -69,6 +70,7 @@ public class FarmingMenu : MonoBehaviour
     }
 
     void Update(){
+        if(this.agent==null || this.agent.gameObject.IsDestroyed())FinishFarmingMenu();
         if(!PauseMenu.isPaused){
             if(Input.GetMouseButtonDown(0)){
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -105,13 +107,18 @@ public class FarmingMenu : MonoBehaviour
         this.agent=null;
         HideStateOfFarms();
         farmMenu.SetActive(false);
-        selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
+        if(selectedAnt!=null){
+            selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
+            selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
+        }else{
+            SelectableItem item=FindObjectOfType<SelectableItem>(false);
+            item.MakeEveryoneSelectable();
+        }
         Clock clock=FindObjectOfType<Clock>();
         if(clock!=null){
             clock.UpdateMessageOfConsoleByEvent();
             consoleText.text=clock.messageOfEvent;
         }
-        selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
         if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
     }
