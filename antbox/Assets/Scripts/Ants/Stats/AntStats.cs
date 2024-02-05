@@ -30,6 +30,21 @@ public class AntStats : CharacterStats
     [SerializeField] protected int MAX_RECOVER_SPEED=30;
     [SerializeField] protected int RECOVER_SPEED_PER_AGE=5;
 
+    [SerializeField] protected int MIN_DAMAGE=5;
+    [SerializeField] protected int MAX_DAMAGE=30;
+
+
+    //La velocidad de ataque se calculará de forma porcentual
+    [SerializeField] protected int MIN_ATTACK_SPEED=30;
+    [SerializeField] protected int MAX_ATTACK_SPEED=240;
+
+    [SerializeField] protected int MIN_MISS_PROBABILITY=10;
+    [SerializeField] protected int MAX_MISS_PROBABILITY=35;
+
+
+    [SerializeField] protected int MIN_CRITICAL_PROBABILITY=75;
+    [SerializeField] protected int MAX_CRITICAL_PROBABILITY=100;
+
 
     //----------------------------------------------------
     [SerializeField] private int maxEnergy;
@@ -38,6 +53,8 @@ public class AntStats : CharacterStats
     [SerializeField] private float farmingSpeed;
     [SerializeField] private float diggingSpeed;
     [SerializeField] private int recoverSpeed;
+
+    public BattleStats battleStats;
     //TODO: Cuando tengamos juego base, mejorar stats para que cada hormiga sea buena en algo
 
     public float GetFarmingSpeed(){
@@ -160,8 +177,13 @@ public class AntStats : CharacterStats
         int randomSpeed=GetRandom().Next(MIN_FARMING_SPEED,MAX_FARMING_SPEED);
         int randomDigging=GetRandom().Next(MIN_DIGGING_SPEED,MAX_DIGGING_SPEED);
         int randomRecover=GetRandom().Next(MIN_RECOVER_SPEED,MAX_RECOVER_SPEED);
+        int randomDamage=GetRandom().Next(MIN_DAMAGE,MAX_DAMAGE);
+        int randomAttackSpeed=GetRandom().Next(MIN_ATTACK_SPEED,MAX_ATTACK_SPEED);
+        int randomMissProbability=GetRandom().Next(MIN_MISS_PROBABILITY,MAX_MISS_PROBABILITY);
+        int randomCriticalProbability=GetRandom().Next(MIN_CRITICAL_PROBABILITY,MAX_CRITICAL_PROBABILITY);
         farmingSpeed=(float)(randomSpeed*1.0/100);
         diggingSpeed=(float)(randomDigging*1.0/100);
+        battleStats=new BattleStats(false,randomDamage,randomAttackSpeed,randomMissProbability,randomCriticalProbability);
         maxEnergy=randomEnergy;
         recoverSpeed=randomRecover;
         SetEnergy(randomEnergy);

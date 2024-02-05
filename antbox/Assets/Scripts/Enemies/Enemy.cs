@@ -19,14 +19,12 @@ public class Enemy : ScriptableObject
     public EnemyType enemyType=EnemyType.ANT;
     public TargetType targetType=TargetType.ANT;
     public Sprite enemySprite;
+    public Sprite enemyBodySprite;
     public int enemyLevel=1;
     public int resources=1;
-    public int damage;
     public int maxHP;
-    public float attackSpeed;
-    public double criticalProbability;
-    public double missProbability;
-    public List<CriticalEffects> criticalEffects=new List<CriticalEffects>();
+
+    public BattleStats battleStats;
 
     
 }

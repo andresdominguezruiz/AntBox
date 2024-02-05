@@ -9,13 +9,14 @@ public class EnemyMovement : MonoBehaviour
     public Transform actualTarget;
     public HashSet<Transform> otherAvailableTargets=new HashSet<Transform>();
     NavMeshAgent enemyAgent;
-    EnemyStats stats;
+
+    BattleManager battleManager;
     void Start()
     {
         enemyAgent=this.GetComponent<NavMeshAgent>();
         enemyAgent.updateRotation = false;
         enemyAgent.updateUpAxis = false;
-        stats=this.GetComponent<EnemyStats>();
+        battleManager=this.GetComponent<BattleManager>();
 
         
     }
@@ -23,8 +24,8 @@ public class EnemyMovement : MonoBehaviour
     void UpdateTarget(){
         EnemyStats enemyStats=this.GetComponent<EnemyStats>();
         SelectableItem selectableItem=FindObjectOfType<SelectableItem>(false);
-        List<SelectableItem> allItems=selectableItem.GetItemsByTarget(enemyStats.enemy.targetType);
-        actualTarget=ChooseTarget(allItems);
+        //List<SelectableItem> allItems=selectableItem.GetItemsByTarget(enemyStats.enemy.targetType);
+        //actualTarget=ChooseTarget(allItems);
     }
 
     public Transform ChooseTarget(List<SelectableItem> items){
@@ -47,12 +48,13 @@ public class EnemyMovement : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collider){
         if(collider.gameObject.transform.Equals(actualTarget)){
-            stats.inBattle=true;
+            Debug.Log("HOLAAA");
+            battleManager.inBattle=true;
         }
     }
     void OnTriggerStay2D(Collider2D collider){
         if(collider.gameObject.transform.Equals(actualTarget)){
-            stats.inBattle=true;
+            battleManager.inBattle=true;
         }
         else{
             SelectableItem item=collider.gameObject.GetComponent<SelectableItem>();
@@ -61,7 +63,7 @@ public class EnemyMovement : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D collider) {
         if(collider.gameObject.transform.Equals(actualTarget)){
-            stats.inBattle=false;
+            battleManager.inBattle=false;
         }else{
             SelectableItem item=collider.gameObject.GetComponent<SelectableItem>();
             if(item!=null) otherAvailableTargets.Remove(collider.transform);

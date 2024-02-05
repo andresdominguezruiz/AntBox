@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03114d8a0bc372043a29ddfb542552a9, type: 3}
-  m_Name: Basic Ant
+  m_Name: Basic Earthworm
   m_EditorClassIdentifier: 
-  enemyType: 0
+  enemyType: 2
   targetType: 0
-  enemySprite: {fileID: -965857784, guid: 81307897c5380a347936cdcedc63ad06, type: 3}
+  enemySprite: {fileID: -140291514, guid: a6e791e42805a7546a55764f81283a72, type: 3}
+  enemyBodySprite: {fileID: -1675844910, guid: a6e791e42805a7546a55764f81283a72, type: 3}
   enemyLevel: 1
-  resources: 2
-  maxHP: 100
-  criticalEffects: 05000000
+  resources: 1
+  maxHP: 1000
   battleStats:
     isEnemy: 1
-    attackSpeed: 2
-    damage: 2
-    criticalProbability: 0.8
+    attackSpeed: 1
+    damage: 4
+    criticalProbability: 0.5
     missProbability: 0.2
-    startBattleType: 2
+    startBattleType: 1
     criticalEffects: 05000000

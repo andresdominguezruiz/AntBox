@@ -41,17 +41,18 @@ public class SelectableItem : MonoBehaviour
         }
         return list;
     }
-    public List<SelectableItem> GetItemsByTarget(TargetType target){
-        List<SelectableItem> items=new List<SelectableItem>();
+    public List<Transform> GetItemsByTarget(TargetType target){
+        List<Transform> items=new List<Transform>();
         foreach(SelectableItem item in selectableItems){
             if((target.Equals(TargetType.ANT) && item.type.Equals(ItemType.ANT)) ||
              (target.Equals(TargetType.FARM) && item.type.Equals(ItemType.FARM)) ||
              (target.Equals(TargetType.QUEEN) && item.type.Equals(ItemType.QUEEN)) ||
              (target.Equals(TargetType.ANTHILL) &&
               (item.type.Equals(ItemType.ANT) || item.type.Equals(ItemType.QUEEN)))){
-                items.Add(item);
+                items.Add(item.transform);
               }
         }
+        Debug.Log(items.Count);
         return items;
     }
 
@@ -173,7 +174,6 @@ public class SelectableItem : MonoBehaviour
         SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
         if(sprite!=null){
             sprite.material.color=newColor;
-            if(sprite.material.color.Equals(newColor)) Debug.Log("FUNCIONA");
         }
     }
 
