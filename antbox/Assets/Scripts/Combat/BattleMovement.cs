@@ -66,6 +66,7 @@ public class BattleMovement : MonoBehaviour
 
     //COLISIONES SON PARA HORMIGAS
     
+    
     //TRIGGERS SON PARA ENEMIGOS
     void OnTriggerEnter2D(Collider2D collider){
         if(collider.gameObject.transform.Equals(actualTarget)){

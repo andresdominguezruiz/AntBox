@@ -11,10 +11,12 @@ public class EnemyStats : MonoBehaviour
     private System.Random random = new System.Random();
     public GameObject dangerZone;
     public int kills=0;
+    public BarManager healthBar;
 
     public void Heal(int extraHP){
         if(extraHP+actualHP>enemy.maxHP) actualHP=enemy.maxHP;
         else actualHP+=extraHP;
+        healthBar.SetBarValue(actualHP);
     }
 
     public bool IsDead(){
@@ -25,6 +27,9 @@ public class EnemyStats : MonoBehaviour
         actualHP-=damage;
         if(IsDead()){
             Destroy(this.gameObject);
+        }else{
+            Debug.Log("ACTUALIZA");
+            healthBar.SetBarValue(actualHP);
         }
     }
     
@@ -35,6 +40,7 @@ public class EnemyStats : MonoBehaviour
         timeLastFrame=0f;
         actualHP=enemy.maxHP;
         SpriteRenderer spriteRenderer=GetComponentInChildren<SpriteRenderer>(false);
+        healthBar.SetMaxBarValue(enemy.maxHP);
         if(spriteRenderer!=null){
             spriteRenderer.sprite=enemy.enemySprite;
         }

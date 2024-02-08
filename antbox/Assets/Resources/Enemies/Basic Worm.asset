@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Basic Worm
   m_EditorClassIdentifier: 
   enemyType: 1
-  targetType: 4
+  targetType: 3
   enemySprite: {fileID: -140291514, guid: a6e791e42805a7546a55764f81283a72, type: 3}
+  enemyBodySprite: {fileID: 0}
   enemyLevel: 1
   resources: 1
-  damage: 10
   maxHP: 10
-  attackSpeed: 2.5
-  criticalProbability: 0.95
-  missProbability: 0.3
-  criticalEffects: 00000000
+  battleStats:
+    isEnemy: 1
+    attackSpeed: 5
+    damage: 5
+    criticalProbability: 0.9
+    missProbability: 0.3
+    startBattleType: 1
+    criticalEffects: 05000000

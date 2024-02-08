@@ -23,6 +23,8 @@ public class CharacterStats : MonoBehaviour
 
     private int counterOfSecons=0;
 
+    public AllBarsManager allBarsManager;
+
     //LIMITS FOR VARIABLES----------------------
     [SerializeField] protected int MIN_HP=40;
     [SerializeField] protected int MAX_HP=60;
@@ -200,7 +202,9 @@ public class CharacterStats : MonoBehaviour
             Die();
         }else if(actualHP>=maxHP){
             actualHP=maxHP;
+            allBarsManager.healthBar.SetMaxBarValue(maxHP);
         }
+        allBarsManager.healthBar.SetBarValue(actualHP);
     }
 
     public void Die(){
@@ -209,6 +213,7 @@ public class CharacterStats : MonoBehaviour
 
     public void TakeDamage(int damage){
         SetActualHP(actualHP-damage);
+        allBarsManager.healthBar.SetBarValue(actualHP);
     }
     public void IncrementHP(int extraHP){
         maxHP+=extraHP;
@@ -218,6 +223,7 @@ public class CharacterStats : MonoBehaviour
     public void Heal(int extraHp){
         if(extraHp+actualHP>maxHP) SetActualHP(maxHP);
         else SetActualHP(extraHp+actualHP);
+        allBarsManager.healthBar.SetBarValue(actualHP);
     }
 
     public int GetMaxHP(){

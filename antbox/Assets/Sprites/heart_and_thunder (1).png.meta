@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 81307897c5380a347936cdcedc63ad06
+guid: c662bdbbe7acfa6438a4b3bf946f398f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,49 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: antEnemy (1)_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9a7b8349d052b584195c6a88d1ccb544
-      internalID: -965857784
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: antEnemy (1)_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 89e9227a7e7d62e408753d84a2b7310d
-      internalID: -1262002659
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: antEnemy (1)_2
+      name: heart_and_thunder (1)_0
       rect:
         serializedVersion: 2
         x: 0
@@ -166,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3dd2568b557317f40a95fbff208ddcc1
-      internalID: -893386096
+      spriteID: 8af174bfe0127b84e9bcd9520c258119
+      internalID: -1405396784
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: antEnemy (1)_3
+      name: heart_and_thunder (1)_1
       rect:
         serializedVersion: 2
         x: 32
@@ -187,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 438df2da1b0d7d041bdac8c73bb12791
-      internalID: 457685267
+      spriteID: 9ebf7d6d169ceb74abf3051080df1eb7
+      internalID: 455030158
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: antEnemy (1)_4
+      name: heart_and_thunder (1)_2
       rect:
         serializedVersion: 2
         x: 0
@@ -208,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f75332b985f5a064fbc039aa85f63345
-      internalID: 1900852488
+      spriteID: 254008bbc25babd4cbc3d73d580253e2
+      internalID: 299517647
       vertices: []
       indices: 
       edges: []
@@ -225,11 +183,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      antEnemy (1)_0: -965857784
-      antEnemy (1)_1: -1262002659
-      antEnemy (1)_2: -893386096
-      antEnemy (1)_3: 457685267
-      antEnemy (1)_4: 1900852488
+      heart_and_thunder (1)_0: -1405396784
+      heart_and_thunder (1)_1: 455030158
+      heart_and_thunder (1)_2: 299517647
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

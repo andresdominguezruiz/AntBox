@@ -10,6 +10,8 @@ public class QueenStats : CharacterStats
     }
     private void Start(){
         this.timeLastFrame=0f;
+        this.allBarsManager=this.gameObject.GetComponentInChildren<AllBarsManager>();
+        allBarsManager.healthBar.SetMaxBarValue(GetMaxHP());
     }
 
 }

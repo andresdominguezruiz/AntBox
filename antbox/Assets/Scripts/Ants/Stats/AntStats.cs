@@ -170,6 +170,8 @@ public class AntStats : CharacterStats
 
     private void Start(){
         this.timeLastFrame=0f;
+        this.allBarsManager=this.gameObject.GetComponentInChildren<AllBarsManager>();
+        allBarsManager.healthBar.SetMaxBarValue(GetMaxHP());
     }
 
     public void InitOtherVariables(){

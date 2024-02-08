@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03114d8a0bc372043a29ddfb542552a9, type: 3}
-  m_Name: Basic Ant
+  m_Name: Basic Spider
   m_EditorClassIdentifier: 
-  enemyType: 0
+  enemyType: 3
   targetType: 0
-  enemySprite: {fileID: -965857784, guid: 81307897c5380a347936cdcedc63ad06, type: 3}
+  enemySprite: {fileID: 0}
   enemyBodySprite: {fileID: 0}
   enemyLevel: 1
-  resources: 2
-  maxHP: 100
+  resources: 1
+  maxHP: 50
   battleStats:
     isEnemy: 1
-    attackSpeed: 2
-    damage: 5
-    criticalProbability: 0.8
-    missProbability: 0.2
+    attackSpeed: 0.5
+    damage: 2
+    criticalProbability: 0.9
+    missProbability: 0.3
     startBattleType: 2
-    criticalEffects: 05000000
+    criticalEffects: 02000000
