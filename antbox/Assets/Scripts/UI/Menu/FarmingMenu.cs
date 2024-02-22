@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
@@ -45,7 +46,7 @@ public class FarmingMenu : MonoBehaviour
     {
         this.agent=selectedAnt.GetComponent<NavMeshAgent>();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectable();
+        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
         farmMenu.gameObject.SetActive(true);
         consoleText.text=selectedAnt.name+"-Select an available farm";
@@ -69,7 +70,9 @@ public class FarmingMenu : MonoBehaviour
     }
 
     void Update(){
-        if(Input.GetMouseButtonDown(0)){
+        if(this.agent==null || this.agent.gameObject.IsDestroyed())FinishFarmingMenu();
+        if(!PauseMenu.isPaused){
+            if(Input.GetMouseButtonDown(0)){
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
@@ -88,6 +91,7 @@ public class FarmingMenu : MonoBehaviour
             }
 
         }
+        }
 
     }
 
@@ -103,13 +107,18 @@ public class FarmingMenu : MonoBehaviour
         this.agent=null;
         HideStateOfFarms();
         farmMenu.SetActive(false);
-        selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
+        if(selectedAnt!=null){
+            selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
+            selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
+        }else{
+            SelectableItem item=FindObjectOfType<SelectableItem>(false);
+            item.MakeEveryoneSelectable();
+        }
         Clock clock=FindObjectOfType<Clock>();
         if(clock!=null){
             clock.UpdateMessageOfConsoleByEvent();
             consoleText.text=clock.messageOfEvent;
         }
-        selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
         if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
     }

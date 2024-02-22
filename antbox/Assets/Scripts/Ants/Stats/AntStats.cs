@@ -30,6 +30,21 @@ public class AntStats : CharacterStats
     [SerializeField] protected int MAX_RECOVER_SPEED=30;
     [SerializeField] protected int RECOVER_SPEED_PER_AGE=5;
 
+    [SerializeField] protected int MIN_DAMAGE=5;
+    [SerializeField] protected int MAX_DAMAGE=30;
+
+
+    //La velocidad de ataque se calculará de forma porcentual
+    [SerializeField] protected int MIN_ATTACK_SPEED=30;
+    [SerializeField] protected int MAX_ATTACK_SPEED=240;
+
+    [SerializeField] protected int MIN_MISS_PROBABILITY=10;
+    [SerializeField] protected int MAX_MISS_PROBABILITY=35;
+
+
+    [SerializeField] protected int MIN_CRITICAL_PROBABILITY=75;
+    [SerializeField] protected int MAX_CRITICAL_PROBABILITY=100;
+
 
     //----------------------------------------------------
     [SerializeField] private int maxEnergy;
@@ -38,10 +53,29 @@ public class AntStats : CharacterStats
     [SerializeField] private float farmingSpeed;
     [SerializeField] private float diggingSpeed;
     [SerializeField] private int recoverSpeed;
+
+    public BattleStats battleStats;
     //TODO: Cuando tengamos juego base, mejorar stats para que cada hormiga sea buena en algo
 
-    public float GetFarminSpeed(){
+    public float GetFarmingSpeed(){
         return farmingSpeed;
+    }
+
+    public void SetFarmingSpeed(float speed){
+        farmingSpeed=speed;
+        if(speed>(float)MAX_FARMING_SPEED*2/100) farmingSpeed=(float)MAX_FARMING_SPEED*2/100;
+        else if(speed<(float)MIN_FARMING_SPEED/(2*100)) farmingSpeed=(float)MIN_FARMING_SPEED/(2*100);
+    }
+    public void SetDiggingSpeed(float speed){
+        diggingSpeed=speed;
+        if(speed>(float)MAX_DIGGING_SPEED*2/100) diggingSpeed=(float)MAX_DIGGING_SPEED*2/100;
+        else if(speed<(float)MIN_DIGGING_SPEED/(2*100)) diggingSpeed=(float)MIN_DIGGING_SPEED/(2*100);
+    }
+
+    public void SetRecoverSpeed(int speed){
+        recoverSpeed=speed;
+        if(speed>MAX_RECOVER_SPEED*2) recoverSpeed=MAX_RECOVER_SPEED*2;
+        else if(speed<MIN_RECOVER_SPEED/2) recoverSpeed=MIN_RECOVER_SPEED/2;
     }
 
     public void CancelAntAction(){
@@ -115,10 +149,16 @@ public class AntStats : CharacterStats
         else if(energy>maxEnergy) actualEnergy=maxEnergy;
         else actualEnergy=energy;
     }
+    public void SetMaxEnergy(int energy){
+        if(energy<MIN_ENERGY/2) maxEnergy=MIN_ENERGY/2;
+        else if(energy>MAX_ENERGY*2) maxEnergy=MAX_ENERGY*2;
+        else maxEnergy=energy;
+    }
 
     public void ApplyEnergyCost(int cost){
         if(!GetClockOfGame().eventType.Equals(EventType.SUMMER) || cost<0)SetEnergy(actualEnergy-cost);
         else SetEnergy(actualEnergy-2*cost);
+        allBarsManager.energyBar.SetBarValue(actualEnergy);
 
     }
     public void InitAntStats(System.Random random){
@@ -131,6 +171,11 @@ public class AntStats : CharacterStats
 
     private void Start(){
         this.timeLastFrame=0f;
+        this.allBarsManager=this.gameObject.GetComponentInChildren<AllBarsManager>();
+        allBarsManager.healthBar.SetMaxBarValue(GetMaxHP());
+        allBarsManager.energyBar.SetMaxBarValue(GetMaxEnergy());
+        allBarsManager.hungerBar.SetMaxBarValue(GetMaxHunger());
+        allBarsManager.thirstBar.SetMaxBarValue(GetMaxThirst());
     }
 
     public void InitOtherVariables(){
@@ -138,8 +183,13 @@ public class AntStats : CharacterStats
         int randomSpeed=GetRandom().Next(MIN_FARMING_SPEED,MAX_FARMING_SPEED);
         int randomDigging=GetRandom().Next(MIN_DIGGING_SPEED,MAX_DIGGING_SPEED);
         int randomRecover=GetRandom().Next(MIN_RECOVER_SPEED,MAX_RECOVER_SPEED);
+        int randomDamage=GetRandom().Next(MIN_DAMAGE,MAX_DAMAGE);
+        int randomAttackSpeed=GetRandom().Next(MIN_ATTACK_SPEED,MAX_ATTACK_SPEED);
+        int randomMissProbability=GetRandom().Next(MIN_MISS_PROBABILITY,MAX_MISS_PROBABILITY);
+        int randomCriticalProbability=GetRandom().Next(MIN_CRITICAL_PROBABILITY,MAX_CRITICAL_PROBABILITY);
         farmingSpeed=(float)(randomSpeed*1.0/100);
         diggingSpeed=(float)(randomDigging*1.0/100);
+        battleStats=new BattleStats(false,randomDamage,randomAttackSpeed,randomMissProbability,randomCriticalProbability);
         maxEnergy=randomEnergy;
         recoverSpeed=randomRecover;
         SetEnergy(randomEnergy);

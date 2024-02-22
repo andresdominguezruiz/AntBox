@@ -15,5 +15,27 @@ public class Card : ScriptableObject {
 
     public List<Action> actions=new List<Action>();
 
+    public double GetComplexityOfCard(double complexityLevelOfGame){
+        double result=complexityLevelOfGame;
+        if(type.Equals(CardType.POWER_UP)){
+            result+=StatisticsOfGame.Instance.counterOfPassedExams;
+            foreach(Action action in actions){
+                result+=action.GetComplexityOfAction();
+            }
+        }
+        return result;
+    }
+
+    public bool HasPassive(){
+        bool res=false;
+        foreach(Action action in actions){
+            if(action.destination.Equals(Destination.PLAYER)){
+                res=true;
+                break;
+            }
+        }
+        return res;
+    }
+
 }
 

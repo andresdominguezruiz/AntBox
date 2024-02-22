@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum ComplexityType{
-    EASY,MEDIUM,HARD
+    VERY_EASY,EASY,MEDIUM,HARD,VERY_HARD
 }
 
 [CreateAssetMenu(fileName = "New Activity", menuName = "Activity")]
@@ -14,6 +14,6 @@ public class Activity : ScriptableObject
     public Sprite optionalImage;
     public string description;
     public ComplexityType complexityType;
-    public string[] options;
+    public Sprite[] options;
     public int correctAnswer;
 }

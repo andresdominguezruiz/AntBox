@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea97fa364571dc4ca8428b5c4d13074, type: 3}
+  m_Name: Act2
+  m_EditorClassIdentifier: 
+  name: Sequences, iterables and streams
+  optionalImage: {fileID: 21300000, guid: 9c240761fc0feba41a5f4b2fb01ef2d3, type: 3}
+  description: 
+  complexityType: 0
+  options:
+  - {fileID: 21300000, guid: 43de25ef1f8a0f34a8cb70ddff9380ff, type: 3}
+  - {fileID: 21300000, guid: 7cde3e00aba84874da54c7fad5d00184, type: 3}
+  - {fileID: 21300000, guid: ae7e5010ff274ff4c9211a11e02c8022, type: 3}
+  - {fileID: 21300000, guid: 6c4562d87a2617d4f9f1acf81fbe4f8b, type: 3}
+  correctAnswer: 0

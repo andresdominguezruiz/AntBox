@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public enum Type{
@@ -14,6 +16,12 @@ public class FarmStats : MonoBehaviour
     //LIMITS:
     [SerializeField] private int MAX_RESOURCES=5;
     [SerializeField] private int MIN_RESOURCES=1;
+    [SerializeField] private int maxTimePerCycle=40;
+    [SerializeField] private int minTimePerCycle=10;
+    [SerializeField] private int minLimitOfCapacity=2;
+    [SerializeField] private int maxLimitOfCapacity=8;
+    [SerializeField] private int maxEnergyCost=5;
+    [SerializeField] private int minEnergyCost=1;
 
     private System.Random random = new System.Random();
 
@@ -25,9 +33,6 @@ public class FarmStats : MonoBehaviour
     public float timePerCycleConsumed;
     public float timeLastFrame;
 
-    [SerializeField] private int timeNeededToRepair=60;
-
-    [SerializeField] private int energyCostToRepair=40;
     [SerializeField] public int energyCostOfCycle=2;
 
     [SerializeField] private int maxCapacity=4;
@@ -44,17 +49,41 @@ public class FarmStats : MonoBehaviour
     public int GetTimePerCycle(){
         return timePerCycle;
     }
-    public void ProcessUpdateEffectOfAction(Action actualAction){
-        if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.FARM_CYCLE_DOWN)){
-            int newTimePerCycle=this.timePerCycle-timePerCycle*20/100;
-            if(newTimePerCycle>=10) this.timePerCycle=newTimePerCycle; //ESTO SE HACE PARA PONER UN LÍMITE
+
+    public void SetMinResources(int resources){
+        if(resources>=1 && resources<MAX_RESOURCES) MIN_RESOURCES=resources;
+    }
+    public void SetMaxResources(int resources){
+        if(resources>MIN_RESOURCES) MAX_RESOURCES=resources;
+    }
+
+    public void ApplyEffect(FarmEffect farmEffect){
+        if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.FARM_CYCLE)){
+            int newTimePerCycle=farmEffect.multiplicatorValue
+            *(this.timePerCycle+(int)farmEffect.sumValue);
+            if(newTimePerCycle>maxTimePerCycle) this.timePerCycle=maxTimePerCycle; //ESTO SE HACE PARA PONER UN LÍMITE
+            else if(newTimePerCycle<minTimePerCycle) this.timePerCycle=minTimePerCycle;
+            else this.timePerCycle=newTimePerCycle;
+            
         }
-        else if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.MORE_CAPACITY) && this.maxCapacity<=8){
-            this.maxCapacity++;
+        else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.CAPACITY)){
+            maxCapacity=farmEffect.multiplicatorValue*(maxCapacity+(int)farmEffect.sumValue);
+            if(maxCapacity>maxLimitOfCapacity) maxCapacity=maxLimitOfCapacity;
+            else if(maxCapacity<minLimitOfCapacity) maxCapacity=minLimitOfCapacity;
         }
-        else if(actualAction.farmEffect.Equals(UpdateEffectOnFarm.FARM_RESOURCES_UP)){
-            this.MIN_RESOURCES+=3;
-            this.MAX_RESOURCES+=3;
+        else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.FARM_RESOURCES)){
+            SetMinResources(farmEffect.multiplicatorValue*(MIN_RESOURCES+(int)farmEffect.sumValue));
+            SetMaxResources(farmEffect.multiplicatorValue*(MAX_RESOURCES+(int)farmEffect.sumValue));
+        }else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.ENERGY_COST)){
+            energyCostOfCycle=farmEffect.multiplicatorValue*(energyCostOfCycle+(int)farmEffect.sumValue);
+            if(energyCostOfCycle<minEnergyCost) energyCostOfCycle=minEnergyCost;
+            else if(energyCostOfCycle>maxEnergyCost) energyCostOfCycle=maxEnergyCost;
+        }
+    }
+
+    public void ProcessUpdateEffectOfAction(List<FarmEffect> farmEffects){
+        foreach(FarmEffect farmEffect in farmEffects){
+            ApplyEffect(farmEffect);
         }
     }
     public Type GetTypeOfFarm(){
@@ -99,7 +128,7 @@ public class FarmStats : MonoBehaviour
             if(Time.time -timeLastFrame>=1.0f){
             float sumSpeed=0f;
             foreach(GameObject ant in antsWorkingInFarm){
-                sumSpeed+=ant.GetComponent<AntStats>().GetFarminSpeed();
+                sumSpeed+=ant.GetComponent<AntStats>().GetFarmingSpeed();
             }
             timePerCycleConsumed+=sumSpeed;
             if(antsWorkingInFarm.Count>0){
@@ -116,15 +145,43 @@ public class FarmStats : MonoBehaviour
                         antStats.CancelAntAction();
                     }
                 }
-            if(timePerCycleConsumed>=timePerCycle){
+            CheckTimePerCycle();
+            timeLastFrame=Time.time;
+        }
+        }else{
+            DestroyFarm();
+        }
+        
+    }
+    public void CheckTimePerCycle(){
+        if(timePerCycleConsumed>=timePerCycle){
                 ContainerData container=FindObjectOfType<ContainerData>();
                 container.AddResources(random.Next(MIN_RESOURCES,MAX_RESOURCES),type);
                 timePerCycleConsumed=0f;
+            }else if(timePerCycleConsumed<=-1*timePerCycle){
+                broken=true;
             }
-            timeLastFrame=Time.time;
+    }
+
+    public void DestroyFarm(){
+        SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
+        item.isSelected=false;
+        List<GameObject> antsInFarm=new List<GameObject>(antsOfFarm); //Necesito clonar
+        //porque no puedo recorrer una lista la cuál voy a ir vaciando.
+        foreach(GameObject ant in antsInFarm){
+            AntStats stats=ant.GetComponent<AntStats>();
+            if(stats!=null){
+                stats.StopFarming();
+            }
         }
+        FarmGenerator farmGenerator=FindObjectOfType<FarmGenerator>(false);
+        if(farmGenerator!=null && this.type.Equals(Type.FOOD)){
+            farmGenerator.foodFarms.Remove(this.gameObject);
+        }else if(farmGenerator!=null && this.type.Equals(Type.WATER)){
+            farmGenerator.waterFarms.Remove(this.gameObject);
         }
-        
+        item.RemoveSelectableItem();
+        Destroy(this.gameObject);
     }
 
     public bool CanAntWorkInHere(){
@@ -138,7 +195,6 @@ public class FarmStats : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D other)
     {
         GameObject item=other.gameObject;
-        Debug.Log("Name:"+item.name);
         if(item.CompareTag("Ant") && item.GetComponent<AntStats>().GetAction().Equals(ActualAction.FARMING)
          && antsOfFarm.Contains(item)){
             antsWorkingInFarm.Add(item);
@@ -149,7 +205,6 @@ public class FarmStats : MonoBehaviour
     public void OnTriggerStay2D(Collider2D collision)
     {
         GameObject item=collision.gameObject;
-        Debug.Log("Name:"+item.name);
         if(item.CompareTag("Ant") && item.GetComponent<AntStats>().GetAction().Equals(ActualAction.FARMING)
          && antsOfFarm.Contains(item)){
             if(!antsWorkingInFarm.Contains(item)) antsWorkingInFarm.Add(item);

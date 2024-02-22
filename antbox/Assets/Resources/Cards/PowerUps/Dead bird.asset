@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204ab161c44cac84986d93c2d6eb5924, type: 3}
+  m_Name: Dead bird
+  m_EditorClassIdentifier: 
+  name: Dead bird
+  description: ' Gives plenty of food(+10) to the container'
+  artWorks: {fileID: 21300000, guid: ca2982c6d725f2f42b4c42b2e31c3308, type: 3}
+  type: 0
+  actions:
+  - uses: 1
+    type: 1
+    destination: 1
+    farmEffects: []
+    containerEffects:
+    - containerEffect: 0
+      multiplicatorValue: 1
+      sumValue: 10
+    characterEffects: []
+    playerEffect: 0
+    interactionType: 0
