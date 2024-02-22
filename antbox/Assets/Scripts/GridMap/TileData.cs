@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -24,6 +25,7 @@ public class TileData
     private int energyCostToDig=2;
     private static ContainerData containerData;
     public bool discovered=false;
+    
 
     public List<AntStats> antsDiggingSameTile=new List<AntStats>();
 
@@ -85,7 +87,7 @@ public class TileData
     void UpdateGift(double randomValue){
         if(randomValue<=0.2){
             gift=GiftType.NOTHING;
-        }else if(randomValue>0.5 && randomValue<=0.7 && generationTilemap.GetFarmGenerator().CanBePlaceFarmInPosition(tilePosition)
+        }else if(randomValue>0.4 && randomValue<=0.6 && generationTilemap.GetFarmGenerator().CanBePlaceFarmInPosition(tilePosition)
          && !tileType.Equals(TileType.STONE)){
             double v= random.NextDouble();
             gift=v<=0.5?GiftType.WATER_FARM:GiftType.FOOD_FARM;
@@ -102,9 +104,6 @@ public class TileData
     }
 
     
-    void UpdateDirectionsAndTilesData(){
-
-    }
 
     void ProcessGift(){
         if(this.gift.Equals(GiftType.CARD) && containerData.CanAddNewCard()){
@@ -115,6 +114,7 @@ public class TileData
             containerData.AddNewFarm(Type.WATER,tilePosition);
         }
 
+
     }
     void ProcessStateOfTile(bool isMenuDigInUse){
         if(!isMenuDigInUse){
@@ -124,6 +124,9 @@ public class TileData
             tileType=TileType.EMPTY;
             generationTilemap.dirtMap.SetTile(tilePosition,null);
             ProcessGift();
+            if(!this.gift.Equals(GiftType.WATER_FARM) || !this.gift.Equals(GiftType.FOOD_FARM)){
+                generationTilemap.CanWakeUpNest(tilePosition);
+            }
             
         }else if(tileType.Equals(TileType.STONE) && actualResistance<=0f){
             actualResistance=maxResistance;

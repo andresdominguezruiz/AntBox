@@ -24,6 +24,7 @@ public class Enemy : ScriptableObject
     public int resources=1;
     public int maxHP;
 
+
     public BattleStats battleStats;
 
     

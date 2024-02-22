@@ -114,23 +114,20 @@ public class CharacterStats : MonoBehaviour
             Destroy(this.gameObject);
         }else{
             bool needToCheckHP=false;
+            int cost=-1;
             if(actualHunger>0 && actualThirst>0){
-                if(clockOfGame!=null && !clockOfGame.eventType.Equals(EventType.WINTER)){
-                    actualHunger--;
-                    actualThirst--;
-                }else{
-                    actualHunger-=3;
-                    actualThirst-=3;
+                if(!(clockOfGame!=null && !clockOfGame.eventType.Equals(EventType.WINTER))){
+                    cost= -3;
                 }
+                SetActualHunger(actualHunger+cost);
+                SetActualThirst(actualThirst+cost);
                 Heal(1);
             }else if(actualHunger>0){
-                if(clockOfGame!=null && !clockOfGame.eventType.Equals(EventType.WINTER)) actualHunger--;
-                else actualHunger-=3;
+                SetActualHunger(actualHunger+cost);
                 actualHP--;
                 needToCheckHP=true;
             }else if(actualThirst>0){
-                if(clockOfGame!=null && !clockOfGame.eventType.Equals(EventType.WINTER)) actualThirst--;
-                else actualThirst-=3;
+                SetActualThirst(actualThirst+cost);
                 actualHP--;
                 needToCheckHP=true;
             }else{
@@ -213,7 +210,7 @@ public class CharacterStats : MonoBehaviour
 
     public void TakeDamage(int damage){
         SetActualHP(actualHP-damage);
-        allBarsManager.healthBar.SetBarValue(actualHP);
+        
     }
     public void IncrementHP(int extraHP){
         maxHP+=extraHP;
@@ -223,7 +220,6 @@ public class CharacterStats : MonoBehaviour
     public void Heal(int extraHp){
         if(extraHp+actualHP>maxHP) SetActualHP(maxHP);
         else SetActualHP(extraHp+actualHP);
-        allBarsManager.healthBar.SetBarValue(actualHP);
     }
 
     public int GetMaxHP(){
@@ -232,6 +228,7 @@ public class CharacterStats : MonoBehaviour
 
     public void SetActualHP(int hp){
         actualHP=hp;
+        allBarsManager.healthBar.SetBarValue(actualHP);
     }
 
     public void SetActualHunger(int hunger){
@@ -240,6 +237,7 @@ public class CharacterStats : MonoBehaviour
         }else{
             actualHunger=hunger;
         }
+        allBarsManager.hungerBar.SetBarValue(actualHunger);
     }
 
     public void SetActualThirst(int thirst){
@@ -248,6 +246,7 @@ public class CharacterStats : MonoBehaviour
         }else{
             actualThirst=thirst;
         }
+        allBarsManager.thirstBar.SetBarValue(actualThirst);
     }
 
     public String GetTextHP(){
@@ -319,6 +318,14 @@ public class CharacterStats : MonoBehaviour
             }
 
         }
+    }
+
+    public int GetMaxHunger(){
+        return maxHunger;
+    }
+
+    public int GetMaxThirst(){
+        return maxThirst;
     }
 
 

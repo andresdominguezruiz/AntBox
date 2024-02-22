@@ -133,6 +133,9 @@ public class BattleManager : MonoBehaviour
             if(ant!=null && (ant.battleStats.startBattleType.Equals(StartBattleType.WAITER)
              || ant.battleStats.startBattleType.Equals(StartBattleType.SEARCH_AND_RESPOND))){
                 StartCounterAttack(characterStats.gameObject);
+                if(ant.GetAction().Equals(ActualAction.DIGGING)) ant.StopDigging();
+                else if(ant.GetAction().Equals(ActualAction.SLEEPING)) ant.StopSleeping();
+                else if(ant.GetAction().Equals(ActualAction.FARMING)) ant.StopFarming();
             }
         }
     }

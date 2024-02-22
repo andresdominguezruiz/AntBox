@@ -158,6 +158,7 @@ public class AntStats : CharacterStats
     public void ApplyEnergyCost(int cost){
         if(!GetClockOfGame().eventType.Equals(EventType.SUMMER) || cost<0)SetEnergy(actualEnergy-cost);
         else SetEnergy(actualEnergy-2*cost);
+        allBarsManager.energyBar.SetBarValue(actualEnergy);
 
     }
     public void InitAntStats(System.Random random){
@@ -172,6 +173,9 @@ public class AntStats : CharacterStats
         this.timeLastFrame=0f;
         this.allBarsManager=this.gameObject.GetComponentInChildren<AllBarsManager>();
         allBarsManager.healthBar.SetMaxBarValue(GetMaxHP());
+        allBarsManager.energyBar.SetMaxBarValue(GetMaxEnergy());
+        allBarsManager.hungerBar.SetMaxBarValue(GetMaxHunger());
+        allBarsManager.thirstBar.SetMaxBarValue(GetMaxThirst());
     }
 
     public void InitOtherVariables(){
