@@ -213,7 +213,7 @@ public class ContainerData : MonoBehaviour
     }
 
     public void AddNewCard(){
-        Card[] allCards=Resources.LoadAll<Card>("Cards/ForTestingUses");
+        Card[] allCards=Resources.LoadAll<Card>("Cards/PowerUps");
         int v=random.Next(0,allCards.Length);
         //OJO,para buscar datos con Resources, debe existir la carpeta Resources
         //Esto puede servir para hacer test, tenlo en cuenta

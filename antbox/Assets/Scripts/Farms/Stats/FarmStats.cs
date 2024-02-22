@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -144,15 +145,43 @@ public class FarmStats : MonoBehaviour
                         antStats.CancelAntAction();
                     }
                 }
-            if(timePerCycleConsumed>=timePerCycle){
+            CheckTimePerCycle();
+            timeLastFrame=Time.time;
+        }
+        }else{
+            DestroyFarm();
+        }
+        
+    }
+    public void CheckTimePerCycle(){
+        if(timePerCycleConsumed>=timePerCycle){
                 ContainerData container=FindObjectOfType<ContainerData>();
                 container.AddResources(random.Next(MIN_RESOURCES,MAX_RESOURCES),type);
                 timePerCycleConsumed=0f;
+            }else if(timePerCycleConsumed<=-1*timePerCycle){
+                broken=true;
             }
-            timeLastFrame=Time.time;
+    }
+
+    public void DestroyFarm(){
+        SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
+        item.isSelected=false;
+        List<GameObject> antsInFarm=new List<GameObject>(antsOfFarm); //Necesito clonar
+        //porque no puedo recorrer una lista la cuál voy a ir vaciando.
+        foreach(GameObject ant in antsInFarm){
+            AntStats stats=ant.GetComponent<AntStats>();
+            if(stats!=null){
+                stats.StopFarming();
+            }
         }
+        FarmGenerator farmGenerator=FindObjectOfType<FarmGenerator>(false);
+        if(farmGenerator!=null && this.type.Equals(Type.FOOD)){
+            farmGenerator.foodFarms.Remove(this.gameObject);
+        }else if(farmGenerator!=null && this.type.Equals(Type.WATER)){
+            farmGenerator.waterFarms.Remove(this.gameObject);
         }
-        
+        item.RemoveSelectableItem();
+        Destroy(this.gameObject);
     }
 
     public bool CanAntWorkInHere(){
@@ -166,7 +195,6 @@ public class FarmStats : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D other)
     {
         GameObject item=other.gameObject;
-        Debug.Log("Name:"+item.name);
         if(item.CompareTag("Ant") && item.GetComponent<AntStats>().GetAction().Equals(ActualAction.FARMING)
          && antsOfFarm.Contains(item)){
             antsWorkingInFarm.Add(item);
@@ -177,7 +205,6 @@ public class FarmStats : MonoBehaviour
     public void OnTriggerStay2D(Collider2D collision)
     {
         GameObject item=collision.gameObject;
-        Debug.Log("Name:"+item.name);
         if(item.CompareTag("Ant") && item.GetComponent<AntStats>().GetAction().Equals(ActualAction.FARMING)
          && antsOfFarm.Contains(item)){
             if(!antsWorkingInFarm.Contains(item)) antsWorkingInFarm.Add(item);

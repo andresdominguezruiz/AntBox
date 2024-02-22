@@ -32,7 +32,7 @@ public class SelectableItem : MonoBehaviour
 
     public UIFarmManager farmUI;
 
-    private ItemType type;
+    public ItemType type;
 
     public List<FarmStats> GetAllFarms(){
         List<FarmStats> list=new List<FarmStats>();
@@ -40,6 +40,20 @@ public class SelectableItem : MonoBehaviour
             if(item.type.Equals(ItemType.FARM)) list.Add(item.gameObject.GetComponent<FarmStats>());
         }
         return list;
+    }
+    public List<Transform> GetItemsByTarget(TargetType target){
+        List<Transform> items=new List<Transform>();
+        foreach(SelectableItem item in selectableItems){
+            if((target.Equals(TargetType.ANT) && item.type.Equals(ItemType.ANT)) ||
+             (target.Equals(TargetType.FARM) && item.type.Equals(ItemType.FARM)) ||
+             (target.Equals(TargetType.QUEEN) && item.type.Equals(ItemType.QUEEN)) ||
+             (target.Equals(TargetType.ANTHILL) &&
+              (item.type.Equals(ItemType.ANT) || item.type.Equals(ItemType.QUEEN)))){
+                items.Add(item.transform);
+              }
+        }
+        Debug.Log(items.Count);
+        return items;
     }
 
     public void RemoveSelectableItem(){
@@ -86,6 +100,8 @@ public class SelectableItem : MonoBehaviour
         selectableItems.Add(this);
         originalColor=this.gameObject.GetComponentInChildren<SpriteRenderer>().color;
         selectedColor=Color.green;
+        QueenStats queenStats=this.GetComponent<QueenStats>();
+        if(queenStats!=null) type=ItemType.QUEEN;
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -158,7 +174,6 @@ public class SelectableItem : MonoBehaviour
         SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
         if(sprite!=null){
             sprite.material.color=newColor;
-            if(sprite.material.color.Equals(newColor)) Debug.Log("FUNCIONA");
         }
     }
 

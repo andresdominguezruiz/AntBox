@@ -52,7 +52,42 @@ public class StatisticsOfGame : MonoBehaviour
             Destroy(item.gameObject);
         }
     }
+    public OptimalNest GetOptimalNestByLevelAndRandomValue(double randomValue){
+        NestType optimalType=NestType.RANDOM;
+        int number=1;
+        int level=1;
+        //Pick max enemy level
+        if(actualLevel>=0 && actualLevel<4) level=2;
+        else if(actualLevel>=4 && actualLevel<8) level=4;
+        else if(actualLevel>=8) level=10;
+
+        //Pick type and number
+        if((actualLevel>=0 && actualLevel<2 && randomValue<0.5) ||
+         (actualLevel>=2 && actualLevel<6 && randomValue<0.33)){
+            number=3;
+            optimalType=NestType.WORMS;
+         }
+        else if((actualLevel>=0 && actualLevel<2 && randomValue>=0.5) ||
+         (actualLevel>=2 && actualLevel<6 && randomValue>=0.33 && randomValue<0.66)){
+            number=2;
+            optimalType=NestType.ANTS;
+         }
+        else if(
+         actualLevel>=2 && actualLevel<6 && randomValue>=0.66 && randomValue<0.9){
+            number=1;
+            optimalType=NestType.EARTHWORMS;
+         }
+        else if((actualLevel>=2 && actualLevel<6 && randomValue>=0.0) || actualLevel>=6){
+            number=3;
+            optimalType=NestType.RANDOM;
+         }
+
+        OptimalNest optimal=new OptimalNest(number,optimalType,level);
+        return optimal;
+    }
     public void ResetData(){
+        NestManager nestManager=FindObjectOfType<NestManager>();
+        if(nestManager!=null) 
         counterOfExams=0;
         counterOfPassedExams=0;
         counterOfFailedExams=0;

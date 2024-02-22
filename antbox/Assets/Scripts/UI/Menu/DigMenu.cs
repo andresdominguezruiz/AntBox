@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
@@ -80,6 +81,7 @@ public class DigMenu : MonoBehaviour
     }
 
     void Update(){
+        if(this.agent==null || this.agent.gameObject.IsDestroyed()) FinishDigMenu();
         if(!PauseMenu.isPaused){
             if(Input.GetMouseButtonDown(0) && !areMoreRutes){
                 SelectStart();
@@ -171,13 +173,18 @@ public class DigMenu : MonoBehaviour
         RollBackRouteTiles();
         routes=new List<Vector3Int>();
         digMenu.SetActive(false);
-        selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
+        if(selectedAnt!=null){
+            selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
+            selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
+        }else{
+            SelectableItem item=FindObjectOfType<SelectableItem>(false);
+            item.MakeEveryoneSelectable();
+        }
         Clock clock=FindObjectOfType<Clock>();
         if(clock!=null){
             clock.UpdateMessageOfConsoleByEvent();
             consoleText.text=clock.messageOfEvent;
         }
-        selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
         if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
     }

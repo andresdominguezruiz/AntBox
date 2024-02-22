@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
@@ -42,6 +43,7 @@ public class MoveMenu : MonoBehaviour
     }
 
     void Update(){
+        if(this.agent==null || this.agent.gameObject.IsDestroyed()) FinishMoveMenu();
         if(Input.GetMouseButtonDown(0) && !PauseMenu.isPaused){
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -52,7 +54,6 @@ public class MoveMenu : MonoBehaviour
                 this.agent.SetDestination(map.GetCellCenterWorld(selectedTile));
                 FinishMoveMenu();
             }
-
         }
 
     }
@@ -65,16 +66,20 @@ public class MoveMenu : MonoBehaviour
     // Update is called once per frame
     public void FinishMoveMenu()
     {
-        
         this.agent=null;
         moveMenu.SetActive(false);
-        selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
+        if(selectedAnt!=null){
+            selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
+            selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
+        }else{
+            SelectableItem item=FindObjectOfType<SelectableItem>(false);
+            item.MakeEveryoneSelectable();
+        }
         Clock clock=FindObjectOfType<Clock>();
         if(clock!=null){
             clock.UpdateMessageOfConsoleByEvent();
             consoleText.text=clock.messageOfEvent;
         }
-        selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
         if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
     }
