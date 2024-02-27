@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI hpText; // Referencia al objeto Text para mostrar el nombre.
     public TextMeshProUGUI hungerText; // Referencia al objeto Text para mostrar la descripción.
     public TextMeshProUGUI thirstText; // Referencia al objeto Text para mostrar las estadísticas.
+    public TextMeshProUGUI poisonText; // Referencia al objeto Text para mostrar las estadísticas.
 
     public bool isQueen=false;
 
@@ -233,6 +234,10 @@ public class UIManager : MonoBehaviour
         farminSpeedText.text="Farming Speed:"+antStats.GetFarmingSpeed();
         diggingSpeedText.text="Digging Speed:"+antStats.GetDiggingSpeed();
         recoverSpeedText.text="Recover Speed:"+antStats.GetRecoverSpeed();
+        if(antStats.poisonSecons<=0) poisonText.text="";
+        else{
+            poisonText.text="Poison: "+antStats.poisonSecons;
+        }
     }
     public void UpdateCanvasWithQueenStats(QueenStats queenStats,string name){
         hpText.text="HP:"+queenStats.GetTextHP();
@@ -241,6 +246,10 @@ public class UIManager : MonoBehaviour
         ageText.text="Age:"+queenStats.GetTextAge();
         nameText.text="Name:"+name;
         isQueen=true;
+        if(queenStats.poisonSecons<=0) poisonText.text="";
+        else{
+            poisonText.text="Poison: "+queenStats.poisonSecons;
+        }
     }
 
     public void HideInfo()
