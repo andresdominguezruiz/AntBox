@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03114d8a0bc372043a29ddfb542552a9, type: 3}
-  m_Name: Basic Earthworm
+  m_Name: Hungry Ant
   m_EditorClassIdentifier: 
-  enemyType: 2
+  enemyType: 0
   targetType: 0
-  enemySprite: {fileID: -140291514, guid: a6e791e42805a7546a55764f81283a72, type: 3}
-  enemyBodySprite: {fileID: -1675844910, guid: a6e791e42805a7546a55764f81283a72, type: 3}
-  enemyLevel: 1
+  enemySprite: {fileID: 1900852488, guid: 81307897c5380a347936cdcedc63ad06, type: 3}
+  enemyBodySprite: {fileID: 0}
+  enemyLevel: 3
   resources: 3
-  maxHP: 250
+  maxHP: 150
   battleStats:
     isEnemy: 1
-    attackSpeed: 4
+    attackSpeed: 3
     damage: 15
-    criticalProbability: 0.8
-    missProbability: 0.2
-    startBattleType: 1
-    criticalEffects: 05000000
+    criticalProbability: 0.5
+    missProbability: 0.3
+    startBattleType: 2
+    criticalEffects: 0300000005000000

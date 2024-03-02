@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 
 public enum AvailableActions{
-    EAT,DRINK,SLEEP,GROW,DIG,MOVE,CANCEL_ACTION,CHANGE_DIRECTIONS
+    EAT,DRINK,SLEEP,GROW,DIG,MOVE,CANCEL_ACTION,CHANGE_DIRECTIONS,INIT_ATTACK,CHANGE_TARGET,HELP
 }
 public class UIManager : MonoBehaviour
 {
@@ -37,6 +37,7 @@ public class UIManager : MonoBehaviour
     public GameObject cancelButton;
     public GameObject moveButton;
     public GameObject farmingButton;
+    public GameObject initAttackButton;
     public GameObject upButton;
     public GameObject downButton;
     public GameObject rightButton;
@@ -63,10 +64,17 @@ public class UIManager : MonoBehaviour
         AvailableActions.SLEEP,
         AvailableActions.GROW,
         AvailableActions.DIG,
-        AvailableActions.MOVE};
+        AvailableActions.MOVE,
+        AvailableActions.INIT_ATTACK};
     
     public List<AvailableActions> availableActionsWhenItsSleeping=new List<AvailableActions>{
         AvailableActions.CANCEL_ACTION};
+    
+    public List<AvailableActions> AvailableActionsWhenItsFighting=new List<AvailableActions>{
+        AvailableActions.CANCEL_ACTION,
+        AvailableActions.CHANGE_TARGET,
+        AvailableActions.HELP
+    };
 
     
     public void CancelAntAction(){
@@ -154,7 +162,8 @@ public class UIManager : MonoBehaviour
 
     void ProcessAvailableActions(List<AvailableActions> availableActions,AntStats stats){
         List<GameObject> allButtons=new List<GameObject>{farmingButton,eatButton,drinkButton
-        ,sleepButton,moveButton,cancelButton,digButton,upButton,rightButton,leftButton,downButton};
+        ,sleepButton,moveButton,cancelButton,digButton,upButton,rightButton,leftButton
+        ,downButton,initAttackButton};
         ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
         FarmStats farm=FindFirstObjectByType<FarmStats>();
         foreach(AvailableActions availableAction in availableActions){
@@ -164,6 +173,9 @@ public class UIManager : MonoBehaviour
             }else if(availableAction.Equals(AvailableActions.MOVE)){
                 allButtons.Remove(moveButton);
                 moveButton.SetActive(true);
+            }else if(availableAction.Equals(AvailableActions.INIT_ATTACK)){
+                allButtons.Remove(initAttackButton);
+                initAttackButton.SetActive(true);
             }else if(availableAction.Equals(AvailableActions.DIG) && ex.CanDig()){
                 allButtons.Remove(digButton);
                 digButton.SetActive(true);

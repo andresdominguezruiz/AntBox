@@ -10,11 +10,15 @@ public class UIFarmManager : MonoBehaviour
     public TextMeshProUGUI typeText;
     public TextMeshProUGUI cycle;
     public TextMeshProUGUI energyCostText;
+    public FarmStats farmStats;
+
+    void Start(){
+        farmStats=this.gameObject.GetComponentInParent<FarmStats>();
+    }
 
 
 
     void Update(){
-        FarmStats farmStats=this.gameObject.GetComponentInParent<FarmStats>();
         if(farmStats!=null) UpdateCanvasWithFarmStats(farmStats);
     }
     public void ShowInfo(){

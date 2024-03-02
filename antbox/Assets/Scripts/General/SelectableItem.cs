@@ -10,7 +10,7 @@ using UnityEngine.Tilemaps;
 
 
 public enum ItemType{
-    ANT,QUEEN,FARM
+    ANT,QUEEN,FARM,ENEMY
 }
 public class SelectableItem : MonoBehaviour
 {
@@ -32,6 +32,8 @@ public class SelectableItem : MonoBehaviour
 
     public UIFarmManager farmUI;
 
+    public UIEnemyManager enemyUI;
+
     public ItemType type;
 
     public List<FarmStats> GetAllFarms(){
@@ -41,6 +43,8 @@ public class SelectableItem : MonoBehaviour
         }
         return list;
     }
+
+    //solo dejar esos tipos porque este método lo usan los enemigos, no los aliados
     public List<Transform> GetItemsByTarget(TargetType target){
         List<Transform> items=new List<Transform>();
         foreach(SelectableItem item in selectableItems){
@@ -52,7 +56,6 @@ public class SelectableItem : MonoBehaviour
                 items.Add(item.transform);
               }
         }
-        Debug.Log(items.Count);
         return items;
     }
 
@@ -69,6 +72,15 @@ public class SelectableItem : MonoBehaviour
             availablePath.Add(worldPosition);
         }
     }
+
+    public void InitSelectableItemOfEnemy(UIEnemyManager uIEnemy){
+        SetUIEnemyManager(uIEnemy);
+        enemyUI.HideInfo();
+        type=ItemType.ENEMY;
+    }
+
+
+    
     //USAR ESTE METODO CUANDO VAYAS A AÑADIR UN NUEVO ELEMENTO SELECCIONABLE
     public void InitSelectableItem(List<Vector3Int> path,Tilemap destructableMap
     ,GameObject moveMenu,GameObject farmMenu,GameObject digMenu,ItemType itemType){
@@ -159,12 +171,16 @@ public class SelectableItem : MonoBehaviour
                 itemUI.ShowInfo();
             }else if(farmUI!=null){
                 farmUI.ShowInfo();
+            }else if(enemyUI!=null){
+                enemyUI.ShowInfo();
             }
         }else{
             if(itemUI!=null){
                 itemUI.HideInfo();
             }else if(farmUI!=null){
                 farmUI.HideInfo();
+            }else if(enemyUI!=null){
+                enemyUI.HideInfo();
             }
         }
 
@@ -207,6 +223,10 @@ public class SelectableItem : MonoBehaviour
 
     public void SetUIFarmManager(UIFarmManager ui){
         farmUI=ui;
+    }
+
+    public void SetUIEnemyManager(UIEnemyManager ui){
+        enemyUI=ui;
     }
 
 

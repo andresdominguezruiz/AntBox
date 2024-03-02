@@ -55,6 +55,8 @@ public class NestManager : MonoBehaviour
         else if(enemy.enemyType.Equals(EnemyType.EARTHWORM)) template=earthwormTemplate;
         GameObject newEnemy=Instantiate(template,map.GetCellCenterWorld(pos),Quaternion.identity,template.transform.parent);
         newEnemy.name=enemy.name;
+        newEnemy.AddComponent<SelectableItem>();
+        newEnemy.GetComponent<SelectableItem>().InitSelectableItemOfEnemy(newEnemy.GetComponentInChildren<UIEnemyManager>());
         GenerationTilemap generation=GetComponent<GenerationTilemap>();
         generation.BakeMap();
         newEnemy.SetActive(true);

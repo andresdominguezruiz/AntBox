@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03114d8a0bc372043a29ddfb542552a9, type: 3}
-  m_Name: Basic Earthworm
+  m_Name: Quadruble Worm
   m_EditorClassIdentifier: 
-  enemyType: 2
-  targetType: 0
-  enemySprite: {fileID: -140291514, guid: a6e791e42805a7546a55764f81283a72, type: 3}
-  enemyBodySprite: {fileID: -1675844910, guid: a6e791e42805a7546a55764f81283a72, type: 3}
-  enemyLevel: 1
-  resources: 3
-  maxHP: 250
+  enemyType: 1
+  targetType: 1
+  enemySprite: {fileID: 21300000, guid: 76321e25426635644b65e0f7dbdefb4d, type: 3}
+  enemyBodySprite: {fileID: 0}
+  enemyLevel: 10
+  resources: 2
+  maxHP: 20
   battleStats:
     isEnemy: 1
     attackSpeed: 4
-    damage: 15
+    damage: 10
     criticalProbability: 0.8
-    missProbability: 0.2
-    startBattleType: 1
-    criticalEffects: 05000000
+    missProbability: 0.1
+    startBattleType: 0
+    criticalEffects: 0400000004000000
