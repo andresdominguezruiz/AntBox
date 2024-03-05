@@ -22,6 +22,7 @@ public class SelectableItem : MonoBehaviour
     public GameObject moveMenu;
     public GameObject farmMenu;
     public GameObject digMenu;
+    public GameObject attackMenu;
 
     public static List<SelectableItem> selectableItems=new List<SelectableItem>();
     public static HashSet<Vector3> availablePath=new HashSet<Vector3>();
@@ -73,17 +74,18 @@ public class SelectableItem : MonoBehaviour
         }
     }
 
-    public void InitSelectableItemOfEnemy(UIEnemyManager uIEnemy){
+    public void InitSelectableItemOfEnemy(UIEnemyManager uIEnemy,GameObject attackMenu){
         SetUIEnemyManager(uIEnemy);
         enemyUI.HideInfo();
         type=ItemType.ENEMY;
+        this.attackMenu=attackMenu;
     }
 
 
     
     //USAR ESTE METODO CUANDO VAYAS A AÑADIR UN NUEVO ELEMENTO SELECCIONABLE
     public void InitSelectableItem(List<Vector3Int> path,Tilemap destructableMap
-    ,GameObject moveMenu,GameObject farmMenu,GameObject digMenu,ItemType itemType){
+    ,GameObject moveMenu,GameObject farmMenu,GameObject digMenu,ItemType itemType,GameObject attackMenu){
         AddPath(path,destructableMap);
         if(itemType.Equals(ItemType.FARM)){
             SetUIFarmManager(this.gameObject.GetComponentInChildren<UIFarmManager>(true));
@@ -98,6 +100,7 @@ public class SelectableItem : MonoBehaviour
             this.moveMenu=moveMenu;
             this.farmMenu=farmMenu;
             this.digMenu=digMenu;
+            this.attackMenu=attackMenu;
             type=ItemType.ANT;
         }
         else{
@@ -205,6 +208,10 @@ public class SelectableItem : MonoBehaviour
                 otherMenu.SetSelectedAnt(this.gameObject);
                 DigMenu dig=digMenu.GetComponent<DigMenu>();
                 dig.SetSelectedAnt(this.gameObject);
+            }
+            if((itemUI!=null && !itemUI.isQueen) || (itemUI==null && enemyUI!=null)){
+                AttackMenu attack=attackMenu.GetComponent<AttackMenu>();
+                attack.SetSelectedItem(this.gameObject,itemUI==null);
             }
             foreach(SelectableItem item in selectableItems){
                 if(item!=this){

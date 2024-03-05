@@ -29,6 +29,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI farminSpeedText;
     public TextMeshProUGUI diggingSpeedText;
     public TextMeshProUGUI recoverSpeedText;
+    public TextMeshProUGUI damageText;
+    public TextMeshProUGUI attackSpeedText;
+
 
 
     public GameObject eatButton;
@@ -250,6 +253,8 @@ public class UIManager : MonoBehaviour
         else{
             poisonText.text="Poison: "+antStats.poisonSecons;
         }
+        damageText.text="Damage:"+antStats.battleStats.damage;
+        attackSpeedText.text="Attack Speed:"+antStats.battleStats.attackSpeed+" .s";
     }
     public void UpdateCanvasWithQueenStats(QueenStats queenStats,string name){
         hpText.text="HP:"+queenStats.GetTextHP();

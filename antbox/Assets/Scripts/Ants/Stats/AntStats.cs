@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 
 public enum ActualAction{
-    NOTHING,FARMING,SLEEPING,DIGGING
+    NOTHING,FARMING,SLEEPING,DIGGING,ATTACKING
 }
 
 
@@ -82,6 +82,16 @@ public class AntStats : CharacterStats
         if(this.GetAction().Equals(ActualAction.FARMING)) StopFarming();
         else if(this.GetAction().Equals(ActualAction.DIGGING)) StopDigging();
         else if(this.GetAction().Equals(ActualAction.SLEEPING)) StopSleeping();
+        else if(this.GetAction().Equals(ActualAction.ATTACKING)) StopAttacking();
+    }
+
+    public void StopAttacking(){
+        BattleMovement battleMovement=this.GetComponent<BattleMovement>();
+        if(battleMovement!=null) {
+            battleMovement.killingMode=false;
+            battleMovement.battleManager.inBattle=false;
+        }
+        this.DoNothing();
     }
 
     public void StopSleeping(){
