@@ -13573,7 +13573,7 @@ GameObject:
   - component: {fileID: 683469266}
   m_Layer: 0
   m_Name: WormTemplate
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15392,7 +15392,7 @@ GameObject:
   - component: {fileID: 769224811}
   m_Layer: 0
   m_Name: AntTemplate
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17603,7 +17603,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1483431185}
         m_TargetAssemblyTypeName: AttackMenu, Assembly-CSharp
-        m_MethodName: StopAttackMenu
+        m_MethodName: FinishAttackMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17734,7 +17734,7 @@ MonoBehaviour:
   availableActionsWhenIsDigging: 01000000000000000600000007000000
   availableActionsWhenIsDoingNothing: 010000000000000002000000030000000400000005000000
   availableActionsWhenItsSleeping: 06000000
-  AvailableActionsWhenItsFighting: 06000000090000000a000000
+  availableActionsWhenItsFighting: 06000000090000000a000000
 --- !u!114 &948329602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27821,7 +27821,7 @@ GameObject:
   - component: {fileID: 1534247999}
   m_Layer: 0
   m_Name: EarthwormTemplate
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29712,7 +29712,7 @@ MonoBehaviour:
   availableActionsWhenIsDigging: 01000000000000000600000007000000
   availableActionsWhenIsDoingNothing: 01000000000000000200000003000000040000000500000008000000
   availableActionsWhenItsSleeping: 06000000
-  AvailableActionsWhenItsFighting: 06000000090000000a000000
+  availableActionsWhenItsFighting: 06000000090000000a000000
 --- !u!114 &1657315997
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ TagManager:
   - CancelButton
   - CardData
   - Danger
+  - Enemy
   layers:
   - Default
   - TransparentFX

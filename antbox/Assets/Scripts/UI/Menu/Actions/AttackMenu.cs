@@ -47,10 +47,37 @@ public class AttackMenu : MonoBehaviour
         attackMenu.gameObject.SetActive(true);
         consoleText.text=aditionalText;
         battleStarter.GetComponent<SelectableItem>().MakeEveryoneUnselectable();
+        BattleMovement battleMovement=battleStarter.GetComponent<BattleMovement>();
+        battleMovement.UpdateTarget();
+    }
+
+    void Update(){
+        if(this.agent==null || this.agent.gameObject.IsDestroyed())FinishAttackMenu();
+        if(!PauseMenu.isPaused){
+            if(Input.GetMouseButtonDown(0)){
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
+            if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
+            (hit.collider!=null && ((hit.collider.CompareTag("Enemy") && selectingEnemy)||(hit.collider.CompareTag("Ant") && !selectingEnemy)))){
+                BattleMovement battleMovement=battleStarter.GetComponent<BattleMovement>();
+                Transform selectedItem=hit.collider.transform;
+                if(selectingEnemy && !selectedItem.gameObject.IsDestroyed()) {
+                        AntStats ant=battleStarter.GetComponent<AntStats>();
+                        if(ant!=null) ant.StartAttacking(selectedItem);
+                }else{
+                    AntStats ant=selectedItem.gameObject.GetComponent<AntStats>();
+                    if(ant!=null) ant.StartAttacking(battleStarter.transform);
+                }
+                FinishAttackMenu();
+            }
+
+        }
+        }
     }
 
 
-    public void StopAttackMenu(){
+    public void FinishAttackMenu(){
         Time.timeScale=1f;
         this.agent=null;
         attackMenu.SetActive(false);

@@ -73,7 +73,7 @@ public class UIManager : MonoBehaviour
     public List<AvailableActions> availableActionsWhenItsSleeping=new List<AvailableActions>{
         AvailableActions.CANCEL_ACTION};
     
-    public List<AvailableActions> AvailableActionsWhenItsFighting=new List<AvailableActions>{
+    public List<AvailableActions> availableActionsWhenItsFighting=new List<AvailableActions>{
         AvailableActions.CANCEL_ACTION,
         AvailableActions.CHANGE_TARGET,
         AvailableActions.HELP
@@ -156,6 +156,8 @@ public class UIManager : MonoBehaviour
             ProcessAvailableActions(availableActionsWhenIsDoingNothing,stats);
         }else if(stats.GetAction().Equals(ActualAction.DIGGING)){
             ProcessAvailableActions(availableActionsWhenIsDigging,stats);
+        }else if(stats.GetAction().Equals(ActualAction.ATTACKING)){
+            ProcessAvailableActions(availableActionsWhenItsFighting,stats);
         }else{
             ProcessAvailableActions(availableActionsWhenItsSleeping,stats);
         }

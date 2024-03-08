@@ -26,6 +26,9 @@ public class EnemyStats : MonoBehaviour
     public void Hurt(int damage){
         actualHP-=damage;
         if(IsDead()){
+            SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
+            item.isSelected=false;
+            item.RemoveSelectableItem();
             Destroy(this.gameObject);
         }else{
             Debug.Log("ACTUALIZA");

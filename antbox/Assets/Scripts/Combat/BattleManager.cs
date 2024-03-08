@@ -88,7 +88,11 @@ public class BattleManager : MonoBehaviour
                     isCritic=true;
                     ApplyCriticalEffectsByEnemy(characterStats);
                 }
-                if(!characterStats.IsDead())ApplyDamageToCharacter(characterStats,enemyStats.enemy.battleStats.damage,isCritic,true);
+                if(!characterStats.IsDead()){
+                    ApplyDamageToCharacter(characterStats,enemyStats.enemy.battleStats.damage,isCritic,true);
+                    AntStats ant=target.gameObject.GetComponent<AntStats>();
+                    if(!ant.GetAction().Equals(ActualAction.ATTACKING)) ant.StartAttacking(this.gameObject.transform);
+                }
             }else{
                 AntAnimatorManager antAnimator=characterStats.gameObject.GetComponent<AntAnimatorManager>();
                 if(antAnimator!=null) antAnimator.DodgeAttack();

@@ -130,6 +130,17 @@ public class AntStats : CharacterStats
         this.gameObject.GetComponent<ExcavationMovement>().StopDigging();
         this.DoNothing();
     }
+
+    public void StartAttacking(Transform firstTarget){
+        BattleMovement battleMovement=this.GetComponent<BattleMovement>();
+        if(battleMovement!=null){
+            battleMovement.killingMode=true;
+            battleMovement.actualTarget=firstTarget;
+            battleMovement.battleManager.inBattle=true;
+            action=ActualAction.ATTACKING;
+        }
+
+    }
     public void StartFarming(){
         action=ActualAction.FARMING;
     }
