@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public static Player Instance;
 
     public HashSet<UpdateEffectOnPlayer> playerPassives=new HashSet<UpdateEffectOnPlayer>();
+    public int helpCounter=0;
     public double complexityLevelOfGame=1.0;
     public List<Activity> knownActivities=new List<Activity>();
     public List<Card> cardsInHand=new List<Card>();
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour
     public void ResetPlayerData(){
         playerPassives=new HashSet<UpdateEffectOnPlayer>();
         complexityLevelOfGame=1.0;
+        helpCounter=0;
         ForgetActivities();
         cardsInHand=new List<Card>();
     }

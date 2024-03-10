@@ -90,6 +90,7 @@ public class AntStats : CharacterStats
         if(battleMovement!=null) {
             battleMovement.killingMode=false;
             battleMovement.battleManager.inBattle=false;
+            battleMovement.agent.SetDestination(this.gameObject.transform.position);
         }
         this.DoNothing();
     }

@@ -47,6 +47,7 @@ public class UIManager : MonoBehaviour
     public GameObject leftButton;
     
     public GameObject digButton;
+    public GameObject helpButton;
 
     
     public List<AvailableActions> availableActionsWhenIsFarming=new List<AvailableActions>{
@@ -85,6 +86,7 @@ public class UIManager : MonoBehaviour
         if(stats.GetAction().Equals(ActualAction.FARMING)) CancelFarming(stats);
         else if(stats.GetAction().Equals(ActualAction.DIGGING)) CancelDigging(stats);
         else if(stats.GetAction().Equals(ActualAction.SLEEPING)) CancelSleeping(stats);
+        else if(stats.GetAction().Equals(ActualAction.ATTACKING)) stats.StopAttacking();
     }
 
     public void CancelSleeping(AntStats stats){
@@ -168,7 +170,7 @@ public class UIManager : MonoBehaviour
     void ProcessAvailableActions(List<AvailableActions> availableActions,AntStats stats){
         List<GameObject> allButtons=new List<GameObject>{farmingButton,eatButton,drinkButton
         ,sleepButton,moveButton,cancelButton,digButton,upButton,rightButton,leftButton
-        ,downButton,initAttackButton};
+        ,downButton,initAttackButton,helpButton};
         ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
         FarmStats farm=FindFirstObjectByType<FarmStats>();
         foreach(AvailableActions availableAction in availableActions){
@@ -213,6 +215,9 @@ public class UIManager : MonoBehaviour
             }else if(availableAction.Equals(AvailableActions.CANCEL_ACTION)){
                 allButtons.Remove(cancelButton);
                 cancelButton.SetActive(true);
+            }else if(availableAction.Equals(AvailableActions.HELP)){
+                allButtons.Remove(helpButton);
+                helpButton.SetActive(true);
             }
         }
         foreach(GameObject notAvailableButton in allButtons){

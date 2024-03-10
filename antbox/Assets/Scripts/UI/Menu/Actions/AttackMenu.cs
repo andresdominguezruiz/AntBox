@@ -96,6 +96,5 @@ public class AttackMenu : MonoBehaviour
         }
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
         if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
-        selectingEnemy=false;
     }
 }

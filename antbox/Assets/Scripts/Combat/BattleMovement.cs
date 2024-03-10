@@ -8,7 +8,7 @@ public class BattleMovement : MonoBehaviour
 {
     public Transform actualTarget;
     public HashSet<Transform> otherAvailableTargets=new HashSet<Transform>();
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
     public BattleManager battleManager;
     public bool killingMode=false;
     void Start()

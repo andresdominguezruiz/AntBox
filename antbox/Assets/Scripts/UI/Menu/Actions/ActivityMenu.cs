@@ -12,6 +12,7 @@ public class ActivityMenu : MonoBehaviour
     public Activity[] activities;
     public bool[] answers;
     public bool isBoss=false;
+    public bool applyDamageToEnemies=false;
     public Sprite correct;
     public Sprite empty;
     public Sprite incorrect;
@@ -48,12 +49,13 @@ public class ActivityMenu : MonoBehaviour
         else ProcessActivity();
     }
 
-    public void SetActivitiesAndStartPlaying(Activity[] activitiesFromCard,bool isBoss){
+    public void SetActivitiesAndStartPlaying(Activity[] activitiesFromCard,bool isBoss,bool applyDamageToEnemies){
         activities=activitiesFromCard;
         index=0;
         Time.timeScale=0f;
         this.gameObject.SetActive(true);
         this.isBoss=isBoss;
+        this.applyDamageToEnemies=applyDamageToEnemies;
         ProcessActivity();
         if(activities!=null && activities.Length>0){
             selectedAnswers=new GameObject[activities.Length];
@@ -91,8 +93,9 @@ public class ActivityMenu : MonoBehaviour
         foreach(GameObject answer in objectsToDestroy) Destroy(answer);
         this.gameObject.SetActive(false);
         ContainerData containerData=FindObjectOfType<ContainerData>();
-        containerData.ProcessEvaluation(evaluation,isBoss);
+        containerData.ProcessEvaluation(evaluation,isBoss,applyDamageToEnemies);
         isBoss=false;
+        applyDamageToEnemies=false;
     }
 
 
