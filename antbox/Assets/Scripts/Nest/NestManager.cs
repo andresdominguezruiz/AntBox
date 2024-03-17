@@ -12,6 +12,7 @@ public class NestManager : MonoBehaviour
     public GameObject antTemplate;
     public GameObject wormTemplate;
     public GameObject earthwormTemplate;
+    public GameObject attackMenu;
     private System.Random random = new System.Random();
 
     public List<GameObject> enemiesInGame=new List<GameObject>();
@@ -55,6 +56,8 @@ public class NestManager : MonoBehaviour
         else if(enemy.enemyType.Equals(EnemyType.EARTHWORM)) template=earthwormTemplate;
         GameObject newEnemy=Instantiate(template,map.GetCellCenterWorld(pos),Quaternion.identity,template.transform.parent);
         newEnemy.name=enemy.name;
+        newEnemy.AddComponent<SelectableItem>();
+        newEnemy.GetComponent<SelectableItem>().InitSelectableItemOfEnemy(newEnemy.GetComponentInChildren<UIEnemyManager>(),attackMenu);
         GenerationTilemap generation=GetComponent<GenerationTilemap>();
         generation.BakeMap();
         newEnemy.SetActive(true);

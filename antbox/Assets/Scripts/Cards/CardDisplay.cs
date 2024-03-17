@@ -107,7 +107,7 @@ public class CardDisplay : MonoBehaviour
 
     public void UseCard(){
         ActivityMenu activityMenu=FindObjectOfType<ActivityMenu>(true);
-        activityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesByComplexity(false),false);
+        activityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesByComplexity(false),false,false);
         ContainerData containerData=FindObjectOfType<ContainerData>();
         containerData.executableActions=card.actions;
         containerData.RemoveCardFromHand(this);

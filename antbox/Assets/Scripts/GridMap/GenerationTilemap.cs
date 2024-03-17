@@ -113,12 +113,11 @@ public class GenerationTilemap : MonoBehaviour
             PlaceQueenAndAnts();
             CreateAllTilesData();
             int numberOfNests=8;
-            if((StatisticsOfGame.Instance.actualLevel+8)<8) numberOfNests=StatisticsOfGame.Instance.actualLevel+2;
+            if((StatisticsOfGame.Instance.actualLevel+4)<8) numberOfNests=StatisticsOfGame.Instance.actualLevel+2;
             CreateNests(numberOfNests);
 
         }
         BakeMap();
-        //WakeUpNest(nestsOfLevel[0]);
 
         
     }

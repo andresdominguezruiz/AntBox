@@ -22,8 +22,8 @@ MonoBehaviour:
   battleStats:
     isEnemy: 1
     attackSpeed: 2
-    damage: 5
+    damage: 10
     criticalProbability: 0.8
-    missProbability: 0.2
+    missProbability: 0.25
     startBattleType: 2
-    criticalEffects: 05000000
+    criticalEffects: 00000000

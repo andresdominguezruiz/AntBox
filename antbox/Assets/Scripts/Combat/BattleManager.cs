@@ -88,7 +88,14 @@ public class BattleManager : MonoBehaviour
                     isCritic=true;
                     ApplyCriticalEffectsByEnemy(characterStats);
                 }
-                if(!characterStats.IsDead())ApplyDamageToCharacter(characterStats,enemyStats.enemy.battleStats.damage,isCritic,true);
+                if(!characterStats.IsDead()){
+                    ApplyDamageToCharacter(characterStats,enemyStats.enemy.battleStats.damage,isCritic,true);
+                    AntStats ant=target.gameObject.GetComponent<AntStats>();
+                    if(!ant.GetAction().Equals(ActualAction.ATTACKING)){
+                        ant.CancelAntAction();
+                        ant.StartAttacking(this.gameObject.transform);
+                    }
+                }
             }else{
                 AntAnimatorManager antAnimator=characterStats.gameObject.GetComponent<AntAnimatorManager>();
                 if(antAnimator!=null) antAnimator.DodgeAttack();
@@ -132,10 +139,9 @@ public class BattleManager : MonoBehaviour
             AntStats ant=characterStats.gameObject.GetComponent<AntStats>();
             if(ant!=null && (ant.battleStats.startBattleType.Equals(StartBattleType.WAITER)
              || ant.battleStats.startBattleType.Equals(StartBattleType.SEARCH_AND_RESPOND))){
+                ant.CancelAntAction();
                 StartCounterAttack(characterStats.gameObject);
-                if(ant.GetAction().Equals(ActualAction.DIGGING)) ant.StopDigging();
-                else if(ant.GetAction().Equals(ActualAction.SLEEPING)) ant.StopSleeping();
-                else if(ant.GetAction().Equals(ActualAction.FARMING)) ant.StopFarming();
+                
             }
         }
     }

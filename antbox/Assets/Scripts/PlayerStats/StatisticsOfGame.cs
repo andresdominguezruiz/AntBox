@@ -43,7 +43,8 @@ public class StatisticsOfGame : MonoBehaviour
             Player.Instance.SaveCards(containerData.cardsInHand);
         }
         DestroyItems();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+2);
+        LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex+2);
+        Player.Instance.helpCounter=0;
     }
     public void DestroyItems(){
         SelectableItem[] items=FindObjectsOfType<SelectableItem>(false);
