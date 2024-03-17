@@ -149,7 +149,7 @@ public class ContainerData : MonoBehaviour
 
     }
 
-    public void ProcessEvaluation(bool[] evaluation,bool isBoss){
+    public void ProcessEvaluation(bool[] evaluation,bool isBoss,bool applyDamageToEnemies){
         double result=0.0;
         foreach(bool point in evaluation){
             if(point) result+=1/(evaluation.Length*1.0);
@@ -164,8 +164,17 @@ public class ContainerData : MonoBehaviour
             }
         } 
         if(result>=0.5 && !isBoss){
-            ActionMenu actionMenu=FindObjectOfType<ActionMenu>(true);
-            actionMenu.InitActions(executableActions);
+            if(!applyDamageToEnemies){
+                //VICTORY IN CARD
+                ActionMenu actionMenu=FindObjectOfType<ActionMenu>(true);
+                actionMenu.InitActions(executableActions);
+            }else{
+                //VICTORY IN HELPING
+                EnemyStats[] allEnemies=FindObjectsOfType<EnemyStats>(false);
+                foreach(EnemyStats enemy in allEnemies){
+                    enemy.Hurt(enemy.enemy.maxHP/5);
+                }
+            }
         }
         else if(result<0.5 && isBoss){
             //TODO:Si evaluación es negativa y es jefe, pillar carta negativa aleatoria y ejecutarla

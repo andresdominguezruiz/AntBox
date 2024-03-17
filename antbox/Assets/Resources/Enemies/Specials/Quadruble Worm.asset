@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03114d8a0bc372043a29ddfb542552a9, type: 3}
+  m_Name: Quadruble Worm
+  m_EditorClassIdentifier: 
+  enemyType: 1
+  targetType: 1
+  enemySprite: {fileID: 21300000, guid: 76321e25426635644b65e0f7dbdefb4d, type: 3}
+  enemyBodySprite: {fileID: 0}
+  enemyLevel: 10
+  resources: 2
+  maxHP: 20
+  battleStats:
+    isEnemy: 1
+    attackSpeed: 4
+    damage: 10
+    criticalProbability: 0.8
+    missProbability: 0.1
+    startBattleType: 0
+    criticalEffects: 0400000004000000

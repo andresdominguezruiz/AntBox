@@ -14,6 +14,7 @@ public class AntGenerator : MonoBehaviour
     public GameObject moveMenu;
     public GameObject farmingMenu;
     public GameObject digMenu;
+    public GameObject attackMenu;
 
 
     public int initialSize=5;
@@ -43,7 +44,7 @@ public class AntGenerator : MonoBehaviour
             newAnt.GetComponent<AntStats>().InitAntStats(random);
             newAnt.GetComponentInChildren<UIManager>().UpdateCanvasWithAntStats(newAnt.GetComponent<AntStats>(),newAnt.name);
             newAnt.AddComponent<SelectableItem>();
-            newAnt.GetComponent<SelectableItem>().InitSelectableItem(path,map,moveMenu,farmingMenu,digMenu,ItemType.ANT);
+            newAnt.GetComponent<SelectableItem>().InitSelectableItem(path,map,moveMenu,farmingMenu,digMenu,ItemType.ANT,attackMenu);
             newAnt.AddComponent<ExcavationMovement>();
             newAnt.GetComponent<ExcavationMovement>().InitComponent(map);
             Debug.Log(newAnt.transform.position.z==0);
@@ -85,7 +86,7 @@ public class AntGenerator : MonoBehaviour
             UIManager uIManager=newAnt.GetComponentInChildren<UIManager>(true);
             if(uIManager!=null) uIManager.UpdateCanvasWithAntStats(newAnt.GetComponent<AntStats>(),newAnt.name);
             newAnt.AddComponent<SelectableItem>();
-            newAnt.GetComponent<SelectableItem>().InitSelectableItem(path,map,moveMenu,farmingMenu,digMenu,ItemType.ANT);
+            newAnt.GetComponent<SelectableItem>().InitSelectableItem(path,map,moveMenu,farmingMenu,digMenu,ItemType.ANT,attackMenu);
             newAnt.AddComponent<ExcavationMovement>();
             newAnt.GetComponent<ExcavationMovement>().InitComponent(map);
             newAnt.SetActive(true);

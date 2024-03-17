@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 
 public enum AvailableActions{
-    EAT,DRINK,SLEEP,GROW,DIG,MOVE,CANCEL_ACTION,CHANGE_DIRECTIONS
+    EAT,DRINK,SLEEP,GROW,DIG,MOVE,CANCEL_ACTION,CHANGE_DIRECTIONS,INIT_ATTACK,CHANGE_TARGET,HELP
 }
 public class UIManager : MonoBehaviour
 {
@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI hpText; // Referencia al objeto Text para mostrar el nombre.
     public TextMeshProUGUI hungerText; // Referencia al objeto Text para mostrar la descripción.
     public TextMeshProUGUI thirstText; // Referencia al objeto Text para mostrar las estadísticas.
+    public TextMeshProUGUI poisonText; // Referencia al objeto Text para mostrar las estadísticas.
 
     public bool isQueen=false;
 
@@ -28,6 +29,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI farminSpeedText;
     public TextMeshProUGUI diggingSpeedText;
     public TextMeshProUGUI recoverSpeedText;
+    public TextMeshProUGUI damageText;
+    public TextMeshProUGUI attackSpeedText;
+
 
 
     public GameObject eatButton;
@@ -36,12 +40,14 @@ public class UIManager : MonoBehaviour
     public GameObject cancelButton;
     public GameObject moveButton;
     public GameObject farmingButton;
+    public GameObject initAttackButton;
     public GameObject upButton;
     public GameObject downButton;
     public GameObject rightButton;
     public GameObject leftButton;
     
     public GameObject digButton;
+    public GameObject helpButton;
 
     
     public List<AvailableActions> availableActionsWhenIsFarming=new List<AvailableActions>{
@@ -62,10 +68,17 @@ public class UIManager : MonoBehaviour
         AvailableActions.SLEEP,
         AvailableActions.GROW,
         AvailableActions.DIG,
-        AvailableActions.MOVE};
+        AvailableActions.MOVE,
+        AvailableActions.INIT_ATTACK};
     
     public List<AvailableActions> availableActionsWhenItsSleeping=new List<AvailableActions>{
         AvailableActions.CANCEL_ACTION};
+    
+    public List<AvailableActions> availableActionsWhenItsFighting=new List<AvailableActions>{
+        AvailableActions.CANCEL_ACTION,
+        AvailableActions.CHANGE_TARGET,
+        AvailableActions.HELP
+    };
 
     
     public void CancelAntAction(){
@@ -73,6 +86,7 @@ public class UIManager : MonoBehaviour
         if(stats.GetAction().Equals(ActualAction.FARMING)) CancelFarming(stats);
         else if(stats.GetAction().Equals(ActualAction.DIGGING)) CancelDigging(stats);
         else if(stats.GetAction().Equals(ActualAction.SLEEPING)) CancelSleeping(stats);
+        else if(stats.GetAction().Equals(ActualAction.ATTACKING)) stats.StopAttacking();
     }
 
     public void CancelSleeping(AntStats stats){
@@ -144,6 +158,8 @@ public class UIManager : MonoBehaviour
             ProcessAvailableActions(availableActionsWhenIsDoingNothing,stats);
         }else if(stats.GetAction().Equals(ActualAction.DIGGING)){
             ProcessAvailableActions(availableActionsWhenIsDigging,stats);
+        }else if(stats.GetAction().Equals(ActualAction.ATTACKING)){
+            ProcessAvailableActions(availableActionsWhenItsFighting,stats);
         }else{
             ProcessAvailableActions(availableActionsWhenItsSleeping,stats);
         }
@@ -153,7 +169,8 @@ public class UIManager : MonoBehaviour
 
     void ProcessAvailableActions(List<AvailableActions> availableActions,AntStats stats){
         List<GameObject> allButtons=new List<GameObject>{farmingButton,eatButton,drinkButton
-        ,sleepButton,moveButton,cancelButton,digButton,upButton,rightButton,leftButton,downButton};
+        ,sleepButton,moveButton,cancelButton,digButton,upButton,rightButton,leftButton
+        ,downButton,initAttackButton,helpButton};
         ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
         FarmStats farm=FindFirstObjectByType<FarmStats>();
         foreach(AvailableActions availableAction in availableActions){
@@ -163,6 +180,9 @@ public class UIManager : MonoBehaviour
             }else if(availableAction.Equals(AvailableActions.MOVE)){
                 allButtons.Remove(moveButton);
                 moveButton.SetActive(true);
+            }else if(availableAction.Equals(AvailableActions.INIT_ATTACK)){
+                allButtons.Remove(initAttackButton);
+                initAttackButton.SetActive(true);
             }else if(availableAction.Equals(AvailableActions.DIG) && ex.CanDig()){
                 allButtons.Remove(digButton);
                 digButton.SetActive(true);
@@ -195,6 +215,9 @@ public class UIManager : MonoBehaviour
             }else if(availableAction.Equals(AvailableActions.CANCEL_ACTION)){
                 allButtons.Remove(cancelButton);
                 cancelButton.SetActive(true);
+            }else if(availableAction.Equals(AvailableActions.HELP)){
+                allButtons.Remove(helpButton);
+                helpButton.SetActive(true);
             }
         }
         foreach(GameObject notAvailableButton in allButtons){
@@ -233,6 +256,12 @@ public class UIManager : MonoBehaviour
         farminSpeedText.text="Farming Speed:"+antStats.GetFarmingSpeed();
         diggingSpeedText.text="Digging Speed:"+antStats.GetDiggingSpeed();
         recoverSpeedText.text="Recover Speed:"+antStats.GetRecoverSpeed();
+        if(antStats.poisonSecons<=0) poisonText.text="";
+        else{
+            poisonText.text="Poison: "+antStats.poisonSecons;
+        }
+        damageText.text="Damage:"+antStats.battleStats.damage;
+        attackSpeedText.text="Attack Speed:"+antStats.battleStats.attackSpeed+" .s";
     }
     public void UpdateCanvasWithQueenStats(QueenStats queenStats,string name){
         hpText.text="HP:"+queenStats.GetTextHP();
@@ -241,6 +270,10 @@ public class UIManager : MonoBehaviour
         ageText.text="Age:"+queenStats.GetTextAge();
         nameText.text="Name:"+name;
         isQueen=true;
+        if(queenStats.poisonSecons<=0) poisonText.text="";
+        else{
+            poisonText.text="Poison: "+queenStats.poisonSecons;
+        }
     }
 
     public void HideInfo()

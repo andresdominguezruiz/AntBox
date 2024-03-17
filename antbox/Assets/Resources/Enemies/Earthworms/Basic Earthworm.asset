@@ -17,13 +17,13 @@ MonoBehaviour:
   enemySprite: {fileID: -140291514, guid: a6e791e42805a7546a55764f81283a72, type: 3}
   enemyBodySprite: {fileID: -1675844910, guid: a6e791e42805a7546a55764f81283a72, type: 3}
   enemyLevel: 1
-  resources: 1
-  maxHP: 10000
+  resources: 3
+  maxHP: 250
   battleStats:
     isEnemy: 1
-    attackSpeed: 2
-    damage: 10
-    criticalProbability: 0.5
+    attackSpeed: 4
+    damage: 15
+    criticalProbability: 0.8
     missProbability: 0.2
     startBattleType: 1
-    criticalEffects: 0500000003000000
+    criticalEffects: 05000000

@@ -8,7 +8,7 @@ public class BattleMovement : MonoBehaviour
 {
     public Transform actualTarget;
     public HashSet<Transform> otherAvailableTargets=new HashSet<Transform>();
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
     public BattleManager battleManager;
     public bool killingMode=false;
     void Start()
@@ -107,7 +107,12 @@ public class BattleMovement : MonoBehaviour
                 agent.SetDestination(actualTarget.position);
             }else if(actualTarget==null && killingMode){
                 UpdateTarget();
-                if(actualTarget==null) killingMode=false;
+                if(actualTarget==null){
+                    killingMode=false;
+                    battleManager.inBattle=false;
+                    AntStats ant=this.gameObject.GetComponent<AntStats>();
+                    if(ant!=null) ant.StopAttacking();
+                }
             }
         }
         
