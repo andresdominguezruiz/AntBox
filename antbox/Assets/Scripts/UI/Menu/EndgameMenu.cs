@@ -21,7 +21,7 @@ public class EndgameMenu : MonoBehaviour
         if(StatisticsOfGame.Instance!=null){
             StatisticsOfGame.Instance.ResetData();   
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
+        LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex-1);
         PauseMenu.isPaused=false;
     }
 
@@ -29,7 +29,7 @@ public class EndgameMenu : MonoBehaviour
         if(StatisticsOfGame.Instance!=null){
             StatisticsOfGame.Instance.ResetData();
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-2);
+        LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex-2);
     }
 
     void Start(){

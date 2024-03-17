@@ -17,9 +17,16 @@ public class PauseMenu : MonoBehaviour
         isPaused=true;
     }
 
+    public void DebuggingNextLevel(){
+        Time.timeScale=1f;
+        isPaused=false;
+        StatisticsOfGame.Instance.NextLevel();
+    }
+
     public void Quit(){
+        Time.timeScale=1f;
+        LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex-1);
         StatisticsOfGame.Instance.ResetData();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
         isPaused=false;
     }
 

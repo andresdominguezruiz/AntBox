@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class InitialMenu : MonoBehaviour
 {
     public void Play(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex+1);
         Time.timeScale=1f;
         
     }

@@ -32,6 +32,6 @@ public class NextLevelMenu : MonoBehaviour
         
     }
     void IniciateNextLevel(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-2);
+        LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex-2);
     }
 }

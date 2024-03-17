@@ -47,7 +47,7 @@ public class HelpButton : MonoBehaviour
             VerifyHelper();
             ActivityMenu activityMenu=FindObjectOfType<ActivityMenu>(true);
             CardDisplay cardDisplay=FindObjectOfType<CardDisplay>(true);
-            activityMenu.SetActivitiesAndStartPlaying(cardDisplay.GenerateActivitiesByComplexity(true),false,true);
+            activityMenu.SetActivitiesAndStartPlaying(cardDisplay.GenerateActivitiesByComplexity(false),false,true);
         }
     }
 }
