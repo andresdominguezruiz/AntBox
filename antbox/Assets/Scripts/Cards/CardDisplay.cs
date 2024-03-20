@@ -57,7 +57,7 @@ public class CardDisplay : MonoBehaviour
     }
     public List<Activity> GetNotKnownActivitiesByComplexity(bool isBoss){
         HashSet<ComplexityType> complexityTypes=PickAreaOfComplexity(isBoss);
-        Activity[] allActivities=Resources.LoadAll<Activity>("Activities");
+        Activity[] allActivities=Resources.LoadAll<Activity>("Activities/DP/Testing");
         List<Activity> activitiesInComplexityRange=new List<Activity>();
         List<Activity> notKnownActivities=new List<Activity>();
         foreach(Activity activity in allActivities){
