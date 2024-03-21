@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea97fa364571dc4ca8428b5c4d13074, type: 3}
+  m_Name: Act1
+  m_EditorClassIdentifier: 
+  name: Act1
+  optionalImage: {fileID: 0}
+  description: What is the purpose of using the Singleton design pattern?
+  complexityType: 3
+  options:
+  - {fileID: 21300000, guid: 9d1f330648c8f5a4090e5cfb4d1e42f5, type: 3}
+  - {fileID: 21300000, guid: da171615d11b04f4693943b29d91f6a5, type: 3}
+  - {fileID: 21300000, guid: 0c55195a7a252fc48b5c7218424763b5, type: 3}
+  - {fileID: 21300000, guid: ea0474d27f55eb84db557666ee183703, type: 3}
+  correctAnswer: 0
