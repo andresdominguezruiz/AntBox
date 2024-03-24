@@ -1,0 +1,21 @@
+name: Unity Tests
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Unity
+      uses: game-ci/unity-action@v2
+      with:
+        unityVersion: '2022.3.9f1'
+    - name: Run Tests
+      run: unity -batchmode -nographics -logFile - -runTests -projectPath . -testResults test-results.xml -testPlatform playmode
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: Test Results
+        path: test-results.xml
