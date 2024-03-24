@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea97fa364571dc4ca8428b5c4d13074, type: 3}
+  m_Name: Act3
+  m_EditorClassIdentifier: 
+  name: Act3
+  optionalImage: {fileID: 0}
+  description: What is the "Primitive Obsession" code smell?
+  complexityType: 3
+  options:
+  - {fileID: 21300000, guid: 544f209da175ac54ab9698944c1f092f, type: 3}
+  - {fileID: 21300000, guid: ce315256851cd1c4a8c28d436638b4e9, type: 3}
+  - {fileID: 21300000, guid: 7ee906c3107619a439213e7a6a3d2241, type: 3}
+  - {fileID: 21300000, guid: 5cea0017ac1e82744aca9ab930b0668b, type: 3}
+  correctAnswer: 3

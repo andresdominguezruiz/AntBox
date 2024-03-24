@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea97fa364571dc4ca8428b5c4d13074, type: 3}
+  m_Name: Act4
+  m_EditorClassIdentifier: 
+  name: Act4
+  optionalImage: {fileID: 0}
+  description: When are you interested in using the Flyweight design pattern for
+    a program?
+  complexityType: 4
+  options:
+  - {fileID: 21300000, guid: 7dcfd5db9d3e1bb4cbdf4fa93b0fd43a, type: 3}
+  - {fileID: 21300000, guid: c9bfbf9ae0a356a40bb8b4025df6c6c4, type: 3}
+  - {fileID: 21300000, guid: 97b9aba4a7427b648a9aa8970f878bc7, type: 3}
+  - {fileID: 21300000, guid: 9ddccc5a07c32be47ba5408d145ac578, type: 3}
+  correctAnswer: 0
