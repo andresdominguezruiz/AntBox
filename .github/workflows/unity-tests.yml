@@ -16,6 +16,7 @@ jobs:
       with:
         unityVersion: '2022.3.9f1'
         githubToken: ${{ secrets.TOKEN }}
+        
     - name: Run Tests
       run: unity -batchmode -nographics -logFile - -runTests -projectPath . -testResults test-results.xml -testPlatform playmode
     - name: Upload Test Results
