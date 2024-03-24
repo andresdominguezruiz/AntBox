@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Setup Unity
-      uses: game-ci/unity-actions@v2
+      uses: game-ci/unity-actions
       with:
         unityVersion: '2022.3.9f1'
     - name: Run Tests
