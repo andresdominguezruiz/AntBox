@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea97fa364571dc4ca8428b5c4d13074, type: 3}
+  m_Name: Act7
+  m_EditorClassIdentifier: 
+  name: Act7
+  optionalImage: {fileID: 0}
+  description: What does the "Speculative Generality" code smell refer to?
+  complexityType: 3
+  options:
+  - {fileID: 21300000, guid: 80be8788843a0114aa11f53ed960e693, type: 3}
+  - {fileID: 21300000, guid: 86375b56bd671444b8e567cd35919ba1, type: 3}
+  - {fileID: 21300000, guid: 1d36d2cc6ba1c434c8f23c96f89a09b5, type: 3}
+  - {fileID: 21300000, guid: c1f5f3e93ad59704fb414c7740d60e82, type: 3}
+  correctAnswer: 2
