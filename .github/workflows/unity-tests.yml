@@ -5,6 +5,8 @@ on: [push,workflow_dispatch]
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: production
+    concurrency: production
     steps:
     # Checkout
       - name: Checkout repository
