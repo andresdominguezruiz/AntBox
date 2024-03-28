@@ -26,12 +26,11 @@ jobs:
 
       # Test
       - name: Run tests
-        env:
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
         uses: game-ci/unity-test-runner@v4
         
       - name: Upload Test Results
