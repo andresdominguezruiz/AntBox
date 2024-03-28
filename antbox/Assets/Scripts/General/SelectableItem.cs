@@ -1,11 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
 
@@ -195,6 +189,15 @@ public class SelectableItem : MonoBehaviour
         }
     }
 
+    public void MakeEveryonedUnselected(){
+        for(int i=0;i<selectableItems.Count;i++){
+            if(selectableItems[i].isSelected){
+                selectableItems[i].isSelected=false;
+                selectableItems[i].ChangeColor(originalColor);
+            }
+        }
+    }
+
     public void HideAllInfo(){
         for(int i=0;i<selectableItems.Count;i++){
             if(selectableItems[i].gameObject.GetComponentInChildren<UIManager>(true)!=null){
@@ -232,6 +235,16 @@ public class SelectableItem : MonoBehaviour
 
     }
 
+    public void ChangeColorWithoutSelecting(){
+        SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
+        if(sprite!=null && sprite.material.color.Equals(originalColor)){
+            sprite.material.color=selectedColor;
+        }
+        else if(sprite!=null && sprite.material.color.Equals(selectedColor)){
+            sprite.material.color=originalColor;
+        }
+    }
+
     void ChangeColor(Color32 newColor){
         SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
         if(sprite!=null){
@@ -241,7 +254,9 @@ public class SelectableItem : MonoBehaviour
 
     void OnMouseDown() {
         if(!PauseMenu.isPaused){
-            if(canBeSelected){
+            if(canBeSelected && !isSelected){
+            CardDisplay cardInHand=FindObjectOfType<CardDisplay>(false);
+            if(cardInHand!=null) cardInHand.HideCardsInHand();
             isSelected=true;
             ChangeColor(this.selectedColor);
             if(itemUI!=null && !itemUI.isQueen){
@@ -261,7 +276,10 @@ public class SelectableItem : MonoBehaviour
                     item.isSelected=false;
                     item.ChangeColor(item.originalColor);
                 } 
-        }
+            }
+        }else if(canBeSelected && isSelected){ //This allows to unselect items
+            isSelected=false;
+            ChangeColor(originalColor);
         }
         }
     }

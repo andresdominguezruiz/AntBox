@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -106,6 +103,10 @@ public class CardDisplay : MonoBehaviour
     }
 
     public void UseCard(){
+        SelectableItem anyItem=FindObjectOfType<SelectableItem>();
+                if(anyItem!=null){
+                    anyItem.MakeEveryoneUnselectableAndUnselected();
+                }
         ActivityMenu activityMenu=FindObjectOfType<ActivityMenu>(true);
         activityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesByComplexity(false),false,false);
         ContainerData containerData=FindObjectOfType<ContainerData>();
@@ -124,7 +125,7 @@ public class CardDisplay : MonoBehaviour
                 }
                 SelectableItem anyItem=FindObjectOfType<SelectableItem>();
                 if(anyItem!=null){
-                    anyItem.MakeEveryoneUnselectableAndUnselected();
+                    anyItem.MakeEveryonedUnselected();
                 }
 
         ContainerData containerData=FindObjectOfType<ContainerData>();
@@ -149,7 +150,13 @@ public class CardDisplay : MonoBehaviour
     public void MakeEveryCardUnselectableAndUnselected(){
         foreach(CardDisplay cardDisplay in FindObjectsOfType<CardDisplay>()){
             cardDisplay.canBeSelected=false;
-            cardDisplay.infoCanvas.gameObject.SetActive(false);
+            cardDisplay.HideInfo();
+        }
+    }
+
+    public void HideCardsInHand(){
+        foreach(CardDisplay cardDisplay in FindObjectsOfType<CardDisplay>()){
+            cardDisplay.HideInfo();
         }
     }
     public void MakeEveryCardSelectable(){
