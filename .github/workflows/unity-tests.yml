@@ -17,7 +17,7 @@ jobs:
         run: echo ${{secrets.UNITY_EMAIL}}
     # Sanity check
       - name: Get directory
-        run: cd antbox
+        run: ls antbox
 
       # Cache
       - uses: actions/cache@v3
