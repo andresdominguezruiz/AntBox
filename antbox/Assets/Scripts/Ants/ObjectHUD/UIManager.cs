@@ -246,6 +246,7 @@ public class UIManager : MonoBehaviour
         if(!isQueen) energyText.text="Energy:"+energy;
     }
 
+
     public void UpdateCanvasWithAntStats(AntStats antStats,string name){
         hpText.text="HP:"+antStats.GetTextHP();
         hungerText.text = "Hunger:"+antStats.GetTextHunger();

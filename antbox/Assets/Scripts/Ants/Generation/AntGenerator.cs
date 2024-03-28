@@ -27,7 +27,6 @@ public class AntGenerator : MonoBehaviour
     public void placeAntsIn(List<Vector3Int> path,Tilemap map,System.Random random){
         GameObject queen=this.gameObject;
         queen.GetComponentInChildren<UIManager>().UpdateCanvasWithQueenStats(queen.GetComponent<QueenStats>(),queen.name);
-        queen.AddComponent<SelectableItem>();
         queen.GetComponent<SelectableItem>().SetUIManager(queen.GetComponentInChildren<UIManager>());
         queen.GetComponentInChildren<UIManager>().HideInfo();
         for(int i=0;i<initialSize;i++){

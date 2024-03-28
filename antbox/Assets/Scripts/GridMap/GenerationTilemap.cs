@@ -6,10 +6,14 @@ using NavMeshPlus.Components;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class GenerationTilemap : MonoBehaviour
 {
     // Start is called before the first frame update
+
+    [SerializeField]
+    private int cardsPerNewLevel=3;
 
     public Tilemap dirtMap;
     public Tilemap walkableMap;
@@ -23,8 +27,9 @@ public class GenerationTilemap : MonoBehaviour
 
     public Dictionary<Vector3Int,TileData> allTilesOfMap=new Dictionary<Vector3Int, TileData>();
 
-    private List<Vector3Int> path=new List<Vector3Int>();
+    public List<Vector3Int> path=new List<Vector3Int>();
     public List<Nest> nestsOfLevel=new List<Nest>();
+    public List<Nest> awakeNests=new List<Nest>();
     private HashSet<Vector3Int> excavablePath=new HashSet<Vector3Int>();
     public List<Color32> colorsForDirtMap=new List<Color32>{
         new Color32(255,255,255,255),
@@ -63,7 +68,19 @@ public class GenerationTilemap : MonoBehaviour
         return random;
     }
 
+    public void WakeUpRandomNest(){
+        IEnumerable<Nest> availableNests= nestsOfLevel.Except(awakeNests);
+        List<Nest> list=availableNests.ToList();
+        int r=random.Next(0,list.Count-1);
+        Nest nest=list[r];
+        WakeUpNest(nest);
+        
+
+    }
+
     public void WakeUpNest(Nest nest){
+        nest.sleeping=false;
+        awakeNests.Add(nest);
         foreach(Vector3Int pos in nest.nestPositions){
             dirtMap.SetTile(pos,null);
             BakeMap();
@@ -100,11 +117,20 @@ public class GenerationTilemap : MonoBehaviour
         return tileData;
     }
 
+    void AddNewCardsToPlayer(){
+        ContainerData containerData=FindObjectOfType<ContainerData>();
+        for(int i=0;i<cardsPerNewLevel;i++){
+            if(containerData!=null && containerData.CanAddNewCard()) containerData.AddNewCard();
+            else break;
+        }
+    }
+
     void Start()
     {
         dirtMap.color=colorsForDirtMap[StatisticsOfGame.Instance.colorIndex];
         walkableMap.color=colorsForWalkableMap[StatisticsOfGame.Instance.colorIndex];
         Player.Instance.GiveCardsToContainer();
+        AddNewCardsToPlayer();
         if(path.Count==0){
             FillTilemap();
             CreateRandomPath();
@@ -113,8 +139,9 @@ public class GenerationTilemap : MonoBehaviour
             PlaceQueenAndAnts();
             CreateAllTilesData();
             int numberOfNests=8;
-            if((StatisticsOfGame.Instance.actualLevel+4)<8) numberOfNests=StatisticsOfGame.Instance.actualLevel+2;
+            if((StatisticsOfGame.Instance.actualLevel+4)<8) numberOfNests=StatisticsOfGame.Instance.actualLevel+4;
             CreateNests(numberOfNests);
+            awakeNests=new List<Nest>();
 
         }
         BakeMap();
@@ -152,7 +179,6 @@ public class GenerationTilemap : MonoBehaviour
                 start=options[randomIndex];
                 nest.AddNewNestPosition(start,dirtMap);
                 numberOfPositions--;
-                Debug.Log("HHHHH");
              }
         }
         nestsOfLevel.Add(nest);

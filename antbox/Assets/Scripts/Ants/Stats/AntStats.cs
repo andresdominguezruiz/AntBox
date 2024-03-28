@@ -132,6 +132,15 @@ public class AntStats : CharacterStats
         this.DoNothing();
     }
 
+    public void StartAttackingWithoutTarget(){
+        BattleMovement battleMovement=this.GetComponent<BattleMovement>();
+        if(battleMovement!=null){
+            battleMovement.killingMode=true;
+            battleMovement.battleManager.inBattle=true;
+            action=ActualAction.ATTACKING;
+        }
+    }
+
     public void StartAttacking(Transform firstTarget){
         BattleMovement battleMovement=this.GetComponent<BattleMovement>();
         if(battleMovement!=null){

@@ -12,6 +12,11 @@ using UnityEngine.Tilemaps;
 public enum ItemType{
     ANT,QUEEN,FARM,ENEMY
 }
+
+[System.Serializable]
+public enum AnthillAction{
+    FEED,HYDRATE,ATTACK,SLEEP
+}
 public class SelectableItem : MonoBehaviour
 {
     public bool isSelected=false;
@@ -64,9 +69,47 @@ public class SelectableItem : MonoBehaviour
         selectableItems.Remove(this);
     }
 
+    public void FeedAnthill(){
+        ContainerData container=FindObjectOfType<ContainerData>(false);
+        foreach(SelectableItem item in selectableItems){
+            if( item.type.Equals(ItemType.ANT) || item.type.Equals(ItemType.QUEEN)){
+                CharacterStats character=item.GetComponent<CharacterStats>();
+                if(character!=null && container!=null) character.Eat(container);
+            }
+        }
+    }
+    public void HydrateAnthill(){
+        ContainerData container=FindObjectOfType<ContainerData>(false);
+        foreach(SelectableItem item in selectableItems){
+            if( item.type.Equals(ItemType.ANT) || item.type.Equals(ItemType.QUEEN)){
+                CharacterStats character=item.GetComponent<CharacterStats>();
+                if(character!=null && container!=null) character.Drink(container);
+            }
+        }
+    }
 
-    
-
+    public void SleepAnthill(){
+        foreach(SelectableItem item in selectableItems){
+            if(item.type.Equals(ItemType.ANT)){
+                AntStats character=item.GetComponent<AntStats>();
+                if(character!=null){
+                    character.CancelAntAction();
+                    character.GoToSleep();
+                }
+            }
+        }
+    }
+    public void AttackAnthill(){
+        foreach(SelectableItem item in selectableItems){
+            if(item.type.Equals(ItemType.ANT)){
+                AntStats character=item.GetComponent<AntStats>();
+                if(character!=null){
+                    character.CancelAntAction();
+                    character.StartAttackingWithoutTarget();
+                }
+            }
+        }
+    }
     public void AddPath(List<Vector3Int> path,Tilemap destructablePath){
         foreach(Vector3Int localPosition in path){
             Vector3 worldPosition=destructablePath.CellToWorld(localPosition);

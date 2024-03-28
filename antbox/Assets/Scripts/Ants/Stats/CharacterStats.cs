@@ -25,6 +25,8 @@ public class CharacterStats : MonoBehaviour
 
     public AllBarsManager allBarsManager;
 
+    public AllBarsManager barsForUI;
+
     //LIMITS FOR VARIABLES----------------------
     [SerializeField] protected int MIN_HP=40;
     [SerializeField] protected int MAX_HP=60;
@@ -41,14 +43,14 @@ public class CharacterStats : MonoBehaviour
 
 
     //----------------------------
-    [SerializeField] private int maxHP;
-    [SerializeField] private int actualHP;
+    [SerializeField] public int maxHP;
+    [SerializeField] public int actualHP;
 
-    [SerializeField] private int maxHunger;
-    [SerializeField] private int actualHunger;
+    [SerializeField] public int maxHunger;
+    [SerializeField] public int actualHunger;
 
-    [SerializeField] private int maxThirst;
-    [SerializeField] private int actualThirst;
+    [SerializeField] public int maxThirst;
+    [SerializeField] public int actualThirst;
 
     [SerializeField] private int age;
 
@@ -97,11 +99,10 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    void UpdateStats(){
-        AntStats antStats=this.gameObject.GetComponent<AntStats>();
-        if(isDead){
-            SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
-            item.isSelected=false;
+    void KillAnt(){
+        SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
+        item.isSelected=false;
+        if(this.gameObject.GetComponent<AntStats>()!=null){
             FarmStats[] farms=FindObjectsOfType<FarmStats>();
             foreach(FarmStats farm in farms){
                 if(farm.antsOfFarm.Contains(this.gameObject)){
@@ -109,9 +110,20 @@ public class CharacterStats : MonoBehaviour
                     farm.antsWorkingInFarm.Remove(this.gameObject);
                 }
             }
-            item.RemoveSelectableItem();
-            IsEndOfGame();
-            Destroy(this.gameObject);
+        }
+        BattleMovement[] battleManagers=FindObjectsOfType<BattleMovement>(false);
+        foreach(BattleMovement manager in battleManagers){
+            manager.otherAvailableTargets.Remove(this.transform);
+        } 
+        item.RemoveSelectableItem();
+        IsEndOfGame();
+        Destroy(this.gameObject);
+    }
+
+    void UpdateStats(){
+        AntStats antStats=this.gameObject.GetComponent<AntStats>();
+        if(isDead){
+            KillAnt();
         }else{
             bool needToCheckHP=false;
             int cost=-1;
@@ -186,7 +198,8 @@ public class CharacterStats : MonoBehaviour
         QueenStats queenStats=this.gameObject.GetComponent<QueenStats>();
         AntStats[] allAnts=FindObjectsOfType<AntStats>(false);
         if((queenStats!=null && queenStats.isDead==true) || (allAnts.Length==1 && allAnts[0].isDead==true)){
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+            foreach(AntStats ant in allAnts) ant.KillAnt();
+            LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex+1);
         }
     }
 

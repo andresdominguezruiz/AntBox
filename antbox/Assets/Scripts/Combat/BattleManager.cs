@@ -21,6 +21,7 @@ public class BattleManager : MonoBehaviour
             isEnemy=true;
         }else if(antStats!=null){
             isEnemy=false;
+            
         }
     }
 
@@ -90,10 +91,12 @@ public class BattleManager : MonoBehaviour
                 }
                 if(!characterStats.IsDead()){
                     ApplyDamageToCharacter(characterStats,enemyStats.enemy.battleStats.damage,isCritic,true);
-                    AntStats ant=target.gameObject.GetComponent<AntStats>();
-                    if(!ant.GetAction().Equals(ActualAction.ATTACKING)){
+                    if(target!=null){
+                        AntStats ant=target.gameObject.GetComponent<AntStats>();
+                        if(!ant.GetAction().Equals(ActualAction.ATTACKING)){
                         ant.CancelAntAction();
                         ant.StartAttacking(this.gameObject.transform);
+                    }
                     }
                 }
             }else{
