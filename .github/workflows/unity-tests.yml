@@ -15,6 +15,9 @@ jobs:
           lfs: true
       - name: Probando secreto
         run: echo ${{secrets.UNITY_EMAIL}}
+    # Sanity check
+      - name: Get directory
+        run: cd antbox
 
       # Cache
       - uses: actions/cache@v3
