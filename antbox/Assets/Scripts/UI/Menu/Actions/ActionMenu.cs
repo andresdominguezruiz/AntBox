@@ -48,7 +48,6 @@ public class ActionMenu : MonoBehaviour
         bool res=false;
         Action actualAction=actions[index];
         if(Input.GetMouseButtonDown(0)){
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
             if(hit.collider!=null){
