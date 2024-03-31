@@ -31,8 +31,14 @@ public class UIFarmManager : MonoBehaviour
         ShowInfo();
     }
 
+    public void StartMultipleFarminMenu(){
+        FarmStats farmStats=this.gameObject.GetComponentInParent<FarmStats>();
+        MultipleFarmingMenu multipleFarmingMenu=FindObjectOfType<MultipleFarmingMenu>(true);
+        if(farmStats!=null && multipleFarmingMenu!=null) multipleFarmingMenu.InitMultipleFarmingMenu(farmStats);
+    }
+
     public void UpdateCanvasWithFarmStats(FarmStats stats){
-        capacityText.text="Capacity:"+(stats.GetMaxCapacity()-stats.antsOfFarm.Count)+"/"+stats.GetMaxCapacity();
+        capacityText.text="Remaining Capacity:"+(stats.GetMaxCapacity()-stats.antsOfFarm.Count)+" of "+stats.GetMaxCapacity();
         typeText.text="Type:"+stats.GetTypeText();
         cycle.text="Cycle:"+stats.GetTimePerCycle()+"/"+stats.timePerCycleConsumed;
         energyCostText.text="EnergyCost:"+stats.energyCostOfCycle;

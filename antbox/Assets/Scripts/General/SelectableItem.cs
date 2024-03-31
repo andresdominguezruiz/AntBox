@@ -243,9 +243,20 @@ public class SelectableItem : MonoBehaviour
         else if(sprite!=null && sprite.material.color.Equals(selectedColor)){
             sprite.material.color=originalColor;
         }
+        else if(sprite!=null){
+            sprite.material.color=originalColor;
+        }
     }
 
-    void ChangeColor(Color32 newColor){
+    public void ChangeColorOfAllAnts(){
+        foreach(SelectableItem item in selectableItems){
+            if(item.type.Equals(ItemType.ANT)){
+                item.ChangeColorWithoutSelecting();
+            }
+        }
+    }
+
+    public void ChangeColor(Color32 newColor){
         SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
         if(sprite!=null){
             sprite.material.color=newColor;

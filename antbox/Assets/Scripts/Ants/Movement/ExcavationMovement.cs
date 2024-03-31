@@ -18,10 +18,9 @@ public class ExcavationMovement : MonoBehaviour
     public Vector3Int direction= new Vector3Int(0,0,0);
     private Vector3Int routeTile;
     public bool isDigging=false;
-    [SerializeField] private static int digTime=5; //Cada t tiempo real, se considera un día
 
 
-    private float counterOfSecons=0;
+
     public float timeLastFrame;
     [SerializeField] private Tilemap destructableMap;
      public static List<ExcavationMovement> itemsWhoDig=new List<ExcavationMovement>();
@@ -55,7 +54,7 @@ public class ExcavationMovement : MonoBehaviour
         selectedTile=selectedTile-direction;
         direction=Vector3Int.up;
         selectedTile=selectedTile+direction;
-        counterOfSecons=0;
+ 
         
     }
     public void Down(){
@@ -63,21 +62,21 @@ public class ExcavationMovement : MonoBehaviour
         selectedTile=selectedTile-direction;
         direction=Vector3Int.down;
         selectedTile=selectedTile+direction;
-        counterOfSecons=0;
+
     }
     public void Right(){
         destructableMap.SetTile(selectedTile,containerData.dirtTile);
         selectedTile=selectedTile-direction;
         direction=Vector3Int.right;
         selectedTile=selectedTile+direction;
-        counterOfSecons=0;
+        
     }
     public void Left(){
         destructableMap.SetTile(selectedTile,containerData.dirtTile);
         selectedTile=selectedTile-direction;
         direction=Vector3Int.left;
         selectedTile=selectedTile+direction;
-        counterOfSecons=0;
+
     }
     public bool CanGoLeft(){
         return destructableMap.GetTile(routeTile+Vector3Int.left)!=null;
@@ -126,7 +125,6 @@ public class ExcavationMovement : MonoBehaviour
         GenerationTilemap generation=FindObjectOfType<GenerationTilemap>();
         destructableMap=generation.dirtMap;
         NavMeshAgent agent=ant.GetComponent<NavMeshAgent>();
-        TileData tileData=generation.GetTileData(selectedTile);
         for(int i=0;i<=7;i++){
             selectedTile+=direction;
             routeTile+=direction;

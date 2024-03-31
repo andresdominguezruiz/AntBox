@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
 public class MultipleFarmingMenu : MonoBehaviour
@@ -15,33 +17,107 @@ public class MultipleFarmingMenu : MonoBehaviour
 
     void UpdateAntsToPlay(AntStats ant){
         SelectableItem item=ant.gameObject.GetComponent<SelectableItem>();
-        if(item!=null) item.ChangeColorWithoutSelecting();
         if(antsToPlay.Contains(ant)){
             antsToPlay.Remove(ant);
+            if(item!=null) item.ChangeColorWithoutSelecting();
         }
         else if(!antsToPlay.Contains(ant)
          && (selectedFarm.actualCapacity+antsToPlay.Count)<selectedFarm.GetMaxCapacity()){
             antsToPlay.Add(ant);
+            if(item!=null) item.ChangeColorWithoutSelecting();
         }
-        capacityText.text="Capacity:"
-        +(selectedFarm.actualCapacity+antsToPlay.Count)+" of "+selectedFarm.GetMaxCapacity();
-        consoleText.text="You can select "
-        +(selectedFarm.GetMaxCapacity()-selectedFarm.actualCapacity+antsToPlay.Count)
-        +" ants";
+        UpdateText();
     }
 
-    void InitMultipleFarmingMenu(FarmStats farm){
-        selectedFarm=farm;
-        this.gameObject.SetActive(true);
+    void ShowState(){
+        SelectableMaskManager mask=selectedFarm.GetComponentInChildren<SelectableMaskManager>(true);
+        if(mask!=null) mask.ShowRender();
+        foreach(GameObject ant in selectedFarm.antsOfFarm){
+            if(!ant.IsDestroyed()&&ant.GetComponent<SelectableItem>()!=null){
+                ant.GetComponent<SelectableItem>().ChangeColor(Color.red);
+            }
+        }
     }
-    void Start()
-    {
-        
+    void HideState(){
+        SelectableMaskManager mask=selectedFarm.GetComponentInChildren<SelectableMaskManager>(true);
+        if(mask!=null) mask.HideRender();
+        SelectableItem item=selectedFarm.GetComponent<SelectableItem>();
+        if(item!=null) item.ChangeColorOfAllAnts();
+    }
+
+    void UpdateText(){
+        capacityText.text="Capacity:"
+            +(selectedFarm.actualCapacity+antsToPlay.Count)+" of "+selectedFarm.GetMaxCapacity();
+            consoleText.text="You can select "
+            +(selectedFarm.GetMaxCapacity()-(selectedFarm.actualCapacity+antsToPlay.Count))
+            +" ants";
+    }
+
+    public void InitMultipleFarmingMenu(FarmStats farm){
+        if(farm.CanAntWorkInHere()){
+            selectedFarm=farm;
+            this.gameObject.SetActive(true);
+            ShowState();
+            UpdateText();
+            CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
+            if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+            SelectableItem item=selectedFarm.GetComponent<SelectableItem>();
+            if(item!=null) item.MakeEveryoneUnselectableAndUnselected();
+        }
+        else{
+            FinishMultipleFarmingMenu(false);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(!PauseMenu.isPaused){
+            if(Input.GetMouseButtonDown(0)){
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
+                if(hit.collider!=null && hit.collider.CompareTag("Ant")){
+                    Debug.Log("ho");
+                    AntStats ant=hit.collider.gameObject.GetComponent<AntStats>();
+                    Debug.Log(!selectedFarm.antsOfFarm.Contains(ant.gameObject));
+                    if( ant!=null &&!selectedFarm.antsOfFarm.Contains(ant.gameObject)){
+                        UpdateAntsToPlay(ant);
+                    }
+                }
+            }
+        }
+    }
+
+    void SendAntsToFarm(){
+        foreach(AntStats ant in antsToPlay){
+            NavMeshAgent agent=ant.GetComponent<NavMeshAgent>();
+            Vector3Int selectedTile=map.WorldToCell(selectedFarm.gameObject.transform.position);
+            agent.SetDestination(map.GetCellCenterWorld(selectedTile));
+            ant.CancelAntAction();
+            ant.StartFarming();
+            selectedFarm.AddAntToFarm(ant.gameObject);
+        }
+    }
+
+    public void FinishMultipleFarmingMenu(bool confirmedAction){
+        if(selectedFarm.CanAntWorkInHere()){
+            if(confirmedAction){
+                SendAntsToFarm();
+            }
+            antsToPlay=new List<AntStats>();
+            HideState();
+            Clock clock=FindObjectOfType<Clock>();
+            if(clock!=null){
+                clock.UpdateMessageOfConsoleByEvent();
+                consoleText.text=clock.messageOfEvent;
+            }
+            CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
+            if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
+        }
+        SelectableItem item=selectedFarm.GetComponent<SelectableItem>();
+        if(item!=null) item.MakeEveryoneSelectable();
+        selectedFarm=null;
+        this.gameObject.SetActive(false);
     }
 }

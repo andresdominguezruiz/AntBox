@@ -65,8 +65,8 @@ public class ContainerData : MonoBehaviour
     }
 
     void UpdateTextOfContainer(){
-        foodText.text="F:"+FOOD_CONTAINER;
-        waterText.text="W:"+WATER_CONTAINER;
+        foodText.text=":"+FOOD_CONTAINER;
+        waterText.text=":"+WATER_CONTAINER;
         foodValueText.text="VALUE:"+foodValue;
         waterValueText.text="VALUE:"+waterValue;
         cardText.text="Cards:"+cardsInHand.Count+"/10";
@@ -114,6 +114,11 @@ public class ContainerData : MonoBehaviour
         foreach(ContainerEffect effect in containerEffects){
             ApplyEffect(effect);
         }
+    }
+
+    public void AddResourcesRandomly(int value,double randomValue){
+        if(randomValue<=0.5) FOOD_CONTAINER+=value;
+        else WATER_CONTAINER+=value;
     }
 
     public void AddResources(int value,Type type){

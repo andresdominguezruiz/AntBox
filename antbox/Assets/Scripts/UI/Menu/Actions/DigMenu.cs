@@ -126,7 +126,11 @@ public class DigMenu : MonoBehaviour
                     }else{
                         //GetCellCenterWorld te devuelve el PUNTO EXACTO DEL CENTRO DE UNA CELDA
                         this.agent.SetDestination(destructableMap.GetCellCenterWorld(availableRutes[0]));
-                        selectedAnt.GetComponent<AntStats>().StartDigging();
+                        AntStats antStats=selectedAnt.GetComponent<AntStats>();
+                        if(antStats!=null){
+                            antStats.CancelAntAction();
+                            antStats.StartDigging();
+                        }
                         selectedAnt.GetComponent<ExcavationMovement>().InitExcavation(selectedDestructableTile,availableRutes[0]);
                         FinishDigMenu();
                     }

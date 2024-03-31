@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,16 +11,20 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField] private GameObject map;
     public static bool isPaused=false;
+
+    public static void SetPause(bool paused){
+        isPaused=paused;
+    }
     public void Pause(){
         Time.timeScale=0f;
         pauseButton.SetActive(false);
         pauseMenu.SetActive(true);
-        isPaused=true;
+        SetPause(true);
     }
 
     public void DebuggingNextLevel(){
         Time.timeScale=1f;
-        isPaused=false;
+        SetPause(false);
         StatisticsOfGame.Instance.NextLevel();
     }
 
@@ -27,7 +32,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale=1f;
         LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex-1);
         StatisticsOfGame.Instance.ResetData();
-        isPaused=false;
+        SetPause(false);
     }
 
     public void Resume(){
@@ -35,6 +40,6 @@ public class PauseMenu : MonoBehaviour
         pauseButton.SetActive(true);
         pauseMenu.SetActive(false);
         map.SetActive(true);
-        isPaused=false;
+        SetPause(false);
     }
 }

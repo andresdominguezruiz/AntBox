@@ -82,7 +82,11 @@ public class FarmingMenu : MonoBehaviour
                 if(farm.CanAntWorkInHere()){
                     Vector3Int selectedTile=map.WorldToCell(mousePos);
                     this.agent.SetDestination(map.GetCellCenterWorld(selectedTile));
-                    selectedAnt.GetComponent<AntStats>().StartFarming();
+                    AntStats antStats=selectedAnt.GetComponent<AntStats>();
+                    if(antStats!=null){
+                        antStats.CancelAntAction();
+                        antStats.StartFarming();
+                    }
                     farm.AddAntToFarm(selectedAnt);
                     FinishFarmingMenu();
                 }else{
