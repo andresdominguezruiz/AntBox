@@ -118,11 +118,17 @@ public class SelectableItem : MonoBehaviour
         this.attackMenu=attackMenu;
     }
 
+    public void InitAntItem(){
+        SetUIManager(this.gameObject.GetComponentInChildren<UIManager>(true));
+        itemUI.HideInfo();
+        type=ItemType.ANT;
+    }
+
+
 
     
     //USAR ESTE METODO CUANDO VAYAS A AÑADIR UN NUEVO ELEMENTO SELECCIONABLE
-    public void InitSelectableItem(List<Vector3Int> path,Tilemap destructableMap
-    ,GameObject moveMenu,GameObject farmMenu,GameObject digMenu,ItemType itemType,GameObject attackMenu){
+    public void InitSelectableItem(List<Vector3Int> path,Tilemap destructableMap,ItemType itemType){
         AddPath(path,destructableMap);
         if(itemType.Equals(ItemType.FARM)){
             SetUIFarmManager(this.gameObject.GetComponentInChildren<UIFarmManager>(true));
@@ -132,13 +138,7 @@ public class SelectableItem : MonoBehaviour
 
         }
         else if(itemType.Equals(ItemType.ANT)){
-            SetUIManager(this.gameObject.GetComponentInChildren<UIManager>(true));
-            itemUI.HideInfo();
-            this.moveMenu=moveMenu;
-            this.farmMenu=farmMenu;
-            this.digMenu=digMenu;
-            this.attackMenu=attackMenu;
-            type=ItemType.ANT;
+            InitAntItem();
         }
         else{
             SetUIManager(this.gameObject.GetComponentInChildren<UIManager>(true));
