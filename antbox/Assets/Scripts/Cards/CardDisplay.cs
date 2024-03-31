@@ -58,7 +58,7 @@ public class CardDisplay : MonoBehaviour
         List<Activity> activitiesInComplexityRange=new List<Activity>();
         List<Activity> notKnownActivities=new List<Activity>();
         foreach(Activity activity in allActivities){
-            if(complexityTypes.Contains(activity.complexityType)) activitiesInComplexityRange.Add(activity);
+            if(complexityTypes.Contains(activity.ComplexityType)) activitiesInComplexityRange.Add(activity);
         }
         foreach(Activity act in activitiesInComplexityRange){
             if(!Player.Instance.knownActivities.Contains(act)) notKnownActivities.Add(act);

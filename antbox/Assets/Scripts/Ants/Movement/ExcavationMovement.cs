@@ -17,24 +17,25 @@ public class ExcavationMovement : MonoBehaviour
     private Vector3Int actualTile;
     public Vector3Int direction= new Vector3Int(0,0,0);
     private Vector3Int routeTile;
-    public bool isDigging=false;
+    [SerializeField]
+    private bool isDigging=false;
 
 
 
     public float timeLastFrame;
     [SerializeField] private Tilemap destructableMap;
-     public static List<ExcavationMovement> itemsWhoDig=new List<ExcavationMovement>();
+    readonly static List<ExcavationMovement> itemsWhoDig=new List<ExcavationMovement>();
 
     private ContainerData containerData;
 
-    public bool IsDigging(){
-        return isDigging;
-    }
+    public bool IsDigging { get => isDigging; set => isDigging = value; }
+
+    
 
     public void StopDigging(){
         direction=new Vector3Int(0,0,0);
         canDig=false;
-        isDigging=false;
+        IsDigging=false;
         GenerationTilemap generation=FindObjectOfType<GenerationTilemap>();
         TileData tileData=generation.GetTileData(selectedTile);
         tileData.antsDiggingSameTile.Remove(this.gameObject.GetComponent<AntStats>());
@@ -104,7 +105,7 @@ public class ExcavationMovement : MonoBehaviour
     }
 
     public void StartDiggingAndFirstDirection(){
-        isDigging=true;
+        IsDigging=true;
         direction=selectedTile-routeTile;
         if(destructableMap.GetTile(selectedTile)==null) selectedTile+=direction;
         
@@ -148,10 +149,10 @@ public class ExcavationMovement : MonoBehaviour
         if(canDig){
             actualTile=destructableMap.WorldToCell(ant.transform.position);
             
-            if(actualTile.x==routeTile.x && actualTile.y==routeTile.y && !isDigging){
+            if(actualTile.x==routeTile.x && actualTile.y==routeTile.y && !IsDigging){
                 StartDiggingAndFirstDirection();
             }  
-            if(isDigging){
+            if(IsDigging){
 
                 if(destructableMap.GetTile(selectedTile)!=null) DigTile();
                 if(destructableMap.GetTile(selectedTile)==null){
@@ -162,7 +163,7 @@ public class ExcavationMovement : MonoBehaviour
                     if(menu!=null && menu.isSelectingDestructableTile){
                         menu.PreparingSelectableTiles();
                     }
-                    isDigging=false;
+                    IsDigging=false;
                     NextPositionsAfterDig();//TODO:Poner límite para evitar tardar mucho en elegir siguiente tile
                 }
             }

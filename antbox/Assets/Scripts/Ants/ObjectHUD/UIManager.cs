@@ -186,7 +186,7 @@ public class UIManager : MonoBehaviour
             }else if(availableAction.Equals(AvailableActions.DIG) && ex.CanDig()){
                 allButtons.Remove(digButton);
                 digButton.SetActive(true);
-            }else if( availableAction.Equals(AvailableActions.CHANGE_DIRECTIONS)&& ex.IsDigging()){
+            }else if( availableAction.Equals(AvailableActions.CHANGE_DIRECTIONS)&& ex.IsDigging){
                     if(ex.CanGoLeft()){
                         allButtons.Remove(leftButton);
                         leftButton.SetActive(true);
