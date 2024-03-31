@@ -234,6 +234,12 @@ public class SelectableItem : MonoBehaviour
         }
 
     }
+    public void ChangeToOriginal(){
+        SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
+        if(sprite!=null){
+            sprite.material.color=originalColor;
+        }
+    }
 
     public void ChangeColorWithoutSelecting(){
         SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
@@ -248,10 +254,12 @@ public class SelectableItem : MonoBehaviour
         }
     }
 
-    public void ChangeColorOfAllAnts(){
+    public void ChangeColorOfAllAnts(bool toOriginal=false){
         foreach(SelectableItem item in selectableItems){
-            if(item.type.Equals(ItemType.ANT)){
+            if(item.type.Equals(ItemType.ANT) && !toOriginal){
                 item.ChangeColorWithoutSelecting();
+            }else if(item.type.Equals(ItemType.ANT) && toOriginal){
+                item.ChangeToOriginal();
             }
         }
     }

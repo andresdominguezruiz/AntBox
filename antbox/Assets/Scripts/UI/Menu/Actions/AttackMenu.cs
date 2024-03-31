@@ -38,15 +38,7 @@ public class AttackMenu : MonoBehaviour
     }
 
     void UpdateAntsToPlay(AntStats ant){
-        SelectableItem item=ant.gameObject.GetComponent<SelectableItem>();
-        if(antsToPlay.Contains(ant)){
-            antsToPlay.Remove(ant);
-            if(item!=null) item.ChangeColorWithoutSelecting();
-        }
-        else if(!antsToPlay.Contains(ant)){
-            antsToPlay.Add(ant);
-            if(item!=null) item.ChangeColorWithoutSelecting();
-        }
+        MenuTool.UpdaterTool(ant,antsToPlay);
         UpdateText();
     }
 

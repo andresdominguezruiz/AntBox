@@ -14,10 +14,14 @@ public class Player : MonoBehaviour
     public List<Card> cardsInHand=new List<Card>();
     [SerializeField] private float minimunComplexity=0.5f;
 
+    private static void SetInstance(Player player){
+        Player.Instance=player;
+    }
+
 
     private void Awake(){
         if(Player.Instance==null){
-            Player.Instance=this;
+            SetInstance(this);
             DontDestroyOnLoad(this.gameObject);
         }else{
             Destroy(this.gameObject);

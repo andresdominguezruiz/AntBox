@@ -16,16 +16,8 @@ public class MultipleFarmingMenu : MonoBehaviour
     private List<AntStats> antsToPlay=new List<AntStats>();
 
     void UpdateAntsToPlay(AntStats ant){
-        SelectableItem item=ant.gameObject.GetComponent<SelectableItem>();
-        if(antsToPlay.Contains(ant)){
-            antsToPlay.Remove(ant);
-            if(item!=null) item.ChangeColorWithoutSelecting();
-        }
-        else if(!antsToPlay.Contains(ant)
-         && (selectedFarm.actualCapacity+antsToPlay.Count)<selectedFarm.GetMaxCapacity()){
-            antsToPlay.Add(ant);
-            if(item!=null) item.ChangeColorWithoutSelecting();
-        }
+        bool elseIfCondition=(selectedFarm.actualCapacity+antsToPlay.Count)<selectedFarm.GetMaxCapacity();
+        MenuTool.UpdaterTool(ant,antsToPlay,elseIfCondition);
         UpdateText();
     }
 
@@ -42,7 +34,7 @@ public class MultipleFarmingMenu : MonoBehaviour
         SelectableMaskManager mask=selectedFarm.GetComponentInChildren<SelectableMaskManager>(true);
         if(mask!=null) mask.HideRender();
         SelectableItem item=selectedFarm.GetComponent<SelectableItem>();
-        if(item!=null) item.ChangeColorOfAllAnts();
+        if(item!=null) item.ChangeColorOfAllAnts(true);
     }
 
     void UpdateText(){
