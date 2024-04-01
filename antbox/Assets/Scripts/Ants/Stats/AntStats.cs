@@ -88,9 +88,9 @@ public class AntStats : CharacterStats
     public void StopAttacking(){
         BattleMovement battleMovement=this.GetComponent<BattleMovement>();
         if(battleMovement!=null) {
-            battleMovement.killingMode=false;
-            battleMovement.battleManager.inBattle=false;
-            battleMovement.agent.SetDestination(this.gameObject.transform.position);
+            battleMovement.KillingMode=false;
+            battleMovement.BattleManager.inBattle=false;
+            battleMovement.Agent.SetDestination(this.gameObject.transform.position);
         }
         this.DoNothing();
     }
@@ -135,8 +135,8 @@ public class AntStats : CharacterStats
     public void StartAttackingWithoutTarget(){
         BattleMovement battleMovement=this.GetComponent<BattleMovement>();
         if(battleMovement!=null){
-            battleMovement.killingMode=true;
-            battleMovement.battleManager.inBattle=true;
+            battleMovement.KillingMode=true;
+            battleMovement.BattleManager.inBattle=true;
             action=ActualAction.ATTACKING;
         }
     }
@@ -144,9 +144,9 @@ public class AntStats : CharacterStats
     public void StartAttacking(Transform firstTarget){
         BattleMovement battleMovement=this.GetComponent<BattleMovement>();
         if(battleMovement!=null){
-            battleMovement.killingMode=true;
-            battleMovement.actualTarget=firstTarget;
-            battleMovement.battleManager.inBattle=true;
+            battleMovement.KillingMode=true;
+            battleMovement.ActualTarget=firstTarget;
+            battleMovement.BattleManager.inBattle=true;
             action=ActualAction.ATTACKING;
         }
 

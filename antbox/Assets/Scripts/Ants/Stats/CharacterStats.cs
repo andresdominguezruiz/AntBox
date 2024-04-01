@@ -113,7 +113,7 @@ public class CharacterStats : MonoBehaviour
         }
         BattleMovement[] battleManagers=FindObjectsOfType<BattleMovement>(false);
         foreach(BattleMovement manager in battleManagers){
-            manager.otherAvailableTargets.Remove(this.transform);
+            manager.OtherAvailableTargets.Remove(this.transform);
         } 
         item.RemoveSelectableItem();
         IsEndOfGame();
