@@ -92,7 +92,9 @@ public class GenerationTilemap : MonoBehaviour
 
         NestManager manager=GetComponent<NestManager>();
         BakeMap();
-        if(manager!=null) manager.ReleaseEnemies(nest,dirtMap);
+        if(manager!=null){
+            manager.ReleaseEnemies(nest,dirtMap);
+        }
     }
 
     public void CanWakeUpNest(Vector3Int diggedTile){
@@ -106,22 +108,27 @@ public class GenerationTilemap : MonoBehaviour
     public Tile GetTileOfTilesData(Vector3Int position){
         Tile tile=null;
         bool result=allTilesOfMap.TryGetValue(position,out TileData data);
-        if(result==true && data.GetTileType().Equals(TileType.DIRT)) tile=data.GetTileByStateAndType();
-        else if(result==true && data.GetTileType().Equals(TileType.STONE)) tile=stone;
+        if(result==true && data.GetTileType().Equals(TileType.DIRT)){
+            tile=data.GetTileByStateAndType();
+        }
+        else if(result==true && data.GetTileType().Equals(TileType.STONE)){
+            tile=stone;
+        }
         return tile;
     }
     public TileData GetTileData(Vector3Int position){
         TileData tileData=null;
         bool result=allTilesOfMap.TryGetValue(position,out TileData data);
-        if(result==true) tileData=data;
+        if(result==true){
+            tileData=data;
+        }
         return tileData;
     }
 
     void AddNewCardsToPlayer(){
         ContainerData containerData=FindObjectOfType<ContainerData>();
-        for(int i=0;i<cardsPerNewLevel;i++){
-            if(containerData!=null && containerData.CanAddNewCard()) containerData.AddNewCard();
-            else break;
+        if(containerData!=null){
+            containerData.AddNumberOfCards(cardsPerNewLevel);
         }
     }
 
@@ -173,7 +180,9 @@ public class GenerationTilemap : MonoBehaviour
             List<Vector3Int> options=OnlyNextToDirtPositions(start,dirtMap);
             options.RemoveAll((Vector3Int pos)=> !availablePos.Contains(pos)
              && nest.nestPositions.Contains(pos)); //coger posiciones no repetidas y válidas
-             if(options.Count==0) break;
+             if(options.Count==0){
+                break;
+             }
              else{
                 randomIndex=random.Next(0,options.Count);
                 start=options[randomIndex];
@@ -203,9 +212,13 @@ public class GenerationTilemap : MonoBehaviour
             for(int j=-2;j<=2;j++){
                 Vector3Int pos=new Vector3Int(position.x+i,position.y+j,position.z);
                 res=dirtMap.GetTile(pos)!=null && dirtMap.GetTile(pos).Equals(dirt);
-                if(!res) break;
+                if(!res){
+                    break;
+                }
             }
-            if(!res) break;
+            if(!res){
+                break;
+            }
         }
         return res;
     }
@@ -216,9 +229,15 @@ public class GenerationTilemap : MonoBehaviour
             for(int j=0;j<=height;j++){
                 Vector3Int pos=new Vector3Int(i,j,0);
                 TileBase tile=dirtMap.GetTile(pos);
-                if(tile==null) allTilesOfMap.Add(pos,new TileData(true,pos,TileType.EMPTY,random,this,containerData));
-                else if(tile.Equals(dirt)) allTilesOfMap.Add(pos,new TileData(pos,TileType.DIRT,random,this,containerData));
-                else if(tile.Equals(stone)) allTilesOfMap.Add(pos,new TileData(pos,TileType.STONE,random,this,containerData));
+                TileType tileType=TileType.EMPTY;
+                if(tile!=null && tile.Equals(dirt)){
+                    tileType=TileType.DIRT;
+                }
+                else if(tile!=null && tile.Equals(stone)){
+                    tileType=TileType.STONE;
+                }
+                bool discovered=tile==null;
+                allTilesOfMap.Add(pos,new TileData(discovered,pos,tileType,random,this,containerData));
             }
         }
     }
@@ -265,7 +284,9 @@ public class GenerationTilemap : MonoBehaviour
             Vector3Int down=new Vector3Int(tile.x,tile.y-1,tile.z);
             List<Vector3Int> options=new List<Vector3Int>{left,right,up,down};
             foreach(Vector3Int option in options){
-                if(dirtMap.GetTile(option)!=null && dirtMap.GetTile(option).Equals(dirt)) list.Add(option);
+                if(dirtMap.GetTile(option)!=null && dirtMap.GetTile(option).Equals(dirt)){
+                    list.Add(option);
+                }
             }
         }
         return list;

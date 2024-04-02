@@ -48,6 +48,18 @@ public class ContainerData : MonoBehaviour
         counterOfFailedExamsText.text="FAILED EXAMS: "+StatisticsOfGame.Instance.counterOfFailedExams;
 
     }
+
+    public static void EnableGameAfterAction(TextMeshProUGUI consoleText){
+        Clock clock=FindObjectOfType<Clock>();
+        if(clock!=null){
+            clock.UpdateMessageOfConsoleByEvent();
+            consoleText.text=clock.messageOfEvent;
+        }
+        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
+        if(anyCardDisplay!=null){
+            anyCardDisplay.MakeEveryCardSelectable();
+        }
+    }
     void Start()
     {
         farmGenerator=FindObjectOfType<FarmGenerator>();
@@ -85,20 +97,32 @@ public class ContainerData : MonoBehaviour
     public void ApplyEffect(ContainerEffect containerEffect){
         if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.FOOD)){
             FOOD_CONTAINER=containerEffect.multiplicatorValue*(FOOD_CONTAINER+(int)containerEffect.sumValue);
-            if(FOOD_CONTAINER<0) FOOD_CONTAINER=0;
+            if(FOOD_CONTAINER<0){
+                FOOD_CONTAINER=0;
+            }
         }
         else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.WATER)){
             WATER_CONTAINER=containerEffect.multiplicatorValue*(WATER_CONTAINER+(int)containerEffect.sumValue);
-            if(WATER_CONTAINER<0) WATER_CONTAINER=0;
+            if(WATER_CONTAINER<0){
+                WATER_CONTAINER=0;
+            }
         }
         else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.WATER_VALUE)){
             waterValue=containerEffect.multiplicatorValue*(waterValue+(int)containerEffect.sumValue);
-            if(waterValue>maxNutritionalValue) waterValue=maxNutritionalValue;
-            else if(waterValue<minNutritionalValue) waterValue=minNutritionalValue;
+            if(waterValue>maxNutritionalValue){
+                waterValue=maxNutritionalValue;
+            }
+            else if(waterValue<minNutritionalValue){
+                waterValue=minNutritionalValue;
+            }
         }else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.FOOD_VALUE)){
             foodValue=containerEffect.multiplicatorValue*(foodValue+(int)containerEffect.sumValue);
-            if(foodValue>maxNutritionalValue) foodValue=maxNutritionalValue;
-            else if(foodValue<minNutritionalValue) foodValue=minNutritionalValue;
+            if(foodValue>maxNutritionalValue){
+                foodValue=maxNutritionalValue;
+            }
+            else if(foodValue<minNutritionalValue){
+                foodValue=minNutritionalValue;
+            }
         }
         else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.MIRROR)){
             //Cambia valores nutritivos de la partida.
@@ -117,8 +141,12 @@ public class ContainerData : MonoBehaviour
     }
 
     public void AddResourcesRandomly(int value,double randomValue){
-        if(randomValue<=0.5) FOOD_CONTAINER+=value;
-        else WATER_CONTAINER+=value;
+        if(randomValue<=0.5){
+            FOOD_CONTAINER+=value;
+        }
+        else{
+            WATER_CONTAINER+=value;
+        }
     }
 
     public void AddResources(int value,Type type){
@@ -192,6 +220,17 @@ public class ContainerData : MonoBehaviour
         }
         else{ //Si el resultado a sido negativo, vuelve a la normalidad
             GoBackToGameAfterActivity();
+        }
+    }
+
+    public void AddNumberOfCards(int number){
+        for(int i=0;i<number;i++){
+            if(CanAddNewCard()){
+                AddNewCard();
+            }
+            else{
+                break;
+            }
         }
     }
     public void GoBackToGameAfterActivity(){
