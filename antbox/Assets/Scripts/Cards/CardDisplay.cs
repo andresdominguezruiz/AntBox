@@ -36,7 +36,9 @@ public class CardDisplay : MonoBehaviour
         if(isBoss) n=10;
         else{
             for(int i=(int)Player.Instance.complexityLevelOfGame;i>0 && n<=3;i--){
-                if(i%3==0) n++;
+                if(i%3==0){
+                    n++;
+                }
             }
         }
         Activity[] activities=new Activity[n];
@@ -58,10 +60,14 @@ public class CardDisplay : MonoBehaviour
         List<Activity> activitiesInComplexityRange=new List<Activity>();
         List<Activity> notKnownActivities=new List<Activity>();
         foreach(Activity activity in allActivities){
-            if(complexityTypes.Contains(activity.ComplexityType)) activitiesInComplexityRange.Add(activity);
+            if(complexityTypes.Contains(activity.ComplexityType)){
+                activitiesInComplexityRange.Add(activity);
+            }
         }
         foreach(Activity act in activitiesInComplexityRange){
-            if(!Player.Instance.knownActivities.Contains(act)) notKnownActivities.Add(act);
+            if(!Player.Instance.knownActivities.Contains(act)){
+                notKnownActivities.Add(act);
+            }
         }
         return notKnownActivities;
     }
@@ -71,7 +77,9 @@ public class CardDisplay : MonoBehaviour
         int multiplicator=2;
         if(isBoss){
             int result=StatisticsOfGame.Instance.counterOfCorrectCards-StatisticsOfGame.Instance.counterOfFailedCards;
-            if(result<0) result=0;
+            if(result<0){
+                result=0;
+            }
             complexity+=Player.Instance.complexityLevelOfGame+0.25*result;
             multiplicator=3;
         }else{
@@ -91,7 +99,9 @@ public class CardDisplay : MonoBehaviour
         }else if(complexity>=(int)ComplexityType.HARD*multiplicator && complexity<(int)ComplexityType.VERY_HARD*multiplicator){
             complexitiesToSearch.Add(ComplexityType.HARD);
             complexitiesToSearch.Add(ComplexityType.VERY_HARD);
-        }else if(complexity>=(int)ComplexityType.VERY_HARD*multiplicator) complexitiesToSearch.Add(ComplexityType.VERY_HARD);
+        }else if(complexity>=(int)ComplexityType.VERY_HARD*multiplicator){
+            complexitiesToSearch.Add(ComplexityType.VERY_HARD);
+        }
 
         return complexitiesToSearch;
     }

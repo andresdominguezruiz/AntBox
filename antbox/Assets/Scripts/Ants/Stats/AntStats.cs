@@ -63,26 +63,46 @@ public class AntStats : CharacterStats
 
     public void SetFarmingSpeed(float speed){
         farmingSpeed=speed;
-        if(speed>(float)MAX_FARMING_SPEED*2/100) farmingSpeed=(float)MAX_FARMING_SPEED*2/100;
-        else if(speed<(float)MIN_FARMING_SPEED/(2*100)) farmingSpeed=(float)MIN_FARMING_SPEED/(2*100);
+        if(speed>(float)MAX_FARMING_SPEED*2/100){
+            farmingSpeed=(float)MAX_FARMING_SPEED*2/100;
+        }
+        else if(speed<(float)MIN_FARMING_SPEED/(2*100)){
+            farmingSpeed=(float)MIN_FARMING_SPEED/(2*100);
+        }
     }
     public void SetDiggingSpeed(float speed){
         diggingSpeed=speed;
-        if(speed>(float)MAX_DIGGING_SPEED*2/100) diggingSpeed=(float)MAX_DIGGING_SPEED*2/100;
-        else if(speed<(float)MIN_DIGGING_SPEED/(2*100)) diggingSpeed=(float)MIN_DIGGING_SPEED/(2*100);
+        if(speed>(float)MAX_DIGGING_SPEED*2/100){
+            diggingSpeed=(float)MAX_DIGGING_SPEED*2/100;
+        }
+        else if(speed<(float)MIN_DIGGING_SPEED/(2*100)){
+            diggingSpeed=(float)MIN_DIGGING_SPEED/(2*100);
+        }
     }
 
     public void SetRecoverSpeed(int speed){
         recoverSpeed=speed;
-        if(speed>MAX_RECOVER_SPEED*2) recoverSpeed=MAX_RECOVER_SPEED*2;
-        else if(speed<MIN_RECOVER_SPEED/2) recoverSpeed=MIN_RECOVER_SPEED/2;
+        if(speed>MAX_RECOVER_SPEED*2){
+            recoverSpeed=MAX_RECOVER_SPEED*2;
+        }
+        else if(speed<MIN_RECOVER_SPEED/2){
+            recoverSpeed=MIN_RECOVER_SPEED/2;
+        }
     }
 
     public void CancelAntAction(){
-        if(this.GetAction().Equals(ActualAction.FARMING)) StopFarming();
-        else if(this.GetAction().Equals(ActualAction.DIGGING)) StopDigging();
-        else if(this.GetAction().Equals(ActualAction.SLEEPING)) StopSleeping();
-        else if(this.GetAction().Equals(ActualAction.ATTACKING)) StopAttacking();
+        if(this.GetAction().Equals(ActualAction.FARMING)){
+            StopFarming();
+        }
+        else if(this.GetAction().Equals(ActualAction.DIGGING)){
+            StopDigging();
+        }
+        else if(this.GetAction().Equals(ActualAction.SLEEPING)){
+            StopSleeping();
+        }
+        else if(this.GetAction().Equals(ActualAction.ATTACKING)){
+            StopAttacking();
+        }
     }
 
     public void StopAttacking(){
@@ -121,7 +141,6 @@ public class AntStats : CharacterStats
                 this.DoNothing();
                 this.gameObject.GetComponent<NavMeshAgent>().isStopped=false;
                 this.gameObject.GetComponent<NavMeshAgent>().SetDestination(this.gameObject.transform.position);
-                Debug.Log("He cancelado, ahora su estado es "+this.GetAction());
                 break;
             }
         }
@@ -176,19 +195,35 @@ public class AntStats : CharacterStats
 
 
     public void SetEnergy(int energy){
-        if(energy<0) actualEnergy=0;
-        else if(energy>maxEnergy) actualEnergy=maxEnergy;
-        else actualEnergy=energy;
+        if(energy<0){
+            actualEnergy=0;
+        }
+        else if(energy>maxEnergy){
+            actualEnergy=maxEnergy;
+        }
+        else{
+            actualEnergy=energy;
+        }
     }
     public void SetMaxEnergy(int energy){
-        if(energy<MIN_ENERGY/2) maxEnergy=MIN_ENERGY/2;
-        else if(energy>MAX_ENERGY*2) maxEnergy=MAX_ENERGY*2;
-        else maxEnergy=energy;
+        if(energy<MIN_ENERGY/2){
+            maxEnergy=MIN_ENERGY/2;
+        }
+        else if(energy>MAX_ENERGY*2){
+            maxEnergy=MAX_ENERGY*2;
+        }
+        else{
+            maxEnergy=energy;
+        }
     }
 
     public void ApplyEnergyCost(int cost){
-        if(!GetClockOfGame().eventType.Equals(EventType.SUMMER) || cost<0)SetEnergy(actualEnergy-cost);
-        else SetEnergy(actualEnergy-2*cost);
+        if(!GetClockOfGame().eventType.Equals(EventType.SUMMER) || cost<0){
+            SetEnergy(actualEnergy-cost);
+        }
+        else {
+            SetEnergy(actualEnergy-2*cost);
+        }
         allBarsManager.energyBar.SetBarValue(actualEnergy);
 
     }

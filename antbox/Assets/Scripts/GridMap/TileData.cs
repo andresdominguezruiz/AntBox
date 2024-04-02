@@ -61,7 +61,7 @@ public class TileData
     }
 
     public TileData(bool discovered,Vector3Int position,TileType type,System.Random randomMap,GenerationTilemap generator,ContainerData container)
-    :this(position,type,randomMap,generator,container){;
+    :this(position,type,randomMap,generator,container){
 
         this.discovered=discovered;
 

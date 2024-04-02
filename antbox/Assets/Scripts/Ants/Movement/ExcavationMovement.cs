@@ -107,7 +107,9 @@ public class ExcavationMovement : MonoBehaviour
     public void StartDiggingAndFirstDirection(){
         IsDigging=true;
         direction=selectedTile-routeTile;
-        if(destructableMap.GetTile(selectedTile)==null) selectedTile+=direction;
+        if(destructableMap.GetTile(selectedTile)==null){
+            selectedTile+=direction;
+        }
         
     }
 
@@ -132,12 +134,18 @@ public class ExcavationMovement : MonoBehaviour
             Debug.Log(ant.GetComponentInChildren<UIManager>()==null);
             Debug.Log(ant.name+" esta buscando");
             if(generation.GetTileOfTilesData(selectedTile)!=null
-             && generation.GetTileData(selectedTile)!=null && !generation.GetTileData(selectedTile).GetTileType().Equals(TileType.EMPTY)) break;
+             && generation.GetTileData(selectedTile)!=null
+              && !generation.GetTileData(selectedTile).GetTileType().Equals(TileType.EMPTY)){
+                break;
+             }
         }
-        if(generation.GetTileOfTilesData(selectedTile)==null || generation.GetTileData(selectedTile)==null || generation.GetTileData(selectedTile).GetTileType().Equals(TileType.EMPTY)){
+        if(generation.GetTileOfTilesData(selectedTile)==null
+         || generation.GetTileData(selectedTile)==null 
+         || generation.GetTileData(selectedTile).GetTileType().Equals(TileType.EMPTY)){
             this.gameObject.GetComponent<AntStats>().StopDigging();
         }else{
-            if(!(selectedTile-routeTile).Equals(direction)){ routeTile+=direction;
+            if(!(selectedTile-routeTile).Equals(direction)){ 
+                routeTile+=direction;
                 
             }
             agent.SetDestination(generation.dirtMap.GetCellCenterWorld(routeTile));
@@ -154,7 +162,9 @@ public class ExcavationMovement : MonoBehaviour
             }  
             if(IsDigging){
 
-                if(destructableMap.GetTile(selectedTile)!=null) DigTile();
+                if(destructableMap.GetTile(selectedTile)!=null){
+                    DigTile();
+                }
                 if(destructableMap.GetTile(selectedTile)==null){
                     DigMenu menu=FindObjectOfType<DigMenu>(false);
                     GenerationTilemap generationTilemap=FindFirstObjectByType<GenerationTilemap>();

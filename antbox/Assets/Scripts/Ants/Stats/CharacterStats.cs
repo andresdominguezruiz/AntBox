@@ -160,11 +160,17 @@ public class CharacterStats : MonoBehaviour
             if(antStats!=null){
                 if(antStats.GetAction().Equals(ActualAction.SLEEPING)){
                     antStats.ApplyEnergyCost(-1*antStats.GetRecoverSpeed());
-                    if(antStats.IsFullOfEnergy()) antStats.CancelAntAction();
+                    if(antStats.IsFullOfEnergy()){
+                        antStats.CancelAntAction();
+                    }
                 }
             }
-            if(actualThirst<0) actualThirst=0;
-            if(actualHunger<0) actualHunger=0;
+            if(actualThirst<0){
+                actualThirst=0;
+            }
+            if(actualHunger<0){
+                actualHunger=0;
+            }
 
             if(needToCheckHP) CheckHP();
         }
@@ -198,7 +204,9 @@ public class CharacterStats : MonoBehaviour
         QueenStats queenStats=this.gameObject.GetComponent<QueenStats>();
         AntStats[] allAnts=FindObjectsOfType<AntStats>(false);
         if((queenStats!=null && queenStats.isDead==true) || (allAnts.Length==1 && allAnts[0].isDead==true)){
-            foreach(AntStats ant in allAnts) ant.KillAnt();
+            foreach(AntStats ant in allAnts){
+                ant.KillAnt();
+            }
             LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex+1);
         }
     }
@@ -290,12 +298,18 @@ public class CharacterStats : MonoBehaviour
         if(!effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.NONE)){
             if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.HP_LIMIT)) {
                 maxHP=effect.multiplicatorValue*(maxHP+(int)effect.sumValue);
-                if(maxHP<MIN_HP/2) maxHP=MIN_HP/2;
-                else if(maxHP>MAX_HP*2) maxHP=MAX_HP*2;
+                if(maxHP<MIN_HP/2){
+                    maxHP=MIN_HP/2;
+                }
+                else if(maxHP>MAX_HP*2){
+                    maxHP=MAX_HP*2;
+                }
             }
             else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.AGE)){
                 age=effect.multiplicatorValue*(age+(int)effect.sumValue);
-                if(age<0 && !Player.Instance.AllowNegativeAge()) age=0;
+                if(age<0 && !Player.Instance.AllowNegativeAge()){
+                    age=0;
+                }
             }
             else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.FEED)){
                 this.EatWithoutCost(effect.multiplicatorValue*actualHunger+(int)effect.sumValue);
@@ -306,17 +320,31 @@ public class CharacterStats : MonoBehaviour
             else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_ENERGY) && stats!=null){
                 stats.SetEnergy(stats.GetMaxEnergy());
             }
-            else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_HP))this.SetActualHP(maxHP);
-            else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_HUNGER))this.SetActualHunger(maxHunger);
-            else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_THIRST)) this.SetActualThirst(maxThirst);
+            else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_HP)){
+                this.SetActualHP(maxHP);
+            }
+            else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_HUNGER)){
+                this.SetActualHunger(maxHunger);
+            }
+            else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_THIRST)){
+                this.SetActualThirst(maxThirst);
+            }
             else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.HUNGER_LIMIT)){
                 maxHunger=effect.multiplicatorValue*(maxHunger+(int)effect.sumValue);
-                if(maxHunger<MIN_HUNGER/2) maxHunger=MIN_HUNGER/2;
-                else if(maxHunger>MAX_HUNGER*2) maxHunger=MAX_HUNGER*2;
+                if(maxHunger<MIN_HUNGER/2) {
+                    maxHunger=MIN_HUNGER/2;
+                }
+                else if(maxHunger>MAX_HUNGER*2){
+                    maxHunger=MAX_HUNGER*2;
+                }
             }else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.THIRST_LIMIT)){
                 maxThirst=effect.multiplicatorValue*(maxThirst+(int)effect.sumValue);
-                if(maxThirst<MIN_THIRST/2) maxThirst=MIN_THIRST/2;
-                else if(maxThirst>MAX_THIRST*2) maxThirst=MAX_THIRST*2;
+                if(maxThirst<MIN_THIRST/2) {
+                    maxThirst=MIN_THIRST/2;
+                }
+                else if(maxThirst>MAX_THIRST*2) {
+                    maxThirst=MAX_THIRST*2;
+                }
             }
             else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.ENERGY_LIMIT) && stats!=null){
                 stats.SetMaxEnergy(effect.multiplicatorValue*(stats.GetMaxEnergy()+(int)effect.sumValue));
