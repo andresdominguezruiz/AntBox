@@ -43,14 +43,15 @@ public class DigMenu : MonoBehaviour
         this.agent=selectedAnt.GetComponent<NavMeshAgent>();
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        if(anyCardDisplay!=null){
+            anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        }
         digMenu.gameObject.SetActive(true);
         consoleText.text=selectedAnt.name+"-Select the start of your excavation";
         selectedAnt.GetComponent<SelectableItem>().MakeEveryoneUnselectable();
         excavablePath=FindObjectOfType<GenerationTilemap>().GetExcavableTiles();
         PreparingSelectableTiles();
         isSelectingDestructableTile=true;
-        Debug.Log(excavablePath.Count);
     }
     //ESTE MÉTODO DEVUELVE LAS POSICIONES EXCAVABLES SELECCIONABLES
     public void PreparingSelectableTiles(){
@@ -81,7 +82,9 @@ public class DigMenu : MonoBehaviour
     }
 
     void Update(){
-        if(this.agent==null || this.agent.gameObject.IsDestroyed()) FinishDigMenu();
+        if(this.agent==null || this.agent.gameObject.IsDestroyed()){
+            FinishDigMenu();
+        }
         if(!PauseMenu.isPaused){
             if(Input.GetMouseButtonDown(0) && !areMoreRutes){
                 SelectStart();

@@ -98,13 +98,7 @@ public class MultipleFarmingMenu : MonoBehaviour
             }
             antsToPlay=new List<AntStats>();
             HideState();
-            Clock clock=FindObjectOfType<Clock>();
-            if(clock!=null){
-                clock.UpdateMessageOfConsoleByEvent();
-                consoleText.text=clock.messageOfEvent;
-            }
-            CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-            if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
+            ContainerData.EnableGameAfterAction(consoleText);
         }
         SelectableItem item=selectedFarm.GetComponent<SelectableItem>();
         if(item!=null) item.MakeEveryoneSelectable();

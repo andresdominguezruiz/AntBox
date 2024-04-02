@@ -118,12 +118,6 @@ public class FarmingMenu : MonoBehaviour
             SelectableItem item=FindObjectOfType<SelectableItem>(false);
             item.MakeEveryoneSelectable();
         }
-        Clock clock=FindObjectOfType<Clock>();
-        if(clock!=null){
-            clock.UpdateMessageOfConsoleByEvent();
-            consoleText.text=clock.messageOfEvent;
-        }
-        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
+        ContainerData.EnableGameAfterAction(consoleText);
     }
 }

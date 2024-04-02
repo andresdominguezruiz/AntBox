@@ -70,6 +70,6 @@ public class Player : MonoBehaviour
     }
 
     public void ProcessUpdateEffectOfAction(Action actualAction){
-        playerPassives.Add(actualAction.playerEffect);
+        playerPassives.Add(actualAction.PlayerEffect);
     }
 }

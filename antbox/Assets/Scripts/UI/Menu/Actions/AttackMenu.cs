@@ -68,7 +68,9 @@ public class AttackMenu : MonoBehaviour
     }
 
     void Update(){
-        if(this.agent==null || this.agent.gameObject.IsDestroyed())FinishAttackMenu(false);
+        if(this.agent==null || this.agent.gameObject.IsDestroyed()){
+            FinishAttackMenu(false);
+        }
         if(!PauseMenu.isPaused){
             if(Input.GetMouseButtonDown(0)){
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -92,7 +94,7 @@ public class AttackMenu : MonoBehaviour
                 }
             }
 
-        }
+            }
         }
     }
 
@@ -102,7 +104,9 @@ public class AttackMenu : MonoBehaviour
         this.agent=null;
         attackMenu.SetActive(false);
         if(battleStarter!=null){
-            if(selectingEnemy) battleStarter.GetComponentInChildren<UIManager>(true).ShowInfo();
+            if(selectingEnemy){
+                battleStarter.GetComponentInChildren<UIManager>(true).ShowInfo();
+            }
             else{
                 battleStarter.GetComponentInChildren<UIEnemyManager>(true).ShowInfo();
                 if(confirmedAction){
@@ -118,12 +122,6 @@ public class AttackMenu : MonoBehaviour
             SelectableItem item=FindObjectOfType<SelectableItem>(false);
             item.MakeEveryoneSelectable();
         }
-        Clock clock=FindObjectOfType<Clock>();
-        if(clock!=null){
-            clock.UpdateMessageOfConsoleByEvent();
-            consoleText.text=clock.messageOfEvent;
-        }
-        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
+        ContainerData.EnableGameAfterAction(consoleText);
     }
 }

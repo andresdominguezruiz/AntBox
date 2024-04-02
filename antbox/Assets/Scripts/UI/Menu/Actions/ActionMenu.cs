@@ -31,12 +31,16 @@ public class ActionMenu : MonoBehaviour
                             isChoosing=false;
                             index++;
                             Time.timeScale=1f;
-                            if(index>actions.Count-1) FinishActionMenu();
-                            else ProcessActualAction();
+                            if(index>actions.Count-1){
+                                FinishActionMenu();
+                            }
+                            else{
+                                ProcessActualAction();
+                            }
                         }
                         else{
                             consoleText.text="Choose "+actualUses+" "
-                            +actualAction.destination.ToString()+" to "+actualAction.type.ToString();
+                            +actualAction.Destination.ToString()+" to "+actualAction.Type.ToString();
                         }
             }
         }
@@ -53,22 +57,22 @@ public class ActionMenu : MonoBehaviour
             if(hit.collider!=null){
                 bool correctExecution=false;
                 if((hit.collider.CompareTag("Ant") && 
-                (actualAction.destination.Equals(Destination.ANT) || actualAction.destination.Equals(Destination.ANTHILL)))
-                || (hit.collider.CompareTag("Queen") && (actualAction.destination.Equals(Destination.QUEEN)
-                 || actualAction.destination.Equals(Destination.ANTHILL)))){
+                (actualAction.Destination.Equals(Destination.ANT) || actualAction.Destination.Equals(Destination.ANTHILL)))
+                || (hit.collider.CompareTag("Queen") && (actualAction.Destination.Equals(Destination.QUEEN)
+                 || actualAction.Destination.Equals(Destination.ANTHILL)))){
 
                     CharacterStats ant=hit.collider.gameObject.GetComponent<CharacterStats>();
-                    ant.ProcessUpdateEffectOfAction(actualAction.characterEffects);
+                    ant.ProcessUpdateEffectOfAction(actualAction.CharacterEffects);
                     correctExecution=true;
-                }else if(hit.collider.CompareTag("Farm") && (actualAction.destination.Equals(Destination.FARM)
-                 || actualAction.destination.Equals(Destination.FOOD_FARM)
-                  || actualAction.destination.Equals(Destination.WATER_FARM))){
+                }else if(hit.collider.CompareTag("Farm") && (actualAction.Destination.Equals(Destination.FARM)
+                 || actualAction.Destination.Equals(Destination.FOOD_FARM)
+                  || actualAction.Destination.Equals(Destination.WATER_FARM))){
                     
                     FarmStats farmStats=hit.collider.gameObject.GetComponent<FarmStats>();
-                    if((actualAction.destination.Equals(Destination.FOOD_FARM) && farmStats.GetTypeOfFarm().Equals(Type.FOOD))
-                    || (actualAction.destination.Equals(Destination.WATER_FARM) && farmStats.GetTypeOfFarm().Equals(Type.WATER))
-                    || actualAction.destination.Equals(Destination.FARM)){
-                        farmStats.ProcessUpdateEffectOfAction(actualAction.farmEffects);
+                    if((actualAction.Destination.Equals(Destination.FOOD_FARM) && farmStats.GetTypeOfFarm().Equals(Type.FOOD))
+                    || (actualAction.Destination.Equals(Destination.WATER_FARM) && farmStats.GetTypeOfFarm().Equals(Type.WATER))
+                    || actualAction.Destination.Equals(Destination.FARM)){
+                        farmStats.ProcessUpdateEffectOfAction(actualAction.FarmEffects);
                         correctExecution=true;
                     }
                   }
@@ -85,7 +89,9 @@ public class ActionMenu : MonoBehaviour
         ContainerData containerData=FindObjectOfType<ContainerData>(false);
         containerData.GoBackToGameAfterActivity();
         Clock clock=FindObjectOfType<Clock>();
-        if(clock!=null) consoleText.text=clock.messageOfEvent;
+        if(clock!=null){
+            consoleText.text=clock.messageOfEvent;
+        }
     }
 
     public void InitActions(List<Action> actions){
@@ -98,25 +104,33 @@ public class ActionMenu : MonoBehaviour
 //1 NIVEL
     void ProcessActualAction(){
         Action actualAction=actions[index];
-        if(actualAction.type.Equals(ActionType.UPDATE)) ApplyUpdateAction(actualAction);
-        else if(actualAction.type.Equals(ActionType.ADD)) ApplyAddAction(actualAction);
-        else if(actualAction.type.Equals(ActionType.DELETE)) ApplyDeleteAction(actualAction);
+        if(actualAction.Type.Equals(ActionType.UPDATE)){
+            ApplyUpdateAction(actualAction);
+        }
+        else if(actualAction.Type.Equals(ActionType.ADD)){
+            ApplyAddAction(actualAction);
+        }
+        else if(actualAction.Type.Equals(ActionType.DELETE)){
+            ApplyDeleteAction(actualAction);
+        }
         if(!isChoosing){
             index++;
-            if(!(index>actions.Count-1)) ProcessActualAction();
+            if(!(index>actions.Count-1)){
+                ProcessActualAction();
+            }
         }
     }
 
     //2 NIVEL
     void ApplyDeleteAction(Action actualAction){
-        for(int i=0;i<actualAction.uses;i++){
+        for(int i=0;i<actualAction.Uses;i++){
                 //SOLO VA A SER DE MOMENTO BORRADOS DE HORMIGAS:
                 DeleteAny(actualAction);
             }
     }
     //3 NIVEL
     void DeleteAny(Action actualAction){
-        if(actualAction.destination.Equals(Destination.ANT)){
+        if(actualAction.Destination.Equals(Destination.ANT)){
             AntStats[] antStats=FindObjectsOfType<AntStats>(false);
             foreach(AntStats ant in antStats){
                 if(!ant.IsDead()){
@@ -129,9 +143,13 @@ public class ActionMenu : MonoBehaviour
     //2 NIVEL
     void ApplyUpdateAction(Action actualAction){
         if(actualAction.NoNeedToChooseItemToApplyUpdateAction()){
-            for(int i=0;i<actualAction.uses;i++){
-                if(actualAction.interactionType.Equals(InteractionType.ANY)) UpdateAny(actualAction);
-                else if(actualAction.interactionType.Equals(InteractionType.ALL)) UpdateAll(actualAction);
+            for(int i=0;i<actualAction.Uses;i++){
+                if(actualAction.InteractionType.Equals(InteractionType.ANY)){
+                    UpdateAny(actualAction);
+                }
+                else if(actualAction.InteractionType.Equals(InteractionType.ALL)){
+                    UpdateAll(actualAction);
+                }
             }
         }
         else{
@@ -141,11 +159,13 @@ public class ActionMenu : MonoBehaviour
     void PrepareToUpdateByChoosingItem(Action actualAction){
         isChoosing=true;
         Time.timeScale=0f;
-        actualUses=actualAction.uses;
-        consoleText.text="Choose "+actualAction.uses+" "
-        +actualAction.destination.ToString()+" to "+actualAction.type.ToString();
+        actualUses=actualAction.Uses;
+        consoleText.text="Choose "+actualAction.Uses+" "
+        +actualAction.Destination.ToString()+" to "+actualAction.Type.ToString();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>(false);
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        if(anyCardDisplay!=null){
+            anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        }
         SelectableItem item=FindObjectOfType<SelectableItem>(false);
         if(item!=null){
             item.MakeEveryoneUnselectableAndUnselected();
@@ -155,65 +175,75 @@ public class ActionMenu : MonoBehaviour
 
     //3 NIVEL
     void UpdateAll(Action actualAction){
-        if(actualAction.destination.Equals(Destination.ANT)){
+        if(actualAction.Destination.Equals(Destination.ANT)){
             AntStats[] antStats=FindObjectsOfType<AntStats>(false);
             foreach(AntStats ant in antStats){
-                ant.ProcessUpdateEffectOfAction(actualAction.characterEffects);
+                ant.ProcessUpdateEffectOfAction(actualAction.CharacterEffects);
             }
         }
-        else if(actualAction.destination.Equals(Destination.FARM)){
+        else if(actualAction.Destination.Equals(Destination.FARM)){
             FarmStats[] farmStats=FindObjectsOfType<FarmStats>(false);
             foreach(FarmStats farm in farmStats){
-                farm.ProcessUpdateEffectOfAction(actualAction.farmEffects);
+                farm.ProcessUpdateEffectOfAction(actualAction.FarmEffects);
             }
-        }else if(actualAction.destination.Equals(Destination.ANTHILL)){
+        }else if(actualAction.Destination.Equals(Destination.ANTHILL)){
             CharacterStats[] characterStats=FindObjectsOfType<CharacterStats>();
             foreach(CharacterStats character in characterStats){
-                character.ProcessUpdateEffectOfAction(actualAction.characterEffects);
+                character.ProcessUpdateEffectOfAction(actualAction.CharacterEffects);
             }
-        }else if(actualAction.destination.Equals(Destination.QUEEN)){
+        }else if(actualAction.Destination.Equals(Destination.QUEEN)){
             QueenStats[] queenStats=FindObjectsOfType<QueenStats>(false);
             foreach(QueenStats queen in queenStats){
-                queen.ProcessUpdateEffectOfAction(actualAction.characterEffects);
+                queen.ProcessUpdateEffectOfAction(actualAction.CharacterEffects);
             }
-        }else if(actualAction.destination.Equals(Destination.CONTAINER)){
+        }else if(actualAction.Destination.Equals(Destination.CONTAINER)){
             ContainerData container=FindObjectOfType<ContainerData>(false);
-            if(container!=null) container.ProcessUpdateEffectOfAction(actualAction.containerEffects);
-        }else if(actualAction.destination.Equals(Destination.FOOD_FARM)){
+            if(container!=null) container.ProcessUpdateEffectOfAction(actualAction.ContainerEffects);
+        }else if(actualAction.Destination.Equals(Destination.FOOD_FARM)){
             FarmStats[] allFarms=FindObjectsOfType<FarmStats>();
             foreach(FarmStats farm in allFarms){
                 if(farm.GetTypeOfFarm().Equals(Type.FOOD)){
-                    farm.ProcessUpdateEffectOfAction(actualAction.farmEffects);
+                    farm.ProcessUpdateEffectOfAction(actualAction.FarmEffects);
                 }
             }
-        }else if(actualAction.destination.Equals(Destination.WATER_FARM)){
+        }else if(actualAction.Destination.Equals(Destination.WATER_FARM)){
             FarmStats[] allFarms=FindObjectsOfType<FarmStats>();
             foreach(FarmStats farm in allFarms){
                 if(farm.GetTypeOfFarm().Equals(Type.WATER)){
-                    farm.ProcessUpdateEffectOfAction(actualAction.farmEffects);
+                    farm.ProcessUpdateEffectOfAction(actualAction.FarmEffects);
                 }
             }
         }
     }
     //3 NIVEL
     void UpdateAny(Action actualAction){
-        if(actualAction.destination.Equals(Destination.ANT)){
+        if(actualAction.Destination.Equals(Destination.ANT)){
             AntStats antStats=FindObjectOfType<AntStats>(false);
-            if(antStats!=null) antStats.ProcessUpdateEffectOfAction(actualAction.characterEffects);
+            if(antStats!=null){
+                antStats.ProcessUpdateEffectOfAction(actualAction.CharacterEffects);
+            }
         }
-        else if(actualAction.destination.Equals(Destination.FARM)){
+        else if(actualAction.Destination.Equals(Destination.FARM)){
             FarmStats farmStats=FindObjectOfType<FarmStats>(false);
-            if(farmStats!=null) farmStats.ProcessUpdateEffectOfAction(actualAction.farmEffects);
-        }else if(actualAction.destination.Equals(Destination.ANTHILL)){
+            if(farmStats!=null){
+                farmStats.ProcessUpdateEffectOfAction(actualAction.FarmEffects);
+            }
+        }else if(actualAction.Destination.Equals(Destination.ANTHILL)){
             CharacterStats characterStats=FindObjectOfType<CharacterStats>();
-            if(characterStats!=null) characterStats.ProcessUpdateEffectOfAction(actualAction.characterEffects);
-        }else if(actualAction.destination.Equals(Destination.QUEEN)){
+            if(characterStats!=null){
+                characterStats.ProcessUpdateEffectOfAction(actualAction.CharacterEffects);
+            }
+        }else if(actualAction.Destination.Equals(Destination.QUEEN)){
             QueenStats queenStats=FindObjectOfType<QueenStats>(false);
-            if(queenStats!=null) queenStats.ProcessUpdateEffectOfAction(actualAction.characterEffects);
-        }else if(actualAction.destination.Equals(Destination.CONTAINER)){
+            if(queenStats!=null){
+                queenStats.ProcessUpdateEffectOfAction(actualAction.CharacterEffects);
+            }
+        }else if(actualAction.Destination.Equals(Destination.CONTAINER)){
             ContainerData container=FindObjectOfType<ContainerData>(false);
-            if(container!=null) container.ProcessUpdateEffectOfAction(actualAction.containerEffects);
-        }else if(actualAction.destination.Equals(Destination.FOOD_FARM)){
+            if(container!=null){
+                container.ProcessUpdateEffectOfAction(actualAction.ContainerEffects);
+            }
+        }else if(actualAction.Destination.Equals(Destination.FOOD_FARM)){
             FarmStats[] allFarms=FindObjectsOfType<FarmStats>();
             FarmStats firstFoodFarm=null;
             foreach(FarmStats farm in allFarms){
@@ -222,8 +252,10 @@ public class ActionMenu : MonoBehaviour
                     break;
                 }
             }
-            if(firstFoodFarm!=null) firstFoodFarm.ProcessUpdateEffectOfAction(actualAction.farmEffects);
-        }else if(actualAction.destination.Equals(Destination.WATER_FARM)){
+            if(firstFoodFarm!=null){
+                firstFoodFarm.ProcessUpdateEffectOfAction(actualAction.FarmEffects);
+            }
+        }else if(actualAction.Destination.Equals(Destination.WATER_FARM)){
             FarmStats[] allFarms=FindObjectsOfType<FarmStats>();
             FarmStats firstWaterFarm=null;
             foreach(FarmStats farm in allFarms){
@@ -232,9 +264,11 @@ public class ActionMenu : MonoBehaviour
                     break;
                 }
             }
-            if(firstWaterFarm!=null) firstWaterFarm.ProcessUpdateEffectOfAction(actualAction.farmEffects);
+            if(firstWaterFarm!=null){
+                firstWaterFarm.ProcessUpdateEffectOfAction(actualAction.FarmEffects);
+            }
         }
-        else if(actualAction.destination.Equals(Destination.PLAYER)){
+        else if(actualAction.Destination.Equals(Destination.PLAYER)){
             //ESTO SON PASIVAS DEL JUGADOR
             Player.Instance.ProcessUpdateEffectOfAction(actualAction);
         }
@@ -243,19 +277,21 @@ public class ActionMenu : MonoBehaviour
 
 //2 NIVEL
     void ApplyAddAction(Action actualAction){
-        for(int i=0;i<actualAction.uses;i++){
-            if(actualAction.destination.Equals(Destination.ANT)){
+        for(int i=0;i<actualAction.Uses;i++){
+            if(actualAction.Destination.Equals(Destination.ANT)){
                 GenerationTilemap generation=FindObjectOfType<GenerationTilemap>();
-                if(generation!=null) generation.AddNewAnt();
-            }else if(actualAction.destination.Equals(Destination.FOOD_FARM)
-             || actualAction.destination.Equals(Destination.WATER_FARM) 
-             || actualAction.destination.Equals(Destination.FARM)){
+                if(generation!=null){
+                    generation.AddNewAnt();
+                }
+            }else if(actualAction.Destination.Equals(Destination.FOOD_FARM)
+             || actualAction.Destination.Equals(Destination.WATER_FARM) 
+             || actualAction.Destination.Equals(Destination.FARM)){
                 FarmGenerator farmGenerator=FindObjectOfType<FarmGenerator>();
-                if(farmGenerator!=null && actualAction.destination.Equals(Destination.FOOD_FARM)){
+                if(farmGenerator!=null && actualAction.Destination.Equals(Destination.FOOD_FARM)){
                     farmGenerator.AddNewFarmRandomly(Type.FOOD);
-                }else if(farmGenerator!=null && actualAction.destination.Equals(Destination.WATER_FARM)){
+                }else if(farmGenerator!=null && actualAction.Destination.Equals(Destination.WATER_FARM)){
                     farmGenerator.AddNewFarmRandomly(Type.WATER);
-                }else if(farmGenerator!=null && actualAction.destination.Equals(Destination.FARM)){
+                }else if(farmGenerator!=null && actualAction.Destination.Equals(Destination.FARM)){
                     farmGenerator.AddNewFarmRandomly();
                 }
             }

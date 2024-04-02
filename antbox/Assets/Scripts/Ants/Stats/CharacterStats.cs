@@ -23,9 +23,9 @@ public class CharacterStats : MonoBehaviour
 
     private int counterOfSecons=0;
 
-    public AllBarsManager allBarsManager;
+    [SerializeField]
+    private AllBarsManager allBarsManager;
 
-    public AllBarsManager barsForUI;
 
     //LIMITS FOR VARIABLES----------------------
     [SerializeField] protected int MIN_HP=40;
@@ -60,6 +60,8 @@ public class CharacterStats : MonoBehaviour
     public int poisonSecons=0;
     public bool unpoisonable=false;
     private Clock clockOfGame;
+
+    public AllBarsManager AllBarsManager { get => allBarsManager; set => allBarsManager = value; }
 
     public Clock GetClockOfGame(){
         return clockOfGame;
@@ -176,27 +178,42 @@ public class CharacterStats : MonoBehaviour
         }
     }
     public void EatWithoutCost(int foodValue){
-        if(maxHunger<actualHunger+foodValue) SetActualHunger(maxHunger);
-        else SetActualHunger(actualHunger+foodValue);
+        if(maxHunger<actualHunger+foodValue){
+            SetActualHunger(maxHunger);
+        }
+        else{
+            SetActualHunger(actualHunger+foodValue);
+        }
     }
     public void DrinkWithoutCost(int waterValue){
-        if(maxThirst<actualThirst+waterValue) SetActualThirst(maxThirst);
-        else SetActualThirst(actualThirst+waterValue);
+        if(maxThirst<actualThirst+waterValue){
+            SetActualThirst(maxThirst);
+        }
+        else{
+            SetActualThirst(actualThirst+waterValue);
+        }
     }
 
     public void Eat(ContainerData container){
         if(container.FOOD_CONTAINER>0){
             container.FOOD_CONTAINER--;
-            if(maxHunger<actualHunger+container.foodValue) SetActualHunger(maxHunger);
-            else SetActualHunger(actualHunger+container.foodValue);
-        }else{
+            if(maxHunger<actualHunger+container.foodValue){
+                SetActualHunger(maxHunger);
+            }
+            else{
+                SetActualHunger(actualHunger+container.foodValue);
+            }
         }
     }
     public void Drink(ContainerData container){
         if(container.WATER_CONTAINER>0){
             container.WATER_CONTAINER--;
-            if(maxThirst<actualThirst+container.waterValue) SetActualThirst(maxThirst);
-            else SetActualThirst(actualThirst+container.waterValue);
+            if(maxThirst<actualThirst+container.waterValue){
+                SetActualThirst(maxThirst);
+            }
+            else{
+                SetActualThirst(actualThirst+container.waterValue);
+            }
         }
     }
 
@@ -220,9 +237,9 @@ public class CharacterStats : MonoBehaviour
             Die();
         }else if(actualHP>=maxHP){
             actualHP=maxHP;
-            allBarsManager.healthBar.SetMaxBarValue(maxHP);
+            AllBarsManager.HealthBar.SetMaxBarValue(maxHP);
         }
-        allBarsManager.healthBar.SetBarValue(actualHP);
+        AllBarsManager.HealthBar.SetBarValue(actualHP);
     }
 
     public void Die(){
@@ -249,7 +266,7 @@ public class CharacterStats : MonoBehaviour
 
     public void SetActualHP(int hp){
         actualHP=hp;
-        allBarsManager.healthBar.SetBarValue(actualHP);
+        AllBarsManager.HealthBar.SetBarValue(actualHP);
     }
 
     public void SetActualHunger(int hunger){
@@ -258,7 +275,7 @@ public class CharacterStats : MonoBehaviour
         }else{
             actualHunger=hunger;
         }
-        allBarsManager.hungerBar.SetBarValue(actualHunger);
+        AllBarsManager.HungerBar.SetBarValue(actualHunger);
     }
 
     public void SetActualThirst(int thirst){
@@ -267,7 +284,7 @@ public class CharacterStats : MonoBehaviour
         }else{
             actualThirst=thirst;
         }
-        allBarsManager.thirstBar.SetBarValue(actualThirst);
+        AllBarsManager.ThirstBar.SetBarValue(actualThirst);
     }
 
     public String GetTextHP(){
