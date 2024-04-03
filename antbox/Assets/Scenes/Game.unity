@@ -29137,6 +29137,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1410400719303337934, guid: 3c13c87a1ed2e594ba245be74bc3e1a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1410400719303337934, guid: 3c13c87a1ed2e594ba245be74bc3e1a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RecoverAnthillAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 1580390698268686603, guid: 3c13c87a1ed2e594ba245be74bc3e1a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1580390698268686603, guid: 3c13c87a1ed2e594ba245be74bc3e1a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RecoverAnthillAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 1580390698268686603, guid: 3c13c87a1ed2e594ba245be74bc3e1a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1586489151075680708, guid: 3c13c87a1ed2e594ba245be74bc3e1a0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -29152,6 +29172,26 @@ PrefabInstance:
     - target: {fileID: 1586489151075680708, guid: 3c13c87a1ed2e594ba245be74bc3e1a0, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628385142436272079, guid: 3c13c87a1ed2e594ba245be74bc3e1a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628385142436272079, guid: 3c13c87a1ed2e594ba245be74bc3e1a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AntFromAnthillAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628385142436272079, guid: 3c13c87a1ed2e594ba245be74bc3e1a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1659291862125007038, guid: 3c13c87a1ed2e594ba245be74bc3e1a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1659291862125007038, guid: 3c13c87a1ed2e594ba245be74bc3e1a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AntFromAnthillAction
       objectReference: {fileID: 0}
     - target: {fileID: 1861236537175821091, guid: 3c13c87a1ed2e594ba245be74bc3e1a0, type: 3}
       propertyPath: m_AnchorMax.y

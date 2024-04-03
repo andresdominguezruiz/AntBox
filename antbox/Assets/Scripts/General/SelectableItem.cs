@@ -63,44 +63,29 @@ public class SelectableItem : MonoBehaviour
         selectableItems.Remove(this);
     }
 
-    public void FeedAnthill(){
+    public void RecoverAnthillAction(bool isFeeding){
         ContainerData container=FindObjectOfType<ContainerData>(false);
         foreach(SelectableItem item in selectableItems){
-            if( item.type.Equals(ItemType.ANT) || item.type.Equals(ItemType.QUEEN)){
-                CharacterStats character=item.GetComponent<CharacterStats>();
-                if(character!=null && container!=null) character.Eat(container);
-            }
-        }
-    }
-    public void HydrateAnthill(){
-        ContainerData container=FindObjectOfType<ContainerData>(false);
-        foreach(SelectableItem item in selectableItems){
-            if( item.type.Equals(ItemType.ANT) || item.type.Equals(ItemType.QUEEN)){
-                CharacterStats character=item.GetComponent<CharacterStats>();
-                if(character!=null && container!=null) character.Drink(container);
+            CharacterStats character=item.GetComponent<CharacterStats>();
+            bool condition=(item.type.Equals(ItemType.ANT) || item.type.Equals(ItemType.QUEEN))
+            && character!=null && container!=null;
+            if( condition && isFeeding){
+                character.Eat(container);
+            }else if(condition){
+                character.Drink(container);
             }
         }
     }
 
-    public void SleepAnthill(){
+    public void AntFromAnthillAction(bool toSleep){
         foreach(SelectableItem item in selectableItems){
-            if(item.type.Equals(ItemType.ANT)){
-                AntStats character=item.GetComponent<AntStats>();
-                if(character!=null){
-                    character.CancelAntAction();
-                    character.GoToSleep();
-                }
-            }
-        }
-    }
-    public void AttackAnthill(){
-        foreach(SelectableItem item in selectableItems){
-            if(item.type.Equals(ItemType.ANT)){
-                AntStats character=item.GetComponent<AntStats>();
-                if(character!=null){
-                    character.CancelAntAction();
-                    character.StartAttackingWithoutTarget();
-                }
+            AntStats character=item.GetComponent<AntStats>();
+            if(character!=null && toSleep){
+                character.CancelAntAction();
+                character.GoToSleep();
+            }else if(item.type.Equals(ItemType.ANT) && character!=null){
+                character.CancelAntAction();
+                character.StartAttackingWithoutTarget();
             }
         }
     }
