@@ -174,7 +174,9 @@ public class CharacterStats : MonoBehaviour
                 actualHunger=0;
             }
 
-            if(needToCheckHP) CheckHP();
+            if(needToCheckHP){
+                CheckHP();
+            }
         }
     }
     public void EatWithoutCost(int foodValue){
@@ -256,8 +258,12 @@ public class CharacterStats : MonoBehaviour
     }
 
     public void Heal(int extraHp){
-        if(extraHp+actualHP>maxHP) SetActualHP(maxHP);
-        else SetActualHP(extraHp+actualHP);
+        if(extraHp+actualHP>maxHP){
+            SetActualHP(maxHP);
+        }
+        else{
+            SetActualHP(extraHp+actualHP);
+        }
     }
 
     public int GetMaxHP(){

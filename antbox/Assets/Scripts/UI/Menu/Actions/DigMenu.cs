@@ -119,7 +119,6 @@ public class DigMenu : MonoBehaviour
             if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
             (hit.collider!=null && hit.collider.CompareTag("Dirt"))){
                 Vector3Int selectedTile=destructableMap.WorldToCell(mousePos);
-                Debug.Log(selectedTile);
                 selectedDestructableTile=selectedTile;
                 if(excavablePath.Contains(selectedTile)){
                     isSelectingDestructableTile=false;
@@ -182,10 +181,6 @@ public class DigMenu : MonoBehaviour
         digMenu.SetActive(false);
         if(selectedAnt!=null){
             selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
-            selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
-        }else{
-            SelectableItem item=FindObjectOfType<SelectableItem>(false);
-            item.MakeEveryoneSelectable();
         }
         ContainerData.EnableGameAfterAction(consoleText);
     }

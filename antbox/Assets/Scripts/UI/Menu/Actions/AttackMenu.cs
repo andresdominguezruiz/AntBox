@@ -46,22 +46,24 @@ public class AttackMenu : MonoBehaviour
         Time.timeScale=0f; //ATACAR PARARA EL TIEMPO
         this.agent=battleStarter.GetComponent<NavMeshAgent>();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
-        string aditionalText="";
+        if(anyCardDisplay!=null){
+            anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        }
+        string adition;
         if(selectingEnemy){
             battleStarter.GetComponentInChildren<UIManager>(true).HideInfo();
-            aditionalText=battleStarter.name+"-Select an available enemy to attack";
+            adition=battleStarter.name+"-Select an available enemy to attack";
             this.aditionalText.gameObject.SetActive(false);
             sendButton.SetActive(false);
         }
         else{
             battleStarter.GetComponentInChildren<UIEnemyManager>(true).HideInfo();
-            aditionalText="-Select an available ant to attack to attack "+battleStarter.name;
+            adition="-Select an available ant to attack to attack "+battleStarter.name;
             this.aditionalText.gameObject.SetActive(true);
             sendButton.SetActive(true);
         }
         attackMenu.gameObject.SetActive(true);
-        consoleText.text=aditionalText;
+        consoleText.text=adition;
         battleStarter.GetComponent<SelectableItem>().MakeEveryoneUnselectableAndUnselected();
         BattleMovement battleMovement=battleStarter.GetComponent<BattleMovement>();
         battleMovement.UpdateTarget();
@@ -117,10 +119,6 @@ public class AttackMenu : MonoBehaviour
                 }
                 antsToPlay=new List<AntStats>();
             }
-            battleStarter.GetComponent<SelectableItem>().MakeEveryoneSelectable();
-        }else{
-            SelectableItem item=FindObjectOfType<SelectableItem>(false);
-            item.MakeEveryoneSelectable();
         }
         ContainerData.EnableGameAfterAction(consoleText);
     }

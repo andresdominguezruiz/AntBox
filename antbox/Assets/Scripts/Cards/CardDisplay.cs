@@ -31,9 +31,10 @@ public class CardDisplay : MonoBehaviour
     public Activity[] GenerateActivitiesByComplexity(bool isBoss){
         //TODO:Añadir complejidad dependiendo de los efectos de la carta
         List<Activity> notKnownActivities=GetNotKnownActivitiesByComplexity(isBoss);
-        //Activity[] allActivities=Resources.LoadAll<Activity>("Activities");
         int n=1;
-        if(isBoss) n=10;
+        if(isBoss){
+            n=10;
+        }
         else{
             for(int i=(int)Player.Instance.complexityLevelOfGame;i>0 && n<=3;i--){
                 if(i%3==0){

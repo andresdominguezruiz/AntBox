@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -50,6 +51,10 @@ public class ContainerData : MonoBehaviour
     }
 
     public static void EnableGameAfterAction(TextMeshProUGUI consoleText){
+        SelectableItem item=FindObjectOfType<SelectableItem>(false);
+        if(item!=null){
+            item.MakeEveryoneSelectable();
+        }
         Clock clock=FindObjectOfType<Clock>();
         if(clock!=null){
             clock.UpdateMessageOfConsoleByEvent();

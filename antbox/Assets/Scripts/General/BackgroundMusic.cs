@@ -11,10 +11,7 @@ public class BackgroundMusic : MonoBehaviour
     void Start()
     {
         audioSource=this.GetComponent<AudioSource>();
-        int v = random.Next(0,music.Length-1);
-        audioSource.clip=music[v];
-        audioSource.loop=true;
-        audioSource.Play();
+        ChangeMusic();
     }
     public void ChangeMusic(){
         int v = random.Next(0,music.Length-1);

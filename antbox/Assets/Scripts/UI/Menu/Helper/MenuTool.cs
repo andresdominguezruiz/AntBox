@@ -2,7 +2,6 @@ using System.Collections.Generic;
 
 public static class MenuTool
 {
-
     public static void UpdaterTool(AntStats ant,List<AntStats> list){
         SelectableItem item=ant.gameObject.GetComponent<SelectableItem>();
         if(list.Contains(ant)){

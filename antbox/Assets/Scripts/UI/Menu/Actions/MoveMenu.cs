@@ -70,10 +70,6 @@ public class MoveMenu : MonoBehaviour
         moveMenu.SetActive(false);
         if(selectedAnt!=null){
             selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
-            selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
-        }else{
-            SelectableItem item=FindObjectOfType<SelectableItem>(false);
-            item.MakeEveryoneSelectable();
         }
         ContainerData.EnableGameAfterAction(consoleText);
     }

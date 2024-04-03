@@ -52,9 +52,13 @@ public class MultipleFarmingMenu : MonoBehaviour
             ShowState();
             UpdateText();
             CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-            if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+            if(anyCardDisplay!=null){
+                anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+            }
             SelectableItem item=selectedFarm.GetComponent<SelectableItem>();
-            if(item!=null) item.MakeEveryoneUnselectableAndUnselected();
+            if(item!=null){
+                item.MakeEveryoneUnselectableAndUnselected();
+            }
         }
         else{
             FinishMultipleFarmingMenu(false);
@@ -100,8 +104,6 @@ public class MultipleFarmingMenu : MonoBehaviour
             HideState();
             ContainerData.EnableGameAfterAction(consoleText);
         }
-        SelectableItem item=selectedFarm.GetComponent<SelectableItem>();
-        if(item!=null) item.MakeEveryoneSelectable();
         selectedFarm=null;
         this.gameObject.SetActive(false);
     }
