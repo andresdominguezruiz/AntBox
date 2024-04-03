@@ -23,7 +23,9 @@ public class CharacterStats : MonoBehaviour
 
     private int counterOfSecons=0;
 
-    public AllBarsManager allBarsManager;
+    [SerializeField]
+    private AllBarsManager allBarsManager;
+
 
     //LIMITS FOR VARIABLES----------------------
     [SerializeField] protected int MIN_HP=40;
@@ -41,14 +43,14 @@ public class CharacterStats : MonoBehaviour
 
 
     //----------------------------
-    [SerializeField] private int maxHP;
-    [SerializeField] private int actualHP;
+    [SerializeField] public int maxHP;
+    [SerializeField] public int actualHP;
 
-    [SerializeField] private int maxHunger;
-    [SerializeField] private int actualHunger;
+    [SerializeField] public int maxHunger;
+    [SerializeField] public int actualHunger;
 
-    [SerializeField] private int maxThirst;
-    [SerializeField] private int actualThirst;
+    [SerializeField] public int maxThirst;
+    [SerializeField] public int actualThirst;
 
     [SerializeField] private int age;
 
@@ -58,6 +60,8 @@ public class CharacterStats : MonoBehaviour
     public int poisonSecons=0;
     public bool unpoisonable=false;
     private Clock clockOfGame;
+
+    public AllBarsManager AllBarsManager { get => allBarsManager; set => allBarsManager = value; }
 
     public Clock GetClockOfGame(){
         return clockOfGame;
@@ -97,11 +101,10 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    void UpdateStats(){
-        AntStats antStats=this.gameObject.GetComponent<AntStats>();
-        if(isDead){
-            SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
-            item.isSelected=false;
+    void KillAnt(){
+        SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
+        item.isSelected=false;
+        if(this.gameObject.GetComponent<AntStats>()!=null){
             FarmStats[] farms=FindObjectsOfType<FarmStats>();
             foreach(FarmStats farm in farms){
                 if(farm.antsOfFarm.Contains(this.gameObject)){
@@ -109,9 +112,20 @@ public class CharacterStats : MonoBehaviour
                     farm.antsWorkingInFarm.Remove(this.gameObject);
                 }
             }
-            item.RemoveSelectableItem();
-            IsEndOfGame();
-            Destroy(this.gameObject);
+        }
+        BattleMovement[] battleManagers=FindObjectsOfType<BattleMovement>(false);
+        foreach(BattleMovement manager in battleManagers){
+            manager.OtherAvailableTargets.Remove(this.transform);
+        } 
+        item.RemoveSelectableItem();
+        IsEndOfGame();
+        Destroy(this.gameObject);
+    }
+
+    void UpdateStats(){
+        AntStats antStats=this.gameObject.GetComponent<AntStats>();
+        if(isDead){
+            KillAnt();
         }else{
             bool needToCheckHP=false;
             int cost=-1;
@@ -148,37 +162,60 @@ public class CharacterStats : MonoBehaviour
             if(antStats!=null){
                 if(antStats.GetAction().Equals(ActualAction.SLEEPING)){
                     antStats.ApplyEnergyCost(-1*antStats.GetRecoverSpeed());
-                    if(antStats.IsFullOfEnergy()) antStats.CancelAntAction();
+                    if(antStats.IsFullOfEnergy()){
+                        antStats.CancelAntAction();
+                    }
                 }
             }
-            if(actualThirst<0) actualThirst=0;
-            if(actualHunger<0) actualHunger=0;
+            if(actualThirst<0){
+                actualThirst=0;
+            }
+            if(actualHunger<0){
+                actualHunger=0;
+            }
 
-            if(needToCheckHP) CheckHP();
+            if(needToCheckHP){
+                CheckHP();
+            }
         }
     }
     public void EatWithoutCost(int foodValue){
-        if(maxHunger<actualHunger+foodValue) SetActualHunger(maxHunger);
-        else SetActualHunger(actualHunger+foodValue);
+        if(maxHunger<actualHunger+foodValue){
+            SetActualHunger(maxHunger);
+        }
+        else{
+            SetActualHunger(actualHunger+foodValue);
+        }
     }
     public void DrinkWithoutCost(int waterValue){
-        if(maxThirst<actualThirst+waterValue) SetActualThirst(maxThirst);
-        else SetActualThirst(actualThirst+waterValue);
+        if(maxThirst<actualThirst+waterValue){
+            SetActualThirst(maxThirst);
+        }
+        else{
+            SetActualThirst(actualThirst+waterValue);
+        }
     }
 
     public void Eat(ContainerData container){
         if(container.FOOD_CONTAINER>0){
             container.FOOD_CONTAINER--;
-            if(maxHunger<actualHunger+container.foodValue) SetActualHunger(maxHunger);
-            else SetActualHunger(actualHunger+container.foodValue);
-        }else{
+            if(maxHunger<actualHunger+container.foodValue){
+                SetActualHunger(maxHunger);
+            }
+            else{
+                SetActualHunger(actualHunger+container.foodValue);
+            }
         }
     }
     public void Drink(ContainerData container){
         if(container.WATER_CONTAINER>0){
             container.WATER_CONTAINER--;
-            if(maxThirst<actualThirst+container.waterValue) SetActualThirst(maxThirst);
-            else SetActualThirst(actualThirst+container.waterValue);
+            if(maxThirst<actualThirst+container.waterValue){
+                SetActualThirst(maxThirst);
+            }
+            else{
+                SetActualThirst(actualThirst+container.waterValue);
+            }
         }
     }
 
@@ -186,7 +223,10 @@ public class CharacterStats : MonoBehaviour
         QueenStats queenStats=this.gameObject.GetComponent<QueenStats>();
         AntStats[] allAnts=FindObjectsOfType<AntStats>(false);
         if((queenStats!=null && queenStats.isDead==true) || (allAnts.Length==1 && allAnts[0].isDead==true)){
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+            foreach(AntStats ant in allAnts){
+                ant.KillAnt();
+            }
+            LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex+1);
         }
     }
 
@@ -199,9 +239,9 @@ public class CharacterStats : MonoBehaviour
             Die();
         }else if(actualHP>=maxHP){
             actualHP=maxHP;
-            allBarsManager.healthBar.SetMaxBarValue(maxHP);
+            AllBarsManager.HealthBar.SetMaxBarValue(maxHP);
         }
-        allBarsManager.healthBar.SetBarValue(actualHP);
+        AllBarsManager.HealthBar.SetBarValue(actualHP);
     }
 
     public void Die(){
@@ -218,8 +258,12 @@ public class CharacterStats : MonoBehaviour
     }
 
     public void Heal(int extraHp){
-        if(extraHp+actualHP>maxHP) SetActualHP(maxHP);
-        else SetActualHP(extraHp+actualHP);
+        if(extraHp+actualHP>maxHP){
+            SetActualHP(maxHP);
+        }
+        else{
+            SetActualHP(extraHp+actualHP);
+        }
     }
 
     public int GetMaxHP(){
@@ -228,7 +272,7 @@ public class CharacterStats : MonoBehaviour
 
     public void SetActualHP(int hp){
         actualHP=hp;
-        allBarsManager.healthBar.SetBarValue(actualHP);
+        AllBarsManager.HealthBar.SetBarValue(actualHP);
     }
 
     public void SetActualHunger(int hunger){
@@ -237,7 +281,7 @@ public class CharacterStats : MonoBehaviour
         }else{
             actualHunger=hunger;
         }
-        allBarsManager.hungerBar.SetBarValue(actualHunger);
+        AllBarsManager.HungerBar.SetBarValue(actualHunger);
     }
 
     public void SetActualThirst(int thirst){
@@ -246,7 +290,7 @@ public class CharacterStats : MonoBehaviour
         }else{
             actualThirst=thirst;
         }
-        allBarsManager.thirstBar.SetBarValue(actualThirst);
+        AllBarsManager.ThirstBar.SetBarValue(actualThirst);
     }
 
     public String GetTextHP(){
@@ -277,12 +321,18 @@ public class CharacterStats : MonoBehaviour
         if(!effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.NONE)){
             if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.HP_LIMIT)) {
                 maxHP=effect.multiplicatorValue*(maxHP+(int)effect.sumValue);
-                if(maxHP<MIN_HP/2) maxHP=MIN_HP/2;
-                else if(maxHP>MAX_HP*2) maxHP=MAX_HP*2;
+                if(maxHP<MIN_HP/2){
+                    maxHP=MIN_HP/2;
+                }
+                else if(maxHP>MAX_HP*2){
+                    maxHP=MAX_HP*2;
+                }
             }
             else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.AGE)){
                 age=effect.multiplicatorValue*(age+(int)effect.sumValue);
-                if(age<0 && !Player.Instance.AllowNegativeAge()) age=0;
+                if(age<0 && !Player.Instance.AllowNegativeAge()){
+                    age=0;
+                }
             }
             else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.FEED)){
                 this.EatWithoutCost(effect.multiplicatorValue*actualHunger+(int)effect.sumValue);
@@ -293,17 +343,31 @@ public class CharacterStats : MonoBehaviour
             else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_ENERGY) && stats!=null){
                 stats.SetEnergy(stats.GetMaxEnergy());
             }
-            else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_HP))this.SetActualHP(maxHP);
-            else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_HUNGER))this.SetActualHunger(maxHunger);
-            else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_THIRST)) this.SetActualThirst(maxThirst);
+            else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_HP)){
+                this.SetActualHP(maxHP);
+            }
+            else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_HUNGER)){
+                this.SetActualHunger(maxHunger);
+            }
+            else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.RESTORE_THIRST)){
+                this.SetActualThirst(maxThirst);
+            }
             else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.HUNGER_LIMIT)){
                 maxHunger=effect.multiplicatorValue*(maxHunger+(int)effect.sumValue);
-                if(maxHunger<MIN_HUNGER/2) maxHunger=MIN_HUNGER/2;
-                else if(maxHunger>MAX_HUNGER*2) maxHunger=MAX_HUNGER*2;
+                if(maxHunger<MIN_HUNGER/2) {
+                    maxHunger=MIN_HUNGER/2;
+                }
+                else if(maxHunger>MAX_HUNGER*2){
+                    maxHunger=MAX_HUNGER*2;
+                }
             }else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.THIRST_LIMIT)){
                 maxThirst=effect.multiplicatorValue*(maxThirst+(int)effect.sumValue);
-                if(maxThirst<MIN_THIRST/2) maxThirst=MIN_THIRST/2;
-                else if(maxThirst>MAX_THIRST*2) maxThirst=MAX_THIRST*2;
+                if(maxThirst<MIN_THIRST/2) {
+                    maxThirst=MIN_THIRST/2;
+                }
+                else if(maxThirst>MAX_THIRST*2) {
+                    maxThirst=MAX_THIRST*2;
+                }
             }
             else if(effect.characterEffect.Equals(UpdateEffectOnAntOrQueen.ENERGY_LIMIT) && stats!=null){
                 stats.SetMaxEnergy(effect.multiplicatorValue*(stats.GetMaxEnergy()+(int)effect.sumValue));

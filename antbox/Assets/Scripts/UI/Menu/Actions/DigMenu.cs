@@ -43,14 +43,15 @@ public class DigMenu : MonoBehaviour
         this.agent=selectedAnt.GetComponent<NavMeshAgent>();
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        if(anyCardDisplay!=null){
+            anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        }
         digMenu.gameObject.SetActive(true);
         consoleText.text=selectedAnt.name+"-Select the start of your excavation";
         selectedAnt.GetComponent<SelectableItem>().MakeEveryoneUnselectable();
         excavablePath=FindObjectOfType<GenerationTilemap>().GetExcavableTiles();
         PreparingSelectableTiles();
         isSelectingDestructableTile=true;
-        Debug.Log(excavablePath.Count);
     }
     //ESTE MÉTODO DEVUELVE LAS POSICIONES EXCAVABLES SELECCIONABLES
     public void PreparingSelectableTiles(){
@@ -81,7 +82,9 @@ public class DigMenu : MonoBehaviour
     }
 
     void Update(){
-        if(this.agent==null || this.agent.gameObject.IsDestroyed()) FinishDigMenu();
+        if(this.agent==null || this.agent.gameObject.IsDestroyed()){
+            FinishDigMenu();
+        }
         if(!PauseMenu.isPaused){
             if(Input.GetMouseButtonDown(0) && !areMoreRutes){
                 SelectStart();
@@ -116,7 +119,6 @@ public class DigMenu : MonoBehaviour
             if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
             (hit.collider!=null && hit.collider.CompareTag("Dirt"))){
                 Vector3Int selectedTile=destructableMap.WorldToCell(mousePos);
-                Debug.Log(selectedTile);
                 selectedDestructableTile=selectedTile;
                 if(excavablePath.Contains(selectedTile)){
                     isSelectingDestructableTile=false;
@@ -126,7 +128,11 @@ public class DigMenu : MonoBehaviour
                     }else{
                         //GetCellCenterWorld te devuelve el PUNTO EXACTO DEL CENTRO DE UNA CELDA
                         this.agent.SetDestination(destructableMap.GetCellCenterWorld(availableRutes[0]));
-                        selectedAnt.GetComponent<AntStats>().StartDigging();
+                        AntStats antStats=selectedAnt.GetComponent<AntStats>();
+                        if(antStats!=null){
+                            antStats.CancelAntAction();
+                            antStats.StartDigging();
+                        }
                         selectedAnt.GetComponent<ExcavationMovement>().InitExcavation(selectedDestructableTile,availableRutes[0]);
                         FinishDigMenu();
                     }
@@ -175,17 +181,7 @@ public class DigMenu : MonoBehaviour
         digMenu.SetActive(false);
         if(selectedAnt!=null){
             selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
-            selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
-        }else{
-            SelectableItem item=FindObjectOfType<SelectableItem>(false);
-            item.MakeEveryoneSelectable();
         }
-        Clock clock=FindObjectOfType<Clock>();
-        if(clock!=null){
-            clock.UpdateMessageOfConsoleByEvent();
-            consoleText.text=clock.messageOfEvent;
-        }
-        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
+        ContainerData.EnableGameAfterAction(consoleText);
     }
 }

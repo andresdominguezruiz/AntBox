@@ -82,7 +82,11 @@ public class FarmingMenu : MonoBehaviour
                 if(farm.CanAntWorkInHere()){
                     Vector3Int selectedTile=map.WorldToCell(mousePos);
                     this.agent.SetDestination(map.GetCellCenterWorld(selectedTile));
-                    selectedAnt.GetComponent<AntStats>().StartFarming();
+                    AntStats antStats=selectedAnt.GetComponent<AntStats>();
+                    if(antStats!=null){
+                        antStats.CancelAntAction();
+                        antStats.StartFarming();
+                    }
                     farm.AddAntToFarm(selectedAnt);
                     FinishFarmingMenu();
                 }else{
@@ -109,17 +113,7 @@ public class FarmingMenu : MonoBehaviour
         farmMenu.SetActive(false);
         if(selectedAnt!=null){
             selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
-            selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
-        }else{
-            SelectableItem item=FindObjectOfType<SelectableItem>(false);
-            item.MakeEveryoneSelectable();
         }
-        Clock clock=FindObjectOfType<Clock>();
-        if(clock!=null){
-            clock.UpdateMessageOfConsoleByEvent();
-            consoleText.text=clock.messageOfEvent;
-        }
-        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
+        ContainerData.EnableGameAfterAction(consoleText);
     }
 }

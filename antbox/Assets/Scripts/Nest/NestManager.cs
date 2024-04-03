@@ -17,12 +17,36 @@ public class NestManager : MonoBehaviour
 
     public List<GameObject> enemiesInGame=new List<GameObject>();
 
-    private string GetOptimalUrl(Nest nest){
+    public string GetOptimalUrl(Nest nest){
+        return GetOptimalUrlByType(nest.nestType);
+    }
+
+    private string GetOptimalUrlByType(NestType type){
         string url="Enemies";
-        if(nest.nestType.Equals(NestType.ANTS)) url+="/Ants";
-        else if(nest.nestType.Equals(NestType.EARTHWORMS)) url+="/Earthworms";
-        else if(nest.nestType.Equals(NestType.WORMS)) url+="/Worms";
+        if(type.Equals(NestType.ANTS)) url+="/Ants";
+        else if(type.Equals(NestType.EARTHWORMS)) url+="/Earthworms";
+        else if(type.Equals(NestType.WORMS)) url+="/Worms";
         return url;
+    }
+    public void SpawnEnemiesForHorde(){
+        string url="Enemies";
+        //2º Filtrar por nivel (de momento que el rango de enemigos siempre aumente)
+        Enemy[] enemies=Resources.LoadAll<Enemy>(url);
+        List<Enemy> availableEnemies=new List<Enemy>();
+        foreach(Enemy enemy in enemies){
+            if(enemy.enemyLevel<=Player.Instance.complexityLevelOfGame+1) availableEnemies.Add(enemy);
+        }
+        int r=random.Next(0,availableEnemies.Count-1);
+        GenerationTilemap generationTilemap=FindObjectOfType<GenerationTilemap>();
+        Enemy selectedEnemy=availableEnemies[r];
+        int number=1;
+        if(selectedEnemy.enemyType.Equals(EnemyType.ANT)) number=2;
+        else if(selectedEnemy.enemyType.Equals(EnemyType.WORM)) number=3;
+        for(int i=0;i<number;i++){
+            int v=random.Next(0,generationTilemap.path.Count);
+            SpawnEnemy(selectedEnemy,generationTilemap.dirtMap,generationTilemap.path[v]);
+        }
+
     }
     
     public void ReleaseEnemies(Nest nest,Tilemap dirtMap){
@@ -56,6 +80,7 @@ public class NestManager : MonoBehaviour
         else if(enemy.enemyType.Equals(EnemyType.EARTHWORM)) template=earthwormTemplate;
         GameObject newEnemy=Instantiate(template,map.GetCellCenterWorld(pos),Quaternion.identity,template.transform.parent);
         newEnemy.name=enemy.name;
+        newEnemy.GetComponent<EnemyStats>().enemy=enemy;
         newEnemy.AddComponent<SelectableItem>();
         newEnemy.GetComponent<SelectableItem>().InitSelectableItemOfEnemy(newEnemy.GetComponentInChildren<UIEnemyManager>(),attackMenu);
         GenerationTilemap generation=GetComponent<GenerationTilemap>();

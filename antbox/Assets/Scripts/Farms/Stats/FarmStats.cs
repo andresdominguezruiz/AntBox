@@ -36,7 +36,7 @@ public class FarmStats : MonoBehaviour
     [SerializeField] public int energyCostOfCycle=2;
 
     [SerializeField] private int maxCapacity=4;
-    public int actualCapacity;
+    public int actualCapacity=0;
 
     public List<GameObject> antsWorkingInFarm=new List<GameObject>();//hormigas que estan actualmente trabajando
     //utilizar este para estadísticas
@@ -103,7 +103,7 @@ public class FarmStats : MonoBehaviour
 
     private void InitValues(bool isBroken,System.Random random){
         this.random=random;
-        actualCapacity=maxCapacity;
+        actualCapacity=0;
         timePerCycleConsumed=0;
         this.broken=isBroken;
     }

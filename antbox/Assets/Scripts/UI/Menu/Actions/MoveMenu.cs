@@ -70,18 +70,8 @@ public class MoveMenu : MonoBehaviour
         moveMenu.SetActive(false);
         if(selectedAnt!=null){
             selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
-            selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
-        }else{
-            SelectableItem item=FindObjectOfType<SelectableItem>(false);
-            item.MakeEveryoneSelectable();
         }
-        Clock clock=FindObjectOfType<Clock>();
-        if(clock!=null){
-            clock.UpdateMessageOfConsoleByEvent();
-            consoleText.text=clock.messageOfEvent;
-        }
-        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
+        ContainerData.EnableGameAfterAction(consoleText);
     }
     
 }

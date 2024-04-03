@@ -11,9 +11,13 @@ public class AttackMenu : MonoBehaviour
 
     [SerializeField] private GameObject attackMenu;
 
+    private List<AntStats> antsToPlay=new List<AntStats>();
+
     [SerializeField] private Tilemap map;
     [SerializeField] private TextMeshProUGUI consoleText;
+    [SerializeField] private TextMeshProUGUI aditionalText;
     [SerializeField] private GameObject cancelActionButton;
+    [SerializeField] private GameObject sendButton;
 
     [SerializeField] private GameObject battleStarter;
     public float minX=-5.5f;
@@ -29,30 +33,46 @@ public class AttackMenu : MonoBehaviour
         battleStarter=agent;
         selectingEnemy=!isEnemy;
     }
+    void UpdateText(){
+        aditionalText.text="You will send "+antsToPlay.Count+" ants";
+    }
+
+    void UpdateAntsToPlay(AntStats ant){
+        MenuTool.UpdaterTool(ant,antsToPlay);
+        UpdateText();
+    }
 
     public void StartAttackMenu(){
         Time.timeScale=0f; //ATACAR PARARA EL TIEMPO
         this.agent=battleStarter.GetComponent<NavMeshAgent>();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
-        string aditionalText="";
+        if(anyCardDisplay!=null){
+            anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        }
+        string adition;
         if(selectingEnemy){
             battleStarter.GetComponentInChildren<UIManager>(true).HideInfo();
-            aditionalText=battleStarter.name+"-Select an available enemy to attack";
+            adition=battleStarter.name+"-Select an available enemy to attack";
+            this.aditionalText.gameObject.SetActive(false);
+            sendButton.SetActive(false);
         }
         else{
             battleStarter.GetComponentInChildren<UIEnemyManager>(true).HideInfo();
-            aditionalText="-Select an available ant to attack to attack "+battleStarter.name;
+            adition="-Select an available ant to attack to attack "+battleStarter.name;
+            this.aditionalText.gameObject.SetActive(true);
+            sendButton.SetActive(true);
         }
         attackMenu.gameObject.SetActive(true);
-        consoleText.text=aditionalText;
-        battleStarter.GetComponent<SelectableItem>().MakeEveryoneUnselectable();
+        consoleText.text=adition;
+        battleStarter.GetComponent<SelectableItem>().MakeEveryoneUnselectableAndUnselected();
         BattleMovement battleMovement=battleStarter.GetComponent<BattleMovement>();
         battleMovement.UpdateTarget();
     }
 
     void Update(){
-        if(this.agent==null || this.agent.gameObject.IsDestroyed())FinishAttackMenu();
+        if(this.agent==null || this.agent.gameObject.IsDestroyed()){
+            FinishAttackMenu(false);
+        }
         if(!PauseMenu.isPaused){
             if(Input.GetMouseButtonDown(0)){
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -60,41 +80,46 @@ public class AttackMenu : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
             if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
             (hit.collider!=null && ((hit.collider.CompareTag("Enemy") && selectingEnemy)||(hit.collider.CompareTag("Ant") && !selectingEnemy)))){
-                BattleMovement battleMovement=battleStarter.GetComponent<BattleMovement>();
                 Transform selectedItem=hit.collider.transform;
                 if(selectingEnemy && !selectedItem.gameObject.IsDestroyed()) {
                         AntStats ant=battleStarter.GetComponent<AntStats>();
-                        if(ant!=null) ant.StartAttacking(selectedItem);
+                        if(ant!=null){
+                            ant.StartAttacking(selectedItem);
+                            FinishAttackMenu(true);
+                        }
                 }else{
                     AntStats ant=selectedItem.gameObject.GetComponent<AntStats>();
-                    if(ant!=null) ant.StartAttacking(battleStarter.transform);
+                    if(ant!=null){
+                        UpdateAntsToPlay(ant);
+                        UpdateText();
+                    }
                 }
-                FinishAttackMenu();
             }
 
-        }
+            }
         }
     }
 
 
-    public void FinishAttackMenu(){
+    public void FinishAttackMenu(bool confirmedAction){
         Time.timeScale=1f;
         this.agent=null;
         attackMenu.SetActive(false);
         if(battleStarter!=null){
-            if(selectingEnemy) battleStarter.GetComponentInChildren<UIManager>(true).ShowInfo();
-            else battleStarter.GetComponentInChildren<UIEnemyManager>(true).ShowInfo();
-            battleStarter.GetComponent<SelectableItem>().MakeEveryoneSelectable();
-        }else{
-            SelectableItem item=FindObjectOfType<SelectableItem>(false);
-            item.MakeEveryoneSelectable();
+            if(selectingEnemy){
+                battleStarter.GetComponentInChildren<UIManager>(true).ShowInfo();
+            }
+            else{
+                battleStarter.GetComponentInChildren<UIEnemyManager>(true).ShowInfo();
+                if(confirmedAction){
+                    foreach(AntStats ant in antsToPlay){
+                        ant.CancelAntAction();
+                        ant.StartAttacking(battleStarter.gameObject.transform);
+                    }
+                }
+                antsToPlay=new List<AntStats>();
+            }
         }
-        Clock clock=FindObjectOfType<Clock>();
-        if(clock!=null){
-            clock.UpdateMessageOfConsoleByEvent();
-            consoleText.text=clock.messageOfEvent;
-        }
-        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
+        ContainerData.EnableGameAfterAction(consoleText);
     }
 }

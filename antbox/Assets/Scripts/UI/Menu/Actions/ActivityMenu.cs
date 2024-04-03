@@ -31,7 +31,7 @@ public class ActivityMenu : MonoBehaviour
     public void ClickOnOption(Button selectedButton){
         if(options.Contains(selectedButton)){
             Image spriteAnswer=selectedAnswers[index].GetComponent<Image>();
-            if(selectedButton.Equals(options[activities[index].correctAnswer])){
+            if(selectedButton.Equals(options[activities[index].CorrectAnswer])){
                 spriteAnswer.sprite=correct;
                 evaluation[index]=true;
                 Player.Instance.knownActivities.Add(activities[index]);
@@ -45,8 +45,12 @@ public class ActivityMenu : MonoBehaviour
 
     void NextActivity(){
         index++;
-        if(index>=activities.Length) FinishActivities();
-        else ProcessActivity();
+        if(index>=activities.Length){
+            FinishActivities();
+        }
+        else{
+            ProcessActivity();
+        }
     }
 
     public void SetActivitiesAndStartPlaying(Activity[] activitiesFromCard,bool isBoss,bool applyDamageToEnemies){
@@ -70,18 +74,20 @@ public class ActivityMenu : MonoBehaviour
 
     void ProcessActivity(){
         Activity nextActivity=activities[index];
-        descriptionText.text=nextActivity.description;
-        difficultyText.text="Difficulty: "+nextActivity.complexityType;
-        if(nextActivity.optionalImage!=null){
-            this.optionalImage.sprite=nextActivity.optionalImage;
+        descriptionText.text=nextActivity.Description;
+        difficultyText.text="Difficulty: "+nextActivity.ComplexityType;
+        if(nextActivity.OptionalImage!=null){
+            this.optionalImage.sprite=nextActivity.OptionalImage;
             this.optionalImage.gameObject.SetActive(true);
         }else{
             this.optionalImage.gameObject.SetActive(false);
         }
         int buttonIndex=0;
-        foreach(Sprite option in nextActivity.options){
+        foreach(Sprite option in nextActivity.Options){
             Image buttonImage=options[buttonIndex].gameObject.GetComponentsInChildren<Image>()[1];
-            if(buttonImage!=null) buttonImage.sprite=option;
+            if(buttonImage!=null){
+                buttonImage.sprite=option;
+            }
             buttonIndex++;
         }
     }
@@ -90,18 +96,13 @@ public class ActivityMenu : MonoBehaviour
         index=0;
         Time.timeScale=1f;
         List<GameObject> objectsToDestroy=new List<GameObject>(selectedAnswers);
-        foreach(GameObject answer in objectsToDestroy) Destroy(answer);
+        foreach(GameObject answer in objectsToDestroy){
+            Destroy(answer);
+        }
         this.gameObject.SetActive(false);
         ContainerData containerData=FindObjectOfType<ContainerData>();
         containerData.ProcessEvaluation(evaluation,isBoss,applyDamageToEnemies);
         isBoss=false;
         applyDamageToEnemies=false;
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

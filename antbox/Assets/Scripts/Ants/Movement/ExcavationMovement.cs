@@ -17,25 +17,25 @@ public class ExcavationMovement : MonoBehaviour
     private Vector3Int actualTile;
     public Vector3Int direction= new Vector3Int(0,0,0);
     private Vector3Int routeTile;
-    public bool isDigging=false;
-    [SerializeField] private static int digTime=5; //Cada t tiempo real, se considera un día
+    [SerializeField]
+    private bool isDigging=false;
 
 
-    private float counterOfSecons=0;
+
     public float timeLastFrame;
     [SerializeField] private Tilemap destructableMap;
-     public static List<ExcavationMovement> itemsWhoDig=new List<ExcavationMovement>();
+    readonly static List<ExcavationMovement> itemsWhoDig=new List<ExcavationMovement>();
 
     private ContainerData containerData;
 
-    public bool IsDigging(){
-        return isDigging;
-    }
+    public bool IsDigging { get => isDigging; set => isDigging = value; }
+
+    
 
     public void StopDigging(){
         direction=new Vector3Int(0,0,0);
         canDig=false;
-        isDigging=false;
+        IsDigging=false;
         GenerationTilemap generation=FindObjectOfType<GenerationTilemap>();
         TileData tileData=generation.GetTileData(selectedTile);
         tileData.antsDiggingSameTile.Remove(this.gameObject.GetComponent<AntStats>());
@@ -55,7 +55,7 @@ public class ExcavationMovement : MonoBehaviour
         selectedTile=selectedTile-direction;
         direction=Vector3Int.up;
         selectedTile=selectedTile+direction;
-        counterOfSecons=0;
+ 
         
     }
     public void Down(){
@@ -63,21 +63,21 @@ public class ExcavationMovement : MonoBehaviour
         selectedTile=selectedTile-direction;
         direction=Vector3Int.down;
         selectedTile=selectedTile+direction;
-        counterOfSecons=0;
+
     }
     public void Right(){
         destructableMap.SetTile(selectedTile,containerData.dirtTile);
         selectedTile=selectedTile-direction;
         direction=Vector3Int.right;
         selectedTile=selectedTile+direction;
-        counterOfSecons=0;
+        
     }
     public void Left(){
         destructableMap.SetTile(selectedTile,containerData.dirtTile);
         selectedTile=selectedTile-direction;
         direction=Vector3Int.left;
         selectedTile=selectedTile+direction;
-        counterOfSecons=0;
+
     }
     public bool CanGoLeft(){
         return destructableMap.GetTile(routeTile+Vector3Int.left)!=null;
@@ -105,9 +105,11 @@ public class ExcavationMovement : MonoBehaviour
     }
 
     public void StartDiggingAndFirstDirection(){
-        isDigging=true;
+        IsDigging=true;
         direction=selectedTile-routeTile;
-        if(destructableMap.GetTile(selectedTile)==null) selectedTile+=direction;
+        if(destructableMap.GetTile(selectedTile)==null){
+            selectedTile+=direction;
+        }
         
     }
 
@@ -126,19 +128,24 @@ public class ExcavationMovement : MonoBehaviour
         GenerationTilemap generation=FindObjectOfType<GenerationTilemap>();
         destructableMap=generation.dirtMap;
         NavMeshAgent agent=ant.GetComponent<NavMeshAgent>();
-        TileData tileData=generation.GetTileData(selectedTile);
         for(int i=0;i<=7;i++){
             selectedTile+=direction;
             routeTile+=direction;
             Debug.Log(ant.GetComponentInChildren<UIManager>()==null);
             Debug.Log(ant.name+" esta buscando");
             if(generation.GetTileOfTilesData(selectedTile)!=null
-             && generation.GetTileData(selectedTile)!=null && !generation.GetTileData(selectedTile).GetTileType().Equals(TileType.EMPTY)) break;
+             && generation.GetTileData(selectedTile)!=null
+              && !generation.GetTileData(selectedTile).GetTileType().Equals(TileType.EMPTY)){
+                break;
+             }
         }
-        if(generation.GetTileOfTilesData(selectedTile)==null || generation.GetTileData(selectedTile)==null || generation.GetTileData(selectedTile).GetTileType().Equals(TileType.EMPTY)){
+        if(generation.GetTileOfTilesData(selectedTile)==null
+         || generation.GetTileData(selectedTile)==null 
+         || generation.GetTileData(selectedTile).GetTileType().Equals(TileType.EMPTY)){
             this.gameObject.GetComponent<AntStats>().StopDigging();
         }else{
-            if(!(selectedTile-routeTile).Equals(direction)){ routeTile+=direction;
+            if(!(selectedTile-routeTile).Equals(direction)){ 
+                routeTile+=direction;
                 
             }
             agent.SetDestination(generation.dirtMap.GetCellCenterWorld(routeTile));
@@ -150,12 +157,14 @@ public class ExcavationMovement : MonoBehaviour
         if(canDig){
             actualTile=destructableMap.WorldToCell(ant.transform.position);
             
-            if(actualTile.x==routeTile.x && actualTile.y==routeTile.y && !isDigging){
+            if(actualTile.x==routeTile.x && actualTile.y==routeTile.y && !IsDigging){
                 StartDiggingAndFirstDirection();
             }  
-            if(isDigging){
+            if(IsDigging){
 
-                if(destructableMap.GetTile(selectedTile)!=null) DigTile();
+                if(destructableMap.GetTile(selectedTile)!=null){
+                    DigTile();
+                }
                 if(destructableMap.GetTile(selectedTile)==null){
                     DigMenu menu=FindObjectOfType<DigMenu>(false);
                     GenerationTilemap generationTilemap=FindFirstObjectByType<GenerationTilemap>();
@@ -164,7 +173,7 @@ public class ExcavationMovement : MonoBehaviour
                     if(menu!=null && menu.isSelectingDestructableTile){
                         menu.PreparingSelectableTiles();
                     }
-                    isDigging=false;
+                    IsDigging=false;
                     NextPositionsAfterDig();//TODO:Poner límite para evitar tardar mucho en elegir siguiente tile
                 }
             }

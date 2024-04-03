@@ -21,6 +21,7 @@ public class BattleManager : MonoBehaviour
             isEnemy=true;
         }else if(antStats!=null){
             isEnemy=false;
+            
         }
     }
 
@@ -29,14 +30,14 @@ public class BattleManager : MonoBehaviour
     {
         if(isEnemy && inBattle && (Time.time-timeLastFrame)>=enemyStats.enemy.battleStats.attackSpeed){
             Transform target=this.GetComponent<BattleMovement>()
-            .actualTarget;
+            .ActualTarget;
             if(target!=null && !target.IsDestroyed()){
                 AttackPlayerItemByEnemy(target);
             }
             timeLastFrame=Time.time;
         }else if(!isEnemy && inBattle && (Time.time-timeLastFrame)>=antStats.battleStats.attackSpeed){
             Transform target=this.GetComponent<BattleMovement>()
-            .actualTarget;
+            .ActualTarget;
             if(target!=null && !target.IsDestroyed()){
                 AttackPlayerItemByAlly(target);
             }
@@ -64,7 +65,7 @@ public class BattleManager : MonoBehaviour
         if(!enemy.gameObject.IsDestroyed() && (enemy.enemy.battleStats.startBattleType.Equals(StartBattleType.WAITER) ||
         enemy.enemy.battleStats.startBattleType.Equals(StartBattleType.SEARCH_AND_RESPOND))){
             BattleMovement battleMovement=enemy.gameObject.GetComponent<BattleMovement>();
-            if(battleMovement!=null) battleMovement.actualTarget=this.gameObject.transform;
+            if(battleMovement!=null) battleMovement.ActualTarget=this.gameObject.transform;
         }
     }
     void ApplyCriticalEffectsByAlly(EnemyStats enemy){
@@ -90,10 +91,12 @@ public class BattleManager : MonoBehaviour
                 }
                 if(!characterStats.IsDead()){
                     ApplyDamageToCharacter(characterStats,enemyStats.enemy.battleStats.damage,isCritic,true);
-                    AntStats ant=target.gameObject.GetComponent<AntStats>();
-                    if(!ant.GetAction().Equals(ActualAction.ATTACKING)){
+                    if(target!=null){
+                        AntStats ant=target.gameObject.GetComponent<AntStats>();
+                        if(!ant.GetAction().Equals(ActualAction.ATTACKING)){
                         ant.CancelAntAction();
                         ant.StartAttacking(this.gameObject.transform);
+                    }
                     }
                 }
             }else{
@@ -118,7 +121,7 @@ public class BattleManager : MonoBehaviour
             targetBattleManager.inBattle=true;
             BattleMovement targetMovement=enemyOrAlly.GetComponent<BattleMovement>();
             if(targetMovement!=null){
-                targetMovement.killingMode=true;
+                targetMovement.KillingMode=true;
                 targetMovement.UpdateTarget();
         }
             }
@@ -164,7 +167,7 @@ public class BattleManager : MonoBehaviour
             else if(critical.Equals(CriticalEffects.AREA_ATTACK)){
                 BattleMovement enemyMovement=GetComponent<BattleMovement>();
                 if(enemyMovement!=null){
-                    foreach(Transform other in enemyMovement.otherAvailableTargets){
+                    foreach(Transform other in enemyMovement.OtherAvailableTargets){
                         if(!other.gameObject.IsDestroyed()){
                             CharacterStats character=other.gameObject.GetComponent<CharacterStats>();
                             FarmStats farm=other.gameObject.GetComponent<FarmStats>();

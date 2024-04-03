@@ -18,9 +18,13 @@ public class StatisticsOfGame : MonoBehaviour
     public int colorIndex=0;
     public int timeSpeed=0;
 
+    private static void SetInstance(StatisticsOfGame game){
+        StatisticsOfGame.Instance=game;
+    }
+
     private void Awake(){
         if(StatisticsOfGame.Instance==null){
-            StatisticsOfGame.Instance=this;
+            SetInstance(this);
             DontDestroyOnLoad(this.gameObject);
         }
         else{

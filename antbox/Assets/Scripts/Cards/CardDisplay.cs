@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,12 +31,15 @@ public class CardDisplay : MonoBehaviour
     public Activity[] GenerateActivitiesByComplexity(bool isBoss){
         //TODO:Añadir complejidad dependiendo de los efectos de la carta
         List<Activity> notKnownActivities=GetNotKnownActivitiesByComplexity(isBoss);
-        //Activity[] allActivities=Resources.LoadAll<Activity>("Activities");
         int n=1;
-        if(isBoss) n=10;
+        if(isBoss){
+            n=10;
+        }
         else{
             for(int i=(int)Player.Instance.complexityLevelOfGame;i>0 && n<=3;i--){
-                if(i%3==0) n++;
+                if(i%3==0){
+                    n++;
+                }
             }
         }
         Activity[] activities=new Activity[n];
@@ -61,10 +61,14 @@ public class CardDisplay : MonoBehaviour
         List<Activity> activitiesInComplexityRange=new List<Activity>();
         List<Activity> notKnownActivities=new List<Activity>();
         foreach(Activity activity in allActivities){
-            if(complexityTypes.Contains(activity.complexityType)) activitiesInComplexityRange.Add(activity);
+            if(complexityTypes.Contains(activity.ComplexityType)){
+                activitiesInComplexityRange.Add(activity);
+            }
         }
         foreach(Activity act in activitiesInComplexityRange){
-            if(!Player.Instance.knownActivities.Contains(act)) notKnownActivities.Add(act);
+            if(!Player.Instance.knownActivities.Contains(act)){
+                notKnownActivities.Add(act);
+            }
         }
         return notKnownActivities;
     }
@@ -74,7 +78,9 @@ public class CardDisplay : MonoBehaviour
         int multiplicator=2;
         if(isBoss){
             int result=StatisticsOfGame.Instance.counterOfCorrectCards-StatisticsOfGame.Instance.counterOfFailedCards;
-            if(result<0) result=0;
+            if(result<0){
+                result=0;
+            }
             complexity+=Player.Instance.complexityLevelOfGame+0.25*result;
             multiplicator=3;
         }else{
@@ -94,7 +100,9 @@ public class CardDisplay : MonoBehaviour
         }else if(complexity>=(int)ComplexityType.HARD*multiplicator && complexity<(int)ComplexityType.VERY_HARD*multiplicator){
             complexitiesToSearch.Add(ComplexityType.HARD);
             complexitiesToSearch.Add(ComplexityType.VERY_HARD);
-        }else if(complexity>=(int)ComplexityType.VERY_HARD*multiplicator) complexitiesToSearch.Add(ComplexityType.VERY_HARD);
+        }else if(complexity>=(int)ComplexityType.VERY_HARD*multiplicator){
+            complexitiesToSearch.Add(ComplexityType.VERY_HARD);
+        }
 
         return complexitiesToSearch;
     }
@@ -106,6 +114,10 @@ public class CardDisplay : MonoBehaviour
     }
 
     public void UseCard(){
+        SelectableItem anyItem=FindObjectOfType<SelectableItem>();
+                if(anyItem!=null){
+                    anyItem.MakeEveryoneUnselectableAndUnselected();
+                }
         ActivityMenu activityMenu=FindObjectOfType<ActivityMenu>(true);
         activityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesByComplexity(false),false,false);
         ContainerData containerData=FindObjectOfType<ContainerData>();
@@ -124,7 +136,7 @@ public class CardDisplay : MonoBehaviour
                 }
                 SelectableItem anyItem=FindObjectOfType<SelectableItem>();
                 if(anyItem!=null){
-                    anyItem.MakeEveryoneUnselectableAndUnselected();
+                    anyItem.MakeEveryonedUnselected();
                 }
 
         ContainerData containerData=FindObjectOfType<ContainerData>();
@@ -149,7 +161,13 @@ public class CardDisplay : MonoBehaviour
     public void MakeEveryCardUnselectableAndUnselected(){
         foreach(CardDisplay cardDisplay in FindObjectsOfType<CardDisplay>()){
             cardDisplay.canBeSelected=false;
-            cardDisplay.infoCanvas.gameObject.SetActive(false);
+            cardDisplay.HideInfo();
+        }
+    }
+
+    public void HideCardsInHand(){
+        foreach(CardDisplay cardDisplay in FindObjectsOfType<CardDisplay>()){
+            cardDisplay.HideInfo();
         }
     }
     public void MakeEveryCardSelectable(){

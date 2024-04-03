@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,10 +10,14 @@ public class LevelLoader : MonoBehaviour
     public Animator animator;
     public float transitionTime=1f;
 
+    private static void SetInstance(LevelLoader level){
+        LevelLoader.Instance=level;
+    }
+
 //Al pasarlo a una instancia, podemos utilizar esto para aplicar todas las transiciones
     private void Awake(){
         if(LevelLoader.Instance==null){
-            LevelLoader.Instance=this;
+            SetInstance(this);
             DontDestroyOnLoad(this.gameObject);
         }else{
             Destroy(this.gameObject);

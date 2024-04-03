@@ -1,16 +1,15 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
 
 public enum ItemType{
     ANT,QUEEN,FARM,ENEMY
+}
+
+[System.Serializable]
+public enum AnthillAction{
+    FEED,HYDRATE,ATTACK,SLEEP
 }
 public class SelectableItem : MonoBehaviour
 {
@@ -64,9 +63,32 @@ public class SelectableItem : MonoBehaviour
         selectableItems.Remove(this);
     }
 
+    public void RecoverAnthillAction(bool isFeeding){
+        ContainerData container=FindObjectOfType<ContainerData>(false);
+        foreach(SelectableItem item in selectableItems){
+            CharacterStats character=item.GetComponent<CharacterStats>();
+            bool condition=(item.type.Equals(ItemType.ANT) || item.type.Equals(ItemType.QUEEN))
+            && character!=null && container!=null;
+            if( condition && isFeeding){
+                character.Eat(container);
+            }else if(condition){
+                character.Drink(container);
+            }
+        }
+    }
 
-    
-
+    public void AntFromAnthillAction(bool toSleep){
+        foreach(SelectableItem item in selectableItems){
+            AntStats character=item.GetComponent<AntStats>();
+            if(character!=null && toSleep){
+                character.CancelAntAction();
+                character.GoToSleep();
+            }else if(item.type.Equals(ItemType.ANT) && character!=null){
+                character.CancelAntAction();
+                character.StartAttackingWithoutTarget();
+            }
+        }
+    }
     public void AddPath(List<Vector3Int> path,Tilemap destructablePath){
         foreach(Vector3Int localPosition in path){
             Vector3 worldPosition=destructablePath.CellToWorld(localPosition);
@@ -81,11 +103,17 @@ public class SelectableItem : MonoBehaviour
         this.attackMenu=attackMenu;
     }
 
+    public void InitAntItem(){
+        SetUIManager(this.gameObject.GetComponentInChildren<UIManager>(true));
+        itemUI.HideInfo();
+        type=ItemType.ANT;
+    }
+
+
 
     
     //USAR ESTE METODO CUANDO VAYAS A AÑADIR UN NUEVO ELEMENTO SELECCIONABLE
-    public void InitSelectableItem(List<Vector3Int> path,Tilemap destructableMap
-    ,GameObject moveMenu,GameObject farmMenu,GameObject digMenu,ItemType itemType,GameObject attackMenu){
+    public void InitSelectableItem(List<Vector3Int> path,Tilemap destructableMap,ItemType itemType){
         AddPath(path,destructableMap);
         if(itemType.Equals(ItemType.FARM)){
             SetUIFarmManager(this.gameObject.GetComponentInChildren<UIFarmManager>(true));
@@ -95,13 +123,7 @@ public class SelectableItem : MonoBehaviour
 
         }
         else if(itemType.Equals(ItemType.ANT)){
-            SetUIManager(this.gameObject.GetComponentInChildren<UIManager>(true));
-            itemUI.HideInfo();
-            this.moveMenu=moveMenu;
-            this.farmMenu=farmMenu;
-            this.digMenu=digMenu;
-            this.attackMenu=attackMenu;
-            type=ItemType.ANT;
+            InitAntItem();
         }
         else{
             SetUIManager(this.gameObject.GetComponentInChildren<UIManager>(true));
@@ -152,6 +174,15 @@ public class SelectableItem : MonoBehaviour
         }
     }
 
+    public void MakeEveryonedUnselected(){
+        for(int i=0;i<selectableItems.Count;i++){
+            if(selectableItems[i].isSelected){
+                selectableItems[i].isSelected=false;
+                selectableItems[i].ChangeColor(originalColor);
+            }
+        }
+    }
+
     public void HideAllInfo(){
         for(int i=0;i<selectableItems.Count;i++){
             if(selectableItems[i].gameObject.GetComponentInChildren<UIManager>(true)!=null){
@@ -188,8 +219,37 @@ public class SelectableItem : MonoBehaviour
         }
 
     }
+    public void ChangeToOriginal(){
+        SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
+        if(sprite!=null){
+            sprite.material.color=originalColor;
+        }
+    }
 
-    void ChangeColor(Color32 newColor){
+    public void ChangeColorWithoutSelecting(){
+        SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
+        if(sprite!=null && sprite.material.color.Equals(originalColor)){
+            sprite.material.color=selectedColor;
+        }
+        else if(sprite!=null && sprite.material.color.Equals(selectedColor)){
+            sprite.material.color=originalColor;
+        }
+        else if(sprite!=null){
+            sprite.material.color=originalColor;
+        }
+    }
+
+    public void ChangeColorOfAllAnts(bool toOriginal=false){
+        foreach(SelectableItem item in selectableItems){
+            if(item.type.Equals(ItemType.ANT) && !toOriginal){
+                item.ChangeColorWithoutSelecting();
+            }else if(item.type.Equals(ItemType.ANT) && toOriginal){
+                item.ChangeToOriginal();
+            }
+        }
+    }
+
+    public void ChangeColor(Color32 newColor){
         SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
         if(sprite!=null){
             sprite.material.color=newColor;
@@ -198,7 +258,9 @@ public class SelectableItem : MonoBehaviour
 
     void OnMouseDown() {
         if(!PauseMenu.isPaused){
-            if(canBeSelected){
+            if(canBeSelected && !isSelected){
+            CardDisplay cardInHand=FindObjectOfType<CardDisplay>(false);
+            if(cardInHand!=null) cardInHand.HideCardsInHand();
             isSelected=true;
             ChangeColor(this.selectedColor);
             if(itemUI!=null && !itemUI.isQueen){
@@ -218,7 +280,10 @@ public class SelectableItem : MonoBehaviour
                     item.isSelected=false;
                     item.ChangeColor(item.originalColor);
                 } 
-        }
+            }
+        }else if(canBeSelected && isSelected){ //This allows to unselect items
+            isSelected=false;
+            ChangeColor(originalColor);
         }
         }
     }

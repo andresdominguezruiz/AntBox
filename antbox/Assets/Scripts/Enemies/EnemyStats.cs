@@ -23,15 +23,21 @@ public class EnemyStats : MonoBehaviour
         return actualHP<=0;
     }
 
+    void GiveResourcesAfterDead(){
+        //TODO: efecto sonoro al matarlo
+        ContainerData container=FindObjectOfType<ContainerData>();
+        container.AddResourcesRandomly(enemy.resources,random.NextDouble());
+    }
+
     public void Hurt(int damage){
         actualHP-=damage;
         if(IsDead()){
             SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
             item.isSelected=false;
             item.RemoveSelectableItem();
+            GiveResourcesAfterDead();
             Destroy(this.gameObject);
         }else{
-            Debug.Log("ACTUALIZA");
             healthBar.SetBarValue(actualHP);
         }
     }
