@@ -70,7 +70,7 @@ public class AttackMenu : MonoBehaviour
     }
 
     void Update(){
-        if(this.agent==null || this.agent.gameObject.IsDestroyed()){
+        if(this.agent==null || this.agent.gameObject==null){
             FinishAttackMenu(false);
         }
         if(!PauseMenu.isPaused){
@@ -81,7 +81,7 @@ public class AttackMenu : MonoBehaviour
             if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
             (hit.collider!=null && ((hit.collider.CompareTag("Enemy") && selectingEnemy)||(hit.collider.CompareTag("Ant") && !selectingEnemy)))){
                 Transform selectedItem=hit.collider.transform;
-                if(selectingEnemy && !selectedItem.gameObject.IsDestroyed()) {
+                if(selectingEnemy && selectedItem.gameObject!=null) {
                         AntStats ant=battleStarter.GetComponent<AntStats>();
                         if(ant!=null){
                             ant.StartAttacking(selectedItem);

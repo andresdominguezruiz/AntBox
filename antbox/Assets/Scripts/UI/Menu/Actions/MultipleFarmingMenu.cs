@@ -25,7 +25,7 @@ public class MultipleFarmingMenu : MonoBehaviour
         SelectableMaskManager mask=selectedFarm.GetComponentInChildren<SelectableMaskManager>(true);
         if(mask!=null) mask.ShowRender();
         foreach(GameObject ant in selectedFarm.antsOfFarm){
-            if(!ant.IsDestroyed()&&ant.GetComponent<SelectableItem>()!=null){
+            if(ant!=null && ant.GetComponent<SelectableItem>()!=null){
                 ant.GetComponent<SelectableItem>().ChangeColor(Color.red);
             }
         }

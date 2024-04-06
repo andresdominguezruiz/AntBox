@@ -31,14 +31,14 @@ public class BattleManager : MonoBehaviour
         if(isEnemy && inBattle && (Time.time-timeLastFrame)>=enemyStats.enemy.battleStats.attackSpeed){
             Transform target=this.GetComponent<BattleMovement>()
             .ActualTarget;
-            if(target!=null && !target.IsDestroyed()){
+            if(target!=null && target.gameObject!=null){
                 AttackPlayerItemByEnemy(target);
             }
             timeLastFrame=Time.time;
         }else if(!isEnemy && inBattle && (Time.time-timeLastFrame)>=antStats.battleStats.attackSpeed){
             Transform target=this.GetComponent<BattleMovement>()
             .ActualTarget;
-            if(target!=null && !target.IsDestroyed()){
+            if(target!=null && target.gameObject!=null){
                 AttackPlayerItemByAlly(target);
             }
             timeLastFrame=Time.time;
@@ -54,15 +54,17 @@ public class BattleManager : MonoBehaviour
                     isCritic=true;
                     ApplyCriticalEffectsByAlly(enemyStats);
                 }
-                if(!enemyStats.gameObject.IsDestroyed() 
+                if(enemyStats.gameObject!=null
                 && !enemyStats.IsDead())ApplyDamageToEnemy(enemyStats,antStats.battleStats.damage,isCritic,true);
             }
         }
     }
 
+    //NO UTILIZAR IsDestroyed(), al ensamblar deja de existir, utiliza gameObject!=null
+
     void ApplyDamageToEnemy(EnemyStats enemy, int damage,bool isCritic,bool initAnimation){
         enemy.Hurt(damage);
-        if(!enemy.gameObject.IsDestroyed() && (enemy.enemy.battleStats.startBattleType.Equals(StartBattleType.WAITER) ||
+        if(enemy.gameObject!=null && (enemy.enemy.battleStats.startBattleType.Equals(StartBattleType.WAITER) ||
         enemy.enemy.battleStats.startBattleType.Equals(StartBattleType.SEARCH_AND_RESPOND))){
             BattleMovement battleMovement=enemy.gameObject.GetComponent<BattleMovement>();
             if(battleMovement!=null) battleMovement.ActualTarget=this.gameObject.transform;
@@ -168,7 +170,7 @@ public class BattleManager : MonoBehaviour
                 BattleMovement enemyMovement=GetComponent<BattleMovement>();
                 if(enemyMovement!=null){
                     foreach(Transform other in enemyMovement.OtherAvailableTargets){
-                        if(!other.gameObject.IsDestroyed()){
+                        if(other.gameObject!=null){
                             CharacterStats character=other.gameObject.GetComponent<CharacterStats>();
                             FarmStats farm=other.gameObject.GetComponent<FarmStats>();
                             if(character!=null) ApplyDamageToCharacter(character,enemyStats.enemy.battleStats.damage/2,false,true);

@@ -239,9 +239,10 @@ public class CharacterStats : MonoBehaviour
             Die();
         }else if(actualHP>=maxHP){
             actualHP=maxHP;
-            AllBarsManager.HealthBar.SetMaxBarValue(maxHP);
         }
-        AllBarsManager.HealthBar.SetBarValue(actualHP);
+        if(AllBarsManager!=null && AllBarsManager.HealthBar!=null){
+            AllBarsManager.HealthBar.SetBarValue(actualHP);
+        }
     }
 
     public void Die(){
@@ -272,7 +273,9 @@ public class CharacterStats : MonoBehaviour
 
     public void SetActualHP(int hp){
         actualHP=hp;
-        AllBarsManager.HealthBar.SetBarValue(actualHP);
+        if(AllBarsManager!=null && AllBarsManager.HealthBar!=null){
+            AllBarsManager.HealthBar.SetBarValue(actualHP);
+        }
     }
 
     public void SetActualHunger(int hunger){
@@ -281,7 +284,9 @@ public class CharacterStats : MonoBehaviour
         }else{
             actualHunger=hunger;
         }
-        AllBarsManager.HungerBar.SetBarValue(actualHunger);
+        if(AllBarsManager!=null && AllBarsManager.HungerBar!=null){
+            AllBarsManager.HungerBar.SetBarValue(actualHunger);
+        }
     }
 
     public void SetActualThirst(int thirst){
@@ -290,7 +295,9 @@ public class CharacterStats : MonoBehaviour
         }else{
             actualThirst=thirst;
         }
-        AllBarsManager.ThirstBar.SetBarValue(actualThirst);
+        if(AllBarsManager!=null && AllBarsManager.ThirstBar!=null){
+            AllBarsManager.ThirstBar.SetBarValue(actualThirst);
+        }
     }
 
     public String GetTextHP(){

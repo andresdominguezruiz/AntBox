@@ -82,7 +82,7 @@ public class DigMenu : MonoBehaviour
     }
 
     void Update(){
-        if(this.agent==null || this.agent.gameObject.IsDestroyed()){
+        if(this.agent==null || this.agent.gameObject==null){
             FinishDigMenu();
         }
         if(!PauseMenu.isPaused){

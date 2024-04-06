@@ -43,7 +43,9 @@ public class MoveMenu : MonoBehaviour
     }
 
     void Update(){
-        if(this.agent==null || this.agent.gameObject.IsDestroyed()) FinishMoveMenu();
+        if(this.agent==null || this.agent.gameObject==null){
+            FinishMoveMenu();
+        }
         if(Input.GetMouseButtonDown(0) && !PauseMenu.isPaused){
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

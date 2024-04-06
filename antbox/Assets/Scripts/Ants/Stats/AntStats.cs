@@ -224,7 +224,9 @@ public class AntStats : CharacterStats
         else {
             SetEnergy(actualEnergy-2*cost);
         }
-        AllBarsManager.EnergyBar.SetBarValue(actualEnergy);
+        if(AllBarsManager!=null && AllBarsManager.EnergyBar!=null){
+            AllBarsManager.EnergyBar.SetBarValue(actualEnergy);
+        }
 
     }
     public void InitAntStats(System.Random random){
@@ -237,11 +239,15 @@ public class AntStats : CharacterStats
 
     private void Start(){
         this.timeLastFrame=0f;
-        this.AllBarsManager = this.gameObject.GetComponentInChildren<AllBarsManager>();
-        AllBarsManager.HealthBar.SetMaxBarValue(GetMaxHP());
-        AllBarsManager.EnergyBar.SetMaxBarValue(GetMaxEnergy());
-        AllBarsManager.HungerBar.SetMaxBarValue(GetMaxHunger());
-        AllBarsManager.ThirstBar.SetMaxBarValue(GetMaxThirst());
+        if(AllBarsManager==null){
+            this.AllBarsManager = this.gameObject.GetComponentInChildren<AllBarsManager>();
+        }
+        if(AllBarsManager!=null){
+            AllBarsManager.HealthBar.SetMaxBarValue(GetMaxHP());
+            AllBarsManager.EnergyBar.SetMaxBarValue(GetMaxEnergy());
+            AllBarsManager.HungerBar.SetMaxBarValue(GetMaxHunger());
+            AllBarsManager.ThirstBar.SetMaxBarValue(GetMaxThirst());
+        }
     }
 
     public void InitOtherVariables(){

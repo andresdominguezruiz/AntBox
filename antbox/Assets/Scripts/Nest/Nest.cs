@@ -38,7 +38,7 @@ public class Nest
         };
         //RemoveAll funciona a base de predicados
         adjacencies.RemoveAll((Vector3Int pos)=>nestPositions.Contains(pos));
-        triggerPositions.AddRange(adjacencies);
+        triggerPositions.UnionWith(adjacencies);
     }
 
     }
@@ -48,9 +48,9 @@ public class Nest
 //IMPORTANTE, ten en cuenta de que se podría dar el caso de que compartan triggerPositions
     public HashSet<Vector3Int> GetCoverOfNest(){
         HashSet<Vector3Int> positions=new HashSet<Vector3Int>();
-        //AddRange es el AddAll de c#
-        positions.AddRange(nestPositions);
-        positions.AddRange(triggerPositions);
+        //AddRange es el AddAll de c#, PERO UTILIZA UnionWith que sino al ensamblar no lo detecta
+        positions.UnionWith(nestPositions);
+        positions.UnionWith(triggerPositions);
         return positions;
     }
     

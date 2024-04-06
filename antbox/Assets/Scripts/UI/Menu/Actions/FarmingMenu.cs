@@ -70,7 +70,9 @@ public class FarmingMenu : MonoBehaviour
     }
 
     void Update(){
-        if(this.agent==null || this.agent.gameObject.IsDestroyed())FinishFarmingMenu();
+        if(this.agent==null || this.agent.gameObject==null){
+            FinishFarmingMenu();
+        }
         if(!PauseMenu.isPaused){
             if(Input.GetMouseButtonDown(0)){
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
