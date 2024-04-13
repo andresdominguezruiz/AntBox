@@ -5,18 +5,23 @@ using UnityEngine;
 public class BackgroundMusic : MonoBehaviour
 {
     private AudioSource audioSource;
-    public AudioClip[] music;
-    private System.Random random = new System.Random();
+
+    [SerializeField]
+    private AudioClip[] music;
+    readonly System.Random random = new System.Random();
+
+    public AudioSource AudioSource { get => audioSource; set => audioSource = value; }
+    public AudioClip[] Music { get => music; set => music = value; }
 
     void Start()
     {
-        audioSource=this.GetComponent<AudioSource>();
+        AudioSource=this.GetComponent<AudioSource>();
         ChangeMusic();
     }
     public void ChangeMusic(){
-        int v = random.Next(0,music.Length-1);
-        audioSource.clip=music[v];
-        audioSource.loop=true;
-        audioSource.Play();
+        int v = random.Next(0,Music.Length-1);
+        AudioSource.clip=Music[v];
+        AudioSource.loop=true;
+        AudioSource.Play();
     }
 }

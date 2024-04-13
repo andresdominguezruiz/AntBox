@@ -10,6 +10,10 @@ public class LevelLoader : MonoBehaviour
     public Animator animator;
     public float transitionTime=1f;
 
+    private float actualVolume=0.5f;
+
+    public float ActualVolume { get => actualVolume; set => actualVolume = value; }
+
     private static void SetInstance(LevelLoader level){
         LevelLoader.Instance=level;
     }

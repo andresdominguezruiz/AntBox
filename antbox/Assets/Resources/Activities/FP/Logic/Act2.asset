@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea97fa364571dc4ca8428b5c4d13074, type: 3}
+  m_Name: Act2
+  m_EditorClassIdentifier: 
+  name: Logic
+  optionalImage: {fileID: 0}
+  description: How would you know if a number p is odd?
+  complexityType: 2
+  options:
+  - {fileID: 21300000, guid: dcd22b156c189fb4e9dfb2ee65a227c2, type: 3}
+  - {fileID: 21300000, guid: 4f71fb6c0204edd4eb6adf90011a0c0e, type: 3}
+  - {fileID: 21300000, guid: 716efc0b00e5fab45b977403f69998a1, type: 3}
+  - {fileID: 21300000, guid: 4010096b52d62484f9445217977fc36e, type: 3}
+  correctAnswer: 2
