@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1280
     height: 629.3334
   m_ShowMode: 4
-  m_Title: Test Runner
+  m_Title: Test Report
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -45,7 +45,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1280
-    height: 629.3333
+    height: 629.3334
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 609.3333
+    y: 609.3334
     width: 1280
     height: 20
   m_MinSize: {x: 0, y: 0}
@@ -114,11 +114,11 @@ MonoBehaviour:
     x: 0
     y: 30
     width: 1280
-    height: 579.3333
+    height: 579.3334
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 50
+  controlID: 47
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -139,11 +139,11 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1280
-    height: 579.3333
+    height: 579.3334
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 51
+  controlID: 48
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -164,11 +164,11 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 969.3333
-    height: 579.3333
+    height: 579.3334
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 52
+  controlID: 49
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -189,11 +189,11 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 969.3333
-    height: 382
+    height: 381.33334
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 53
+  controlID: 50
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -211,13 +211,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 208.66667
-    height: 382
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 17}
+    width: 208
+    height: 381.33334
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 18}
   m_Panes:
-  - {fileID: 17}
+  - {fileID: 18}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &10
@@ -230,25 +230,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: TestRunnerWindow
+  m_Name: TestReportWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 208.66667
+    x: 208
     y: 0
-    width: 760.6666
-    height: 382
-  m_MinSize: {x: 102, y: 121}
+    width: 761.3333
+    height: 381.33334
+  m_MinSize: {x: 642, y: 501}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 14}
+  m_ActualView: {fileID: 13}
   m_Panes:
-  - {fileID: 18}
-  - {fileID: 20}
-  - {fileID: 16}
-  - {fileID: 14}
-  m_Selected: 3
-  m_LastSelected: 0
+  - {fileID: 19}
+  - {fileID: 21}
+  - {fileID: 17}
+  - {fileID: 15}
+  - {fileID: 13}
+  m_Selected: 4
+  m_LastSelected: 3
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -259,26 +260,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: CodeCoverageWindow
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 382
+    y: 381.33334
     width: 969.3333
-    height: 197.33331
-  m_MinSize: {x: 446, y: 86}
+    height: 198.00003
+  m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 13}
+  m_ActualView: {fileID: 22}
   m_Panes:
-  - {fileID: 21}
   - {fileID: 22}
-  - {fileID: 19}
-  - {fileID: 13}
-  - {fileID: 15}
-  m_Selected: 3
-  m_LastSelected: 0
+  - {fileID: 23}
+  - {fileID: 20}
+  - {fileID: 14}
+  - {fileID: 16}
+  m_Selected: 0
+  m_LastSelected: 4
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -297,15 +298,203 @@ MonoBehaviour:
     x: 969.3333
     y: 0
     width: 310.6667
-    height: 579.3333
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 23}
+    height: 579.3334
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 24}
   m_Panes:
-  - {fileID: 23}
+  - {fileID: 24}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &13
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4272062d6dbd273438736c85848ea974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 640, y: 480}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Test Report
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 208
+    y: 72.66667
+    width: 759.3333
+    height: 360.33334
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_OverlaysVisible: 1
+  m_colorWhite: {r: 1, g: 1, b: 1, a: 1}
+  m_colorBarBackground: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_colorBoxAndWhiskerBackground: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+  m_colorBar: {r: 0.95, g: 0.95, b: 0.95, a: 1}
+  m_colorStandardLine: {r: 1, g: 1, b: 1, a: 1}
+  m_colorMedianLine: {r: 0.2, g: 0.5, b: 1, a: 0.5}
+  m_colorMedianText: {r: 0.4, g: 0.7, b: 1, a: 1}
+  m_colorWarningText: {r: 1, g: 0, b: 0, a: 1}
+  m_testListTreeViewState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 00000000
+    m_LastClickedID: 0
+    m_ExpandedIDs: 
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 0
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+  m_testListMulticolumnHeaderState:
+    m_Columns:
+    - width: 40
+      sortedAscending: 1
+      headerContent:
+        m_Text: Index
+        m_Image: {fileID: 0}
+        m_Tooltip: Ordering from the test run
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 50
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    - width: 500
+      sortedAscending: 1
+      headerContent:
+        m_Text: Name
+        m_Image: {fileID: 0}
+        m_Tooltip: Name of test
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 100
+      maxWidth: 1000000
+      autoResize: 0
+      allowToggleVisibility: 0
+      canSort: 1
+      userData: 0
+    - width: 50
+      sortedAscending: 0
+      headerContent:
+        m_Text: Groups
+        m_Image: {fileID: 0}
+        m_Tooltip: Number of Sample Groups
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 50
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    - width: 50
+      sortedAscending: 0
+      headerContent:
+        m_Text: SD
+        m_Image: {fileID: 0}
+        m_Tooltip: Standard Deviation
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 50
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    - width: 50
+      sortedAscending: 0
+      headerContent:
+        m_Text: Deviation
+        m_Image: {fileID: 0}
+        m_Tooltip: Standard Deviation / Median
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 50
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    - width: 50
+      sortedAscending: 0
+      headerContent:
+        m_Text: Median
+        m_Image: {fileID: 0}
+        m_Tooltip: Median value
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 50
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    - width: 50
+      sortedAscending: 0
+      headerContent:
+        m_Text: Min
+        m_Image: {fileID: 0}
+        m_Tooltip: Min value
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 50
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    - width: 50
+      sortedAscending: 0
+      headerContent:
+        m_Text: Max
+        m_Image: {fileID: 0}
+        m_Tooltip: Max value
+      contextMenuText: 
+      headerTextAlignment: 0
+      sortingArrowAlignment: 0
+      minWidth: 50
+      maxWidth: 1000000
+      autoResize: 1
+      allowToggleVisibility: 1
+      canSort: 1
+      userData: 0
+    m_VisibleColumns: 0000000001000000020000000400000003000000050000000600000007000000
+    m_SortedColumns: 0100000000000000
+--- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -326,9 +515,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 454.6667
+    y: 454
     width: 968.3333
-    height: 176.33331
+    height: 177.00003
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -339,7 +528,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &14
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -359,10 +548,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 208.66667
+    x: 208
     y: 72.66667
-    width: 758.6666
-    height: 361
+    width: 759.3333
+    height: 360.33334
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -374,12 +563,12 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 2557
+    ID: 2252
     splitterInitialOffset: 181.66667
     currentActiveSplitter: -1
     realSizes:
-    - 192
-    - 98.666664
+    - 191.33333
+    - 98.66667
     relativeSizes:
     - 0.6608527
     - 0.33914733
@@ -389,7 +578,7 @@ MonoBehaviour:
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 290.66666
+    lastTotalSize: 290
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -399,14 +588,14 @@ MonoBehaviour:
     oldSplitSize: 0
   m_TestTypeToolbarIndex: 0
   m_PlayModeTestListGUI:
-    m_Window: {fileID: 14}
+    m_Window: {fileID: 15}
     m_NewResultList:
     - id: 1005
       uniqueId: '[antbox][suite]'
       name: antbox
       fullName: antbox
       resultStatus: 1
-      duration: 16.351965
+      duration: 46.78682
       messages: 
       output: 
       stacktrace: 
@@ -422,7 +611,7 @@ MonoBehaviour:
       name: PlayMode.dll
       fullName: C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/PlayMode.dll
       resultStatus: 1
-      duration: 16.29113
+      duration: 46.75798
       messages: 
       output: 
       stacktrace: 
@@ -516,8 +705,8 @@ MonoBehaviour:
         Local Bounds [Walkable]: Center: (1.50, 0.00, 0.50), Extents: (9.00, 4.50,
         0.50)
 
-        To World Bounds: Center: (-1.75, -0.50, -2.25), Extents:
-        (12.25, 0.50, 6.75)
+        To World Bounds: Center: (-1.75, -0.50, -2.25), Extents: (12.25,
+        0.50, 6.75)
 
 '
       stacktrace: 
@@ -580,8 +769,8 @@ MonoBehaviour:
         Local Bounds [Walkable]: Center: (1.50, 0.00, 0.50), Extents: (9.00, 4.50,
         0.50)
 
-        To World Bounds: Center: (-1.75, -0.50, -2.25), Extents:
-        (12.25, 0.50, 6.75)
+        To World Bounds: Center: (-1.75, -0.50, -2.25), Extents: (12.25,
+        0.50, 6.75)
 
 '
       stacktrace: 
@@ -627,8 +816,8 @@ MonoBehaviour:
         Local Bounds [Walkable]: Center: (1.50, 0.00, 0.50), Extents: (9.00, 4.50,
         0.50)
 
-        To World Bounds: Center: (-1.75, -0.50, -2.25), Extents:
-        (12.25, 0.50, 6.75)
+        To World Bounds: Center: (-1.75, -0.50, -2.25), Extents: (12.25,
+        0.50, 6.75)
 
 '
       stacktrace: 
@@ -640,6 +829,114 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1003
       parentUniqueId: PlayMode.dll/[PlayMode][LevelLoad][suite]
+    - id: 1112
+      uniqueId: PlayMode.dll/[PlayMode][PerformanceTest][suite]
+      name: PerformanceTest
+      fullName: PerformanceTest
+      resultStatus: 1
+      duration: 46.74778
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1114
+      parentUniqueId: '[PlayMode][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/PlayMode.dll][suite]'
+    - id: 1113
+      uniqueId: PlayMode.dll/PerformanceTest/[PlayMode][PerformanceTest.SpawnEnemies]
+      name: SpawnEnemies
+      fullName: PerformanceTest.SpawnEnemies
+      resultStatus: 1
+      duration: 46.70436
+      messages: 
+      output: 'BJCDDBCDCBJDC:71
+
+        BJCDDBCDCBJDC:55
+
+        BJCDDBCDCBJDC:52
+
+        BJCDDBCDCBJDC:47
+
+        Walkable
+        Bounds [DestructableMap]: Center: (2.00, 1.50, 0.50), Extents: (10.00, 6.50,
+        0.50)
+
+        Walkable Bounds [Walkable]: Center: (1.50, 0.00, 0.50), Extents:
+        (9.00, 4.50, 0.50)
+
+        Sources 724
+
+        From Local Bounds [DestructableMap]:
+        Center: (2.00, 1.50, 0.50), Extents: (10.00, 6.50, 0.50)
+
+        To World
+        Bounds: Center: (-4.00, -0.50, -2.50), Extents: (10.00, 0.50, 6.50)
+
+        From
+        Local Bounds [Walkable]: Center: (1.50, 0.00, 0.50), Extents: (9.00, 4.50,
+        0.50)
+
+        To World Bounds: Center: (-1.75, -0.50, -2.25), Extents:
+        (12.25, 0.50, 6.75)
+
+        Time.GC() Undefined Median:6,00 Min:3,00 Max:12,00
+        Avg:5,78 Std:1,82 SampleCount: 20 Sum: 115,60
+
+        Time Millisecond Median:0,10
+        Min:0,09 Max:0,11 Avg:0,10 Std:0,01 SampleCount: 10 Sum: 0,99
+
+        
+
+        ##performancetestresult2:{"Name":"PerformanceTest.SpawnEnemies","Version":"1","Categories":["Performance"],"SampleGroups":[{"Name":"Time.GC()","Unit":8,"IncreaseIsBetter":false,"Samples":[12.0,6.4,3.0,6.0,3.4,5.8,6.4,6.6,6.2,3.2,6.4,6.0,6.0,5.8,6.0,6.0,5.6,6.2,3.6,5.0],"Min":3.0,"Max":12.0,"Median":6.0,"Average":5.779999999999999,"StandardDeviation":1.8241710446117712,"Sum":115.6},{"Name":"Time","Unit":2,"IncreaseIsBetter":false,"Samples":[0.1020000000003165,0.1024000000002161,0.09259999999994762,0.09470000000010259,0.11449999999967986,0.08870000000024447,0.09259999999994762,0.10910000000058062,0.09549999999944703,0.0978000000004613],"Min":0.08870000000024447,"Max":0.11449999999967986,"Median":0.0978000000004613,"Average":0.09899000000009437,"StandardDeviation":0.007635502602994631,"Sum":0.9899000000009437}]}
+
+        ##performancetestruninfo2:{"TestSuite":"Playmode","Date":1714153986474,"Player":{"Development":true,"ScreenWidth":1920,"ScreenHeight":1080,"ScreenRefreshRate":60,"Fullscreen":false,"Vsync":1,"AntiAliasing":2,"Batchmode":false,"RenderThreadingMode":"MultiThreaded","GpuSkinning":false,"Platform":"WindowsEditor","ColorSpace":"Linear","AnisotropicFiltering":"ForceEnable","BlendWeights":"Unlimited","GraphicsApi":"Direct3D11","ScriptingBackend":"Mono2x","AndroidTargetSdkVersion":"AndroidApiLevelAuto","AndroidBuildSystem":"Gradle","BuildTarget":"StandaloneWindows64","StereoRenderingPath":"MultiPass"},"Hardware":{"OperatingSystem":"Windows
+        11  (10.0.22631) 64bit","DeviceModel":"HP Pavilion Laptop 14-ec0xxx (HP)","DeviceName":"LAPTOP-H5GTOIIF","ProcessorType":"AMD
+        Ryzen 7 5700U with Radeon Graphics ","ProcessorCount":16,"GraphicsDeviceName":"AMD
+        Radeon(TM) Graphics","SystemMemorySizeMB":15693},"Editor":{"Version":"2022.3.9f1","Branch":"2022.3/staging","Changeset":"ea401c316338","Date":1692874842},"Dependencies":["com.unity.test-framework.performance@2.8.1-preview","com.unity.ai.navigation@1.1.5","com.unity.collab-proxy@2.0.7","com.unity.feature.2d@2.0.0","com.unity.ide.rider@3.0.24","com.unity.ide.visualstudio@2.0.21","com.unity.ide.vscode@1.2.5","com.unity.test-framework@1.1.33","com.unity.testtools.codecoverage@1.2.5","com.unity.textmeshpro@3.0.6","com.unity.timeline@1.7.5","com.unity.ugui@1.0.0","com.unity.visualscripting@1.9.0","com.unity.modules.ai@1.0.0","com.unity.modules.androidjni@1.0.0","com.unity.modules.animation@1.0.0","com.unity.modules.assetbundle@1.0.0","com.unity.modules.audio@1.0.0","com.unity.modules.cloth@1.0.0","com.unity.modules.director@1.0.0","com.unity.modules.imageconversion@1.0.0","com.unity.modules.imgui@1.0.0","com.unity.modules.jsonserialize@1.0.0","com.unity.modules.particlesystem@1.0.0","com.unity.modules.physics@1.0.0","com.unity.modules.physics2d@1.0.0","com.unity.modules.screencapture@1.0.0","com.unity.modules.terrain@1.0.0","com.unity.modules.terrainphysics@1.0.0","com.unity.modules.tilemap@1.0.0","com.unity.modules.ui@1.0.0","com.unity.modules.uielements@1.0.0","com.unity.modules.umbra@1.0.0","com.unity.modules.unityanalytics@1.0.0","com.unity.modules.unitywebrequest@1.0.0","com.unity.modules.unitywebrequestassetbundle@1.0.0","com.unity.modules.unitywebrequestaudio@1.0.0","com.unity.modules.unitywebrequesttexture@1.0.0","com.unity.modules.unitywebrequestwww@1.0.0","com.unity.modules.vehicles@1.0.0","com.unity.modules.video@1.0.0","com.unity.modules.vr@1.0.0","com.unity.modules.wind@1.0.0","com.unity.modules.xr@1.0.0","com.unity.modules.subsystems@1.0.0","com.unity.settings-manager@2.0.1","com.unity.ext.nunit@1.0.6","com.unity.2d.animation@9.0.3","com.unity.2d.pixel-perfect@5.0.3","com.unity.2d.psdimporter@8.0.2","com.unity.2d.sprite@1.0.0","com.unity.2d.spriteshape@9.0.2","com.unity.2d.tilemap@1.0.0","com.unity.2d.tilemap.extras@3.1.1","com.unity.2d.aseprite@1.0.0","com.unity.2d.common@8.0.1","com.unity.mathematics@1.2.6","com.unity.collections@1.2.4","com.unity.burst@1.8.8"],"Results":[]}
+
+        BJCDDBCDCBJDC:70
+
+        BJCDDBCDCBJDC:60
+
+        BJCDDBCDCBJDC:50
+
+        BJCDDBCDCBJDC:41
+
+        Walkable
+        Bounds [DestructableMap]: Center: (2.00, 1.50, 0.50), Extents: (10.00, 6.50,
+        0.50)
+
+        Walkable Bounds [Walkable]: Center: (1.50, 0.00, 0.50), Extents:
+        (9.00, 4.50, 0.50)
+
+        Sources 724
+
+        From Local Bounds [DestructableMap]:
+        Center: (2.00, 1.50, 0.50), Extents: (10.00, 6.50, 0.50)
+
+        To World
+        Bounds: Center: (-4.00, -0.50, -2.50), Extents: (10.00, 0.50, 6.50)
+
+        From
+        Local Bounds [Walkable]: Center: (1.50, 0.00, 0.50), Extents: (9.00, 4.50,
+        0.50)
+
+        To World Bounds: Center: (-1.75, -0.50, -2.25), Extents:
+        (12.25, 0.50, 6.75)
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1112
+      parentUniqueId: PlayMode.dll/[PlayMode][PerformanceTest][suite]
     - id: 1004
       uniqueId: '[Tests][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Tests.dll][suite]'
       name: Tests.dll
@@ -706,13 +1003,418 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1001
       parentUniqueId: Tests.dll/[Tests][NewTestScript][suite]
-    m_ResultText: antbox (16,352s)
+    - id: 1144
+      uniqueId: '[Unity.PerformanceTesting.Tests.Runtime][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Runtime.dll][suite]'
+      name: Unity.PerformanceTesting.Tests.Runtime.dll
+      fullName: C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Runtime.dll
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1107
+      parentUniqueId: '[antbox][suite]'
+    - id: 1121
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests][suite]
+      name: FrametimeOverloadTests
+      fullName: FrametimeOverloadTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1144
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Runtime][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Runtime.dll][suite]'
+    - id: 1132
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/FrametimeOverloadTests/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests.MeasureFrame_WithEmptySampleGroupsAsProfilerMarker_RecordsDefaultTimeMarkerInMilliseconds]
+      name: MeasureFrame_WithEmptySampleGroupsAsProfilerMarker_RecordsDefaultTimeMarkerInMilliseconds
+      fullName: FrametimeOverloadTests.MeasureFrame_WithEmptySampleGroupsAsProfilerMarker_RecordsDefaultTimeMarkerInMilliseconds
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1121
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests][suite]
+    - id: 1133
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/FrametimeOverloadTests/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests.MeasureFrame_WithMultipleSampleGroups_RecordSpecifiedMarkers_WithCorrectSampleUnits]
+      name: MeasureFrame_WithMultipleSampleGroups_RecordSpecifiedMarkers_WithCorrectSampleUnits
+      fullName: FrametimeOverloadTests.MeasureFrame_WithMultipleSampleGroups_RecordSpecifiedMarkers_WithCorrectSampleUnits
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1121
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests][suite]
+    - id: 1131
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/FrametimeOverloadTests/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests.MeasureFrame_WithSampleGroupAndProfilerMarker_RecordSpecifiedMarkers_WithCorrectSampleUnit]
+      name: MeasureFrame_WithSampleGroupAndProfilerMarker_RecordSpecifiedMarkers_WithCorrectSampleUnit
+      fullName: FrametimeOverloadTests.MeasureFrame_WithSampleGroupAndProfilerMarker_RecordSpecifiedMarkers_WithCorrectSampleUnit
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1121
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests][suite]
+    - id: 1122
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/FrametimeOverloadTests/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests.MeasureFrames_WhenYielding_RecordsFrametimes]
+      name: MeasureFrames_WhenYielding_RecordsFrametimes
+      fullName: FrametimeOverloadTests.MeasureFrames_WhenYielding_RecordsFrametimes
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1121
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests][suite]
+    - id: 1125
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/FrametimeOverloadTests/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests.MeasureFrames_WithCustomDefinition_AssignsDefinition]
+      name: MeasureFrames_WithCustomDefinition_AssignsDefinition
+      fullName: FrametimeOverloadTests.MeasureFrames_WithCustomDefinition_AssignsDefinition
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1121
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests][suite]
+    - id: 1124
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/FrametimeOverloadTests/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests.MeasureFrames_WithNoParams_RecordsSampleGroup]
+      name: MeasureFrames_WithNoParams_RecordsSampleGroup
+      fullName: FrametimeOverloadTests.MeasureFrames_WithNoParams_RecordsSampleGroup
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1121
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests][suite]
+    - id: 1127
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/FrametimeOverloadTests/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests.MeasureFrames_WithProfilerMarkers_RecordsMarkers]
+      name: MeasureFrames_WithProfilerMarkers_RecordsMarkers
+      fullName: FrametimeOverloadTests.MeasureFrames_WithProfilerMarkers_RecordsMarkers
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1121
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests][suite]
+    - id: 1128
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/FrametimeOverloadTests/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests.MeasureFrames_WithProfilerMarkers_string_RecordsMarkers]
+      name: MeasureFrames_WithProfilerMarkers_string_RecordsMarkers
+      fullName: FrametimeOverloadTests.MeasureFrames_WithProfilerMarkers_string_RecordsMarkers
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1121
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests][suite]
+    - id: 1126
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/FrametimeOverloadTests/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests.MeasureFrames_WithRecordingDisabled_RecordsNoSampleGroups]
+      name: MeasureFrames_WithRecordingDisabled_RecordsNoSampleGroups
+      fullName: FrametimeOverloadTests.MeasureFrames_WithRecordingDisabled_RecordsNoSampleGroups
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1121
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests][suite]
+    - id: 1123
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/FrametimeOverloadTests/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests.MeasureFrames_WithSampleGroups_ConvertToPassedSampleUnit]
+      name: MeasureFrames_WithSampleGroups_ConvertToPassedSampleUnit
+      fullName: FrametimeOverloadTests.MeasureFrames_WithSampleGroups_ConvertToPassedSampleUnit
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1121
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests][suite]
+    - id: 1130
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/FrametimeOverloadTests/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests.MeasureFrames_WithWarmup_ThrowsException]
+      name: MeasureFrames_WithWarmup_ThrowsException
+      fullName: FrametimeOverloadTests.MeasureFrames_WithWarmup_ThrowsException
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1121
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests][suite]
+    - id: 1129
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/FrametimeOverloadTests/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests.MeasureFrames_WithWarmupAndExecutions_RecordsSpecifiedAmount]
+      name: MeasureFrames_WithWarmupAndExecutions_RecordsSpecifiedAmount
+      fullName: FrametimeOverloadTests.MeasureFrames_WithWarmupAndExecutions_RecordsSpecifiedAmount
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1121
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][FrametimeOverloadTests][suite]
+    - id: 1134
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests][suite]
+      name: MeasureProfilerSamplesTests
+      fullName: MeasureProfilerSamplesTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1144
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Runtime][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Runtime.dll][suite]'
+    - id: 1138
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests.MeasureProfilerSamples_ManyFrames_RecordsSamples]
+      name: MeasureProfilerSamples_ManyFrames_RecordsSamples
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_ManyFrames_RecordsSamples
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1134
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests][suite]
+    - id: 1143
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests.MeasureProfilerSamples_SampleGroup_ManyFrames_RecordsSamples]
+      name: MeasureProfilerSamples_SampleGroup_ManyFrames_RecordsSamples
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_SampleGroup_ManyFrames_RecordsSamples
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1134
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests][suite]
+    - id: 1142
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests.MeasureProfilerSamples_SampleGroup_SingleFrame_RecordsSample]
+      name: MeasureProfilerSamples_SampleGroup_SingleFrame_RecordsSample
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_SampleGroup_SingleFrame_RecordsSample
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1134
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests][suite]
+    - id: 1139
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests.MeasureProfilerSamples_string_ManyFrames_RecordsSamples]
+      name: MeasureProfilerSamples_string_ManyFrames_RecordsSamples
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_string_ManyFrames_RecordsSamples
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1134
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests][suite]
+    - id: 1136
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests.MeasureProfilerSamples_string_SingleFrame_RecordsSample]
+      name: MeasureProfilerSamples_string_SingleFrame_RecordsSample
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_string_SingleFrame_RecordsSample
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1134
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests][suite]
+    - id: 1135
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests.MeasureProfilerSamples_string_WithNoSamples_DoesNotRecordSampleGroups]
+      name: MeasureProfilerSamples_string_WithNoSamples_DoesNotRecordSampleGroups
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_string_WithNoSamples_DoesNotRecordSampleGroups
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1134
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests][suite]
+    - id: 1137
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests.MeasureProfilerSamples_strings_SingleFrame_RecordsSample]
+      name: MeasureProfilerSamples_strings_SingleFrame_RecordsSample
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_strings_SingleFrame_RecordsSample
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1134
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests][suite]
+    - id: 1141
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests.MeasureProfilerSamples_WithNoGroupSamples_DoesNotRecordSampleGroups]
+      name: MeasureProfilerSamples_WithNoGroupSamples_DoesNotRecordSampleGroups
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_WithNoGroupSamples_DoesNotRecordSampleGroups
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1134
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests][suite]
+    - id: 1140
+      uniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests.MeasureProfilerSamples_WithNullProfilerMarkers_DoesNotRecordSampleGroups]
+      name: MeasureProfilerSamples_WithNullProfilerMarkers_DoesNotRecordSampleGroups
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_WithNullProfilerMarkers_DoesNotRecordSampleGroups
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1134
+      parentUniqueId: Unity.PerformanceTesting.Tests.Runtime.dll/[Unity.PerformanceTesting.Tests.Runtime][MeasureProfilerSamplesTests][suite]
+    m_ResultText: PerformanceTest (46,748s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 3e27c258
-      m_LastClickedID: 1489119038
-      m_ExpandedIDs: 58d704cf59922f0445df6032ae50e43622524b3a010c8f483e27c258ffffff7f
+      m_SelectedIDs: 4ffbcdac
+      m_LastClickedID: -1395786929
+      m_ExpandedIDs: 58d704cf59922f0445df603222524b3a010c8f483e27c258ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -735,20 +1437,21 @@ MonoBehaviour:
       FailedHidden: 0
       NotRunHidden: 0
       m_SearchString: 
-      selectedCategoryMask: 0
+      selectedCategoryMask: 1
       availableCategories:
+      - Performance
       - Uncategorized
     m_SelectedOption: 0
   m_EditModeTestListGUI:
-    m_Window: {fileID: 14}
+    m_Window: {fileID: 15}
     m_NewResultList:
     - id: 1000
       uniqueId: '[antbox][suite]'
       name: antbox
       fullName: antbox
-      resultStatus: 1
-      duration: 0.1056258
-      messages: 
+      resultStatus: 2
+      duration: 0.0502209
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -763,7 +1466,7 @@ MonoBehaviour:
       name: EditMode.dll
       fullName: C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/EditMode.dll
       resultStatus: 1
-      duration: 0.0594961
+      duration: 0.3070559
       messages: 
       output: 
       stacktrace: 
@@ -779,7 +1482,7 @@ MonoBehaviour:
       name: CardResources
       fullName: CardResources
       resultStatus: 1
-      duration: 0.0572607
+      duration: 0.3037117
       messages: 
       output: 
       stacktrace: 
@@ -795,7 +1498,7 @@ MonoBehaviour:
       name: CardsSize
       fullName: CardResources.CardsSize
       resultStatus: 1
-      duration: 0.0327197
+      duration: 0.2776035
       messages: 
       output: 
       stacktrace: 
@@ -807,13 +1510,1595 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1001
       parentUniqueId: EditMode.dll/[EditMode][CardResources][suite]
-    m_ResultText: antbox (0,106s)
+    - id: 1101
+      uniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+      name: Unity.PerformanceTesting.Tests.Editor.dll
+      fullName: C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1000
+      parentUniqueId: '[antbox][suite]'
+    - id: 1024
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][ClassVersionTests][suite]
+      name: ClassVersionTests
+      fullName: ClassVersionTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1025
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/ClassVersionTests/[Unity.PerformanceTesting.Tests.Editor][ClassVersionTests.Default_VersionAttribute_IsSet]
+      name: Default_VersionAttribute_IsSet
+      fullName: ClassVersionTests.Default_VersionAttribute_IsSet
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1024
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][ClassVersionTests][suite]
+    - id: 1026
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/ClassVersionTests/[Unity.PerformanceTesting.Tests.Editor][ClassVersionTests.VersionAttribute_IsSet]
+      name: VersionAttribute_IsSet
+      fullName: ClassVersionTests.VersionAttribute_IsSet
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1024
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][ClassVersionTests][suite]
+    - id: 1029
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/ClassVersionTests/[Unity.PerformanceTesting.Tests.Editor][ClassVersionTests.VersionAttribute_IsSet_OnTestCase][suite]
+      name: VersionAttribute_IsSet_OnTestCase
+      fullName: ClassVersionTests.VersionAttribute_IsSet_OnTestCase
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1024
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][ClassVersionTests][suite]
+    - id: 1027
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/ClassVersionTests/VersionAttribute_IsSet_OnTestCase/[Unity.PerformanceTesting.Tests.Editor][ClassVersionTests.VersionAttribute_IsSet_OnTestCase("1")]
+      name: VersionAttribute_IsSet_OnTestCase("1")
+      fullName: ClassVersionTests.VersionAttribute_IsSet_OnTestCase("1")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1029
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/ClassVersionTests/[Unity.PerformanceTesting.Tests.Editor][ClassVersionTests.VersionAttribute_IsSet_OnTestCase][suite]
+    - id: 1028
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/ClassVersionTests/VersionAttribute_IsSet_OnTestCase/[Unity.PerformanceTesting.Tests.Editor][ClassVersionTests.VersionAttribute_IsSet_OnTestCase("2")]
+      name: VersionAttribute_IsSet_OnTestCase("2")
+      fullName: ClassVersionTests.VersionAttribute_IsSet_OnTestCase("2")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1029
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/ClassVersionTests/[Unity.PerformanceTesting.Tests.Editor][ClassVersionTests.VersionAttribute_IsSet_OnTestCase][suite]
+    - id: 1009
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][DomainReloadTests][suite]
+      name: DomainReloadTests
+      fullName: DomainReloadTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1012
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/DomainReloadTests/[Unity.PerformanceTesting.Tests.Editor][DomainReloadTests.Measure_Survives_DomainReloadWithoutCompilation]
+      name: Measure_Survives_DomainReloadWithoutCompilation
+      fullName: DomainReloadTests.Measure_Survives_DomainReloadWithoutCompilation
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1009
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][DomainReloadTests][suite]
+    - id: 1010
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/DomainReloadTests/[Unity.PerformanceTesting.Tests.Editor][DomainReloadTests.Measure_Survives_EnterPlaymode]
+      name: Measure_Survives_EnterPlaymode
+      fullName: DomainReloadTests.Measure_Survives_EnterPlaymode
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1009
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][DomainReloadTests][suite]
+    - id: 1011
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/DomainReloadTests/[Unity.PerformanceTesting.Tests.Editor][DomainReloadTests.Measure_Survives_ScriptCompliation]
+      name: Measure_Survives_ScriptCompliation
+      fullName: DomainReloadTests.Measure_Survives_ScriptCompliation
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1009
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][DomainReloadTests][suite]
+    - id: 1013
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][GenericTests][suite]
+      name: GenericTests
+      fullName: GenericTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1016
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/GenericTests/[Unity.PerformanceTesting.Tests.Editor][GenericTests.Default_VersionAttribute_IsSet]
+      name: Default_VersionAttribute_IsSet
+      fullName: GenericTests.Default_VersionAttribute_IsSet
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1013
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][GenericTests][suite]
+    - id: 1023
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/GenericTests/[Unity.PerformanceTesting.Tests.Editor][GenericTests.EnterPlaymode_NoFailure]
+      name: EnterPlaymode_NoFailure
+      fullName: GenericTests.EnterPlaymode_NoFailure
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1013
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][GenericTests][suite]
+    - id: 1014
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/GenericTests/[Unity.PerformanceTesting.Tests.Editor][GenericTests.Utils_ConvertFromUnixTimestamp]
+      name: Utils_ConvertFromUnixTimestamp
+      fullName: GenericTests.Utils_ConvertFromUnixTimestamp
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1013
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][GenericTests][suite]
+    - id: 1015
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/GenericTests/[Unity.PerformanceTesting.Tests.Editor][GenericTests.Utils_ConvertToUnixTimestamp]
+      name: Utils_ConvertToUnixTimestamp
+      fullName: GenericTests.Utils_ConvertToUnixTimestamp
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1013
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][GenericTests][suite]
+    - id: 1017
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/GenericTests/[Unity.PerformanceTesting.Tests.Editor][GenericTests.VersionAttribute_IsSet]
+      name: VersionAttribute_IsSet
+      fullName: GenericTests.VersionAttribute_IsSet
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1013
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][GenericTests][suite]
+    - id: 1020
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/GenericTests/[Unity.PerformanceTesting.Tests.Editor][GenericTests.VersionAttribute_IsSet_OnTestCase][suite]
+      name: VersionAttribute_IsSet_OnTestCase
+      fullName: GenericTests.VersionAttribute_IsSet_OnTestCase
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1013
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][GenericTests][suite]
+    - id: 1018
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/GenericTests/VersionAttribute_IsSet_OnTestCase/[Unity.PerformanceTesting.Tests.Editor][GenericTests.VersionAttribute_IsSet_OnTestCase("1")]
+      name: VersionAttribute_IsSet_OnTestCase("1")
+      fullName: GenericTests.VersionAttribute_IsSet_OnTestCase("1")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1020
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/GenericTests/[Unity.PerformanceTesting.Tests.Editor][GenericTests.VersionAttribute_IsSet_OnTestCase][suite]
+    - id: 1019
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/GenericTests/VersionAttribute_IsSet_OnTestCase/[Unity.PerformanceTesting.Tests.Editor][GenericTests.VersionAttribute_IsSet_OnTestCase("2")]
+      name: VersionAttribute_IsSet_OnTestCase("2")
+      fullName: GenericTests.VersionAttribute_IsSet_OnTestCase("2")
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1020
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/GenericTests/[Unity.PerformanceTesting.Tests.Editor][GenericTests.VersionAttribute_IsSet_OnTestCase][suite]
+    - id: 1022
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/GenericTests/[Unity.PerformanceTesting.Tests.Editor][GenericTests.ZeroSampleGroups_Highlighted_MultipleSamples]
+      name: ZeroSampleGroups_Highlighted_MultipleSamples
+      fullName: GenericTests.ZeroSampleGroups_Highlighted_MultipleSamples
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1013
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][GenericTests][suite]
+    - id: 1021
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/GenericTests/[Unity.PerformanceTesting.Tests.Editor][GenericTests.ZeroSampleGroups_Highlighted_SingleSample]
+      name: ZeroSampleGroups_Highlighted_SingleSample
+      fullName: GenericTests.ZeroSampleGroups_Highlighted_SingleSample
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1013
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][GenericTests][suite]
+    - id: 1030
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureCustomTests][suite]
+      name: MeasureCustomTests
+      fullName: MeasureCustomTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1035
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureCustomTests/[Unity.PerformanceTesting.Tests.Editor][MeasureCustomTests.MeasureCustom_MultipleSampleGroups]
+      name: MeasureCustom_MultipleSampleGroups
+      fullName: MeasureCustomTests.MeasureCustom_MultipleSampleGroups
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1030
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureCustomTests][suite]
+    - id: 1036
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureCustomTests/[Unity.PerformanceTesting.Tests.Editor][MeasureCustomTests.MeasureCustom_NaN_Throws]
+      name: MeasureCustom_NaN_Throws
+      fullName: MeasureCustomTests.MeasureCustom_NaN_Throws
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1030
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureCustomTests][suite]
+    - id: 1033
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureCustomTests/[Unity.PerformanceTesting.Tests.Editor][MeasureCustomTests.MeasureCustom_PercentileSample_CorrectValues]
+      name: MeasureCustom_PercentileSample_CorrectValues
+      fullName: MeasureCustomTests.MeasureCustom_PercentileSample_CorrectValues
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1030
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureCustomTests][suite]
+    - id: 1034
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureCustomTests/[Unity.PerformanceTesting.Tests.Editor][MeasureCustomTests.MeasureCustom_PercentileSamples_CorrectValues]
+      name: MeasureCustom_PercentileSamples_CorrectValues
+      fullName: MeasureCustomTests.MeasureCustom_PercentileSamples_CorrectValues
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1030
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureCustomTests][suite]
+    - id: 1031
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureCustomTests/[Unity.PerformanceTesting.Tests.Editor][MeasureCustomTests.MeasureCustom_SampleGroup_CorrectValues]
+      name: MeasureCustom_SampleGroup_CorrectValues
+      fullName: MeasureCustomTests.MeasureCustom_SampleGroup_CorrectValues
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1030
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureCustomTests][suite]
+    - id: 1032
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureCustomTests/[Unity.PerformanceTesting.Tests.Editor][MeasureCustomTests.MeasureCustom_SampleGroupWithSamples_CorrectValues]
+      name: MeasureCustom_SampleGroupWithSamples_CorrectValues
+      fullName: MeasureCustomTests.MeasureCustom_SampleGroupWithSamples_CorrectValues
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1030
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureCustomTests][suite]
+    - id: 1037
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
+      name: MeasureMethodTests
+      fullName: MeasureMethodTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1045
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_With_EmptyProfilerMarkers]
+      name: MeasureMethod_With_EmptyProfilerMarkers
+      fullName: MeasureMethodTests.MeasureMethod_With_EmptyProfilerMarkers
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1037
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
+    - id: 1082
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_With_GarbageCollectionMarker]
+      name: MeasureMethod_With_GarbageCollectionMarker
+      fullName: MeasureMethodTests.MeasureMethod_With_GarbageCollectionMarker
+      resultStatus: 0
+      duration: 0
+      messages: Unstable, can't guarantee no GC events
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 1
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1075
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
+    - id: 1039
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_With_MeasurementCount]
+      name: MeasureMethod_With_MeasurementCount
+      fullName: MeasureMethodTests.MeasureMethod_With_MeasurementCount
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1037
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
+    - id: 1042
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_With_MeasurementCountAndCleanup]
+      name: MeasureMethod_With_MeasurementCountAndCleanup
+      fullName: MeasureMethodTests.MeasureMethod_With_MeasurementCountAndCleanup
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1037
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
+    - id: 1043
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_With_MeasurementCountAndIterationCount]
+      name: MeasureMethod_With_MeasurementCountAndIterationCount
+      fullName: MeasureMethodTests.MeasureMethod_With_MeasurementCountAndIterationCount
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1037
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
+    - id: 1041
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_With_MeasurementCountAndSetup]
+      name: MeasureMethod_With_MeasurementCountAndSetup
+      fullName: MeasureMethodTests.MeasureMethod_With_MeasurementCountAndSetup
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1037
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
+    - id: 1040
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_With_MeasurementCountAndSetupCleanup]
+      name: MeasureMethod_With_MeasurementCountAndSetupCleanup
+      fullName: MeasureMethodTests.MeasureMethod_With_MeasurementCountAndSetupCleanup
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1037
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
+    - id: 1038
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_With_NoArguments]
+      name: MeasureMethod_With_NoArguments
+      fullName: MeasureMethodTests.MeasureMethod_With_NoArguments
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1037
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
+    - id: 1046
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_With_ValidProfilerMarkers]
+      name: MeasureMethod_With_ValidProfilerMarkers
+      fullName: MeasureMethodTests.MeasureMethod_With_ValidProfilerMarkers
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1037
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
+    - id: 1049
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_WithCustomSampleGroup_And_MultipleProfilerMarkers_SetsTheCorrectSampleUnit_Run]
+      name: MeasureMethod_WithCustomSampleGroup_And_MultipleProfilerMarkers_SetsTheCorrectSampleUnit_Run
+      fullName: MeasureMethodTests.MeasureMethod_WithCustomSampleGroup_And_MultipleProfilerMarkers_SetsTheCorrectSampleUnit_Run
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1037
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
+    - id: 1048
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_WithCustomSampleGroup_And_ProfilerMarker_SetsTheCorrectSampleUnit_Run]
+      name: MeasureMethod_WithCustomSampleGroup_And_ProfilerMarker_SetsTheCorrectSampleUnit_Run
+      fullName: MeasureMethodTests.MeasureMethod_WithCustomSampleGroup_And_ProfilerMarker_SetsTheCorrectSampleUnit_Run
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1037
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
+    - id: 1047
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_WithCustomSampleGroupInProfilerMarker_UsesDefaultSampleGroupPlusTheCustomOne_Run]
+      name: MeasureMethod_WithCustomSampleGroupInProfilerMarker_UsesDefaultSampleGroupPlusTheCustomOne_Run
+      fullName: MeasureMethodTests.MeasureMethod_WithCustomSampleGroupInProfilerMarker_UsesDefaultSampleGroupPlusTheCustomOne_Run
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1037
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
+    - id: 1050
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests][suite]
+      name: MeasureProfilerSamplesTests
+      fullName: MeasureProfilerSamplesTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1093
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests.MeasureProfilerSamples_ManyFrames_RecordsSamples]
+      name: MeasureProfilerSamples_ManyFrames_RecordsSamples
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_ManyFrames_RecordsSamples
+      resultStatus: 0
+      duration: 0
+      messages: Not supported yet
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 1
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1088
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests][suite]
+    - id: 1052
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests.MeasureProfilerSamples_SingleFrame_RecordsSample]
+      name: MeasureProfilerSamples_SingleFrame_RecordsSample
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_SingleFrame_RecordsSample
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1050
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests][suite]
+    - id: 1094
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests.MeasureProfilerSamples_string_ManyFrames_RecordsSamples]
+      name: MeasureProfilerSamples_string_ManyFrames_RecordsSamples
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_string_ManyFrames_RecordsSamples
+      resultStatus: 0
+      duration: 0
+      messages: Not supported
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 1
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1088
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests][suite]
+    - id: 1053
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests.MeasureProfilerSamples_strings_SingleFrame_RecordsSample]
+      name: MeasureProfilerSamples_strings_SingleFrame_RecordsSample
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_strings_SingleFrame_RecordsSample
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1050
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests][suite]
+    - id: 1054
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests.MeasureProfilerSamples_WhenNewScene_RecordsSample]
+      name: MeasureProfilerSamples_WhenNewScene_RecordsSample
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_WhenNewScene_RecordsSample
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1050
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests][suite]
+    - id: 1051
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests.MeasureProfilerSamples_WithNoSamples_DoesNotRecordSampleGroups]
+      name: MeasureProfilerSamples_WithNoSamples_DoesNotRecordSampleGroups
+      fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_WithNoSamples_DoesNotRecordSampleGroups
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1050
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests][suite]
+    - id: 1057
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureScope][suite]
+      name: MeasureScope
+      fullName: MeasureScope
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1060
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureScope/[Unity.PerformanceTesting.Tests.Editor][MeasureScope.MeasureMultipleScopes_WithDefinition_MeasuresSamples]
+      name: MeasureMultipleScopes_WithDefinition_MeasuresSamples
+      fullName: MeasureScope.MeasureMultipleScopes_WithDefinition_MeasuresSamples
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1057
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureScope][suite]
+    - id: 1059
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureScope/[Unity.PerformanceTesting.Tests.Editor][MeasureScope.MeasureScope_WithDefinition_MeasuresSample]
+      name: MeasureScope_WithDefinition_MeasuresSample
+      fullName: MeasureScope.MeasureScope_WithDefinition_MeasuresSample
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1057
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureScope][suite]
+    - id: 1058
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureScope/[Unity.PerformanceTesting.Tests.Editor][MeasureScope.MeasureScope_WithoutDefinition_MeasuresDefaultSample]
+      name: MeasureScope_WithoutDefinition_MeasuresDefaultSample
+      fullName: MeasureScope.MeasureScope_WithoutDefinition_MeasuresDefaultSample
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1057
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureScope][suite]
+    - id: 1061
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureScope/[Unity.PerformanceTesting.Tests.Editor][MeasureScope.MeasureScope_WithSampleGroup_ResultsIsInTheDefinedSampleUnit]
+      name: MeasureScope_WithSampleGroup_ResultsIsInTheDefinedSampleUnit
+      fullName: MeasureScope.MeasureScope_WithSampleGroup_ResultsIsInTheDefinedSampleUnit
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1057
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureScope][suite]
+    - id: 1062
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MetadataTests][suite]
+      name: MetadataTests
+      fullName: MetadataTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1066
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MetadataTests/[Unity.PerformanceTesting.Tests.Editor][MetadataTests.Metadata_GetFromResources]
+      name: Metadata_GetFromResources
+      fullName: MetadataTests.Metadata_GetFromResources
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1062
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MetadataTests][suite]
+    - id: 1065
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MetadataTests/[Unity.PerformanceTesting.Tests.Editor][MetadataTests.TestRunBuilder_CreateBuildInfo]
+      name: TestRunBuilder_CreateBuildInfo
+      fullName: MetadataTests.TestRunBuilder_CreateBuildInfo
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1062
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MetadataTests][suite]
+    - id: 1064
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MetadataTests/[Unity.PerformanceTesting.Tests.Editor][MetadataTests.TestRunBuilder_CreateRunInfo]
+      name: TestRunBuilder_CreateRunInfo
+      fullName: MetadataTests.TestRunBuilder_CreateRunInfo
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1062
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MetadataTests][suite]
+    - id: 1063
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MetadataTests/[Unity.PerformanceTesting.Tests.Editor][MetadataTests.TestRunBuilder_GetPerformanceTestRun]
+      name: TestRunBuilder_GetPerformanceTestRun
+      fullName: MetadataTests.TestRunBuilder_GetPerformanceTestRun
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1062
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MetadataTests][suite]
+    - id: 1067
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MultipleDomainReloadTests][suite]
+      name: MultipleDomainReloadTests
+      fullName: MultipleDomainReloadTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1070
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MultipleDomainReloadTests/[Unity.PerformanceTesting.Tests.Editor][MultipleDomainReloadTests.MeasureCustom_Survives_MultipleSessionEvents][suite]
+      name: MeasureCustom_Survives_MultipleSessionEvents
+      fullName: MultipleDomainReloadTests.MeasureCustom_Survives_MultipleSessionEvents
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1067
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MultipleDomainReloadTests][suite]
+    - id: 1068
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MultipleDomainReloadTests/MeasureCustom_Survives_MultipleSessionEvents/[Unity.PerformanceTesting.Tests.Editor][MultipleDomainReloadTests.MeasureCustom_Survives_MultipleSessionEvents(ByReference)]
+      name: MeasureCustom_Survives_MultipleSessionEvents(ByReference)
+      fullName: MultipleDomainReloadTests.MeasureCustom_Survives_MultipleSessionEvents(ByReference)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1070
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MultipleDomainReloadTests/[Unity.PerformanceTesting.Tests.Editor][MultipleDomainReloadTests.MeasureCustom_Survives_MultipleSessionEvents][suite]
+    - id: 1069
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MultipleDomainReloadTests/MeasureCustom_Survives_MultipleSessionEvents/[Unity.PerformanceTesting.Tests.Editor][MultipleDomainReloadTests.MeasureCustom_Survives_MultipleSessionEvents(ByValue)]
+      name: MeasureCustom_Survives_MultipleSessionEvents(ByValue)
+      fullName: MultipleDomainReloadTests.MeasureCustom_Survives_MultipleSessionEvents(ByValue)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1070
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MultipleDomainReloadTests/[Unity.PerformanceTesting.Tests.Editor][MultipleDomainReloadTests.MeasureCustom_Survives_MultipleSessionEvents][suite]
+    - id: 1071
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][PerformanceTestTests][suite]
+      name: PerformanceTestTests
+      fullName: PerformanceTestTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1072
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/PerformanceTestTests/[Unity.PerformanceTesting.Tests.Editor][PerformanceTestTests.Serialize_NewTest]
+      name: Serialize_NewTest
+      fullName: PerformanceTestTests.Serialize_NewTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1071
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][PerformanceTestTests][suite]
+    - id: 1073
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/PerformanceTestTests/[Unity.PerformanceTesting.Tests.Editor][PerformanceTestTests.Serialize_TestWithSampleGroups]
+      name: Serialize_TestWithSampleGroups
+      fullName: PerformanceTestTests.Serialize_TestWithSampleGroups
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1071
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][PerformanceTestTests][suite]
+    - id: 1102
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwrite][suite]
+      name: TestNameOverwrite
+      fullName: TestNameOverwrite
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1097
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwrite/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwrite.TestNameOverwriteInNamespaceTests][suite]
+      name: TestNameOverwriteInNamespaceTests
+      fullName: TestNameOverwrite.TestNameOverwriteInNamespaceTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1102
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwrite][suite]
+    - id: 1098
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwrite/TestNameOverwriteInNamespaceTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwrite.TestNameOverwriteInNamespaceTests.TestName_NameSpace_Default]
+      name: TestName_NameSpace_Default
+      fullName: TestNameOverwrite.TestNameOverwriteInNamespaceTests.TestName_NameSpace_Default
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1097
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwrite/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwrite.TestNameOverwriteInNamespaceTests][suite]
+    - id: 1100
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwrite/TestNameOverwriteInNamespaceTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwrite.TestNameOverwriteInNamespaceTests.TestName_Overwrite_TestCase][suite]
+      name: TestName_Overwrite_TestCase
+      fullName: TestNameOverwrite.TestNameOverwriteInNamespaceTests.TestName_Overwrite_TestCase
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1097
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwrite/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwrite.TestNameOverwriteInNamespaceTests][suite]
+    - id: 1099
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwrite/TestNameOverwriteInNamespaceTests/TestName_Overwrite_TestCase/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwrite.TestNameOverwriteInNamespaceTests.TestName_OverwriteInTestCase]
+      name: TestName_OverwriteInTestCase
+      fullName: TestNameOverwrite.TestNameOverwriteInNamespaceTests.TestName_OverwriteInTestCase
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1100
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwrite/TestNameOverwriteInNamespaceTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwrite.TestNameOverwriteInNamespaceTests.TestName_Overwrite_TestCase][suite]
+    - id: 1078
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests][suite]
+      name: TestNameOverwriteTests
+      fullName: TestNameOverwriteTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1083
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_Overwrite_TestCase][suite]
+      name: TestName_Overwrite_TestCase
+      fullName: TestNameOverwriteTests.TestName_Overwrite_TestCase
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1078
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests][suite]
+    - id: 1082
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/TestName_Overwrite_TestCase/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_OverwriteInTestCase]
+      name: TestName_OverwriteInTestCase
+      fullName: TestNameOverwriteTests.TestName_OverwriteInTestCase
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1083
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_Overwrite_TestCase][suite]
+    - id: 1092
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_Overwrite_TestCase_UnityTest][suite]
+      name: TestName_Overwrite_TestCase_UnityTest
+      fullName: TestNameOverwriteTests.TestName_Overwrite_TestCase_UnityTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1078
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests][suite]
+    - id: 1091
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/TestName_Overwrite_TestCase_UnityTest/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_OverwriteInTestCase]
+      name: TestName_OverwriteInTestCase
+      fullName: TestNameOverwriteTests.TestName_OverwriteInTestCase
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1092
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_Overwrite_TestCase_UnityTest][suite]
+    - id: 1085
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_Overwrite_TestCaseSource][suite]
+      name: TestName_Overwrite_TestCaseSource
+      fullName: TestNameOverwriteTests.TestName_Overwrite_TestCaseSource
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1078
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests][suite]
+    - id: 1084
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/TestName_Overwrite_TestCaseSource/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_OverwriteInTestCaseSource]
+      name: TestName_OverwriteInTestCaseSource
+      fullName: TestNameOverwriteTests.TestName_OverwriteInTestCaseSource
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1085
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_Overwrite_TestCaseSource][suite]
+    - id: 1094
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_Overwrite_TestCaseSource_UnityTest][suite]
+      name: TestName_Overwrite_TestCaseSource_UnityTest
+      fullName: TestNameOverwriteTests.TestName_Overwrite_TestCaseSource_UnityTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1078
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests][suite]
+    - id: 1093
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/TestName_Overwrite_TestCaseSource_UnityTest/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_OverwriteInTestCaseSource]
+      name: TestName_OverwriteInTestCaseSource
+      fullName: TestNameOverwriteTests.TestName_OverwriteInTestCaseSource
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1094
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_Overwrite_TestCaseSource_UnityTest][suite]
+    - id: 1087
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_OverwriteMethodName][suite]
+      name: TestName_OverwriteMethodName
+      fullName: TestNameOverwriteTests.TestName_OverwriteMethodName
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1078
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests][suite]
+    - id: 1086
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/TestName_OverwriteMethodName/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_OverwriteMethodName(OverwriteTestMethodName)]
+      name: TestName_OverwriteMethodName(OverwriteTestMethodName)
+      fullName: TestNameOverwriteTests.TestName_OverwriteMethodName(OverwriteTestMethodName)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1087
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_OverwriteMethodName][suite]
+    - id: 1096
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_OverwriteMethodName_UnityTest][suite]
+      name: TestName_OverwriteMethodName_UnityTest
+      fullName: TestNameOverwriteTests.TestName_OverwriteMethodName_UnityTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1078
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests][suite]
+    - id: 1095
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/TestName_OverwriteMethodName_UnityTest/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_OverwriteMethodName_UnityTest(OverwriteTestMethodName)]
+      name: TestName_OverwriteMethodName_UnityTest(OverwriteTestMethodName)
+      fullName: TestNameOverwriteTests.TestName_OverwriteMethodName_UnityTest(OverwriteTestMethodName)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1096
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_OverwriteMethodName_UnityTest][suite]
+    - id: 1081
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_TestCase_Default][suite]
+      name: TestName_TestCase_Default
+      fullName: TestNameOverwriteTests.TestName_TestCase_Default
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1078
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests][suite]
+    - id: 1079
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/TestName_TestCase_Default/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_TestCase_Default(1)]
+      name: TestName_TestCase_Default(1)
+      fullName: TestNameOverwriteTests.TestName_TestCase_Default(1)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1081
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_TestCase_Default][suite]
+    - id: 1080
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/TestName_TestCase_Default/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_TestCase_Default(2)]
+      name: TestName_TestCase_Default(2)
+      fullName: TestNameOverwriteTests.TestName_TestCase_Default(2)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1081
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_TestCase_Default][suite]
+    - id: 1090
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_TestCase_Default_UnityTest][suite]
+      name: TestName_TestCase_Default_UnityTest
+      fullName: TestNameOverwriteTests.TestName_TestCase_Default_UnityTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories:
+      - Performance
+      parentId: 1078
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests][suite]
+    - id: 1088
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/TestName_TestCase_Default_UnityTest/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_TestCase_Default_UnityTest(1)]
+      name: TestName_TestCase_Default_UnityTest(1)
+      fullName: TestNameOverwriteTests.TestName_TestCase_Default_UnityTest(1)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1090
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_TestCase_Default_UnityTest][suite]
+    - id: 1089
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/TestName_TestCase_Default_UnityTest/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_TestCase_Default_UnityTest(2)]
+      name: TestName_TestCase_Default_UnityTest(2)
+      fullName: TestNameOverwriteTests.TestName_TestCase_Default_UnityTest(2)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1090
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestNameOverwriteTests/[Unity.PerformanceTesting.Tests.Editor][TestNameOverwriteTests.TestName_TestCase_Default_UnityTest][suite]
+    - id: 1074
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][TestSetupTeardown][suite]
+      name: TestSetupTeardown
+      fullName: TestSetupTeardown
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1075
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/TestSetupTeardown/[Unity.PerformanceTesting.Tests.Editor][TestSetupTeardown.Test]
+      name: Test
+      fullName: TestSetupTeardown.Test
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1074
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][TestSetupTeardown][suite]
+    - id: 1076
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][UnityTestSetupTeardown][suite]
+      name: UnityTestSetupTeardown
+      fullName: UnityTestSetupTeardown
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1101
+      parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
+    - id: 1077
+      uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/UnityTestSetupTeardown/[Unity.PerformanceTesting.Tests.Editor][UnityTestSetupTeardown.Test]
+      name: Test
+      fullName: UnityTestSetupTeardown.Test
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Performance
+      parentId: 1076
+      parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][UnityTestSetupTeardown][suite]
+    m_ResultText: 
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 3e27c258
-      m_LastClickedID: 1489119038
-      m_ExpandedIDs: b00bf7ce18687e113e27c2585a6f4e61ffffff7f
+      m_SelectedIDs: d29d8e3c
+      m_LastClickedID: 1015979474
+      m_ExpandedIDs: 3f68e183b00bf7ce5c591dd918687e113e27c2585a6f4e61ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -838,8 +3123,9 @@ MonoBehaviour:
       m_SearchString: 
       selectedCategoryMask: 0
       availableCategories:
+      - Performance
       - Uncategorized
---- !u!114 &15
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -860,9 +3146,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 454.6667
+    y: 454
     width: 968.3333
-    height: 176.33331
+    height: 177.00003
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -898,10 +3184,10 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 299.6667}
-    m_SelectedIDs: 32660000
-    m_LastClickedID: 26162
-    m_ExpandedIDs: 000000002c6600002e66000030660000326600003466000036660000386600003a6600003c6600003e66000040660000426600005e660000a066000000ca9a3b
+    scrollPos: {x: 0, y: 243.66663}
+    m_SelectedIDs: fe710000
+    m_LastClickedID: 29182
+    m_ExpandedIDs: 00000000f8710000fa710000fe710000007200000472000006720000087200000a7200000c7200000e720000107200002072000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -929,7 +3215,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000002c6600002e66000030660000326600003466000036660000386600003a6600003c6600003e6600004066000042660000
+    m_ExpandedIDs: 00000000f8710000fa710000fc710000fe71000000720000027200000472000006720000087200000a7200000c7200000e72000010720000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -954,24 +3240,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 94c40000
-    m_LastClickedInstanceID: 50324
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c27100001e6c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: BackgroundVolume
-      m_OriginalName: BackgroundVolume
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 29586
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
@@ -985,7 +3271,7 @@ MonoBehaviour:
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 160.66667
---- !u!114 &16
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1005,10 +3291,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 208.66667
+    x: 208
     y: 72.66667
-    width: 758.6666
-    height: 361
+    width: 759.3333
+    height: 360.33334
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1446,7 +3732,7 @@ MonoBehaviour:
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &17
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1468,8 +3754,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 72.66667
-    width: 207.66667
-    height: 361
+    width: 207
+    height: 360.33334
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1485,21 +3771,21 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 0cf1feff40f1feff982fffff0c35ffff4035ffff204bffff8252ffff3053ffff6453ffffa668ffffea6cffff1e6dffff106fffff2ecaffff92cfffffaad7ffffe0f4ffff16fbffffb86c00001a7c000068820000148d00003a8d0000408d00002ab3000030b3000018c0000026c1000050c200006ac30000c6d90000
+      m_ExpandedIDs: 5e9efbff929efbff9892fdff00a9fdff84a9fdffb8a9fdff209effffe8a3ffffc8a4ffff54a6ffffe8a7ffffc8beffff16fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: BackgroundAudio
-        m_OriginalName: BackgroundAudio
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 25716
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 9}
       m_SearchString: 
@@ -1509,7 +3795,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 4c969a2b90040154d917609493e03593
---- !u!114 &18
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1529,10 +3815,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 208.66667
+    x: 208
     y: 72.66667
-    width: 758.6666
-    height: 361
+    width: 759.3333
+    height: 360.33334
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1551,7 +3837,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 604, y: 340}
+  m_TargetSize: {x: 603, y: 339.33334}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1566,10 +3852,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -201.33334
-    m_HBaseRangeMax: 201.33334
-    m_VBaseRangeMin: -113.333336
-    m_VBaseRangeMax: 113.333336
+    m_HBaseRangeMin: -201
+    m_HBaseRangeMax: 201
+    m_VBaseRangeMin: -113.111115
+    m_VBaseRangeMax: 113.111115
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -1587,29 +3873,29 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 758.6666
-      height: 340
+      width: 759.3333
+      height: 339.33334
     m_Scale: {x: 1.5, y: 1.5}
-    m_Translation: {x: 379.3333, y: 170}
+    m_Translation: {x: 379.66666, y: 169.66667}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -252.88887
-      y: -113.333336
-      width: 505.77774
-      height: 226.66667
+      x: -253.1111
+      y: -113.111115
+      width: 506.2222
+      height: 226.22223
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 1138, y: 541.5}
+  m_LastWindowPixelSize: {x: 1139, y: 540.5}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &19
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1646,7 +3932,7 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_LastSelectedObjectID: 50324
---- !u!114 &20
+--- !u!114 &21
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1666,10 +3952,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 178.66667
+    x: 208
     y: 72.66667
-    width: 812
-    height: 374.33334
+    width: 759.3333
+    height: 360.33334
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1750,7 +4036,7 @@ MonoBehaviour:
   m_CurrentEditor: 1
   m_LayerEditor:
     m_SelectedLayerIndex: 0
---- !u!114 &21
+--- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1771,9 +4057,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 454.6667
+    y: 454
     width: 968.3333
-    height: 176.33331
+    height: 177.00003
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1784,7 +4070,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &22
+--- !u!114 &23
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1819,7 +4105,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   mForceToOpen: 0
---- !u!114 &23
+--- !u!114 &24
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1842,7 +4128,7 @@ MonoBehaviour:
     x: 969.3334
     y: 72.66667
     width: 309.6667
-    height: 558.3333
+    height: 558.3334
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
