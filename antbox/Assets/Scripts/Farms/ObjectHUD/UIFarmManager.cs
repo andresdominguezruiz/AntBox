@@ -19,7 +19,9 @@ public class UIFarmManager : MonoBehaviour
 
 
     void Update(){
-        if(farmStats!=null) UpdateCanvasWithFarmStats(farmStats);
+        if(farmStats!=null){
+            UpdateCanvasWithFarmStats(farmStats);
+        }
     }
     public void ShowInfo(){
         infoCanvas.gameObject.SetActive(true);
@@ -34,7 +36,9 @@ public class UIFarmManager : MonoBehaviour
     public void StartMultipleFarminMenu(){
         FarmStats farmStats=this.gameObject.GetComponentInParent<FarmStats>();
         MultipleFarmingMenu multipleFarmingMenu=FindObjectOfType<MultipleFarmingMenu>(true);
-        if(farmStats!=null && multipleFarmingMenu!=null) multipleFarmingMenu.InitMultipleFarmingMenu(farmStats);
+        if(farmStats!=null && multipleFarmingMenu!=null){
+            multipleFarmingMenu.InitMultipleFarmingMenu(farmStats);
+        }
     }
 
     public void UpdateCanvasWithFarmStats(FarmStats stats){

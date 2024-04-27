@@ -81,8 +81,12 @@ public class FarmGenerator : MonoBehaviour
     }
     public void PlaceNewFarmInPosition(Vector3Int position,bool placeWaterFarm){
         Tilemap map=dirtMap.GetComponent<Tilemap>();
-        if(placeWaterFarm) PlaceWaterFarm(map,position);
-        else PlaceFoodFarm(map,position);
+        if(placeWaterFarm){
+            PlaceWaterFarm(map,position);
+        }
+        else{
+            PlaceFoodFarm(map,position);
+        }
         availablePath.Remove(position);
         DestroyAroundFarmAndAddCoverage(position,map);
     }

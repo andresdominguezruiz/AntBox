@@ -82,7 +82,9 @@ public class TileData
     public void DiggingTile(AntStats antStats,bool isMenuDigInUse){
         actualResistance-=antStats.GetDiggingSpeed();
         antStats.ApplyEnergyCost(energyCostToDig);
-        if(!antsDiggingSameTile.Contains(antStats)) antsDiggingSameTile.Add(antStats);
+        if(!antsDiggingSameTile.Contains(antStats)){
+            antsDiggingSameTile.Add(antStats);
+        }
         ProcessStateOfTile(isMenuDigInUse);
     }
 

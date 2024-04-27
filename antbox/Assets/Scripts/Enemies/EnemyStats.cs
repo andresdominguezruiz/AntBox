@@ -14,8 +14,12 @@ public class EnemyStats : MonoBehaviour
     public BarManager healthBar;
 
     public void Heal(int extraHP){
-        if(extraHP+actualHP>enemy.maxHP) actualHP=enemy.maxHP;
-        else actualHP+=extraHP;
+        if(extraHP+actualHP>enemy.maxHP){
+            actualHP=enemy.maxHP;
+        }
+        else{
+            actualHP+=extraHP;
+        }
         healthBar.SetBarValue(actualHP);
     }
 

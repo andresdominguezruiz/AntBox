@@ -25,8 +25,6 @@ public class SelectableItem : MonoBehaviour
 
     public static List<SelectableItem> selectableItems=new List<SelectableItem>();
     public static HashSet<Vector3> availablePath=new HashSet<Vector3>();
-
-    private System.Random random = new System.Random();
     
     public UIManager itemUI;
 
@@ -39,7 +37,9 @@ public class SelectableItem : MonoBehaviour
     public List<FarmStats> GetAllFarms(){
         List<FarmStats> list=new List<FarmStats>();
         foreach(SelectableItem item in selectableItems){
-            if(item.type.Equals(ItemType.FARM)) list.Add(item.gameObject.GetComponent<FarmStats>());
+            if(item.type.Equals(ItemType.FARM)){
+                list.Add(item.gameObject.GetComponent<FarmStats>());
+            }
         }
         return list;
     }
@@ -138,7 +138,9 @@ public class SelectableItem : MonoBehaviour
         originalColor=this.gameObject.GetComponentInChildren<SpriteRenderer>().color;
         selectedColor=Color.green;
         QueenStats queenStats=this.GetComponent<QueenStats>();
-        if(queenStats!=null) type=ItemType.QUEEN;
+        if(queenStats!=null){
+            type=ItemType.QUEEN;
+        }
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -147,15 +149,6 @@ public class SelectableItem : MonoBehaviour
         {
             // Ignora la colisión
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider, true);
-        }
-    }
-    public void MakeEveryoneUnselectableButPrepareFarms(){
-        for(int i=0;i<selectableItems.Count;i++){
-            selectableItems[i].canBeSelected=false;
-            if(selectableItems[i].gameObject.GetComponent<FarmStats>()!=null){
-                FarmStats stats=selectableItems[i].gameObject.GetComponent<FarmStats>();
-
-            }
         }
     }
 
@@ -260,7 +253,9 @@ public class SelectableItem : MonoBehaviour
         if(!PauseMenu.isPaused){
             if(canBeSelected && !isSelected){
             CardDisplay cardInHand=FindObjectOfType<CardDisplay>(false);
-            if(cardInHand!=null) cardInHand.HideCardsInHand();
+            if(cardInHand!=null){
+                cardInHand.HideCardsInHand();
+            }
             isSelected=true;
             ChangeColor(this.selectedColor);
             if(itemUI!=null && !itemUI.isQueen){

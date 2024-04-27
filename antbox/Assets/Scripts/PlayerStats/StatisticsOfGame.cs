@@ -62,9 +62,15 @@ public class StatisticsOfGame : MonoBehaviour
         int number=1;
         int level=1;
         //Pick max enemy level
-        if(actualLevel>=0 && actualLevel<4) level=2;
-        else if(actualLevel>=4 && actualLevel<8) level=4;
-        else if(actualLevel>=8) level=10;
+        if(actualLevel>=0 && actualLevel<4){
+            level=2;
+        }
+        else if(actualLevel>=4 && actualLevel<8){
+            level=4;
+        }
+        else if(actualLevel>=8){
+            level=10;
+        }
 
         //Pick type and number
         if((actualLevel>=0 && actualLevel<2 && randomValue<0.5) ||
@@ -92,7 +98,9 @@ public class StatisticsOfGame : MonoBehaviour
     }
     public void ResetData(){
         NestManager nestManager=FindObjectOfType<NestManager>();
-        if(nestManager!=null) 
+        if(nestManager!=null){
+            nestManager.ResetEnemies();
+        }
         counterOfExams=0;
         counterOfPassedExams=0;
         counterOfFailedExams=0;

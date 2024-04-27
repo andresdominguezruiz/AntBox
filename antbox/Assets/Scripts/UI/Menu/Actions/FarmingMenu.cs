@@ -46,7 +46,9 @@ public class FarmingMenu : MonoBehaviour
     {
         this.agent=selectedAnt.GetComponent<NavMeshAgent>();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        if(anyCardDisplay!=null){
+            anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        }
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
         farmMenu.gameObject.SetActive(true);
         consoleText.text=selectedAnt.name+"-Select an available farm";

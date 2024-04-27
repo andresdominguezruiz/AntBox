@@ -23,7 +23,9 @@ public class MultipleFarmingMenu : MonoBehaviour
 
     void ShowState(){
         SelectableMaskManager mask=selectedFarm.GetComponentInChildren<SelectableMaskManager>(true);
-        if(mask!=null) mask.ShowRender();
+        if(mask!=null){
+            mask.ShowRender();
+        }
         foreach(GameObject ant in selectedFarm.antsOfFarm){
             if(ant!=null && ant.GetComponent<SelectableItem>()!=null){
                 ant.GetComponent<SelectableItem>().ChangeColor(Color.red);
@@ -32,9 +34,13 @@ public class MultipleFarmingMenu : MonoBehaviour
     }
     void HideState(){
         SelectableMaskManager mask=selectedFarm.GetComponentInChildren<SelectableMaskManager>(true);
-        if(mask!=null) mask.HideRender();
+        if(mask!=null){
+            mask.HideRender();
+        }
         SelectableItem item=selectedFarm.GetComponent<SelectableItem>();
-        if(item!=null) item.ChangeColorOfAllAnts(true);
+        if(item!=null){
+            item.ChangeColorOfAllAnts(true);
+        }
     }
 
     void UpdateText(){

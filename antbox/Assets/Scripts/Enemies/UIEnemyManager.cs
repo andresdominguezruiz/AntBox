@@ -17,13 +17,17 @@ public class UIEnemyManager : MonoBehaviour
 
     void Start(){
         enemyStats=this.gameObject.GetComponentInParent<EnemyStats>();
-        if(enemyStats!=null) StartCanvasWithEnemyStats(enemyStats);
+        if(enemyStats!=null){
+            StartCanvasWithEnemyStats(enemyStats);
+        }
     }
 
 
 
     void Update(){
-        if(enemyStats!=null) UpdateCanvasWithEnemyStats(enemyStats);
+        if(enemyStats!=null){
+            UpdateCanvasWithEnemyStats(enemyStats);
+        }
     }
     public void ShowInfo(){
         infoCanvas.gameObject.SetActive(true);
@@ -45,8 +49,9 @@ public class UIEnemyManager : MonoBehaviour
         damageText.text="Damage:"+stats.enemy.battleStats.damage;
         attackSpeedText.text="Attack speed:"+stats.enemy.battleStats.attackSpeed;
         criticsText.text="Critical Effects:";
-        foreach(CriticalEffects critical in stats.enemy.battleStats.criticalEffects)
+        foreach(CriticalEffects critical in stats.enemy.battleStats.criticalEffects){
             criticsText.text+="-"+critical;
+        }
     }
 
 

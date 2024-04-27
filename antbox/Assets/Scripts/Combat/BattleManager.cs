@@ -55,7 +55,9 @@ public class BattleManager : MonoBehaviour
                     ApplyCriticalEffectsByAlly(enemyStats);
                 }
                 if(enemyStats.gameObject!=null
-                && !enemyStats.IsDead())ApplyDamageToEnemy(enemyStats,antStats.battleStats.damage,isCritic,true);
+                && !enemyStats.IsDead()){
+                    ApplyDamageToEnemy(enemyStats,antStats.battleStats.damage,isCritic,true);
+                }
             }
         }
     }
@@ -67,7 +69,9 @@ public class BattleManager : MonoBehaviour
         if(enemy.gameObject!=null && (enemy.enemy.battleStats.startBattleType.Equals(StartBattleType.WAITER) ||
         enemy.enemy.battleStats.startBattleType.Equals(StartBattleType.SEARCH_AND_RESPOND))){
             BattleMovement battleMovement=enemy.gameObject.GetComponent<BattleMovement>();
-            if(battleMovement!=null) battleMovement.ActualTarget=this.gameObject.transform;
+            if(battleMovement!=null){
+                 battleMovement.ActualTarget=this.gameObject.transform;
+            }
         }
     }
     void ApplyCriticalEffectsByAlly(EnemyStats enemy){
@@ -103,7 +107,9 @@ public class BattleManager : MonoBehaviour
                 }
             }else{
                 AntAnimatorManager antAnimator=characterStats.gameObject.GetComponent<AntAnimatorManager>();
-                if(antAnimator!=null) antAnimator.DodgeAttack();
+                if(antAnimator!=null){
+                    antAnimator.DodgeAttack();
+                }
             }
         }
         else{
@@ -114,7 +120,9 @@ public class BattleManager : MonoBehaviour
     void ApplyDamageToFarm(FarmStats farmStats,int damage){
             farmStats.timePerCycleConsumed-=damage;
             farmStats.CheckTimePerCycle();
-            if(farmStats.broken && enemyStats!=null) enemyStats.kills++;
+            if(farmStats.broken && enemyStats!=null){
+                enemyStats.kills++;
+            }
     }
 
     void StartCounterAttack(GameObject enemyOrAlly){
@@ -173,8 +181,12 @@ public class BattleManager : MonoBehaviour
                         if(other.gameObject!=null){
                             CharacterStats character=other.gameObject.GetComponent<CharacterStats>();
                             FarmStats farm=other.gameObject.GetComponent<FarmStats>();
-                            if(character!=null) ApplyDamageToCharacter(character,enemyStats.enemy.battleStats.damage/2,false,true);
-                            else if(farm!=null) ApplyDamageToFarm(farm,enemyStats.enemy.battleStats.damage*10/100);
+                            if(character!=null){
+                                ApplyDamageToCharacter(character,enemyStats.enemy.battleStats.damage/2,false,true);
+                            }
+                            else if(farm!=null){
+                                ApplyDamageToFarm(farm,enemyStats.enemy.battleStats.damage*10/100);
+                            }
                         }
                     }
                 }

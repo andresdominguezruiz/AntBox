@@ -23,7 +23,7 @@ public class Clock : MonoBehaviour
     [SerializeField] private Sprite[] states=new Sprite[24];
 
 
-    public static int growingTime=24; //Cada t tiempo real, se considera un día
+    readonly static int growingTime=24; //Cada t tiempo real, se considera un día
 
     private int counterOfSecons=0;
 

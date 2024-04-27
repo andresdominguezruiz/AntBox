@@ -51,33 +51,51 @@ public class FarmStats : MonoBehaviour
     }
 
     public void SetMinResources(int resources){
-        if(resources>=1 && resources<MAX_RESOURCES) MIN_RESOURCES=resources;
+        if(resources>=1 && resources<MAX_RESOURCES){
+            MIN_RESOURCES=resources;
+        }
     }
     public void SetMaxResources(int resources){
-        if(resources>MIN_RESOURCES) MAX_RESOURCES=resources;
+        if(resources>MIN_RESOURCES){
+            MAX_RESOURCES=resources;
+        }
     }
 
     public void ApplyEffect(FarmEffect farmEffect){
         if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.FARM_CYCLE)){
             int newTimePerCycle=farmEffect.multiplicatorValue
             *(this.timePerCycle+(int)farmEffect.sumValue);
-            if(newTimePerCycle>maxTimePerCycle) this.timePerCycle=maxTimePerCycle; //ESTO SE HACE PARA PONER UN LÍMITE
-            else if(newTimePerCycle<minTimePerCycle) this.timePerCycle=minTimePerCycle;
-            else this.timePerCycle=newTimePerCycle;
+            if(newTimePerCycle>maxTimePerCycle){
+                this.timePerCycle=maxTimePerCycle; //ESTO SE HACE PARA PONER UN LÍMITE
+            }
+            else if(newTimePerCycle<minTimePerCycle){
+                this.timePerCycle=minTimePerCycle;
+            }
+            else{
+                this.timePerCycle=newTimePerCycle;
+            }
             
         }
         else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.CAPACITY)){
             maxCapacity=farmEffect.multiplicatorValue*(maxCapacity+(int)farmEffect.sumValue);
-            if(maxCapacity>maxLimitOfCapacity) maxCapacity=maxLimitOfCapacity;
-            else if(maxCapacity<minLimitOfCapacity) maxCapacity=minLimitOfCapacity;
+            if(maxCapacity>maxLimitOfCapacity){
+                maxCapacity=maxLimitOfCapacity;
+            }
+            else if(maxCapacity<minLimitOfCapacity){
+                maxCapacity=minLimitOfCapacity;
+            }
         }
         else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.FARM_RESOURCES)){
             SetMinResources(farmEffect.multiplicatorValue*(MIN_RESOURCES+(int)farmEffect.sumValue));
             SetMaxResources(farmEffect.multiplicatorValue*(MAX_RESOURCES+(int)farmEffect.sumValue));
         }else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.ENERGY_COST)){
             energyCostOfCycle=farmEffect.multiplicatorValue*(energyCostOfCycle+(int)farmEffect.sumValue);
-            if(energyCostOfCycle<minEnergyCost) energyCostOfCycle=minEnergyCost;
-            else if(energyCostOfCycle>maxEnergyCost) energyCostOfCycle=maxEnergyCost;
+            if(energyCostOfCycle<minEnergyCost){
+                energyCostOfCycle=minEnergyCost;
+            }
+            else if(energyCostOfCycle>maxEnergyCost){
+                energyCostOfCycle=maxEnergyCost;
+            }
         }
     }
 
@@ -186,7 +204,9 @@ public class FarmStats : MonoBehaviour
 
     public bool CanAntWorkInHere(){
         bool res=false;
-        if(antsOfFarm.Count<maxCapacity) res=true;
+        if(antsOfFarm.Count<maxCapacity){
+            res=true;
+        }
         return res;
     }
     public void AddAntToFarm(GameObject item){
@@ -207,7 +227,9 @@ public class FarmStats : MonoBehaviour
         GameObject item=collision.gameObject;
         if(item.CompareTag("Ant") && item.GetComponent<AntStats>().GetAction().Equals(ActualAction.FARMING)
          && antsOfFarm.Contains(item)){
-            if(!antsWorkingInFarm.Contains(item)) antsWorkingInFarm.Add(item);
+            if(!antsWorkingInFarm.Contains(item)){
+                antsWorkingInFarm.Add(item);
+            }
          } 
     }
 }

@@ -17,7 +17,9 @@ public class AreaTrigger : MonoBehaviour
         }
         else{
             SelectableItem item=collider.gameObject.GetComponent<SelectableItem>();
-            if(item!=null) battleMovement.OtherAvailableTargets.Add(collider.transform);
+            if(item!=null){
+                battleMovement.OtherAvailableTargets.Add(collider.transform);
+            }
         }
     }
     void OnTriggerExit2D(Collider2D collider) {
@@ -25,7 +27,9 @@ public class AreaTrigger : MonoBehaviour
             battleMovement.BattleManager.inBattle=false;
         }else{
             SelectableItem item=collider.gameObject.GetComponent<SelectableItem>();
-            if(item!=null) battleMovement.OtherAvailableTargets.Remove(collider.transform);
+            if(item!=null){
+                battleMovement.OtherAvailableTargets.Remove(collider.transform);
+            }
         }
     }
 }
