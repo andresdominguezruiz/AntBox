@@ -7,7 +7,7 @@ using UnityEngine.TestTools;
 public class CardResources
 {
     [SerializeField] readonly int ALL_GOOD_CARDS=21;
-    [SerializeField] readonly int ALL_BAD_CARDS=1;
+    [SerializeField] readonly int ALL_BAD_CARDS=2;
     [Test]
     public void CardsSize()
     {

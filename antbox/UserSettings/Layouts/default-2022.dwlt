@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Test Runner
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 23
+  controlID: 57
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 24
+  controlID: 58
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 25
+  controlID: 59
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 26
+  controlID: 60
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: GameView
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -239,17 +239,17 @@ MonoBehaviour:
     y: 0
     width: 1141
     height: 656
-  m_MinSize: {x: 202, y: 221}
+  m_MinSize: {x: 102, y: 121}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 19}
+  m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 19}
   - {fileID: 21}
   - {fileID: 17}
   - {fileID: 15}
   - {fileID: 13}
-  m_Selected: 0
-  m_LastSelected: 3
+  m_Selected: 3
+  m_LastSelected: 0
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: CodeCoverageWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -269,17 +269,17 @@ MonoBehaviour:
     y: 656
     width: 1453
     height: 283
-  m_MinSize: {x: 101, y: 121}
+  m_MinSize: {x: 446, y: 86}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 22}
+  m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 22}
   - {fileID: 23}
   - {fileID: 20}
   - {fileID: 14}
   - {fileID: 16}
-  m_Selected: 0
-  m_LastSelected: 4
+  m_Selected: 3
+  m_LastSelected: 0
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -548,10 +548,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 2128
-    y: 72.66667
-    width: 758.6667
-    height: 383.66666
+    x: 312
+    y: 73
+    width: 1139
+    height: 635
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -563,12 +563,12 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 10757
+    ID: 175
     splitterInitialOffset: 181.66667
     currentActiveSplitter: -1
     realSizes:
-    - 206.66666
-    - 106
+    - 373
+    - 192
     relativeSizes:
     - 0.6608527
     - 0.33914733
@@ -578,7 +578,7 @@ MonoBehaviour:
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 312.66666
+    lastTotalSize: 565
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -586,7 +586,7 @@ MonoBehaviour:
     oldMinSizes: 
     oldMaxSizes: 
     oldSplitSize: 0
-  m_TestTypeToolbarIndex: 0
+  m_TestTypeToolbarIndex: 1
   m_PlayModeTestListGUI:
     m_Window: {fileID: 15}
     m_NewResultList:
@@ -1449,9 +1449,9 @@ MonoBehaviour:
       uniqueId: '[antbox][suite]'
       name: antbox
       fullName: antbox
-      resultStatus: 2
-      duration: 0.0502209
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.142145
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1466,7 +1466,7 @@ MonoBehaviour:
       name: EditMode.dll
       fullName: C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/EditMode.dll
       resultStatus: 1
-      duration: 0.3070559
+      duration: 0.086746
       messages: 
       output: 
       stacktrace: 
@@ -1482,7 +1482,7 @@ MonoBehaviour:
       name: CardResources
       fullName: CardResources
       resultStatus: 1
-      duration: 0.3037117
+      duration: 0.0810891
       messages: 
       output: 
       stacktrace: 
@@ -1498,7 +1498,7 @@ MonoBehaviour:
       name: CardsSize
       fullName: CardResources.CardsSize
       resultStatus: 1
-      duration: 0.2776035
+      duration: 0.0512517
       messages: 
       output: 
       stacktrace: 
@@ -2031,7 +2031,7 @@ MonoBehaviour:
       - Performance
       parentId: 1037
       parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
-    - id: 1082
+    - id: 1290
       uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_With_GarbageCollectionMarker]
       name: MeasureMethod_With_GarbageCollectionMarker
       fullName: MeasureMethodTests.MeasureMethod_With_GarbageCollectionMarker
@@ -2046,7 +2046,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Performance
-      parentId: 1075
+      parentId: 1283
       parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests][suite]
     - id: 1039
       uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureMethodTests/[Unity.PerformanceTesting.Tests.Editor][MeasureMethodTests.MeasureMethod_With_MeasurementCount]
@@ -2234,7 +2234,7 @@ MonoBehaviour:
       categories: []
       parentId: 1101
       parentUniqueId: '[Unity.PerformanceTesting.Tests.Editor][C:/UNITY/AntBox/antbox/Library/ScriptAssemblies/Unity.PerformanceTesting.Tests.Editor.dll][suite]'
-    - id: 1093
+    - id: 1301
       uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests.MeasureProfilerSamples_ManyFrames_RecordsSamples]
       name: MeasureProfilerSamples_ManyFrames_RecordsSamples
       fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_ManyFrames_RecordsSamples
@@ -2249,7 +2249,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Performance
-      parentId: 1088
+      parentId: 1296
       parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests][suite]
     - id: 1052
       uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests.MeasureProfilerSamples_SingleFrame_RecordsSample]
@@ -2268,7 +2268,7 @@ MonoBehaviour:
       - Performance
       parentId: 1050
       parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests][suite]
-    - id: 1094
+    - id: 1302
       uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests.MeasureProfilerSamples_string_ManyFrames_RecordsSamples]
       name: MeasureProfilerSamples_string_ManyFrames_RecordsSamples
       fullName: MeasureProfilerSamplesTests.MeasureProfilerSamples_string_ManyFrames_RecordsSamples
@@ -2283,7 +2283,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Performance
-      parentId: 1088
+      parentId: 1296
       parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests][suite]
     - id: 1053
       uniqueId: Unity.PerformanceTesting.Tests.Editor.dll/MeasureProfilerSamplesTests/[Unity.PerformanceTesting.Tests.Editor][MeasureProfilerSamplesTests.MeasureProfilerSamples_strings_SingleFrame_RecordsSample]
@@ -3092,12 +3092,12 @@ MonoBehaviour:
       - Performance
       parentId: 1076
       parentUniqueId: Unity.PerformanceTesting.Tests.Editor.dll/[Unity.PerformanceTesting.Tests.Editor][UnityTestSetupTeardown][suite]
-    m_ResultText: 
+    m_ResultText: CardResources (0,081s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: d29d8e3c
-      m_LastClickedID: 1015979474
+      m_SelectedIDs: 5a6f4e61
+      m_LastClickedID: 1632530266
       m_ExpandedIDs: 3f68e183b00bf7ce5c591dd918687e113e27c2585a6f4e61ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -3187,7 +3187,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 218.33328}
     m_SelectedIDs: 74720000
     m_LastClickedID: 29300
-    m_ExpandedIDs: 0000000070720000727200007472000076720000787200007a7200007c7200007e72000080720000827200008472000086720000887200008a720000f472000000ca9a3b
+    m_ExpandedIDs: 000000007472000076720000787200007a7200007c7200007e72000080720000827200008472000086720000887200008a7200008c7200008e720000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -3215,7 +3215,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000070720000727200007472000076720000787200007a7200007c7200007e72000080720000827200008472000086720000887200008a720000
+    m_ExpandedIDs: 000000007472000076720000787200007a7200007c7200007e72000080720000827200008472000086720000887200008a7200008c7200008e720000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -3771,7 +3771,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 94faffff
+      m_ExpandedIDs: a0f4ffff64faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
