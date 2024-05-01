@@ -20,12 +20,6 @@ public class AttackMenu : MonoBehaviour
     [SerializeField] private GameObject sendButton;
 
     [SerializeField] private GameObject battleStarter;
-    public float minX=-5.5f;
-    public float maxX=7f;
-    public float minY=-3.5f;
-    public float maxY=3f;
-
-    public float speed=0.5f;
 
     private NavMeshAgent agent;
 
@@ -78,7 +72,7 @@ public class AttackMenu : MonoBehaviour
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
-            if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
+            if((mousePos.x>=MenuTool.MinX && mousePos.x<=MenuTool.MaxX) && (mousePos.y>=MenuTool.MinY && mousePos.y<=MenuTool.MaxY) && 
             (hit.collider!=null && ((hit.collider.CompareTag("Enemy") && selectingEnemy)||(hit.collider.CompareTag("Ant") && !selectingEnemy)))){
                 Transform selectedItem=hit.collider.transform;
                 if(selectingEnemy && selectedItem.gameObject!=null) {

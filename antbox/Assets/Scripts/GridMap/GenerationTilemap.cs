@@ -270,7 +270,9 @@ public class GenerationTilemap : MonoBehaviour
             Vector3Int down=new Vector3Int(tile.x,tile.y-1,tile.z);
             List<Vector3Int> options=new List<Vector3Int>{left,right,up,down};
             foreach(Vector3Int option in options){
-                if(dirtMap.GetTile(option)!=null) list.Add(option);
+                if(dirtMap.GetTile(option)!=null){
+                    list.Add(option);
+                }
             }
         }
         return list;

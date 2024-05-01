@@ -66,7 +66,9 @@ public class Player : MonoBehaviour
     }
 
     public void AddComplexity(float value){
-        if(complexityLevelOfGame+value>=minimunComplexity) complexityLevelOfGame+=value;
+        if(complexityLevelOfGame+value>=minimunComplexity){
+            complexityLevelOfGame+=value;
+        }
     }
 
     public void ProcessUpdateEffectOfAction(Action actualAction){

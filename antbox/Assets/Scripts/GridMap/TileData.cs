@@ -131,7 +131,9 @@ public class TileData
         }
         List<AntStats> antsWithoutEnoughEnergy=new List<AntStats>();
         foreach(AntStats ant in AntsDiggingSameTile){
-            if(ant.GetActualEnergy()<EnergyCostToDig) antsWithoutEnoughEnergy.Add(ant);
+            if(ant.GetActualEnergy()<EnergyCostToDig){
+                antsWithoutEnoughEnergy.Add(ant);
+            }
         }
         foreach(AntStats ant in antsWithoutEnoughEnergy){
             ant.CancelAntAction();

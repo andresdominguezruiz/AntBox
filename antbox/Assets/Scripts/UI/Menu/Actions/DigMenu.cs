@@ -24,12 +24,7 @@ public class DigMenu : MonoBehaviour
     private HashSet<Vector3Int> excavablePath;
     private Vector3Int selectedDestructableTile;
     private List<Vector3Int> routes=new List<Vector3Int>();
-    public float minX=-6f;
-    public float maxX=8f;
-    public float minY=-4f;
-    public float maxY=4f;
 
-    public float speed=0.5f;
 
     public bool areMoreRutes=false;
     public bool isSelectingDestructableTile=false;
@@ -98,7 +93,7 @@ public class DigMenu : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
-        if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
+        if((mousePos.x>=MenuTool.MinX && mousePos.x<=MenuTool.MaxX) && (mousePos.y>=MenuTool.MinY && mousePos.y<=MenuTool.MaxY) && 
             (hit.collider!=null && hit.collider.CompareTag("Dirt"))){
                 Vector3Int selectedTile=destructableMap.WorldToCell(mousePos);
                 if(routes.Contains(selectedTile)){
@@ -116,7 +111,7 @@ public class DigMenu : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
-            if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
+            if((mousePos.x>=MenuTool.MinX && mousePos.x<=MenuTool.MaxX) && (mousePos.y>=MenuTool.MinY && mousePos.y<=MenuTool.MaxY) && 
             (hit.collider!=null && hit.collider.CompareTag("Dirt"))){
                 Vector3Int selectedTile=destructableMap.WorldToCell(mousePos);
                 selectedDestructableTile=selectedTile;

@@ -147,10 +147,18 @@ public class UIManager : MonoBehaviour
 
     public void CancelAntAction(){
         AntStats stats=this.gameObject.GetComponentInParent<AntStats>();
-        if(stats.GetAction().Equals(ActualAction.FARMING)) CancelFarming(stats);
-        else if(stats.GetAction().Equals(ActualAction.DIGGING)) CancelDigging(stats);
-        else if(stats.GetAction().Equals(ActualAction.SLEEPING)) CancelSleeping(stats);
-        else if(stats.GetAction().Equals(ActualAction.ATTACKING)) stats.StopAttacking();
+        if(stats.GetAction().Equals(ActualAction.FARMING)){
+            CancelFarming(stats);
+        }
+        else if(stats.GetAction().Equals(ActualAction.DIGGING)){
+            CancelDigging(stats);
+        }
+        else if(stats.GetAction().Equals(ActualAction.SLEEPING)){
+            CancelSleeping(stats);
+        }
+        else if(stats.GetAction().Equals(ActualAction.ATTACKING)){
+            stats.StopAttacking();
+        }
     }
 
     public void CancelSleeping(AntStats stats){
@@ -197,7 +205,6 @@ public class UIManager : MonoBehaviour
                 stats.DoNothing();
                 stats.gameObject.GetComponent<NavMeshAgent>().isStopped=false;
                 stats.gameObject.GetComponent<NavMeshAgent>().SetDestination(this.gameObject.transform.position);
-                Debug.Log("He cancelado, ahora su estado es "+stats.GetAction());
                 break;
             }
         }
@@ -307,7 +314,9 @@ public class UIManager : MonoBehaviour
         ThirstText.text = "Thirst:" + thirst;
         AgeText.text="Age:"+age;
         NameText.text="Name:"+name;
-        if(!IsQueen) EnergyText.text="Energy:"+energy;
+        if(!IsQueen){
+            EnergyText.text="Energy:"+energy;
+        }
     }
 
 
@@ -321,7 +330,9 @@ public class UIManager : MonoBehaviour
         FarminSpeedText.text="Farming Speed:"+antStats.GetFarmingSpeed();
         DiggingSpeedText.text="Digging Speed:"+antStats.GetDiggingSpeed();
         RecoverSpeedText.text="Recover Speed:"+antStats.GetRecoverSpeed();
-        if(antStats.PoisonSecons<=0) PoisonText.text="";
+        if(antStats.PoisonSecons<=0){
+             PoisonText.text="";
+        }
         else{
             PoisonText.text="Poison: "+antStats.PoisonSecons;
         }
@@ -335,7 +346,9 @@ public class UIManager : MonoBehaviour
         AgeText.text="Age:"+queenStats.GetTextAge();
         NameText.text="Name:"+name;
         IsQueen=true;
-        if(queenStats.PoisonSecons<=0) PoisonText.text="";
+        if(queenStats.PoisonSecons<=0){
+            PoisonText.text="";
+        }
         else{
             PoisonText.text="Poison: "+queenStats.PoisonSecons;
         }

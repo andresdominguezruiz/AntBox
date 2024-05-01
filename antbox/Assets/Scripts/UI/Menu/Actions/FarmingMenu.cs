@@ -15,14 +15,10 @@ public class FarmingMenu : MonoBehaviour
     [SerializeField] private GameObject cancelActionButton;
 
     [SerializeField] private GameObject selectedAnt;
-    public float minX=-5.5f;
-    public float maxX=7f;
-    public float minY=-3.5f;
-    public float maxY=3f;
-
-    public float speed=0.5f;
 
     private NavMeshAgent agent;
+
+    public NavMeshAgent Agent { get => agent; set => agent = value; }
 
     // Start is called before the first frame update
 
@@ -44,7 +40,7 @@ public class FarmingMenu : MonoBehaviour
     
     public void StartFarmingMenu()
     {
-        this.agent=selectedAnt.GetComponent<NavMeshAgent>();
+        this.Agent=selectedAnt.GetComponent<NavMeshAgent>();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
         if(anyCardDisplay!=null){
             anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
@@ -72,7 +68,7 @@ public class FarmingMenu : MonoBehaviour
     }
 
     void Update(){
-        if(this.agent==null || this.agent.gameObject==null){
+        if(this.Agent==null || this.Agent.gameObject==null){
             FinishFarmingMenu();
         }
         if(!PauseMenu.isPaused){
@@ -80,12 +76,12 @@ public class FarmingMenu : MonoBehaviour
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
-            if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
+            if((mousePos.x>=MenuTool.MinX && mousePos.x<=MenuTool.MaxX) && (mousePos.y>=MenuTool.MinY && mousePos.y<=MenuTool.MaxY) && 
             (hit.collider!=null && hit.collider.CompareTag("Farm"))){
                 FarmStats farm=hit.collider.gameObject.GetComponent<FarmStats>();
                 if(farm.CanAntWorkInHere()){
                     Vector3Int selectedTile=map.WorldToCell(mousePos);
-                    this.agent.SetDestination(map.GetCellCenterWorld(selectedTile));
+                    this.Agent.SetDestination(map.GetCellCenterWorld(selectedTile));
                     AntStats antStats=selectedAnt.GetComponent<AntStats>();
                     if(antStats!=null){
                         antStats.CancelAntAction();
@@ -112,7 +108,7 @@ public class FarmingMenu : MonoBehaviour
     public void FinishFarmingMenu()
     {
         
-        this.agent=null;
+        this.Agent=null;
         HideStateOfFarms();
         farmMenu.SetActive(false);
         if(selectedAnt!=null){

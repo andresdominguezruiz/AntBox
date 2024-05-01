@@ -71,7 +71,6 @@ public class MultipleFarmingMenu : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(!PauseMenu.isPaused){
@@ -79,7 +78,6 @@ public class MultipleFarmingMenu : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
                 if(hit.collider!=null && hit.collider.CompareTag("Ant")){
-                    Debug.Log("ho");
                     AntStats ant=hit.collider.gameObject.GetComponent<AntStats>();
                     Debug.Log(!selectedFarm.antsOfFarm.Contains(ant.gameObject));
                     if( ant!=null &&!selectedFarm.antsOfFarm.Contains(ant.gameObject)){
