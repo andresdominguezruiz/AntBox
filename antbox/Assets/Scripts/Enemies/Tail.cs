@@ -81,7 +81,7 @@ public class Tail : MonoBehaviour
                 GameObject newBodyPart=Instantiate(BodyPart,BodyPart.transform.position,Quaternion.identity,BodyPart.transform.parent);
                 BodyParts[i]=newBodyPart;
             }
-            BodyParts[i].GetComponent<SpriteRenderer>().sprite=EnemyStats.enemy.enemyBodySprite;
+            BodyParts[i].GetComponent<SpriteRenderer>().sprite=EnemyStats.Enemy.EnemyBodySprite;
         }
     }
 

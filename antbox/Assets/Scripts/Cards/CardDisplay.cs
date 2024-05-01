@@ -6,24 +6,49 @@ using UnityEngine.UI;
 public class CardDisplay : MonoBehaviour
 {
     // Start is called before the first frame update
-    private System.Random random = new System.Random();
+    readonly System.Random random = new System.Random();
 
-    public Card card;
-    public Image image;
-    public TextMeshProUGUI cardName;
-    public GameObject infoCanvas;
-    public GameObject activityMenu;
-    public RawImage littleTemplate;
-    public RawImage bigTemplate;
-    public bool canBeSelected=true;
+    [SerializeField]
+    private Card card;
+
+    [SerializeField]
+    private Image image;
+
+    [SerializeField]
+    private TextMeshProUGUI cardName;
+
+    [SerializeField]
+    private GameObject infoCanvas;
+
+    [SerializeField]
+    private GameObject activityMenu;
+
+    [SerializeField]
+    private RawImage littleTemplate;
+
+    [SerializeField]
+    private RawImage bigTemplate;
+
+    [SerializeField]
+    private bool canBeSelected = true;
+
+    public Card Card { get => card; set => card = value; }
+    public Image Image { get => image; set => image = value; }
+    public TextMeshProUGUI CardName { get => cardName; set => cardName = value; }
+    public GameObject InfoCanvas { get => infoCanvas; set => infoCanvas = value; }
+    public GameObject ActivityMenu { get => activityMenu; set => activityMenu = value; }
+    public RawImage LittleTemplate { get => littleTemplate; set => littleTemplate = value; }
+    public RawImage BigTemplate { get => bigTemplate; set => bigTemplate = value; }
+    public bool CanBeSelected { get => canBeSelected; set => canBeSelected = value; }
+
     void Start()
     {
-        cardName.text=card.Name;
-        image.sprite=card.ArtWorks;
-        if(card.HasPassive()){
-            littleTemplate.color=new Color32(255,0,229,255);
-            bigTemplate.color=new Color32(255,0,229,255);
-            cardName.color=new Color32(0,255,0,255);
+        CardName.text=Card.Name;
+        Image.sprite=Card.ArtWorks;
+        if(Card.HasPassive()){
+            LittleTemplate.color=new Color32(255,0,229,255);
+            BigTemplate.color=new Color32(255,0,229,255);
+            CardName.color=new Color32(0,255,0,255);
         }
         HideInfo();
         
@@ -84,7 +109,7 @@ public class CardDisplay : MonoBehaviour
             complexity+=Player.Instance.complexityLevelOfGame+0.25*result;
             multiplicator=3;
         }else{
-            complexity+=card.GetComplexityOfCard(Player.Instance.complexityLevelOfGame);
+            complexity+=Card.GetComplexityOfCard(Player.Instance.complexityLevelOfGame);
         }
         //Para los areas de complejidad he aprovechado los indices del enumerado, ya que estos estaban ordenados
         //, y crear otras variables para los límites me parece redundante
@@ -121,11 +146,11 @@ public class CardDisplay : MonoBehaviour
         ActivityMenu activityMenu=FindObjectOfType<ActivityMenu>(true);
         activityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesByComplexity(false),false,false);
         ContainerData containerData=FindObjectOfType<ContainerData>();
-        containerData.executableActions=card.Actions;
+        containerData.executableActions=Card.Actions;
         containerData.RemoveCardFromHand(this);
     }
     public void ShowCardData(){
-        if(canBeSelected){
+        if(CanBeSelected){
                 UIManager[] uIManagers=FindObjectsOfType<UIManager>(true);
                 foreach(UIManager ui in uIManagers){
                     ui.HideInfo();
@@ -141,9 +166,9 @@ public class CardDisplay : MonoBehaviour
 
         ContainerData containerData=FindObjectOfType<ContainerData>();
         foreach(CardDisplay card in containerData.cardsInHand){
-            card.infoCanvas.gameObject.SetActive(false);
+            card.InfoCanvas.gameObject.SetActive(false);
         }
-        infoCanvas.gameObject.SetActive(true);
+        InfoCanvas.gameObject.SetActive(true);
         }
     }
 
@@ -152,15 +177,15 @@ public class CardDisplay : MonoBehaviour
         if(anyItem!=null){
             anyItem.MakeEveryoneSelectable();
         }
-        infoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
+        InfoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
     }
     public void HideInfo()
     {
-        infoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
+        InfoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
     }
     public void MakeEveryCardUnselectableAndUnselected(){
         foreach(CardDisplay cardDisplay in FindObjectsOfType<CardDisplay>()){
-            cardDisplay.canBeSelected=false;
+            cardDisplay.CanBeSelected=false;
             cardDisplay.HideInfo();
         }
     }
@@ -172,7 +197,7 @@ public class CardDisplay : MonoBehaviour
     }
     public void MakeEveryCardSelectable(){
         foreach(CardDisplay cardDisplay in FindObjectsOfType<CardDisplay>()){
-            cardDisplay.canBeSelected=true;
+            cardDisplay.CanBeSelected=true;
         }
     }
 

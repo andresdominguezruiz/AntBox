@@ -210,7 +210,7 @@ public class ContainerData : MonoBehaviour
                 //VICTORY IN HELPING
                 EnemyStats[] allEnemies=FindObjectsOfType<EnemyStats>(false);
                 foreach(EnemyStats enemy in allEnemies){
-                    enemy.Hurt(enemy.enemy.maxHP/5);
+                    enemy.Hurt(enemy.Enemy.MaxHP/5);
                 }
             }
         }
@@ -256,8 +256,8 @@ public class ContainerData : MonoBehaviour
 
     public void AddCard(Card card){
         CardDisplay newCard=Instantiate<CardDisplay>(cardTemplate,cardTemplate.transform.position,Quaternion.identity,cardPlatform.transform);
-        newCard.card=card;
-        newCard.activityMenu=activityMenu;
+        newCard.Card=card;
+        newCard.ActivityMenu=activityMenu;
         GameObject newCardData=newCard.transform.Find("Data").gameObject;
         GameObject cardDataTemplate=cardTemplate.transform.Find("Data").gameObject;
         GameObject newCardHUD=newCard.transform.Find("HUD").gameObject;

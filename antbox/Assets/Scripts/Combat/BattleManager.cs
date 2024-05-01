@@ -28,7 +28,7 @@ public class BattleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isEnemy && inBattle && (Time.time-timeLastFrame)>=enemyStats.enemy.battleStats.AttackSpeed){
+        if(isEnemy && inBattle && (Time.time-timeLastFrame)>=enemyStats.Enemy.BattleStats.AttackSpeed){
             Transform target=this.GetComponent<BattleMovement>()
             .ActualTarget;
             if(target!=null && target.gameObject!=null){
@@ -66,8 +66,8 @@ public class BattleManager : MonoBehaviour
 
     void ApplyDamageToEnemy(EnemyStats enemy, int damage,bool isCritic,bool initAnimation){
         enemy.Hurt(damage);
-        if(enemy.gameObject!=null && (enemy.enemy.battleStats.StartBattleType.Equals(StartBattleType.WAITER) ||
-        enemy.enemy.battleStats.StartBattleType.Equals(StartBattleType.SEARCH_AND_RESPOND))){
+        if(enemy.gameObject!=null && (enemy.Enemy.BattleStats.StartBattleType.Equals(StartBattleType.WAITER) ||
+        enemy.Enemy.BattleStats.StartBattleType.Equals(StartBattleType.SEARCH_AND_RESPOND))){
             BattleMovement battleMovement=enemy.gameObject.GetComponent<BattleMovement>();
             if(battleMovement!=null){
                  battleMovement.ActualTarget=this.gameObject.transform;
@@ -89,14 +89,14 @@ public class BattleManager : MonoBehaviour
         CharacterStats characterStats=target.gameObject.GetComponent<CharacterStats>();
         if(characterStats!=null){
             double randomValue=random.NextDouble();
-            if(randomValue>=enemyStats.enemy.battleStats.MissProbability){
+            if(randomValue>=enemyStats.Enemy.BattleStats.MissProbability){
                 bool isCritic=false;
-                if(randomValue>=enemyStats.enemy.battleStats.CriticalProbability){
+                if(randomValue>=enemyStats.Enemy.BattleStats.CriticalProbability){
                     isCritic=true;
                     ApplyCriticalEffectsByEnemy(characterStats);
                 }
                 if(!characterStats.IsDead()){
-                    ApplyDamageToCharacter(characterStats,enemyStats.enemy.battleStats.Damage,isCritic,true);
+                    ApplyDamageToCharacter(characterStats,enemyStats.Enemy.BattleStats.Damage,isCritic,true);
                     if(target!=null){
                         AntStats ant=target.gameObject.GetComponent<AntStats>();
                         if(!ant.GetAction().Equals(ActualAction.ATTACKING)){
@@ -114,14 +114,14 @@ public class BattleManager : MonoBehaviour
         }
         else{
             FarmStats farmStats=target.gameObject.GetComponent<FarmStats>();
-            ApplyDamageToFarm(farmStats,enemyStats.enemy.battleStats.Damage*20/100);
+            ApplyDamageToFarm(farmStats,enemyStats.Enemy.BattleStats.Damage*20/100);
         }
     }
     void ApplyDamageToFarm(FarmStats farmStats,int damage){
             farmStats.timePerCycleConsumed-=damage;
             farmStats.CheckTimePerCycle();
             if(farmStats.broken && enemyStats!=null){
-                enemyStats.kills++;
+                enemyStats.Kills++;
             }
     }
 
@@ -148,7 +148,7 @@ public class BattleManager : MonoBehaviour
         }
         characterStats.CheckHP();
         if(characterStats.IsDead()){
-            enemyStats.kills++;
+            enemyStats.Kills++;
         }
         else{
             AntStats ant=characterStats.gameObject.GetComponent<AntStats>();
@@ -162,16 +162,16 @@ public class BattleManager : MonoBehaviour
     }
 
     void ApplyCriticalEffectsByEnemy(CharacterStats targetStats){
-        foreach(CriticalEffects critical in enemyStats.enemy.battleStats.CriticalEffects){
+        foreach(CriticalEffects critical in enemyStats.Enemy.BattleStats.CriticalEffects){
             if(critical.Equals(CriticalEffects.DRAIN_HP)){
-                enemyStats.Heal(enemyStats.enemy.battleStats.Damage/5);
+                enemyStats.Heal(enemyStats.Enemy.BattleStats.Damage/5);
             }
             else if(critical.Equals(CriticalEffects.DOUBLE_DAMAGE)){
-                ApplyDamageToCharacter(targetStats,enemyStats.enemy.battleStats.Damage,true,false);
+                ApplyDamageToCharacter(targetStats,enemyStats.Enemy.BattleStats.Damage,true,false);
             }
             else if(critical.Equals(CriticalEffects.EAT_RESOURCES)){
-                targetStats.EatWithoutCost(-enemyStats.enemy.battleStats.Damage);
-                targetStats.DrinkWithoutCost(-enemyStats.enemy.battleStats.Damage);
+                targetStats.EatWithoutCost(-enemyStats.Enemy.BattleStats.Damage);
+                targetStats.DrinkWithoutCost(-enemyStats.Enemy.BattleStats.Damage);
             }
             else if(critical.Equals(CriticalEffects.POISONOUS)){
                 targetStats.PoisonSecons+=10;
@@ -184,10 +184,10 @@ public class BattleManager : MonoBehaviour
                             CharacterStats character=other.gameObject.GetComponent<CharacterStats>();
                             FarmStats farm=other.gameObject.GetComponent<FarmStats>();
                             if(character!=null){
-                                ApplyDamageToCharacter(character,enemyStats.enemy.battleStats.Damage/2,false,true);
+                                ApplyDamageToCharacter(character,enemyStats.Enemy.BattleStats.Damage/2,false,true);
                             }
                             else if(farm!=null){
-                                ApplyDamageToFarm(farm,enemyStats.enemy.battleStats.Damage*10/100);
+                                ApplyDamageToFarm(farm,enemyStats.Enemy.BattleStats.Damage*10/100);
                             }
                         }
                     }

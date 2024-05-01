@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
 
     public void SaveCards(List<CardDisplay> containerCards){
         foreach(CardDisplay cardDisplay in containerCards){
-            cardsInHand.Add(cardDisplay.card);
+            cardsInHand.Add(cardDisplay.Card);
         }
     }
 
