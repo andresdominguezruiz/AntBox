@@ -9,7 +9,7 @@ public class QueenStats : CharacterStats
         InitVariables(random);
     }
     private void Start(){
-        this.timeLastFrame=0f;
+        this.TimeLastFrame=0f;
         this.AllBarsManager=this.gameObject.GetComponentInChildren<AllBarsManager>();
         AllBarsManager.HealthBar.SetMaxBarValue(GetMaxHP());
     }

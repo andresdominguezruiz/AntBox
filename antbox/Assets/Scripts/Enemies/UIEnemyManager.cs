@@ -46,10 +46,10 @@ public class UIEnemyManager : MonoBehaviour
         icon.sprite=stats.enemy.enemySprite;
         hpText.text="HP:"+stats.actualHP+"/"+stats.enemy.maxHP;
         nameText.text="Name:"+stats.enemy.name;
-        damageText.text="Damage:"+stats.enemy.battleStats.damage;
-        attackSpeedText.text="Attack speed:"+stats.enemy.battleStats.attackSpeed;
+        damageText.text="Damage:"+stats.enemy.battleStats.Damage;
+        attackSpeedText.text="Attack speed:"+stats.enemy.battleStats.AttackSpeed;
         criticsText.text="Critical Effects:";
-        foreach(CriticalEffects critical in stats.enemy.battleStats.criticalEffects){
+        foreach(CriticalEffects critical in stats.enemy.battleStats.CriticalEffects){
             criticsText.text+="-"+critical;
         }
     }

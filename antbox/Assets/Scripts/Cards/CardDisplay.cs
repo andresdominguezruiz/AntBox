@@ -18,8 +18,8 @@ public class CardDisplay : MonoBehaviour
     public bool canBeSelected=true;
     void Start()
     {
-        cardName.text=card.name;
-        image.sprite=card.artWorks;
+        cardName.text=card.Name;
+        image.sprite=card.ArtWorks;
         if(card.HasPassive()){
             littleTemplate.color=new Color32(255,0,229,255);
             bigTemplate.color=new Color32(255,0,229,255);
@@ -57,7 +57,7 @@ public class CardDisplay : MonoBehaviour
     }
     public List<Activity> GetNotKnownActivitiesByComplexity(bool isBoss){
         HashSet<ComplexityType> complexityTypes=PickAreaOfComplexity(isBoss);
-        Activity[] allActivities=Resources.LoadAll<Activity>("Activities/DP/Testing");
+        Activity[] allActivities=Resources.LoadAll<Activity>("Activities");
         List<Activity> activitiesInComplexityRange=new List<Activity>();
         List<Activity> notKnownActivities=new List<Activity>();
         foreach(Activity activity in allActivities){
@@ -121,7 +121,7 @@ public class CardDisplay : MonoBehaviour
         ActivityMenu activityMenu=FindObjectOfType<ActivityMenu>(true);
         activityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesByComplexity(false),false,false);
         ContainerData containerData=FindObjectOfType<ContainerData>();
-        containerData.executableActions=card.actions;
+        containerData.executableActions=card.Actions;
         containerData.RemoveCardFromHand(this);
     }
     public void ShowCardData(){

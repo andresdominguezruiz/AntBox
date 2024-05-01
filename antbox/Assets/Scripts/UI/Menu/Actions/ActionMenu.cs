@@ -7,6 +7,8 @@ using UnityEngine;
 public class ActionMenu : MonoBehaviour
 {
     private List<Action> actions;
+    [SerializeField]
+    private NestManager nestManager;
     [SerializeField] private TextMeshProUGUI consoleText;
     private int index;
     private bool isChoosing=false;
@@ -293,6 +295,8 @@ public class ActionMenu : MonoBehaviour
                 }else if(farmGenerator!=null && actualAction.Destination.Equals(Destination.FARM)){
                     farmGenerator.AddNewFarmRandomly();
                 }
+            }else if(actualAction.Destination.Equals(Destination.HORDE)){
+                nestManager.SpawnEnemiesForHorde();
             }
         }
     }

@@ -12,7 +12,7 @@ public enum InteractionType{
     ANY,ALL,CHOOSE,NONE
 }
 public enum Destination{
-    ANT,CONTAINER,WATER_FARM,FOOD_FARM,QUEEN,FARM,ANTHILL,PLAYER
+    ANT,CONTAINER,WATER_FARM,FOOD_FARM,QUEEN,FARM,ANTHILL,PLAYER,HORDE
 }
 
 public enum UpdateEffectOnPlayer{

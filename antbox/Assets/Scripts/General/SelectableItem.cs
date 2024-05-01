@@ -258,7 +258,7 @@ public class SelectableItem : MonoBehaviour
             }
             isSelected=true;
             ChangeColor(this.selectedColor);
-            if(itemUI!=null && !itemUI.isQueen){
+            if(itemUI!=null && !itemUI.IsQueen){
                 MoveMenu menu=moveMenu.GetComponent<MoveMenu>();
                 menu.SetSelectedAnt(this.gameObject);
                 FarmingMenu otherMenu=farmMenu.GetComponent<FarmingMenu>();
@@ -266,7 +266,7 @@ public class SelectableItem : MonoBehaviour
                 DigMenu dig=digMenu.GetComponent<DigMenu>();
                 dig.SetSelectedAnt(this.gameObject);
             }
-            if((itemUI!=null && !itemUI.isQueen) || (itemUI==null && enemyUI!=null)){
+            if((itemUI!=null && !itemUI.IsQueen) || (itemUI==null && enemyUI!=null)){
                 AttackMenu attack=attackMenu.GetComponent<AttackMenu>();
                 attack.SetSelectedItem(this.gameObject,itemUI==null);
             }

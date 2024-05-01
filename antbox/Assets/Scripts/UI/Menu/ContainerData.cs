@@ -101,19 +101,19 @@ public class ContainerData : MonoBehaviour
 
     public void ApplyEffect(ContainerEffect containerEffect){
         if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.FOOD)){
-            FOOD_CONTAINER=containerEffect.multiplicatorValue*(FOOD_CONTAINER+(int)containerEffect.sumValue);
+            FOOD_CONTAINER=containerEffect.MultiplicatorValue*(FOOD_CONTAINER+(int)containerEffect.SumValue);
             if(FOOD_CONTAINER<0){
                 FOOD_CONTAINER=0;
             }
         }
         else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.WATER)){
-            WATER_CONTAINER=containerEffect.multiplicatorValue*(WATER_CONTAINER+(int)containerEffect.sumValue);
+            WATER_CONTAINER=containerEffect.MultiplicatorValue*(WATER_CONTAINER+(int)containerEffect.SumValue);
             if(WATER_CONTAINER<0){
                 WATER_CONTAINER=0;
             }
         }
         else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.WATER_VALUE)){
-            waterValue=containerEffect.multiplicatorValue*(waterValue+(int)containerEffect.sumValue);
+            waterValue=containerEffect.MultiplicatorValue*(waterValue+(int)containerEffect.SumValue);
             if(waterValue>maxNutritionalValue){
                 waterValue=maxNutritionalValue;
             }
@@ -121,7 +121,7 @@ public class ContainerData : MonoBehaviour
                 waterValue=minNutritionalValue;
             }
         }else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.FOOD_VALUE)){
-            foodValue=containerEffect.multiplicatorValue*(foodValue+(int)containerEffect.sumValue);
+            foodValue=containerEffect.MultiplicatorValue*(foodValue+(int)containerEffect.SumValue);
             if(foodValue>maxNutritionalValue){
                 foodValue=maxNutritionalValue;
             }
@@ -219,7 +219,7 @@ public class ContainerData : MonoBehaviour
             Card[] allCards=Resources.LoadAll<Card>("Cards/PowerDowns");
             int v=random.Next(0,allCards.Length);
             Card badCard=allCards[v];
-            executableActions=badCard.actions;
+            executableActions=badCard.Actions;
             ActionMenu actionMenu=FindObjectOfType<ActionMenu>(true);
             actionMenu.InitActions(executableActions);
         }

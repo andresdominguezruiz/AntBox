@@ -115,7 +115,9 @@ public class BattleMovement : MonoBehaviour
                     KillingMode=false;
                     BattleManager.inBattle=false;
                     AntStats ant=this.gameObject.GetComponent<AntStats>();
-                    if(ant!=null) ant.StopAttacking();
+                    if(ant!=null){
+                        ant.StopAttacking();
+                    }
                 }
             }
         }

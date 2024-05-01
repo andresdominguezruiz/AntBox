@@ -38,7 +38,7 @@ public class ExcavationMovement : MonoBehaviour
         IsDigging=false;
         GenerationTilemap generation=FindObjectOfType<GenerationTilemap>();
         TileData tileData=generation.GetTileData(selectedTile);
-        tileData.antsDiggingSameTile.Remove(this.gameObject.GetComponent<AntStats>());
+        tileData.AntsDiggingSameTile.Remove(this.gameObject.GetComponent<AntStats>());
     }
     public bool CanDig(){
         GenerationTilemap generation=FindObjectOfType<GenerationTilemap>();
@@ -187,7 +187,7 @@ public class ExcavationMovement : MonoBehaviour
         if(tileData!=null){
             if(Time.time -timeLastFrame>=1.0f){
             tileData.DiggingTile(ant.GetComponent<AntStats>(),menu!=null);
-            Debug.Log("RESISTANCE:"+tileData.actualResistance);
+            Debug.Log("RESISTANCE:"+tileData.ActualResistance);
             timeLastFrame=Time.time;
         }
         }

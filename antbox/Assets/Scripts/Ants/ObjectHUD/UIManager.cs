@@ -13,43 +13,80 @@ public enum AvailableActions{
 }
 public class UIManager : MonoBehaviour
 {
-    public GameObject infoCanvas; // Referencia al objeto Canvas de tu UI.
-    public TextMeshProUGUI hpText; // Referencia al objeto Text para mostrar el nombre.
-    public TextMeshProUGUI hungerText; // Referencia al objeto Text para mostrar la descripción.
-    public TextMeshProUGUI thirstText; // Referencia al objeto Text para mostrar las estadísticas.
-    public TextMeshProUGUI poisonText; // Referencia al objeto Text para mostrar las estadísticas.
+    [SerializeField]
+    private GameObject infoCanvas; // Referencia al objeto Canvas de tu UI.
+    [SerializeField]
+    private TextMeshProUGUI hpText; // Referencia al objeto Text para mostrar el nombre.
+    [SerializeField]
+    private TextMeshProUGUI hungerText; // Referencia al objeto Text para mostrar la descripción.
+    [SerializeField]
+    private TextMeshProUGUI thirstText; // Referencia al objeto Text para mostrar las estadísticas.
+    [SerializeField]
+    private TextMeshProUGUI poisonText; // Referencia al objeto Text para mostrar las estadísticas.
 
-    public bool isQueen=false;
+    [SerializeField]
+    private bool isQueen = false;
 
-    public TextMeshProUGUI energyText;
+    [SerializeField]
+    private TextMeshProUGUI energyText;
 
-    public TextMeshProUGUI ageText;
+    [SerializeField]
+    private TextMeshProUGUI ageText;
 
-    public TextMeshProUGUI nameText;
-    public TextMeshProUGUI farminSpeedText;
-    public TextMeshProUGUI diggingSpeedText;
-    public TextMeshProUGUI recoverSpeedText;
-    public TextMeshProUGUI damageText;
-    public TextMeshProUGUI attackSpeedText;
+    [SerializeField]
+    private TextMeshProUGUI nameText;
+    [SerializeField]
+    private TextMeshProUGUI farminSpeedText;
+    [SerializeField]
+    private TextMeshProUGUI diggingSpeedText;
+    [SerializeField]
+    private TextMeshProUGUI recoverSpeedText;
+    [SerializeField]
+    private TextMeshProUGUI damageText;
+    [SerializeField]
+    private TextMeshProUGUI attackSpeedText;
 
 
-
-    public GameObject eatButton;
-    public GameObject drinkButton;
-    public GameObject sleepButton;
-    public GameObject cancelButton;
-    public GameObject moveButton;
-    public GameObject farmingButton;
-    public GameObject initAttackButton;
-    public GameObject upButton;
-    public GameObject downButton;
-    public GameObject rightButton;
-    public GameObject leftButton;
+    [SerializeField]
+    private GameObject eatButton;
     
-    public GameObject digButton;
-    public GameObject helpButton;
-
+    [SerializeField]
+    private GameObject drinkButton;
     
+    [SerializeField]
+    private GameObject sleepButton;
+    
+    [SerializeField]
+    private GameObject cancelButton;
+    
+    [SerializeField]
+    private GameObject moveButton;
+    
+    [SerializeField]
+    private GameObject farmingButton;
+    
+    [SerializeField]
+    private GameObject initAttackButton;
+    
+    [SerializeField]
+    private GameObject upButton;
+    
+    [SerializeField]
+    private GameObject downButton;
+    
+    [SerializeField]
+    private GameObject rightButton;
+    
+    [SerializeField]
+    private GameObject leftButton;
+
+    [SerializeField]
+    private GameObject digButton;
+    
+    [SerializeField]
+    private GameObject helpButton;
+
+
     public List<AvailableActions> availableActionsWhenIsFarming=new List<AvailableActions>{
         AvailableActions.DRINK,
         AvailableActions.EAT,
@@ -80,7 +117,34 @@ public class UIManager : MonoBehaviour
         AvailableActions.HELP
     };
 
-    
+    public GameObject InfoCanvas { get => infoCanvas; set => infoCanvas = value; }
+    public TextMeshProUGUI HpText { get => hpText; set => hpText = value; }
+    public TextMeshProUGUI HungerText { get => hungerText; set => hungerText = value; }
+    public TextMeshProUGUI ThirstText { get => thirstText; set => thirstText = value; }
+    public TextMeshProUGUI PoisonText { get => poisonText; set => poisonText = value; }
+    public bool IsQueen { get => isQueen; set => isQueen = value; }
+    public TextMeshProUGUI EnergyText { get => energyText; set => energyText = value; }
+    public TextMeshProUGUI AgeText { get => ageText; set => ageText = value; }
+    public TextMeshProUGUI NameText { get => nameText; set => nameText = value; }
+    public TextMeshProUGUI FarminSpeedText { get => farminSpeedText; set => farminSpeedText = value; }
+    public TextMeshProUGUI DiggingSpeedText { get => diggingSpeedText; set => diggingSpeedText = value; }
+    public TextMeshProUGUI RecoverSpeedText { get => recoverSpeedText; set => recoverSpeedText = value; }
+    public TextMeshProUGUI DamageText { get => damageText; set => damageText = value; }
+    public TextMeshProUGUI AttackSpeedText { get => attackSpeedText; set => attackSpeedText = value; }
+    public GameObject EatButton { get => eatButton; set => eatButton = value; }
+    public GameObject DrinkButton { get => drinkButton; set => drinkButton = value; }
+    public GameObject SleepButton { get => sleepButton; set => sleepButton = value; }
+    public GameObject CancelButton { get => cancelButton; set => cancelButton = value; }
+    public GameObject MoveButton { get => moveButton; set => moveButton = value; }
+    public GameObject FarmingButton { get => farmingButton; set => farmingButton = value; }
+    public GameObject InitAttackButton { get => initAttackButton; set => initAttackButton = value; }
+    public GameObject UpButton { get => upButton; set => upButton = value; }
+    public GameObject DownButton { get => downButton; set => downButton = value; }
+    public GameObject RightButton { get => rightButton; set => rightButton = value; }
+    public GameObject LeftButton { get => leftButton; set => leftButton = value; }
+    public GameObject DigButton { get => digButton; set => digButton = value; }
+    public GameObject HelpButton { get => helpButton; set => helpButton = value; }
+
     public void CancelAntAction(){
         AntStats stats=this.gameObject.GetComponentInParent<AntStats>();
         if(stats.GetAction().Equals(ActualAction.FARMING)) CancelFarming(stats);
@@ -141,7 +205,7 @@ public class UIManager : MonoBehaviour
 
 
     void Update(){
-        if(!isQueen){
+        if(!IsQueen){
             AntStats antStats=this.gameObject.GetComponentInParent<AntStats>();
             UpdateCanvasWithAntStats(antStats,this.transform.parent.name);
             ShowAvailableButtonsForAnt(antStats);
@@ -168,56 +232,56 @@ public class UIManager : MonoBehaviour
 
 
     void ProcessAvailableActions(List<AvailableActions> availableActions,AntStats stats){
-        List<GameObject> allButtons=new List<GameObject>{farmingButton,eatButton,drinkButton
-        ,sleepButton,moveButton,cancelButton,digButton,upButton,rightButton,leftButton
-        ,downButton,initAttackButton,helpButton};
+        List<GameObject> allButtons=new List<GameObject>{FarmingButton,EatButton,DrinkButton
+        ,SleepButton,MoveButton,CancelButton,DigButton,UpButton,RightButton,LeftButton
+        ,DownButton,InitAttackButton,HelpButton};
         ExcavationMovement ex=this.gameObject.GetComponentInParent<ExcavationMovement>();
         FarmStats farm=FindFirstObjectByType<FarmStats>();
         foreach(AvailableActions availableAction in availableActions){
             if(availableAction.Equals(AvailableActions.GROW) && farm!=null && stats.GetActualEnergy()>=farm.energyCostOfCycle){
-                allButtons.Remove(farmingButton);
-                farmingButton.SetActive(true);
+                allButtons.Remove(FarmingButton);
+                FarmingButton.SetActive(true);
             }else if(availableAction.Equals(AvailableActions.MOVE)){
-                allButtons.Remove(moveButton);
-                moveButton.SetActive(true);
+                allButtons.Remove(MoveButton);
+                MoveButton.SetActive(true);
             }else if(availableAction.Equals(AvailableActions.INIT_ATTACK)){
-                allButtons.Remove(initAttackButton);
-                initAttackButton.SetActive(true);
+                allButtons.Remove(InitAttackButton);
+                InitAttackButton.SetActive(true);
             }else if(availableAction.Equals(AvailableActions.DIG) && ex.CanDig()){
-                allButtons.Remove(digButton);
-                digButton.SetActive(true);
+                allButtons.Remove(DigButton);
+                DigButton.SetActive(true);
             }else if( availableAction.Equals(AvailableActions.CHANGE_DIRECTIONS)&& ex.IsDigging){
                     if(ex.CanGoLeft()){
-                        allButtons.Remove(leftButton);
-                        leftButton.SetActive(true);
+                        allButtons.Remove(LeftButton);
+                        LeftButton.SetActive(true);
                     }
                     if(ex.CanGoRight()){
-                        allButtons.Remove(rightButton);
-                        rightButton.SetActive(true);
+                        allButtons.Remove(RightButton);
+                        RightButton.SetActive(true);
                     }
                     if(ex.CanGoDown()){
-                        allButtons.Remove(downButton);
-                        downButton.SetActive(true);
+                        allButtons.Remove(DownButton);
+                        DownButton.SetActive(true);
                     }
                     if(ex.CanGoUp()){
-                        allButtons.Remove(upButton);
-                        upButton.SetActive(true);
+                        allButtons.Remove(UpButton);
+                        UpButton.SetActive(true);
                     }
             }else if(availableAction.Equals(AvailableActions.SLEEP)){
-                allButtons.Remove(sleepButton);
-                sleepButton.SetActive(true);
+                allButtons.Remove(SleepButton);
+                SleepButton.SetActive(true);
             }else if(availableAction.Equals(AvailableActions.EAT)){
-                allButtons.Remove(eatButton);
-                eatButton.SetActive(true);
+                allButtons.Remove(EatButton);
+                EatButton.SetActive(true);
             }else if(availableAction.Equals(AvailableActions.DRINK)){
-                allButtons.Remove(drinkButton);
-                drinkButton.SetActive(true);
+                allButtons.Remove(DrinkButton);
+                DrinkButton.SetActive(true);
             }else if(availableAction.Equals(AvailableActions.CANCEL_ACTION)){
-                allButtons.Remove(cancelButton);
-                cancelButton.SetActive(true);
+                allButtons.Remove(CancelButton);
+                CancelButton.SetActive(true);
             }else if(availableAction.Equals(AvailableActions.HELP)){
-                allButtons.Remove(helpButton);
-                helpButton.SetActive(true);
+                allButtons.Remove(HelpButton);
+                HelpButton.SetActive(true);
             }
         }
         foreach(GameObject notAvailableButton in allButtons){
@@ -229,7 +293,7 @@ public class UIManager : MonoBehaviour
 
 
     public void ShowInfo(){
-        infoCanvas.gameObject.SetActive(true);
+        InfoCanvas.gameObject.SetActive(true);
     }
     public void UpdateAndShowInfo(string hp, string hunger, string thirst,string age,string name,string energy)
     {
@@ -238,47 +302,47 @@ public class UIManager : MonoBehaviour
     }
 
     public void UpdateInfo(string hp, string hunger, string thirst,string age,string name,string energy){
-        hpText.text = "HP:" + hp;
-        hungerText.text = "Hunger:" + hunger;
-        thirstText.text = "Thirst:" + thirst;
-        ageText.text="Age:"+age;
-        nameText.text="Name:"+name;
-        if(!isQueen) energyText.text="Energy:"+energy;
+        HpText.text = "HP:" + hp;
+        HungerText.text = "Hunger:" + hunger;
+        ThirstText.text = "Thirst:" + thirst;
+        AgeText.text="Age:"+age;
+        NameText.text="Name:"+name;
+        if(!IsQueen) EnergyText.text="Energy:"+energy;
     }
 
 
     public void UpdateCanvasWithAntStats(AntStats antStats,string name){
-        hpText.text="HP:"+antStats.GetTextHP();
-        hungerText.text = "Hunger:"+antStats.GetTextHunger();
-        thirstText.text ="Thirst:" +antStats.GetTextThirst();
-        ageText.text="Age:"+antStats.GetTextAge();
-        energyText.text="Energy:"+antStats.GetEnergyText();
-        nameText.text="Name:"+name;
-        farminSpeedText.text="Farming Speed:"+antStats.GetFarmingSpeed();
-        diggingSpeedText.text="Digging Speed:"+antStats.GetDiggingSpeed();
-        recoverSpeedText.text="Recover Speed:"+antStats.GetRecoverSpeed();
-        if(antStats.poisonSecons<=0) poisonText.text="";
+        HpText.text="HP:"+antStats.GetTextHP();
+        HungerText.text = "Hunger:"+antStats.GetTextHunger();
+        ThirstText.text ="Thirst:" +antStats.GetTextThirst();
+        AgeText.text="Age:"+antStats.GetTextAge();
+        EnergyText.text="Energy:"+antStats.GetEnergyText();
+        NameText.text="Name:"+name;
+        FarminSpeedText.text="Farming Speed:"+antStats.GetFarmingSpeed();
+        DiggingSpeedText.text="Digging Speed:"+antStats.GetDiggingSpeed();
+        RecoverSpeedText.text="Recover Speed:"+antStats.GetRecoverSpeed();
+        if(antStats.PoisonSecons<=0) PoisonText.text="";
         else{
-            poisonText.text="Poison: "+antStats.poisonSecons;
+            PoisonText.text="Poison: "+antStats.PoisonSecons;
         }
-        damageText.text="Damage:"+antStats.battleStats.damage;
-        attackSpeedText.text="Attack Speed:"+antStats.battleStats.attackSpeed+" .s";
+        DamageText.text="Damage:"+antStats.battleStats.Damage;
+        AttackSpeedText.text="Attack Speed:"+antStats.battleStats.AttackSpeed+" .s";
     }
     public void UpdateCanvasWithQueenStats(QueenStats queenStats,string name){
-        hpText.text="HP:"+queenStats.GetTextHP();
-        hungerText.text = "Hunger:"+queenStats.GetTextHunger();
-        thirstText.text ="Thirst:" +queenStats.GetTextThirst();
-        ageText.text="Age:"+queenStats.GetTextAge();
-        nameText.text="Name:"+name;
-        isQueen=true;
-        if(queenStats.poisonSecons<=0) poisonText.text="";
+        HpText.text="HP:"+queenStats.GetTextHP();
+        HungerText.text = "Hunger:"+queenStats.GetTextHunger();
+        ThirstText.text ="Thirst:" +queenStats.GetTextThirst();
+        AgeText.text="Age:"+queenStats.GetTextAge();
+        NameText.text="Name:"+name;
+        IsQueen=true;
+        if(queenStats.PoisonSecons<=0) PoisonText.text="";
         else{
-            poisonText.text="Poison: "+queenStats.poisonSecons;
+            PoisonText.text="Poison: "+queenStats.PoisonSecons;
         }
     }
 
     public void HideInfo()
     {
-        infoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
+        InfoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
     }
 }

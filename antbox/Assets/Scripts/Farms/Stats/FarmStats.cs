@@ -63,8 +63,8 @@ public class FarmStats : MonoBehaviour
 
     public void ApplyEffect(FarmEffect farmEffect){
         if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.FARM_CYCLE)){
-            int newTimePerCycle=farmEffect.multiplicatorValue
-            *(this.timePerCycle+(int)farmEffect.sumValue);
+            int newTimePerCycle=farmEffect.MultiplicatorValue
+            *(this.timePerCycle+(int)farmEffect.SumValue);
             if(newTimePerCycle>maxTimePerCycle){
                 this.timePerCycle=maxTimePerCycle; //ESTO SE HACE PARA PONER UN LÍMITE
             }
@@ -77,7 +77,7 @@ public class FarmStats : MonoBehaviour
             
         }
         else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.CAPACITY)){
-            maxCapacity=farmEffect.multiplicatorValue*(maxCapacity+(int)farmEffect.sumValue);
+            maxCapacity=farmEffect.MultiplicatorValue*(maxCapacity+(int)farmEffect.SumValue);
             if(maxCapacity>maxLimitOfCapacity){
                 maxCapacity=maxLimitOfCapacity;
             }
@@ -86,10 +86,10 @@ public class FarmStats : MonoBehaviour
             }
         }
         else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.FARM_RESOURCES)){
-            SetMinResources(farmEffect.multiplicatorValue*(MIN_RESOURCES+(int)farmEffect.sumValue));
-            SetMaxResources(farmEffect.multiplicatorValue*(MAX_RESOURCES+(int)farmEffect.sumValue));
+            SetMinResources(farmEffect.MultiplicatorValue*(MIN_RESOURCES+(int)farmEffect.SumValue));
+            SetMaxResources(farmEffect.MultiplicatorValue*(MAX_RESOURCES+(int)farmEffect.SumValue));
         }else if(farmEffect.farmEffect.Equals(UpdateEffectOnFarm.ENERGY_COST)){
-            energyCostOfCycle=farmEffect.multiplicatorValue*(energyCostOfCycle+(int)farmEffect.sumValue);
+            energyCostOfCycle=farmEffect.MultiplicatorValue*(energyCostOfCycle+(int)farmEffect.SumValue);
             if(energyCostOfCycle<minEnergyCost){
                 energyCostOfCycle=minEnergyCost;
             }
@@ -132,11 +132,6 @@ public class FarmStats : MonoBehaviour
 
     public string GetTypeText(){
         return type.ToString();
-    }
-    
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame

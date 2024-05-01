@@ -55,7 +55,6 @@ public class AntStats : CharacterStats
     [SerializeField] private int recoverSpeed;
 
     public BattleStats battleStats;
-    //TODO: Cuando tengamos juego base, mejorar stats para que cada hormiga sea buena en algo
 
     public float GetFarmingSpeed(){
         return farmingSpeed;
@@ -186,7 +185,7 @@ public class AntStats : CharacterStats
     }
 
     public string GetEnergyText(){
-        return maxEnergy.ToString()+"/"+actualEnergy.ToString();
+        return actualEnergy.ToString()+"/"+maxEnergy.ToString();
     }
 
     public float GetDiggingSpeed(){
@@ -238,7 +237,7 @@ public class AntStats : CharacterStats
     }
 
     private void Start(){
-        this.timeLastFrame=0f;
+        this.TimeLastFrame=0f;
         if(AllBarsManager==null){
             this.AllBarsManager = this.gameObject.GetComponentInChildren<AllBarsManager>();
         }

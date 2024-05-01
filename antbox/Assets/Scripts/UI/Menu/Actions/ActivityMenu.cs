@@ -65,7 +65,7 @@ public class ActivityMenu : MonoBehaviour
             selectedAnswers=new GameObject[activities.Length];
             evaluation=new bool[activities.Length];
             for(int i=0;i<activities.Length;i++){
-                GameObject newLight=Instantiate<GameObject>(lightTemplate
+                GameObject newLight=Instantiate(lightTemplate
                 ,lightTemplate.transform.position,Quaternion.identity,containerForTemplates.transform);
                 selectedAnswers[i]=newLight;
             }

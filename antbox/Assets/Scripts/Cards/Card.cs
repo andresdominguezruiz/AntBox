@@ -8,18 +8,34 @@ public enum CardType{
 }
 [CreateAssetMenu(fileName = "New Card", menuName = "Card")]
 public class Card : ScriptableObject {
-    public new string name;
-    public string description;
-    public Sprite artWorks;
-    public CardType type;
 
-    public List<Action> actions=new List<Action>();
+    [SerializeField]
+    private new string name;
+
+    [SerializeField]
+    private string description;
+
+    [SerializeField]
+    private Sprite artWorks;
+
+    [SerializeField]
+    private CardType type;
+
+
+    [SerializeField]
+    private List<Action> actions = new List<Action>();
+
+    public string Name { get => name; set => name = value; }
+    public string Description { get => description; set => description = value; }
+    public Sprite ArtWorks { get => artWorks; set => artWorks = value; }
+    public CardType Type { get => type; set => type = value; }
+    public List<Action> Actions { get => actions; set => actions = value; }
 
     public double GetComplexityOfCard(double complexityLevelOfGame){
         double result=complexityLevelOfGame;
-        if(type.Equals(CardType.POWER_UP)){
+        if(Type.Equals(CardType.POWER_UP)){
             result+=StatisticsOfGame.Instance.counterOfPassedExams;
-            foreach(Action action in actions){
+            foreach(Action action in Actions){
                 result+=action.GetComplexityOfAction();
             }
         }
@@ -28,7 +44,7 @@ public class Card : ScriptableObject {
 
     public bool HasPassive(){
         bool res=false;
-        foreach(Action action in actions){
+        foreach(Action action in Actions){
             if(action.Destination.Equals(Destination.PLAYER)){
                 res=true;
                 break;

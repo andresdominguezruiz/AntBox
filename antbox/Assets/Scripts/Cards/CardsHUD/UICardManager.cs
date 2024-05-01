@@ -41,9 +41,9 @@ public class UICardManager : MonoBehaviour
     public void Init(){
         InfoCanvas=this.gameObject;
         CardDisplay cardDisplay=this.gameObject.GetComponentInParent<CardDisplay>();
-        Image.sprite=cardDisplay.card.artWorks;
-        CardName.text=cardDisplay.card.name;
-        CardDescription.text=cardDisplay.card.description;
+        Image.sprite=cardDisplay.card.ArtWorks;
+        CardName.text=cardDisplay.card.Name;
+        CardDescription.text=cardDisplay.card.Description;
         Button[] allButtons=InfoCanvas.GetComponentsInChildren<Button>();
         foreach(Button b in allButtons){
             if(b.gameObject.CompareTag("UseButton")){

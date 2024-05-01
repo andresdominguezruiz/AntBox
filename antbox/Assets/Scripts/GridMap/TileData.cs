@@ -17,24 +17,35 @@ public class TileData
 
     private TileType tileType;
     private Vector3Int tilePosition;
-    public float actualResistance;
+    private float actualResistance;
     private float maxResistance=7f;
 
     private static GenerationTilemap generationTilemap;
-    public GiftType gift=GiftType.NOTHING;
+    private GiftType gift = GiftType.NOTHING;
     private int energyCostToDig=2;
     private static ContainerData containerData;
-    public bool discovered=false;
-    
+    private bool discovered = false;
 
-    public List<AntStats> antsDiggingSameTile=new List<AntStats>();
+
+    private List<AntStats> antsDiggingSameTile = new List<AntStats>();
+
+    public TileType TileType { get => tileType; set => tileType = value; }
+    public Vector3Int TilePosition { get => tilePosition; set => tilePosition = value; }
+    public float ActualResistance { get => actualResistance; set => actualResistance = value; }
+    public float MaxResistance { get => maxResistance; set => maxResistance = value; }
+    public static GenerationTilemap GenerationTilemap { get => generationTilemap; set => generationTilemap = value; }
+    public GiftType Gift { get => gift; set => gift = value; }
+    public int EnergyCostToDig { get => energyCostToDig; set => energyCostToDig = value; }
+    public static ContainerData ContainerData { get => containerData; set => containerData = value; }
+    public bool Discovered { get => discovered; set => discovered = value; }
+    public List<AntStats> AntsDiggingSameTile { get => antsDiggingSameTile; set => antsDiggingSameTile = value; }
 
     public TileType GetTileType(){
-        return tileType;
+        return TileType;
     }
 
     public int GetEnergyCostToDig(){
-        return energyCostToDig;
+        return EnergyCostToDig;
     }
 
 //LOS CONSTRUCTORES NO SIRVEN CON MOHOBEHAVIOR, TIENES QUE HACER ADDCOMPONENT
@@ -42,19 +53,19 @@ public class TileData
         if(random==null){
             random=randomMap; //Al ser static, esto debe afectar a todos los TileData
         }
-        if(generationTilemap==null){
-            generationTilemap=generator;
+        if(GenerationTilemap==null){
+            GenerationTilemap=generator;
         }
-        if(containerData==null){
-            containerData=container;
+        if(ContainerData==null){
+            ContainerData=container;
         }
-        tilePosition=position;
-        tileType=type;
-        if(tileType.Equals(TileType.EMPTY)){
-            actualResistance=0;
+        TilePosition=position;
+        TileType=type;
+        if(TileType.Equals(TileType.EMPTY)){
+            ActualResistance=0;
             
         }else{
-            actualResistance=maxResistance;
+            ActualResistance=MaxResistance;
             UpdateGift(random.NextDouble());
         }
 
@@ -63,27 +74,27 @@ public class TileData
     public TileData(bool discovered,Vector3Int position,TileType type,System.Random randomMap,GenerationTilemap generator,ContainerData container)
     :this(position,type,randomMap,generator,container){
 
-        this.discovered=discovered;
+        this.Discovered=discovered;
 
     }
 
     void UpdateGift(double randomValue){
         if(randomValue<=0.2){
-            gift=GiftType.NOTHING;
-        }else if(randomValue>0.4 && randomValue<=0.6 && generationTilemap.GetFarmGenerator().CanBePlaceFarmInPosition(tilePosition)
-         && !tileType.Equals(TileType.STONE)){
+            Gift=GiftType.NOTHING;
+        }else if(randomValue>0.4 && randomValue<=0.6 && GenerationTilemap.GetFarmGenerator().CanBePlaceFarmInPosition(TilePosition)
+         && !TileType.Equals(TileType.STONE)){
             double v= random.NextDouble();
-            gift=v<=0.5?GiftType.WATER_FARM:GiftType.FOOD_FARM;
+            Gift=v<=0.5?GiftType.WATER_FARM:GiftType.FOOD_FARM;
         }else{
-            gift=GiftType.CARD;
+            Gift=GiftType.CARD;
         }
     }
 
     public void DiggingTile(AntStats antStats,bool isMenuDigInUse){
-        actualResistance-=antStats.GetDiggingSpeed();
-        antStats.ApplyEnergyCost(energyCostToDig);
-        if(!antsDiggingSameTile.Contains(antStats)){
-            antsDiggingSameTile.Add(antStats);
+        ActualResistance-=antStats.GetDiggingSpeed();
+        antStats.ApplyEnergyCost(EnergyCostToDig);
+        if(!AntsDiggingSameTile.Contains(antStats)){
+            AntsDiggingSameTile.Add(antStats);
         }
         ProcessStateOfTile(isMenuDigInUse);
     }
@@ -91,36 +102,36 @@ public class TileData
     
 
     void ProcessGift(){
-        if(this.gift.Equals(GiftType.CARD) && containerData.CanAddNewCard()){
-            containerData.AddNewCard();
-        }else if(this.gift.Equals(GiftType.FOOD_FARM)){
-            containerData.AddNewFarm(Type.FOOD,tilePosition);
-        }else if(this.gift.Equals(GiftType.WATER_FARM)){
-            containerData.AddNewFarm(Type.WATER,tilePosition);
+        if(this.Gift.Equals(GiftType.CARD) && ContainerData.CanAddNewCard()){
+            ContainerData.AddNewCard();
+        }else if(this.Gift.Equals(GiftType.FOOD_FARM)){
+            ContainerData.AddNewFarm(Type.FOOD,TilePosition);
+        }else if(this.Gift.Equals(GiftType.WATER_FARM)){
+            ContainerData.AddNewFarm(Type.WATER,TilePosition);
         }
 
 
     }
     void ProcessStateOfTile(bool isMenuDigInUse){
         if(!isMenuDigInUse){
-            generationTilemap.dirtMap.SetTile(tilePosition,GetTileByStateAndType());
+            GenerationTilemap.dirtMap.SetTile(TilePosition,GetTileByStateAndType());
         }
-        if(tileType.Equals(TileType.DIRT) && actualResistance<=0f){
-            tileType=TileType.EMPTY;
-            generationTilemap.dirtMap.SetTile(tilePosition,null);
+        if(TileType.Equals(TileType.DIRT) && ActualResistance<=0f){
+            TileType=TileType.EMPTY;
+            GenerationTilemap.dirtMap.SetTile(TilePosition,null);
             ProcessGift();
-            if(!this.gift.Equals(GiftType.WATER_FARM) || !this.gift.Equals(GiftType.FOOD_FARM)){
-                generationTilemap.CanWakeUpNest(tilePosition);
+            if(!this.Gift.Equals(GiftType.WATER_FARM) || !this.Gift.Equals(GiftType.FOOD_FARM)){
+                GenerationTilemap.CanWakeUpNest(TilePosition);
             }
             
-        }else if(tileType.Equals(TileType.STONE) && actualResistance<=0f){
-            actualResistance=maxResistance;
+        }else if(TileType.Equals(TileType.STONE) && ActualResistance<=0f){
+            ActualResistance=MaxResistance;
             ProcessGift();
             UpdateGift(random.NextDouble());
         }
         List<AntStats> antsWithoutEnoughEnergy=new List<AntStats>();
-        foreach(AntStats ant in antsDiggingSameTile){
-            if(ant.GetActualEnergy()<energyCostToDig) antsWithoutEnoughEnergy.Add(ant);
+        foreach(AntStats ant in AntsDiggingSameTile){
+            if(ant.GetActualEnergy()<EnergyCostToDig) antsWithoutEnoughEnergy.Add(ant);
         }
         foreach(AntStats ant in antsWithoutEnoughEnergy){
             ant.CancelAntAction();
@@ -129,19 +140,19 @@ public class TileData
 
     public Tile GetTileByStateAndType(){
         Tile tile=null;
-        if(tileType.Equals(TileType.DIRT)){
-            if(actualResistance<maxResistance && actualResistance>= maxResistance*2/4f){
-                tile=containerData.diggingDirtTile1;
-            }else if(actualResistance< maxResistance*2/4f && actualResistance>= maxResistance*1/4f){
-                tile=containerData.diggingDirtTile2;
-            }else if(actualResistance<maxResistance*1/4f && actualResistance>=0f){
-                tile=containerData.diggingDirtTile3;
-            }else if(actualResistance>=maxResistance){
-                tile=containerData.dirtTile;
+        if(TileType.Equals(TileType.DIRT)){
+            if(ActualResistance<MaxResistance && ActualResistance>= MaxResistance*2/4f){
+                tile=ContainerData.diggingDirtTile1;
+            }else if(ActualResistance< MaxResistance*2/4f && ActualResistance>= MaxResistance*1/4f){
+                tile=ContainerData.diggingDirtTile2;
+            }else if(ActualResistance<MaxResistance*1/4f && ActualResistance>=0f){
+                tile=ContainerData.diggingDirtTile3;
+            }else if(ActualResistance>=MaxResistance){
+                tile=ContainerData.dirtTile;
             }
-        }else if(tileType.Equals(TileType.STONE)){
+        }else if(TileType.Equals(TileType.STONE)){
             //TODO:Sprites al minar
-            tile=containerData.stoneTile;
+            tile=ContainerData.stoneTile;
 
         }
         return tile;

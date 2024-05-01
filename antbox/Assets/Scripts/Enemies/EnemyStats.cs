@@ -57,13 +57,13 @@ public class EnemyStats : MonoBehaviour
         if(spriteRenderer!=null){
             spriteRenderer.sprite=enemy.enemySprite;
         }
-        if(enemy.battleStats.criticalEffects.Contains(CriticalEffects.AREA_ATTACK) && !enemy.enemyType.Equals(EnemyType.EARTHWORM)){
+        if(enemy.battleStats.CriticalEffects.Contains(CriticalEffects.AREA_ATTACK) && !enemy.enemyType.Equals(EnemyType.EARTHWORM)){
             Transform area=this.gameObject.transform.Find("AreaAttack");
             if(area!=null){
                 area.gameObject.SetActive(true);
                 dangerZone=area.gameObject;
             }
-        }else if(enemy.battleStats.criticalEffects.Contains(CriticalEffects.AREA_ATTACK) && enemy.enemyType.Equals(EnemyType.EARTHWORM)){
+        }else if(enemy.battleStats.CriticalEffects.Contains(CriticalEffects.AREA_ATTACK) && enemy.enemyType.Equals(EnemyType.EARTHWORM)){
             dangerZone.SetActive(true);
         }
     }

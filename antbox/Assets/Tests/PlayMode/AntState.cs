@@ -55,13 +55,13 @@ public class AntState
     [UnityTest]
     public IEnumerator AntStatsThroughtTime()
     {
-        Assert.True(antStats.actualHP.Equals(antStats.GetMaxHP())
+        Assert.True(antStats.ActualHP.Equals(antStats.GetMaxHP())
          && antStats.AllBarsManager.HealthBar.Slider.maxValue
          .Equals(antStats.AllBarsManager.HealthBar.Slider.value));
 
         antStats.TakeDamage(-20);
 
-        Assert.True(!antStats.actualHP.Equals(antStats.GetMaxHP()));
+        Assert.True(!antStats.ActualHP.Equals(antStats.GetMaxHP()));
         yield return null;
     }
 }
