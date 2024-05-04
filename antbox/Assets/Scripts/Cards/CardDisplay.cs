@@ -21,7 +21,7 @@ public class CardDisplay : MonoBehaviour
     private GameObject infoCanvas;
 
     [SerializeField]
-    private GameObject activityMenu;
+    private ActivityMenu activityMenu;
 
     [SerializeField]
     private RawImage littleTemplate;
@@ -32,19 +32,27 @@ public class CardDisplay : MonoBehaviour
     [SerializeField]
     private bool canBeSelected = true;
 
+    private SelectableItem anyItem;
+
+    private ContainerData containerData;
+
     public Card Card { get => card; set => card = value; }
     public Image Image { get => image; set => image = value; }
     public TextMeshProUGUI CardName { get => cardName; set => cardName = value; }
     public GameObject InfoCanvas { get => infoCanvas; set => infoCanvas = value; }
-    public GameObject ActivityMenu { get => activityMenu; set => activityMenu = value; }
+    public ActivityMenu ActivityMenu { get => activityMenu; set => activityMenu = value; }
     public RawImage LittleTemplate { get => littleTemplate; set => littleTemplate = value; }
     public RawImage BigTemplate { get => bigTemplate; set => bigTemplate = value; }
     public bool CanBeSelected { get => canBeSelected; set => canBeSelected = value; }
+    public SelectableItem AnyItem { get => anyItem; set => anyItem = value; }
+    public ContainerData ContainerData { get => containerData; set => containerData = value; }
 
     void Start()
     {
         CardName.text=Card.Name;
         Image.sprite=Card.ArtWorks;
+        AnyItem=FindObjectOfType<SelectableItem>();
+        ContainerData=FindObjectOfType<ContainerData>();
         if(Card.HasPassive()){
             LittleTemplate.color=new Color32(255,0,229,255);
             BigTemplate.color=new Color32(255,0,229,255);
@@ -133,21 +141,17 @@ public class CardDisplay : MonoBehaviour
     }
 
     public void DiscardCard(){
-        ContainerData containerData=FindObjectOfType<ContainerData>();
-        containerData.RemoveCardFromHand(this);
-        containerData.GoBackToGameAfterActivity();
+        ContainerData.RemoveCardFromHand(this);
+        ContainerData.GoBackToGameAfterActivity();
     }
 
     public void UseCard(){
-        SelectableItem anyItem=FindObjectOfType<SelectableItem>();
-                if(anyItem!=null){
-                    anyItem.MakeEveryoneUnselectableAndUnselected();
-                }
-        ActivityMenu activityMenu=FindObjectOfType<ActivityMenu>(true);
-        activityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesByComplexity(false),false,false);
-        ContainerData containerData=FindObjectOfType<ContainerData>();
-        containerData.executableActions=Card.Actions;
-        containerData.RemoveCardFromHand(this);
+        if(AnyItem!=null){
+            AnyItem.MakeEveryoneUnselectableAndUnselected();
+        }
+        ActivityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesByComplexity(false),false,false);
+        ContainerData.executableActions=Card.Actions;
+        ContainerData.RemoveCardFromHand(this);
     }
     public void ShowCardData(){
         if(CanBeSelected){
@@ -159,13 +163,10 @@ public class CardDisplay : MonoBehaviour
                 foreach(UIFarmManager ui in uIFarmManagers){
                     ui.HideInfo();
                 }
-                SelectableItem anyItem=FindObjectOfType<SelectableItem>();
-                if(anyItem!=null){
-                    anyItem.MakeEveryonedUnselected();
+                if(AnyItem!=null){
+                    AnyItem.MakeEveryonedUnselected();
                 }
-
-        ContainerData containerData=FindObjectOfType<ContainerData>();
-        foreach(CardDisplay card in containerData.cardsInHand){
+        foreach(CardDisplay card in ContainerData.cardsInHand){
             card.InfoCanvas.gameObject.SetActive(false);
         }
         InfoCanvas.gameObject.SetActive(true);
@@ -173,9 +174,8 @@ public class CardDisplay : MonoBehaviour
     }
 
     public void CancelCard(){
-        SelectableItem anyItem=FindObjectOfType<SelectableItem>();
-        if(anyItem!=null){
-            anyItem.MakeEveryoneSelectable();
+        if(AnyItem!=null){
+            AnyItem.MakeEveryoneSelectable();
         }
         InfoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
     }

@@ -257,7 +257,7 @@ public class ContainerData : MonoBehaviour
     public void AddCard(Card card){
         CardDisplay newCard=Instantiate<CardDisplay>(cardTemplate,cardTemplate.transform.position,Quaternion.identity,cardPlatform.transform);
         newCard.Card=card;
-        newCard.ActivityMenu=activityMenu;
+        newCard.ActivityMenu=activityMenu.GetComponent<ActivityMenu>();
         GameObject newCardData=newCard.transform.Find("Data").gameObject;
         GameObject cardDataTemplate=cardTemplate.transform.Find("Data").gameObject;
         GameObject newCardHUD=newCard.transform.Find("HUD").gameObject;

@@ -112,7 +112,7 @@ public class CharacterStats : MonoBehaviour
 
     void KillAnt(){
         SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
-        item.isSelected=false;
+        item.IsSelected=false;
         if(this.gameObject.GetComponent<AntStats>()!=null){
             FarmStats[] farms=FindObjectsOfType<FarmStats>();
             foreach(FarmStats farm in farms){

@@ -178,7 +178,7 @@ public class FarmStats : MonoBehaviour
 
     public void DestroyFarm(){
         SelectableItem item=this.gameObject.GetComponent<SelectableItem>();
-        item.isSelected=false;
+        item.IsSelected=false;
         List<GameObject> antsInFarm=new List<GameObject>(antsOfFarm); //Necesito clonar
         //porque no puedo recorrer una lista la cuál voy a ir vaciando.
         foreach(GameObject ant in antsInFarm){
