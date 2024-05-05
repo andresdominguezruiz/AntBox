@@ -12,7 +12,7 @@ public enum InteractionType{
     ANY,ALL,CHOOSE,NONE
 }
 public enum Destination{
-    ANT,CONTAINER,WATER_FARM,FOOD_FARM,QUEEN,FARM,ANTHILL,PLAYER
+    ANT,CONTAINER,WATER_FARM,FOOD_FARM,QUEEN,FARM,ANTHILL,PLAYER,HORDE
 }
 
 public enum UpdateEffectOnPlayer{
@@ -81,9 +81,9 @@ public class Action
         double result=0.0;
         for(int i=0;i<Uses;i++){
             if(!Type.Equals(ActionType.UPDATE)){
-                result+=0.5;
+                result+=1.5;
             }else{
-                result+=Destination.Equals(Destination.PLAYER)?1.0:0.2*(ContainerEffects.Count+CharacterEffects.Count+FarmEffects.Count);
+                result+=Destination.Equals(Destination.PLAYER)?1.5:0.35*(ContainerEffects.Count+CharacterEffects.Count+FarmEffects.Count);
             }
         }
         return result;

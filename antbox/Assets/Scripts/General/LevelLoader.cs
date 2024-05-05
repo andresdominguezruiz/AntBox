@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +7,10 @@ public class LevelLoader : MonoBehaviour
     public static LevelLoader Instance;
     public Animator animator;
     public float transitionTime=1f;
+
+    private float actualVolume=0.5f;
+
+    public float ActualVolume { get => actualVolume; set => actualVolume = value; }
 
     private static void SetInstance(LevelLoader level){
         LevelLoader.Instance=level;

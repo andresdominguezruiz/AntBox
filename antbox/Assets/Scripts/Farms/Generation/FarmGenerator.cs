@@ -81,8 +81,12 @@ public class FarmGenerator : MonoBehaviour
     }
     public void PlaceNewFarmInPosition(Vector3Int position,bool placeWaterFarm){
         Tilemap map=dirtMap.GetComponent<Tilemap>();
-        if(placeWaterFarm) PlaceWaterFarm(map,position);
-        else PlaceFoodFarm(map,position);
+        if(placeWaterFarm){
+            PlaceWaterFarm(map,position);
+        }
+        else{
+            PlaceFoodFarm(map,position);
+        }
         availablePath.Remove(position);
         DestroyAroundFarmAndAddCoverage(position,map);
     }
@@ -106,7 +110,7 @@ public class FarmGenerator : MonoBehaviour
         //, DE ESTA FORMA CADA COBERTURA DE CADA GRANJA SE DISTINGUE EN LA INTERFAZ
         bool res=true;
         Tilemap map=dirtMap.GetComponent<Tilemap>();
-        TileBase stone=FindObjectOfType<ContainerData>().stoneTile;
+        TileBase stone=FindObjectOfType<ContainerData>().StoneTile;
         QueenStats queen=FindObjectOfType<QueenStats>(false);
         foreach(Vector3Int pos in myCoverage){
             if(coveredPositions.Contains(pos) || stone.Equals(map.GetTile(pos)) ||

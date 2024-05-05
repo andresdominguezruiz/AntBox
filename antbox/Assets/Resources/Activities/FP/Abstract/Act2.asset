@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea97fa364571dc4ca8428b5c4d13074, type: 3}
+  m_Name: Act2
+  m_EditorClassIdentifier: 
+  name: Abstract
+  optionalImage: {fileID: 21300000, guid: e5d795f6fa4e11e47a516908fdb354a6, type: 3}
+  description: 
+  complexityType: 3
+  options:
+  - {fileID: 21300000, guid: 311dbc16dd4316f4a9bbf52e541df38a, type: 3}
+  - {fileID: 21300000, guid: 6f45a990ddd8b6041a62c9c836fb6326, type: 3}
+  - {fileID: 21300000, guid: 925a7c6ab14222a4da5691f08f76a87a, type: 3}
+  - {fileID: 21300000, guid: b1f5302cdd5bb9b46a34227f8a90c3a4, type: 3}
+  correctAnswer: 1

@@ -38,7 +38,7 @@ public class ExcavationMovement : MonoBehaviour
         IsDigging=false;
         GenerationTilemap generation=FindObjectOfType<GenerationTilemap>();
         TileData tileData=generation.GetTileData(selectedTile);
-        tileData.antsDiggingSameTile.Remove(this.gameObject.GetComponent<AntStats>());
+        tileData.AntsDiggingSameTile.Remove(this.gameObject.GetComponent<AntStats>());
     }
     public bool CanDig(){
         GenerationTilemap generation=FindObjectOfType<GenerationTilemap>();
@@ -51,7 +51,7 @@ public class ExcavationMovement : MonoBehaviour
     }
 
     public void Up(){
-        destructableMap.SetTile(selectedTile,containerData.dirtTile);
+        destructableMap.SetTile(selectedTile,containerData.DirtTile);
         selectedTile=selectedTile-direction;
         direction=Vector3Int.up;
         selectedTile=selectedTile+direction;
@@ -59,21 +59,21 @@ public class ExcavationMovement : MonoBehaviour
         
     }
     public void Down(){
-        destructableMap.SetTile(selectedTile,containerData.dirtTile);
+        destructableMap.SetTile(selectedTile,containerData.DirtTile);
         selectedTile=selectedTile-direction;
         direction=Vector3Int.down;
         selectedTile=selectedTile+direction;
 
     }
     public void Right(){
-        destructableMap.SetTile(selectedTile,containerData.dirtTile);
+        destructableMap.SetTile(selectedTile,containerData.DirtTile);
         selectedTile=selectedTile-direction;
         direction=Vector3Int.right;
         selectedTile=selectedTile+direction;
         
     }
     public void Left(){
-        destructableMap.SetTile(selectedTile,containerData.dirtTile);
+        destructableMap.SetTile(selectedTile,containerData.DirtTile);
         selectedTile=selectedTile-direction;
         direction=Vector3Int.left;
         selectedTile=selectedTile+direction;
@@ -187,7 +187,7 @@ public class ExcavationMovement : MonoBehaviour
         if(tileData!=null){
             if(Time.time -timeLastFrame>=1.0f){
             tileData.DiggingTile(ant.GetComponent<AntStats>(),menu!=null);
-            Debug.Log("RESISTANCE:"+tileData.actualResistance);
+            Debug.Log("RESISTANCE:"+tileData.ActualResistance);
             timeLastFrame=Time.time;
         }
         }

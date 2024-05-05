@@ -55,7 +55,6 @@ public class AntStats : CharacterStats
     [SerializeField] private int recoverSpeed;
 
     public BattleStats battleStats;
-    //TODO: Cuando tengamos juego base, mejorar stats para que cada hormiga sea buena en algo
 
     public float GetFarmingSpeed(){
         return farmingSpeed;
@@ -186,7 +185,7 @@ public class AntStats : CharacterStats
     }
 
     public string GetEnergyText(){
-        return maxEnergy.ToString()+"/"+actualEnergy.ToString();
+        return actualEnergy.ToString()+"/"+maxEnergy.ToString();
     }
 
     public float GetDiggingSpeed(){
@@ -224,7 +223,9 @@ public class AntStats : CharacterStats
         else {
             SetEnergy(actualEnergy-2*cost);
         }
-        AllBarsManager.EnergyBar.SetBarValue(actualEnergy);
+        if(AllBarsManager!=null && AllBarsManager.EnergyBar!=null){
+            AllBarsManager.EnergyBar.SetBarValue(actualEnergy);
+        }
 
     }
     public void InitAntStats(System.Random random){
@@ -236,12 +237,16 @@ public class AntStats : CharacterStats
     }
 
     private void Start(){
-        this.timeLastFrame=0f;
-        this.AllBarsManager = this.gameObject.GetComponentInChildren<AllBarsManager>();
-        AllBarsManager.HealthBar.SetMaxBarValue(GetMaxHP());
-        AllBarsManager.EnergyBar.SetMaxBarValue(GetMaxEnergy());
-        AllBarsManager.HungerBar.SetMaxBarValue(GetMaxHunger());
-        AllBarsManager.ThirstBar.SetMaxBarValue(GetMaxThirst());
+        this.TimeLastFrame=0f;
+        if(AllBarsManager==null){
+            this.AllBarsManager = this.gameObject.GetComponentInChildren<AllBarsManager>();
+        }
+        if(AllBarsManager!=null){
+            AllBarsManager.HealthBar.SetMaxBarValue(GetMaxHP());
+            AllBarsManager.EnergyBar.SetMaxBarValue(GetMaxEnergy());
+            AllBarsManager.HungerBar.SetMaxBarValue(GetMaxHunger());
+            AllBarsManager.ThirstBar.SetMaxBarValue(GetMaxThirst());
+        }
     }
 
     public void InitOtherVariables(){

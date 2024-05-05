@@ -60,12 +60,13 @@ public class ActivityMenu : MonoBehaviour
         this.gameObject.SetActive(true);
         this.isBoss=isBoss;
         this.applyDamageToEnemies=applyDamageToEnemies;
+        DestroyAllLights();
         ProcessActivity();
         if(activities!=null && activities.Length>0){
             selectedAnswers=new GameObject[activities.Length];
             evaluation=new bool[activities.Length];
             for(int i=0;i<activities.Length;i++){
-                GameObject newLight=Instantiate<GameObject>(lightTemplate
+                GameObject newLight=Instantiate(lightTemplate
                 ,lightTemplate.transform.position,Quaternion.identity,containerForTemplates.transform);
                 selectedAnswers[i]=newLight;
             }
@@ -92,16 +93,20 @@ public class ActivityMenu : MonoBehaviour
         }
     }
 
-    void FinishActivities(){
-        index=0;
-        Time.timeScale=1f;
+    void DestroyAllLights(){
         List<GameObject> objectsToDestroy=new List<GameObject>(selectedAnswers);
         foreach(GameObject answer in objectsToDestroy){
             Destroy(answer);
         }
+    }
+
+    void FinishActivities(){
+        index=0;
+        Time.timeScale=1f;
+        DestroyAllLights();
         this.gameObject.SetActive(false);
         ContainerData containerData=FindObjectOfType<ContainerData>();
-        containerData.ProcessEvaluation(evaluation,isBoss,applyDamageToEnemies);
+        containerData.StartProcessEvaluation(evaluation,isBoss,applyDamageToEnemies);
         isBoss=false;
         applyDamageToEnemies=false;
     }

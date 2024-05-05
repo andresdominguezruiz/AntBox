@@ -5,24 +5,44 @@ using UnityEngine;
 
 public class UIFarmManager : MonoBehaviour
 {
-    public GameObject infoCanvas;
-    public TextMeshProUGUI capacityText;
-    public TextMeshProUGUI typeText;
-    public TextMeshProUGUI cycle;
-    public TextMeshProUGUI energyCostText;
-    public FarmStats farmStats;
+    [SerializeField]
+    private GameObject infoCanvas;
+
+    [SerializeField]
+    private TextMeshProUGUI capacityText;
+
+    [SerializeField]
+    private TextMeshProUGUI typeText;
+
+    [SerializeField]
+    private TextMeshProUGUI cycle;
+
+    [SerializeField]
+    private TextMeshProUGUI energyCostText;
+
+    [SerializeField]
+    private FarmStats farmStats;
+
+    public GameObject InfoCanvas { get => infoCanvas; set => infoCanvas = value; }
+    public TextMeshProUGUI CapacityText { get => capacityText; set => capacityText = value; }
+    public TextMeshProUGUI TypeText { get => typeText; set => typeText = value; }
+    public TextMeshProUGUI Cycle { get => cycle; set => cycle = value; }
+    public TextMeshProUGUI EnergyCostText { get => energyCostText; set => energyCostText = value; }
+    public FarmStats FarmStats { get => farmStats; set => farmStats = value; }
 
     void Start(){
-        farmStats=this.gameObject.GetComponentInParent<FarmStats>();
+        FarmStats=this.gameObject.GetComponentInParent<FarmStats>();
     }
 
 
 
     void Update(){
-        if(farmStats!=null) UpdateCanvasWithFarmStats(farmStats);
+        if(FarmStats!=null){
+            UpdateCanvasWithFarmStats(FarmStats);
+        }
     }
     public void ShowInfo(){
-        infoCanvas.gameObject.SetActive(true);
+        InfoCanvas.gameObject.SetActive(true);
     }
     public void UpdateAndShowInfo()
     {
@@ -34,19 +54,21 @@ public class UIFarmManager : MonoBehaviour
     public void StartMultipleFarminMenu(){
         FarmStats farmStats=this.gameObject.GetComponentInParent<FarmStats>();
         MultipleFarmingMenu multipleFarmingMenu=FindObjectOfType<MultipleFarmingMenu>(true);
-        if(farmStats!=null && multipleFarmingMenu!=null) multipleFarmingMenu.InitMultipleFarmingMenu(farmStats);
+        if(farmStats!=null && multipleFarmingMenu!=null){
+            multipleFarmingMenu.InitMultipleFarmingMenu(farmStats);
+        }
     }
 
     public void UpdateCanvasWithFarmStats(FarmStats stats){
-        capacityText.text="Remaining Capacity:"+(stats.GetMaxCapacity()-stats.antsOfFarm.Count)+" of "+stats.GetMaxCapacity();
-        typeText.text="Type:"+stats.GetTypeText();
-        cycle.text="Cycle:"+stats.GetTimePerCycle()+"/"+stats.timePerCycleConsumed;
-        energyCostText.text="EnergyCost:"+stats.energyCostOfCycle;
+        CapacityText.text="Remaining Capacity:"+(stats.GetMaxCapacity()-stats.antsOfFarm.Count)+"/"+stats.GetMaxCapacity();
+        TypeText.text="Type:"+stats.GetTypeText();
+        Cycle.text="Cycle:"+stats.timePerCycleConsumed+"/"+stats.GetTimePerCycle();
+        EnergyCostText.text="EnergyCost:"+stats.energyCostOfCycle;
     }
 
 
     public void HideInfo()
     {
-        infoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
+        InfoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
     }
 }

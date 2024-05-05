@@ -42,13 +42,21 @@ public class SelectableMaskManager : MonoBehaviour
 
     void UpdateState(){
         if(farmStats!=null){
-            if(farmStats.CanAntWorkInHere()) actualState=State.AVAILABLE;
-            else actualState=State.NOT_AVAILABLE;
+            if(farmStats.CanAntWorkInHere()){
+                actualState=State.AVAILABLE;
+            }
+            else{
+                actualState=State.NOT_AVAILABLE;
+            }
         }
     }
 
     void UpdateSprite(){
-        if(actualState.Equals(State.AVAILABLE)) spriteRender.color=Color.green;
-        else spriteRender.color=Color.red;
+        if(actualState.Equals(State.AVAILABLE)){
+            spriteRender.color=Color.green;
+        }
+        else{
+            spriteRender.color=Color.red;
+        }
     }
 }

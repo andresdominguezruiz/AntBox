@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
 
     public void SaveCards(List<CardDisplay> containerCards){
         foreach(CardDisplay cardDisplay in containerCards){
-            cardsInHand.Add(cardDisplay.card);
+            cardsInHand.Add(cardDisplay.Card);
         }
     }
 
@@ -66,7 +66,9 @@ public class Player : MonoBehaviour
     }
 
     public void AddComplexity(float value){
-        if(complexityLevelOfGame+value>=minimunComplexity) complexityLevelOfGame+=value;
+        if(complexityLevelOfGame+value>=minimunComplexity){
+            complexityLevelOfGame+=value;
+        }
     }
 
     public void ProcessUpdateEffectOfAction(Action actualAction){

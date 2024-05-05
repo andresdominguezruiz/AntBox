@@ -45,7 +45,7 @@ public class BattleMovement : MonoBehaviour
         if(BattleManager.isEnemy){
             EnemyStats enemyStats=this.GetComponent<EnemyStats>();
             SelectableItem selectableItem=FindObjectOfType<SelectableItem>(false);
-            allItems=selectableItem.GetItemsByTarget(enemyStats.enemy.targetType);
+            allItems=selectableItem.GetItemsByTarget(enemyStats.Enemy.TargetType);
         }else if(!BattleManager.isEnemy){
             EnemyStats[] enemies=FindObjectsOfType<EnemyStats>(false);
             foreach(EnemyStats enemyStats in enemies){
@@ -99,10 +99,10 @@ public class BattleMovement : MonoBehaviour
     void Update()
     {
         if(BattleManager.isEnemy){
-            Enemy enemy=GetComponent<EnemyStats>().enemy;
-            if(ActualTarget!=null && !enemy.targetType.Equals(TargetType.NONE)){
+            Enemy enemy=GetComponent<EnemyStats>().Enemy;
+            if(ActualTarget!=null && !enemy.TargetType.Equals(TargetType.NONE)){
                 Agent.SetDestination(ActualTarget.position);
-            }else if(ActualTarget==null && !enemy.targetType.Equals(TargetType.NONE)){
+            }else if(ActualTarget==null && !enemy.TargetType.Equals(TargetType.NONE)){
                 UpdateTarget();
             }
         }
@@ -115,7 +115,9 @@ public class BattleMovement : MonoBehaviour
                     KillingMode=false;
                     BattleManager.inBattle=false;
                     AntStats ant=this.gameObject.GetComponent<AntStats>();
-                    if(ant!=null) ant.StopAttacking();
+                    if(ant!=null){
+                        ant.StopAttacking();
+                    }
                 }
             }
         }

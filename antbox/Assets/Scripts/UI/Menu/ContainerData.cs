@@ -7,46 +7,127 @@ using UnityEngine.Tilemaps;
 
 public class ContainerData : MonoBehaviour
 {
-    public int FOOD_CONTAINER=20;
-    public int WATER_CONTAINER=20;
+
+    [SerializeField]
+    private int fOOD_CONTAINER = 20;
+
+    [SerializeField]
+    private int wATER_CONTAINER = 20;
     [SerializeField] private int minNutritionalValue=10;
     [SerializeField] private int maxNutritionalValue=60;
-    public int maxCards=10;
-    private System.Random random = new System.Random();
-    public List<CardDisplay> cardsInHand=new List<CardDisplay>();
+
+    [SerializeField]
+    private int maxCards = 10;
+    readonly System.Random random = new System.Random();
+
+    [SerializeField]
+    private List<CardDisplay> cardsInHand = new List<CardDisplay>();
+
+    [SerializeField]
     private FarmGenerator farmGenerator;
-    public GameObject cardPlatform;
-    public GameObject activityMenu;
-    public List<Action> executableActions;
-    public int foodValue=24;
-    public int waterValue=24;
+
+    [SerializeField]
+    private GameObject cardPlatform;
+
+    [SerializeField]
+    private GameObject activityMenu;
+
+    [SerializeField]
+    private List<Action> executableActions;
+
+    [SerializeField]
+    private int foodValue = 24;
+
+    [SerializeField]
+    private int waterValue = 24;
     //PUEDES AÑADIR EL GAMEOBJECT QUE CONTIENE EL COMPONENTE TAMBIEN
-    public CardDisplay cardTemplate;
 
-    public TextMeshProUGUI foodText;
-    public TextMeshProUGUI waterText;
-    public TextMeshProUGUI foodValueText;
-    public TextMeshProUGUI waterValueText;
+    [SerializeField]
+    private CardDisplay cardTemplate;
 
-    public TextMeshProUGUI foodLimitText;
-    public TextMeshProUGUI waterLimitText;
-    public TextMeshProUGUI cardText;
-    public Tile dirtTile;
-    public Tile stoneTile;
-    public Tile diggingDirtTile1;
-    public Tile diggingDirtTile2;
-    public Tile diggingDirtTile3;
+    [SerializeField]
+    private TextMeshProUGUI foodText;
 
-    public TextMeshProUGUI counterOfExamsText;
-    public TextMeshProUGUI counterOfPassedExamsText;
-    public TextMeshProUGUI counterOfFailedExamsText;
+    [SerializeField]
+    private TextMeshProUGUI waterText;
+
+    [SerializeField]
+    private TextMeshProUGUI foodValueText;
+
+    [SerializeField]
+    private TextMeshProUGUI waterValueText;
+
+    [SerializeField]
+    private TextMeshProUGUI foodLimitText;
+
+    [SerializeField]
+    private TextMeshProUGUI waterLimitText;
+
+    [SerializeField]
+    private TextMeshProUGUI cardText;
+
+    [SerializeField]
+    private Tile dirtTile;
+
+    [SerializeField]
+    private Tile stoneTile;
+
+    [SerializeField]
+    private Tile diggingDirtTile1;
+
+    [SerializeField]
+    private Tile diggingDirtTile2;
+
+    [SerializeField]
+    private Tile diggingDirtTile3;
+
+    [SerializeField]
+    private TextMeshProUGUI counterOfExamsText;
+
+    [SerializeField]
+    private TextMeshProUGUI counterOfPassedExamsText;
+
+    [SerializeField]
+    private TextMeshProUGUI counterOfFailedExamsText;
+
+    public int FOOD_CONTAINER { get => fOOD_CONTAINER; set => fOOD_CONTAINER = value; }
+    public int WATER_CONTAINER { get => wATER_CONTAINER; set => wATER_CONTAINER = value; }
+    public int MinNutritionalValue { get => minNutritionalValue; set => minNutritionalValue = value; }
+    public int MaxNutritionalValue { get => maxNutritionalValue; set => maxNutritionalValue = value; }
+    public int MaxCards { get => maxCards; set => maxCards = value; }
+
+    public System.Random Random => random;
+
+    public List<CardDisplay> CardsInHand { get => cardsInHand; set => cardsInHand = value; }
+    public FarmGenerator FarmGenerator { get => farmGenerator; set => farmGenerator = value; }
+    public GameObject CardPlatform { get => cardPlatform; set => cardPlatform = value; }
+    public GameObject ActivityMenu { get => activityMenu; set => activityMenu = value; }
+    public List<Action> ExecutableActions { get => executableActions; set => executableActions = value; }
+    public int FoodValue { get => foodValue; set => foodValue = value; }
+    public int WaterValue { get => waterValue; set => waterValue = value; }
+    public CardDisplay CardTemplate { get => cardTemplate; set => cardTemplate = value; }
+    public TextMeshProUGUI FoodText { get => foodText; set => foodText = value; }
+    public TextMeshProUGUI WaterText { get => waterText; set => waterText = value; }
+    public TextMeshProUGUI FoodValueText { get => foodValueText; set => foodValueText = value; }
+    public TextMeshProUGUI WaterValueText { get => waterValueText; set => waterValueText = value; }
+    public TextMeshProUGUI FoodLimitText { get => foodLimitText; set => foodLimitText = value; }
+    public TextMeshProUGUI WaterLimitText { get => waterLimitText; set => waterLimitText = value; }
+    public TextMeshProUGUI CardText { get => cardText; set => cardText = value; }
+    public Tile DirtTile { get => dirtTile; set => dirtTile = value; }
+    public Tile StoneTile { get => stoneTile; set => stoneTile = value; }
+    public Tile DiggingDirtTile1 { get => diggingDirtTile1; set => diggingDirtTile1 = value; }
+    public Tile DiggingDirtTile2 { get => diggingDirtTile2; set => diggingDirtTile2 = value; }
+    public Tile DiggingDirtTile3 { get => diggingDirtTile3; set => diggingDirtTile3 = value; }
+    public TextMeshProUGUI CounterOfExamsText { get => counterOfExamsText; set => counterOfExamsText = value; }
+    public TextMeshProUGUI CounterOfPassedExamsText { get => counterOfPassedExamsText; set => counterOfPassedExamsText = value; }
+    public TextMeshProUGUI CounterOfFailedExamsText { get => counterOfFailedExamsText; set => counterOfFailedExamsText = value; }
 
     // Start is called before the first frame update
 
     void UpdateCountersOfExams(){
-        counterOfExamsText.text="TOTAL EXAMS: "+StatisticsOfGame.Instance.counterOfExams;
-        counterOfPassedExamsText.text="PASSED EXAMS: "+StatisticsOfGame.Instance.counterOfPassedExams;
-        counterOfFailedExamsText.text="FAILED EXAMS: "+StatisticsOfGame.Instance.counterOfFailedExams;
+        CounterOfExamsText.text="TOTAL EXAMS: "+StatisticsOfGame.Instance.counterOfExams;
+        CounterOfPassedExamsText.text="PASSED EXAMS: "+StatisticsOfGame.Instance.counterOfPassedExams;
+        CounterOfFailedExamsText.text="FAILED EXAMS: "+StatisticsOfGame.Instance.counterOfFailedExams;
 
     }
 
@@ -67,12 +148,12 @@ public class ContainerData : MonoBehaviour
     }
     void Start()
     {
-        farmGenerator=FindObjectOfType<FarmGenerator>();
+        FarmGenerator=FindObjectOfType<FarmGenerator>();
         UpdateTextOfContainer();
         
     }
     public bool CanAddNewCard(){
-        return cardsInHand.Count<maxCards;
+        return CardsInHand.Count<MaxCards;
     }
     public void AddNewFarm(Type farmType,Vector3Int tilePosition){
         FarmGenerator generator=FindObjectOfType<FarmGenerator>();
@@ -82,13 +163,13 @@ public class ContainerData : MonoBehaviour
     }
 
     void UpdateTextOfContainer(){
-        foodText.text=":"+FOOD_CONTAINER;
-        waterText.text=":"+WATER_CONTAINER;
-        foodValueText.text="VALUE:"+foodValue;
-        waterValueText.text="VALUE:"+waterValue;
-        cardText.text="Cards:"+cardsInHand.Count+"/10";
-        foodLimitText.text=farmGenerator.foodFarms.Count+"/"+farmGenerator.GetMaxNumberOfFarms();
-        waterLimitText.text=farmGenerator.waterFarms.Count+"/"+farmGenerator.GetMaxNumberOfFarms();
+        FoodText.text=":"+FOOD_CONTAINER;
+        WaterText.text=":"+WATER_CONTAINER;
+        FoodValueText.text="VALUE:"+FoodValue;
+        WaterValueText.text="VALUE:"+WaterValue;
+        CardText.text="Cards:"+CardsInHand.Count+"/10";
+        FoodLimitText.text=FarmGenerator.foodFarms.Count+"/"+FarmGenerator.GetMaxNumberOfFarms();
+        WaterLimitText.text=FarmGenerator.waterFarms.Count+"/"+FarmGenerator.GetMaxNumberOfFarms();
         UpdateCountersOfExams();
     }
 
@@ -101,41 +182,41 @@ public class ContainerData : MonoBehaviour
 
     public void ApplyEffect(ContainerEffect containerEffect){
         if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.FOOD)){
-            FOOD_CONTAINER=containerEffect.multiplicatorValue*(FOOD_CONTAINER+(int)containerEffect.sumValue);
+            FOOD_CONTAINER=containerEffect.MultiplicatorValue*(FOOD_CONTAINER+(int)containerEffect.SumValue);
             if(FOOD_CONTAINER<0){
                 FOOD_CONTAINER=0;
             }
         }
         else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.WATER)){
-            WATER_CONTAINER=containerEffect.multiplicatorValue*(WATER_CONTAINER+(int)containerEffect.sumValue);
+            WATER_CONTAINER=containerEffect.MultiplicatorValue*(WATER_CONTAINER+(int)containerEffect.SumValue);
             if(WATER_CONTAINER<0){
                 WATER_CONTAINER=0;
             }
         }
         else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.WATER_VALUE)){
-            waterValue=containerEffect.multiplicatorValue*(waterValue+(int)containerEffect.sumValue);
-            if(waterValue>maxNutritionalValue){
-                waterValue=maxNutritionalValue;
+            WaterValue=containerEffect.MultiplicatorValue*(WaterValue+(int)containerEffect.SumValue);
+            if(WaterValue>MaxNutritionalValue){
+                WaterValue=MaxNutritionalValue;
             }
-            else if(waterValue<minNutritionalValue){
-                waterValue=minNutritionalValue;
+            else if(WaterValue<MinNutritionalValue){
+                WaterValue=MinNutritionalValue;
             }
         }else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.FOOD_VALUE)){
-            foodValue=containerEffect.multiplicatorValue*(foodValue+(int)containerEffect.sumValue);
-            if(foodValue>maxNutritionalValue){
-                foodValue=maxNutritionalValue;
+            FoodValue=containerEffect.MultiplicatorValue*(FoodValue+(int)containerEffect.SumValue);
+            if(FoodValue>MaxNutritionalValue){
+                FoodValue=MaxNutritionalValue;
             }
-            else if(foodValue<minNutritionalValue){
-                foodValue=minNutritionalValue;
+            else if(FoodValue<MinNutritionalValue){
+                FoodValue=MinNutritionalValue;
             }
         }
         else if(containerEffect.containerEffect.Equals(UpdateEffectOnContainer.MIRROR)){
             //Cambia valores nutritivos de la partida.
-            int originalValue=foodValue;
+            int originalValue=FoodValue;
             int container=FOOD_CONTAINER;
-            foodValue=waterValue;
+            FoodValue=WaterValue;
             FOOD_CONTAINER=WATER_CONTAINER;
-            waterValue=originalValue;
+            WaterValue=originalValue;
             WATER_CONTAINER=container;
         }
     }
@@ -159,10 +240,10 @@ public class ContainerData : MonoBehaviour
         else WATER_CONTAINER+=value;
     }
     public void RelocateCardsInHand(){
-        GameObject cardDataTemplate=cardTemplate.transform.Find("Data").gameObject;
-        foreach(CardDisplay card in cardsInHand){
+        GameObject cardDataTemplate=CardTemplate.transform.Find("Data").gameObject;
+        foreach(CardDisplay card in CardsInHand){
             GameObject cardData=card.transform.Find("Data").gameObject;
-            cardData.transform.position=new Vector3(cardDataTemplate.transform.position.x+35f*cardsInHand.IndexOf(card),cardDataTemplate.transform.position.y,0);
+            cardData.transform.position=new Vector3(cardDataTemplate.transform.position.x+35f*CardsInHand.IndexOf(card),cardDataTemplate.transform.position.y,0);
         }
     }
     void AnalyseResultToUpdateCounters(double result,bool isExam)
@@ -180,52 +261,78 @@ public class ContainerData : MonoBehaviour
             StatisticsOfGame.Instance.counterOfExams++;
             UpdateCountersOfExams();
         }else{
-            if(result>=0.5) StatisticsOfGame.Instance.counterOfCorrectCards++;
-            else StatisticsOfGame.Instance.counterOfFailedCards++;
+            if(result>=0.5) {
+                StatisticsOfGame.Instance.counterOfCorrectCards++;
+            }
+            else{
+                StatisticsOfGame.Instance.counterOfFailedCards++;
+            }
             StatisticsOfGame.Instance.counterOfUsedCards++;
         }
 
     }
 
-    public void ProcessEvaluation(bool[] evaluation,bool isBoss,bool applyDamageToEnemies){
-        double result=0.0;
-        foreach(bool point in evaluation){
-            if(point) result+=1/(evaluation.Length*1.0);
+    public void StartProcessEvaluation(bool[] evaluation, bool isBoss, bool applyDamageToEnemies)
+    {
+        StartCoroutine(ProcessEvaluation(evaluation, isBoss, applyDamageToEnemies));
+    }
+
+    IEnumerator ProcessEvaluation(bool[] evaluation, bool isBoss, bool applyDamageToEnemies)
+    {
+        double result = 0.0;
+        foreach (bool point in evaluation)
+        {
+            if (point){
+                result += 1 / (evaluation.Length * 1.0);
+            }
         }
-        AnalyseResultToUpdateCounters(result,isBoss);
-        if(isBoss){
-            Clock clock=FindObjectOfType<Clock>();
-            if(clock!=null){
+
+        AnalyseResultToUpdateCounters(result, isBoss);
+
+        if (isBoss)
+        {
+            Clock clock = FindObjectOfType<Clock>();
+            if (clock != null)
+            {
                 clock.GoBackToNothingEvent();
                 clock.UpdateMessageOfConsoleByEvent();
-                clock.eventTypeText.text=clock.eventType.ToString();
+                clock.eventTypeText.text = clock.eventType.ToString();
+                yield return null; // Si necesitas una espera específica, reemplaza null por new WaitForSeconds(tiempoDeEspera)
             }
-        } 
-        if(result>=0.5 && !isBoss){
-            if(!applyDamageToEnemies){
-                //VICTORY IN CARD
-                ActionMenu actionMenu=FindObjectOfType<ActionMenu>(true);
-                actionMenu.InitActions(executableActions);
-            }else{
-                //VICTORY IN HELPING
-                EnemyStats[] allEnemies=FindObjectsOfType<EnemyStats>(false);
-                foreach(EnemyStats enemy in allEnemies){
-                    enemy.Hurt(enemy.enemy.maxHP/5);
+        }
+
+        if (result >= 0.5 && !isBoss)
+        {
+            if (!applyDamageToEnemies)
+            {
+                ActionMenu actionMenu = FindObjectOfType<ActionMenu>(true);
+                actionMenu.InitActions(ExecutableActions);
+            }
+            else
+            {
+                EnemyStats[] allEnemies = FindObjectsOfType<EnemyStats>(false);
+                foreach (EnemyStats enemy in allEnemies)
+                {
+                    enemy.Hurt(enemy.Enemy.MaxHP / 5);
                 }
             }
         }
-        else if(result<0.5 && isBoss){
-            //TODO:Si evaluación es negativa y es jefe, pillar carta negativa aleatoria y ejecutarla
-            Card[] allCards=Resources.LoadAll<Card>("Cards/PowerDowns");
-            int v=random.Next(0,allCards.Length);
-            Card badCard=allCards[v];
-            executableActions=badCard.actions;
-            ActionMenu actionMenu=FindObjectOfType<ActionMenu>(true);
-            actionMenu.InitActions(executableActions);
+        else if (result < 0.5 && isBoss)
+        {
+            Card[] allCards = Resources.LoadAll<Card>("Cards/PowerDowns");
+            int v = Random.Next(0, allCards.Length);
+            Card badCard = allCards[v];
+            ExecutableActions = badCard.Actions;
+            ActionMenu actionMenu = FindObjectOfType<ActionMenu>(true);
+            actionMenu.InitActions(ExecutableActions);
+            ExecutableActions = new List<Action>();
         }
-        else{ //Si el resultado a sido negativo, vuelve a la normalidad
+        else
+        {
             GoBackToGameAfterActivity();
         }
+
+        yield return null;
     }
 
     public void AddNumberOfCards(int number){
@@ -243,11 +350,11 @@ public class ContainerData : MonoBehaviour
             if(anyItem!=null){
                 anyItem.MakeEveryoneSelectable();
             }
-            cardTemplate.MakeEveryCardSelectable();
+            CardTemplate.MakeEveryCardSelectable();
     }
     public void RemoveCardFromHand(CardDisplay cardDisplay){
-        if(cardsInHand.Contains(cardDisplay)){
-            cardsInHand.Remove(cardDisplay);
+        if(CardsInHand.Contains(cardDisplay)){
+            CardsInHand.Remove(cardDisplay);
             Destroy(cardDisplay.gameObject);
             RelocateCardsInHand();
 
@@ -255,24 +362,24 @@ public class ContainerData : MonoBehaviour
     }
 
     public void AddCard(Card card){
-        CardDisplay newCard=Instantiate<CardDisplay>(cardTemplate,cardTemplate.transform.position,Quaternion.identity,cardPlatform.transform);
-        newCard.card=card;
-        newCard.activityMenu=activityMenu;
+        CardDisplay newCard=Instantiate<CardDisplay>(CardTemplate,CardTemplate.transform.position,Quaternion.identity,CardPlatform.transform);
+        newCard.Card=card;
+        newCard.ActivityMenu=ActivityMenu.GetComponent<ActivityMenu>();
         GameObject newCardData=newCard.transform.Find("Data").gameObject;
-        GameObject cardDataTemplate=cardTemplate.transform.Find("Data").gameObject;
+        GameObject cardDataTemplate=CardTemplate.transform.Find("Data").gameObject;
         GameObject newCardHUD=newCard.transform.Find("HUD").gameObject;
-        GameObject cardHUDTemplate=cardTemplate.transform.Find("HUD").gameObject;
+        GameObject cardHUDTemplate=CardTemplate.transform.Find("HUD").gameObject;
         newCardHUD.transform.localScale=cardHUDTemplate.transform.localScale+new Vector3(0.65f,0.65f,0.7f);
         newCardHUD.transform.position=cardHUDTemplate.transform.position;
-        newCardData.transform.position=new Vector3(cardDataTemplate.transform.position.x+35f*cardsInHand.Count,cardDataTemplate.transform.position.y,0);
+        newCardData.transform.position=new Vector3(cardDataTemplate.transform.position.x+35f*CardsInHand.Count,cardDataTemplate.transform.position.y,0);
         newCardData.transform.localScale=cardDataTemplate.transform.localScale+new Vector3(0.5f,0.5f,0.5f);
         newCard.gameObject.SetActive(true);
-        cardsInHand.Add(newCard);
+        CardsInHand.Add(newCard);
     }
 
     public void AddNewCard(){
         Card[] allCards=Resources.LoadAll<Card>("Cards/PowerUps");
-        int v=random.Next(0,allCards.Length);
+        int v=Random.Next(0,allCards.Length);
         //OJO,para buscar datos con Resources, debe existir la carpeta Resources
         //Esto puede servir para hacer test, tenlo en cuenta
         AddCard(allCards[v]);

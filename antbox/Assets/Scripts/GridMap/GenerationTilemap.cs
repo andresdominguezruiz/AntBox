@@ -146,7 +146,9 @@ public class GenerationTilemap : MonoBehaviour
             PlaceQueenAndAnts();
             CreateAllTilesData();
             int numberOfNests=8;
-            if((StatisticsOfGame.Instance.actualLevel+4)<8) numberOfNests=StatisticsOfGame.Instance.actualLevel+4;
+            if((StatisticsOfGame.Instance.actualLevel+4)<8){
+                numberOfNests=StatisticsOfGame.Instance.actualLevel+4;
+            }
             CreateNests(numberOfNests);
             awakeNests=new List<Nest>();
 
@@ -168,7 +170,6 @@ public class GenerationTilemap : MonoBehaviour
         //1ºcoger posicion aleatoria e inicializar contador
         //2º añadir posicion al nido y buscar otra direccion que este permitida
         //3º al finalizar contador o direcciones=> añadir a posiciones no disponibles la covertura
-        Debug.Log("BJCDDBCDCBJDC:"+availablePos.Count);
         int numberOfPositions=availablePos.Count>8?random.Next(4,8):random.Next(1,availablePos.Count);
         int randomIndex=random.Next(0,availablePos.Count);
         OptimalNest optimal=StatisticsOfGame.Instance.GetOptimalNestByLevelAndRandomValue(random.NextDouble());
@@ -269,7 +270,9 @@ public class GenerationTilemap : MonoBehaviour
             Vector3Int down=new Vector3Int(tile.x,tile.y-1,tile.z);
             List<Vector3Int> options=new List<Vector3Int>{left,right,up,down};
             foreach(Vector3Int option in options){
-                if(dirtMap.GetTile(option)!=null) list.Add(option);
+                if(dirtMap.GetTile(option)!=null){
+                    list.Add(option);
+                }
             }
         }
         return list;
@@ -419,7 +422,8 @@ public class GenerationTilemap : MonoBehaviour
     void CreateRandomPath()
     {
         int exit=width/2;
-        Vector3Int actualTile=new Vector3Int(exit, height, 0);
+        //height-1 para no quitar la apertura del hormiguero
+        Vector3Int actualTile=new Vector3Int(exit, height-1, 0);
         dirtMap.SetTile(actualTile,null);
         path.Add(actualTile);
         for(int i=0;i<3;i++){

@@ -16,26 +16,21 @@ public class MoveMenu : MonoBehaviour
     [SerializeField] private GameObject cancelActionButton;
 
     [SerializeField] private GameObject selectedAnt;
-    public float minX=-5.5f;
-    public float maxX=7f;
-    public float minY=-3.5f;
-    public float maxY=3f;
 
-    public float speed=0.5f;
+
 
     private NavMeshAgent agent;
 
-    // Start is called before the first frame update
+    public NavMeshAgent Agent { get => agent; set => agent = value; }
 
-    void Start()
-    {
-        
-    }
     public void StartMoveMenu()
     {
-        this.agent=selectedAnt.GetComponent<NavMeshAgent>();
+        Time.timeScale=0f;
+        this.Agent=selectedAnt.GetComponent<NavMeshAgent>();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        if(anyCardDisplay!=null){
+            anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        }
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
         moveMenu.gameObject.SetActive(true);
         consoleText.text=selectedAnt.name+"-Select an accessible area";
@@ -43,15 +38,17 @@ public class MoveMenu : MonoBehaviour
     }
 
     void Update(){
-        if(this.agent==null || this.agent.gameObject.IsDestroyed()) FinishMoveMenu();
+        if(this.Agent==null || this.Agent.gameObject==null){
+            FinishMoveMenu();
+        }
         if(Input.GetMouseButtonDown(0) && !PauseMenu.isPaused){
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
-            if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
+            if((mousePos.x>=MenuTool.MinX && mousePos.x<=MenuTool.MaxX) && (mousePos.y>=MenuTool.MinY && mousePos.y<=MenuTool.MaxY) && 
             (hit.collider==null || !hit.collider.CompareTag("Dirt"))){
                 Vector3Int selectedTile=map.WorldToCell(mousePos);
-                this.agent.SetDestination(map.GetCellCenterWorld(selectedTile));
+                this.Agent.SetDestination(map.GetCellCenterWorld(selectedTile));
                 FinishMoveMenu();
             }
         }
@@ -66,7 +63,8 @@ public class MoveMenu : MonoBehaviour
     // Update is called once per frame
     public void FinishMoveMenu()
     {
-        this.agent=null;
+        Time.timeScale=1f;
+        this.Agent=null;
         moveMenu.SetActive(false);
         if(selectedAnt!=null){
             selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();

@@ -23,9 +23,15 @@ public class NestManager : MonoBehaviour
 
     private string GetOptimalUrlByType(NestType type){
         string url="Enemies";
-        if(type.Equals(NestType.ANTS)) url+="/Ants";
-        else if(type.Equals(NestType.EARTHWORMS)) url+="/Earthworms";
-        else if(type.Equals(NestType.WORMS)) url+="/Worms";
+        if(type.Equals(NestType.ANTS)){
+            url+="/Ants";
+        }
+        else if(type.Equals(NestType.EARTHWORMS)){
+            url+="/Earthworms";
+        }
+        else if(type.Equals(NestType.WORMS)){
+            url+="/Worms";
+        }
         return url;
     }
     public void SpawnEnemiesForHorde(){
@@ -34,14 +40,20 @@ public class NestManager : MonoBehaviour
         Enemy[] enemies=Resources.LoadAll<Enemy>(url);
         List<Enemy> availableEnemies=new List<Enemy>();
         foreach(Enemy enemy in enemies){
-            if(enemy.enemyLevel<=Player.Instance.complexityLevelOfGame+1) availableEnemies.Add(enemy);
+            if(enemy.EnemyLevel<=Player.Instance.complexityLevelOfGame+1){
+                availableEnemies.Add(enemy);
+            }
         }
         int r=random.Next(0,availableEnemies.Count-1);
         GenerationTilemap generationTilemap=FindObjectOfType<GenerationTilemap>();
         Enemy selectedEnemy=availableEnemies[r];
         int number=1;
-        if(selectedEnemy.enemyType.Equals(EnemyType.ANT)) number=2;
-        else if(selectedEnemy.enemyType.Equals(EnemyType.WORM)) number=3;
+        if(selectedEnemy.EnemyType.Equals(EnemyType.ANT)) {
+            number=2;
+        }
+        else if(selectedEnemy.EnemyType.Equals(EnemyType.WORM)){
+            number=3;
+        }
         for(int i=0;i<number;i++){
             int v=random.Next(0,generationTilemap.path.Count);
             SpawnEnemy(selectedEnemy,generationTilemap.dirtMap,generationTilemap.path[v]);
@@ -56,7 +68,9 @@ public class NestManager : MonoBehaviour
         Enemy[] enemies=Resources.LoadAll<Enemy>(url);
         List<Enemy> availableEnemies=new List<Enemy>();
         foreach(Enemy enemy in enemies){
-            if(enemy.enemyLevel<=nest.maxLevel) availableEnemies.Add(enemy);
+            if(enemy.EnemyLevel<=nest.maxLevel){
+                availableEnemies.Add(enemy);
+            }
         }
         if(availableEnemies.Count>0){
             int randomIndex=random.Next(0,availableEnemies.Count);
@@ -76,11 +90,15 @@ public class NestManager : MonoBehaviour
 
     private void SpawnEnemy(Enemy enemy,Tilemap map,Vector3Int pos){
         GameObject template=antTemplate;
-        if(enemy.enemyType.Equals(EnemyType.WORM)) template=wormTemplate;
-        else if(enemy.enemyType.Equals(EnemyType.EARTHWORM)) template=earthwormTemplate;
+        if(enemy.EnemyType.Equals(EnemyType.WORM)){
+            template=wormTemplate;
+        }
+        else if(enemy.EnemyType.Equals(EnemyType.EARTHWORM)){
+            template=earthwormTemplate;
+        }
         GameObject newEnemy=Instantiate(template,map.GetCellCenterWorld(pos),Quaternion.identity,template.transform.parent);
         newEnemy.name=enemy.name;
-        newEnemy.GetComponent<EnemyStats>().enemy=enemy;
+        newEnemy.GetComponent<EnemyStats>().Enemy=enemy;
         newEnemy.AddComponent<SelectableItem>();
         newEnemy.GetComponent<SelectableItem>().InitSelectableItemOfEnemy(newEnemy.GetComponentInChildren<UIEnemyManager>(),attackMenu);
         GenerationTilemap generation=GetComponent<GenerationTilemap>();

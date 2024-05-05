@@ -23,18 +23,24 @@ public class MultipleFarmingMenu : MonoBehaviour
 
     void ShowState(){
         SelectableMaskManager mask=selectedFarm.GetComponentInChildren<SelectableMaskManager>(true);
-        if(mask!=null) mask.ShowRender();
+        if(mask!=null){
+            mask.ShowRender();
+        }
         foreach(GameObject ant in selectedFarm.antsOfFarm){
-            if(!ant.IsDestroyed()&&ant.GetComponent<SelectableItem>()!=null){
+            if(ant!=null && ant.GetComponent<SelectableItem>()!=null){
                 ant.GetComponent<SelectableItem>().ChangeColor(Color.red);
             }
         }
     }
     void HideState(){
         SelectableMaskManager mask=selectedFarm.GetComponentInChildren<SelectableMaskManager>(true);
-        if(mask!=null) mask.HideRender();
+        if(mask!=null){
+            mask.HideRender();
+        }
         SelectableItem item=selectedFarm.GetComponent<SelectableItem>();
-        if(item!=null) item.ChangeColorOfAllAnts(true);
+        if(item!=null){
+            item.ChangeColorOfAllAnts(true);
+        }
     }
 
     void UpdateText(){
@@ -46,6 +52,7 @@ public class MultipleFarmingMenu : MonoBehaviour
     }
 
     public void InitMultipleFarmingMenu(FarmStats farm){
+        Time.timeScale=0f;
         if(farm.CanAntWorkInHere()){
             selectedFarm=farm;
             this.gameObject.SetActive(true);
@@ -65,7 +72,6 @@ public class MultipleFarmingMenu : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(!PauseMenu.isPaused){
@@ -73,7 +79,6 @@ public class MultipleFarmingMenu : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
                 if(hit.collider!=null && hit.collider.CompareTag("Ant")){
-                    Debug.Log("ho");
                     AntStats ant=hit.collider.gameObject.GetComponent<AntStats>();
                     Debug.Log(!selectedFarm.antsOfFarm.Contains(ant.gameObject));
                     if( ant!=null &&!selectedFarm.antsOfFarm.Contains(ant.gameObject)){
@@ -96,6 +101,7 @@ public class MultipleFarmingMenu : MonoBehaviour
     }
 
     public void FinishMultipleFarmingMenu(bool confirmedAction){
+        Time.timeScale=1f;
         if(selectedFarm.CanAntWorkInHere()){
             if(confirmedAction){
                 SendAntsToFarm();

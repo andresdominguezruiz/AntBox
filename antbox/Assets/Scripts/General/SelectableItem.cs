@@ -13,46 +13,93 @@ public enum AnthillAction{
 }
 public class SelectableItem : MonoBehaviour
 {
-    public bool isSelected=false;
-    public bool canBeSelected=true;
+    [SerializeField]
+    private bool isSelected = false;
+
+    [SerializeField]
+    private bool canBeSelected = true;
+
+    [SerializeField]
     private Color32 originalColor;
+
+    [SerializeField]
     private Color32 selectedColor;
 
-    public GameObject moveMenu;
-    public GameObject farmMenu;
-    public GameObject digMenu;
-    public GameObject attackMenu;
+    [SerializeField]
+    private GameObject moveMenu;
 
-    public static List<SelectableItem> selectableItems=new List<SelectableItem>();
-    public static HashSet<Vector3> availablePath=new HashSet<Vector3>();
+    [SerializeField]
+    private GameObject farmMenu;
 
-    private System.Random random = new System.Random();
-    
-    public UIManager itemUI;
+    [SerializeField]
+    private GameObject digMenu;
 
-    public UIFarmManager farmUI;
+    [SerializeField]
+    private GameObject attackMenu;
 
-    public UIEnemyManager enemyUI;
+    private static List<SelectableItem> selectableItems = new List<SelectableItem>();
+    private static HashSet<Vector3> availablePath = new HashSet<Vector3>();
 
-    public ItemType type;
+    [SerializeField]
+    private UIManager itemUI;
+
+    [SerializeField]
+    private UIFarmManager farmUI;
+
+    [SerializeField]
+    private UIEnemyManager enemyUI;
+
+    [SerializeField]
+    private ItemType type;
+
+    public bool IsSelected { get => isSelected; set => isSelected = value; }
+    public bool CanBeSelected { get => canBeSelected; set => canBeSelected = value; }
+    public Color32 OriginalColor { get => originalColor; set => originalColor = value; }
+    public Color32 SelectedColor { get => selectedColor; set => selectedColor = value; }
+    public GameObject MoveMenu { get => moveMenu; set => moveMenu = value; }
+    public GameObject FarmMenu { get => farmMenu; set => farmMenu = value; }
+    public GameObject DigMenu { get => digMenu; set => digMenu = value; }
+    public GameObject AttackMenu { get => attackMenu; set => attackMenu = value; }
+    public static List<SelectableItem> SelectableItems { get => selectableItems; set => selectableItems = value; }
+    public static HashSet<Vector3> AvailablePath { get => availablePath; set => availablePath = value; }
+    public UIManager ItemUI { get => itemUI; set => itemUI = value; }
+    public UIFarmManager FarmUI { get => farmUI; set => farmUI = value; }
+    public UIEnemyManager EnemyUI { get => enemyUI; set => enemyUI = value; }
+    public ItemType Type { get => type; set => type = value; }
 
     public List<FarmStats> GetAllFarms(){
         List<FarmStats> list=new List<FarmStats>();
-        foreach(SelectableItem item in selectableItems){
-            if(item.type.Equals(ItemType.FARM)) list.Add(item.gameObject.GetComponent<FarmStats>());
+        foreach(SelectableItem item in SelectableItems){
+            if(item.Type.Equals(ItemType.FARM)){
+                list.Add(item.gameObject.GetComponent<FarmStats>());
+            }
         }
         return list;
+    }
+
+    public static List<SelectableItem> GetItemsByTargetType(TargetType target){
+        List<SelectableItem> items=new List<SelectableItem>();
+        foreach(SelectableItem item in SelectableItems){
+            if((target.Equals(TargetType.ANT) && item.Type.Equals(ItemType.ANT)) ||
+             (target.Equals(TargetType.FARM) && item.Type.Equals(ItemType.FARM)) ||
+             (target.Equals(TargetType.QUEEN) && item.Type.Equals(ItemType.QUEEN)) ||
+             (target.Equals(TargetType.ANTHILL) &&
+              (item.Type.Equals(ItemType.ANT) || item.Type.Equals(ItemType.QUEEN)))){
+                items.Add(item);
+              }
+        }
+        return items;
     }
 
     //solo dejar esos tipos porque este método lo usan los enemigos, no los aliados
     public List<Transform> GetItemsByTarget(TargetType target){
         List<Transform> items=new List<Transform>();
-        foreach(SelectableItem item in selectableItems){
-            if((target.Equals(TargetType.ANT) && item.type.Equals(ItemType.ANT)) ||
-             (target.Equals(TargetType.FARM) && item.type.Equals(ItemType.FARM)) ||
-             (target.Equals(TargetType.QUEEN) && item.type.Equals(ItemType.QUEEN)) ||
+        foreach(SelectableItem item in SelectableItems){
+            if((target.Equals(TargetType.ANT) && item.Type.Equals(ItemType.ANT)) ||
+             (target.Equals(TargetType.FARM) && item.Type.Equals(ItemType.FARM)) ||
+             (target.Equals(TargetType.QUEEN) && item.Type.Equals(ItemType.QUEEN)) ||
              (target.Equals(TargetType.ANTHILL) &&
-              (item.type.Equals(ItemType.ANT) || item.type.Equals(ItemType.QUEEN)))){
+              (item.Type.Equals(ItemType.ANT) || item.Type.Equals(ItemType.QUEEN)))){
                 items.Add(item.transform);
               }
         }
@@ -60,14 +107,14 @@ public class SelectableItem : MonoBehaviour
     }
 
     public void RemoveSelectableItem(){
-        selectableItems.Remove(this);
+        SelectableItems.Remove(this);
     }
 
     public void RecoverAnthillAction(bool isFeeding){
         ContainerData container=FindObjectOfType<ContainerData>(false);
-        foreach(SelectableItem item in selectableItems){
+        foreach(SelectableItem item in SelectableItems){
             CharacterStats character=item.GetComponent<CharacterStats>();
-            bool condition=(item.type.Equals(ItemType.ANT) || item.type.Equals(ItemType.QUEEN))
+            bool condition=(item.Type.Equals(ItemType.ANT) || item.Type.Equals(ItemType.QUEEN))
             && character!=null && container!=null;
             if( condition && isFeeding){
                 character.Eat(container);
@@ -78,12 +125,12 @@ public class SelectableItem : MonoBehaviour
     }
 
     public void AntFromAnthillAction(bool toSleep){
-        foreach(SelectableItem item in selectableItems){
+        foreach(SelectableItem item in SelectableItems){
             AntStats character=item.GetComponent<AntStats>();
             if(character!=null && toSleep){
                 character.CancelAntAction();
                 character.GoToSleep();
-            }else if(item.type.Equals(ItemType.ANT) && character!=null){
+            }else if(item.Type.Equals(ItemType.ANT) && character!=null){
                 character.CancelAntAction();
                 character.StartAttackingWithoutTarget();
             }
@@ -92,21 +139,21 @@ public class SelectableItem : MonoBehaviour
     public void AddPath(List<Vector3Int> path,Tilemap destructablePath){
         foreach(Vector3Int localPosition in path){
             Vector3 worldPosition=destructablePath.CellToWorld(localPosition);
-            availablePath.Add(worldPosition);
+            AvailablePath.Add(worldPosition);
         }
     }
 
     public void InitSelectableItemOfEnemy(UIEnemyManager uIEnemy,GameObject attackMenu){
         SetUIEnemyManager(uIEnemy);
-        enemyUI.HideInfo();
-        type=ItemType.ENEMY;
-        this.attackMenu=attackMenu;
+        EnemyUI.HideInfo();
+        Type=ItemType.ENEMY;
+        this.AttackMenu=attackMenu;
     }
 
     public void InitAntItem(){
         SetUIManager(this.gameObject.GetComponentInChildren<UIManager>(true));
-        itemUI.HideInfo();
-        type=ItemType.ANT;
+        ItemUI.HideInfo();
+        Type=ItemType.ANT;
     }
 
 
@@ -117,8 +164,8 @@ public class SelectableItem : MonoBehaviour
         AddPath(path,destructableMap);
         if(itemType.Equals(ItemType.FARM)){
             SetUIFarmManager(this.gameObject.GetComponentInChildren<UIFarmManager>(true));
-            farmUI.HideInfo();
-            type=ItemType.FARM;
+            FarmUI.HideInfo();
+            Type=ItemType.FARM;
 
 
         }
@@ -127,18 +174,20 @@ public class SelectableItem : MonoBehaviour
         }
         else{
             SetUIManager(this.gameObject.GetComponentInChildren<UIManager>(true));
-            itemUI.HideInfo();
-            type=ItemType.QUEEN;
+            ItemUI.HideInfo();
+            Type=ItemType.QUEEN;
 
         }
 
     }
     void Start(){
-        selectableItems.Add(this);
-        originalColor=this.gameObject.GetComponentInChildren<SpriteRenderer>().color;
-        selectedColor=Color.green;
+        SelectableItems.Add(this);
+        OriginalColor=this.gameObject.GetComponentInChildren<SpriteRenderer>().color;
+        SelectedColor=Color.green;
         QueenStats queenStats=this.GetComponent<QueenStats>();
-        if(queenStats!=null) type=ItemType.QUEEN;
+        if(queenStats!=null){
+            Type=ItemType.QUEEN;
+        }
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -149,72 +198,63 @@ public class SelectableItem : MonoBehaviour
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider, true);
         }
     }
-    public void MakeEveryoneUnselectableButPrepareFarms(){
-        for(int i=0;i<selectableItems.Count;i++){
-            selectableItems[i].canBeSelected=false;
-            if(selectableItems[i].gameObject.GetComponent<FarmStats>()!=null){
-                FarmStats stats=selectableItems[i].gameObject.GetComponent<FarmStats>();
-
-            }
-        }
-    }
 
     public void MakeEveryoneUnselectable(){
-        for(int i=0;i<selectableItems.Count;i++){
-            selectableItems[i].canBeSelected=false;
+        for(int i=0;i<SelectableItems.Count;i++){
+            SelectableItems[i].CanBeSelected=false;
         }
     }
     public void MakeEveryoneUnselectableAndUnselected(){
-        for(int i=0;i<selectableItems.Count;i++){
-            selectableItems[i].canBeSelected=false;
-            if(selectableItems[i].isSelected){
-                selectableItems[i].isSelected=false;
-                selectableItems[i].ChangeColor(originalColor);
+        for(int i=0;i<SelectableItems.Count;i++){
+            SelectableItems[i].CanBeSelected=false;
+            if(SelectableItems[i].IsSelected){
+                SelectableItems[i].IsSelected=false;
+                SelectableItems[i].ChangeColor(OriginalColor);
             }
         }
     }
 
     public void MakeEveryonedUnselected(){
-        for(int i=0;i<selectableItems.Count;i++){
-            if(selectableItems[i].isSelected){
-                selectableItems[i].isSelected=false;
-                selectableItems[i].ChangeColor(originalColor);
+        for(int i=0;i<SelectableItems.Count;i++){
+            if(SelectableItems[i].IsSelected){
+                SelectableItems[i].IsSelected=false;
+                SelectableItems[i].ChangeColor(OriginalColor);
             }
         }
     }
 
     public void HideAllInfo(){
-        for(int i=0;i<selectableItems.Count;i++){
-            if(selectableItems[i].gameObject.GetComponentInChildren<UIManager>(true)!=null){
-                selectableItems[i].gameObject.GetComponentInChildren<UIManager>(true).HideInfo();
-            }else if(selectableItems[i].gameObject.GetComponentInChildren<UIFarmManager>(true)!=null){
-                selectableItems[i].gameObject.GetComponentInChildren<UIFarmManager>(true).HideInfo();
+        for(int i=0;i<SelectableItems.Count;i++){
+            if(SelectableItems[i].gameObject.GetComponentInChildren<UIManager>(true)!=null){
+                SelectableItems[i].gameObject.GetComponentInChildren<UIManager>(true).HideInfo();
+            }else if(SelectableItems[i].gameObject.GetComponentInChildren<UIFarmManager>(true)!=null){
+                SelectableItems[i].gameObject.GetComponentInChildren<UIFarmManager>(true).HideInfo();
             }
         }
     }
 
     public void MakeEveryoneSelectable(){
-        for(int i=0;i<selectableItems.Count;i++){
-            selectableItems[i].canBeSelected=true;
+        for(int i=0;i<SelectableItems.Count;i++){
+            SelectableItems[i].CanBeSelected=true;
         }
     }
 
     void Update(){
-        if(isSelected && canBeSelected){
-            if(itemUI!=null){
-                itemUI.ShowInfo();
-            }else if(farmUI!=null){
-                farmUI.ShowInfo();
-            }else if(enemyUI!=null){
-                enemyUI.ShowInfo();
+        if(IsSelected && CanBeSelected){
+            if(ItemUI!=null){
+                ItemUI.ShowInfo();
+            }else if(FarmUI!=null){
+                FarmUI.ShowInfo();
+            }else if(EnemyUI!=null){
+                EnemyUI.ShowInfo();
             }
         }else{
-            if(itemUI!=null){
-                itemUI.HideInfo();
-            }else if(farmUI!=null){
-                farmUI.HideInfo();
-            }else if(enemyUI!=null){
-                enemyUI.HideInfo();
+            if(ItemUI!=null){
+                ItemUI.HideInfo();
+            }else if(FarmUI!=null){
+                FarmUI.HideInfo();
+            }else if(EnemyUI!=null){
+                EnemyUI.HideInfo();
             }
         }
 
@@ -222,28 +262,28 @@ public class SelectableItem : MonoBehaviour
     public void ChangeToOriginal(){
         SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
         if(sprite!=null){
-            sprite.material.color=originalColor;
+            sprite.material.color=OriginalColor;
         }
     }
 
     public void ChangeColorWithoutSelecting(){
         SpriteRenderer sprite=this.gameObject.GetComponentInChildren<SpriteRenderer>();
-        if(sprite!=null && sprite.material.color.Equals(originalColor)){
-            sprite.material.color=selectedColor;
+        if(sprite!=null && sprite.material.color.Equals(OriginalColor)){
+            sprite.material.color=SelectedColor;
         }
-        else if(sprite!=null && sprite.material.color.Equals(selectedColor)){
-            sprite.material.color=originalColor;
+        else if(sprite!=null && sprite.material.color.Equals(SelectedColor)){
+            sprite.material.color=OriginalColor;
         }
         else if(sprite!=null){
-            sprite.material.color=originalColor;
+            sprite.material.color=OriginalColor;
         }
     }
 
     public void ChangeColorOfAllAnts(bool toOriginal=false){
-        foreach(SelectableItem item in selectableItems){
-            if(item.type.Equals(ItemType.ANT) && !toOriginal){
+        foreach(SelectableItem item in SelectableItems){
+            if(item.Type.Equals(ItemType.ANT) && !toOriginal){
                 item.ChangeColorWithoutSelecting();
-            }else if(item.type.Equals(ItemType.ANT) && toOriginal){
+            }else if(item.Type.Equals(ItemType.ANT) && toOriginal){
                 item.ChangeToOriginal();
             }
         }
@@ -258,53 +298,56 @@ public class SelectableItem : MonoBehaviour
 
     void OnMouseDown() {
         if(!PauseMenu.isPaused){
-            if(canBeSelected && !isSelected){
+            if(CanBeSelected && !IsSelected){
             CardDisplay cardInHand=FindObjectOfType<CardDisplay>(false);
-            if(cardInHand!=null) cardInHand.HideCardsInHand();
-            isSelected=true;
-            ChangeColor(this.selectedColor);
-            if(itemUI!=null && !itemUI.isQueen){
-                MoveMenu menu=moveMenu.GetComponent<MoveMenu>();
+            if(cardInHand!=null){
+                cardInHand.HideCardsInHand();
+            }
+            IsSelected=true;
+            ChangeColor(this.SelectedColor);
+            if(ItemUI!=null && !ItemUI.IsQueen){
+                MoveMenu menu=MoveMenu.GetComponent<MoveMenu>();
                 menu.SetSelectedAnt(this.gameObject);
-                FarmingMenu otherMenu=farmMenu.GetComponent<FarmingMenu>();
+                FarmingMenu otherMenu=FarmMenu.GetComponent<FarmingMenu>();
                 otherMenu.SetSelectedAnt(this.gameObject);
-                DigMenu dig=digMenu.GetComponent<DigMenu>();
+                DigMenu dig=DigMenu.GetComponent<DigMenu>();
                 dig.SetSelectedAnt(this.gameObject);
             }
-            if((itemUI!=null && !itemUI.isQueen) || (itemUI==null && enemyUI!=null)){
-                AttackMenu attack=attackMenu.GetComponent<AttackMenu>();
-                attack.SetSelectedItem(this.gameObject,itemUI==null);
+            if((ItemUI!=null && !ItemUI.IsQueen) || (ItemUI==null && EnemyUI!=null)){
+                AttackMenu attack=AttackMenu.GetComponent<AttackMenu>();
+                attack.SetSelectedItem(this.gameObject,ItemUI==null);
             }
-            foreach(SelectableItem item in selectableItems){
+            Debug.Log("NUMBER:"+SelectableItems.Count);
+            foreach(SelectableItem item in SelectableItems){
                 if(item!=this){
-                    item.isSelected=false;
-                    item.ChangeColor(item.originalColor);
+                    item.IsSelected=false;
+                    item.ChangeColor(item.OriginalColor);
                 } 
             }
-        }else if(canBeSelected && isSelected){ //This allows to unselect items
-            isSelected=false;
-            ChangeColor(originalColor);
+        }else if(CanBeSelected && IsSelected){ //This allows to unselect items
+            IsSelected=false;
+            ChangeColor(OriginalColor);
         }
         }
     }
 
 
     public void SetUIManager(UIManager ui){
-        itemUI=ui;
+        ItemUI=ui;
     }
 
     public void SetUIFarmManager(UIFarmManager ui){
-        farmUI=ui;
+        FarmUI=ui;
     }
 
     public void SetUIEnemyManager(UIEnemyManager ui){
-        enemyUI=ui;
+        EnemyUI=ui;
     }
 
 
 
     public UIManager GetUIManager(){
-        return itemUI;
+        return ItemUI;
     }
 
     
