@@ -10,7 +10,8 @@ public static class AntsTool
 
     public static void IsEndOfGame(){
         List<SelectableItem> anthill=SelectableItem.GetItemsByTargetType(TargetType.ANTHILL);
-        if(anthill.Count<=1){
+        List<SelectableItem> queens=SelectableItem.GetItemsByTargetType(TargetType.QUEEN);
+        if(anthill.Count<=1 || queens.Count<1){
             StatisticsOfGame.Instance.DestroyItemsAndEnemies();
             LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex+1);
         }
