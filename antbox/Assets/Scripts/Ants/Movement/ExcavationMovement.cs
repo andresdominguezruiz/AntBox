@@ -51,7 +51,7 @@ public class ExcavationMovement : MonoBehaviour
     }
 
     public void Up(){
-        destructableMap.SetTile(selectedTile,containerData.dirtTile);
+        destructableMap.SetTile(selectedTile,containerData.DirtTile);
         selectedTile=selectedTile-direction;
         direction=Vector3Int.up;
         selectedTile=selectedTile+direction;
@@ -59,21 +59,21 @@ public class ExcavationMovement : MonoBehaviour
         
     }
     public void Down(){
-        destructableMap.SetTile(selectedTile,containerData.dirtTile);
+        destructableMap.SetTile(selectedTile,containerData.DirtTile);
         selectedTile=selectedTile-direction;
         direction=Vector3Int.down;
         selectedTile=selectedTile+direction;
 
     }
     public void Right(){
-        destructableMap.SetTile(selectedTile,containerData.dirtTile);
+        destructableMap.SetTile(selectedTile,containerData.DirtTile);
         selectedTile=selectedTile-direction;
         direction=Vector3Int.right;
         selectedTile=selectedTile+direction;
         
     }
     public void Left(){
-        destructableMap.SetTile(selectedTile,containerData.dirtTile);
+        destructableMap.SetTile(selectedTile,containerData.DirtTile);
         selectedTile=selectedTile-direction;
         direction=Vector3Int.left;
         selectedTile=selectedTile+direction;

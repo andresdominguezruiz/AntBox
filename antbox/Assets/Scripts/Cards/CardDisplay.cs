@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ItemState{
+    SELECT,UNSELECT,UNSELECT_AND_UNSELECTABLE
+}
 public class CardDisplay : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -31,9 +35,6 @@ public class CardDisplay : MonoBehaviour
 
     [SerializeField]
     private bool canBeSelected = true;
-
-    private SelectableItem anyItem;
-
     private ContainerData containerData;
 
     public Card Card { get => card; set => card = value; }
@@ -44,14 +45,12 @@ public class CardDisplay : MonoBehaviour
     public RawImage LittleTemplate { get => littleTemplate; set => littleTemplate = value; }
     public RawImage BigTemplate { get => bigTemplate; set => bigTemplate = value; }
     public bool CanBeSelected { get => canBeSelected; set => canBeSelected = value; }
-    public SelectableItem AnyItem { get => anyItem; set => anyItem = value; }
     public ContainerData ContainerData { get => containerData; set => containerData = value; }
 
     void Start()
     {
         CardName.text=Card.Name;
         Image.sprite=Card.ArtWorks;
-        AnyItem=FindObjectOfType<SelectableItem>();
         ContainerData=FindObjectOfType<ContainerData>();
         if(Card.HasPassive()){
             LittleTemplate.color=new Color32(255,0,229,255);
@@ -108,13 +107,13 @@ public class CardDisplay : MonoBehaviour
     public HashSet<ComplexityType> PickAreaOfComplexity(bool isBoss){
         HashSet<ComplexityType> complexitiesToSearch=new HashSet<ComplexityType>();
         double complexity=0.0;
-        int multiplicator=2;
+        int multiplicator=3;
         if(isBoss){
             int result=StatisticsOfGame.Instance.counterOfCorrectCards-StatisticsOfGame.Instance.counterOfFailedCards;
             if(result<0){
                 result=0;
             }
-            complexity+=Player.Instance.complexityLevelOfGame+0.25*result;
+            complexity+=Player.Instance.complexityLevelOfGame+0.3*result;
             multiplicator=3;
         }else{
             complexity+=Card.GetComplexityOfCard(Player.Instance.complexityLevelOfGame);
@@ -145,12 +144,21 @@ public class CardDisplay : MonoBehaviour
         ContainerData.GoBackToGameAfterActivity();
     }
 
-    public void UseCard(){
-        if(AnyItem!=null){
-            AnyItem.MakeEveryoneUnselectableAndUnselected();
+    public void UpdateStateOfItems(ItemState state){
+        if(SelectableItem.SelectableItems.Count>0 && state.Equals(ItemState.SELECT)){
+            SelectableItem.SelectableItems[0].MakeEveryoneSelectable();
+        }else if(SelectableItem.SelectableItems.Count>0 && state.Equals(ItemState.UNSELECT)){
+            SelectableItem.SelectableItems[0].MakeEveryonedUnselected();
+        }else if(SelectableItem.SelectableItems.Count>0 && state.Equals(ItemState.UNSELECT_AND_UNSELECTABLE)){
+            SelectableItem.SelectableItems[0].MakeEveryoneUnselectableAndUnselected();
         }
+
+    }
+
+    public void UseCard(){
+        UpdateStateOfItems(ItemState.UNSELECT_AND_UNSELECTABLE);
         ActivityMenu.SetActivitiesAndStartPlaying(GenerateActivitiesByComplexity(false),false,false);
-        ContainerData.executableActions=Card.Actions;
+        ContainerData.ExecutableActions=Card.Actions;
         ContainerData.RemoveCardFromHand(this);
     }
     public void ShowCardData(){
@@ -163,10 +171,8 @@ public class CardDisplay : MonoBehaviour
                 foreach(UIFarmManager ui in uIFarmManagers){
                     ui.HideInfo();
                 }
-                if(AnyItem!=null){
-                    AnyItem.MakeEveryonedUnselected();
-                }
-        foreach(CardDisplay card in ContainerData.cardsInHand){
+                UpdateStateOfItems(ItemState.UNSELECT);
+        foreach(CardDisplay card in ContainerData.CardsInHand){
             card.InfoCanvas.gameObject.SetActive(false);
         }
         InfoCanvas.gameObject.SetActive(true);
@@ -174,9 +180,7 @@ public class CardDisplay : MonoBehaviour
     }
 
     public void CancelCard(){
-        if(AnyItem!=null){
-            AnyItem.MakeEveryoneSelectable();
-        }
+        UpdateStateOfItems(ItemState.SELECT);
         InfoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
     }
     public void HideInfo()
@@ -191,7 +195,7 @@ public class CardDisplay : MonoBehaviour
     }
 
     public void HideCardsInHand(){
-        foreach(CardDisplay cardDisplay in FindObjectsOfType<CardDisplay>()){
+        foreach(CardDisplay cardDisplay in ContainerData.CardsInHand){
             cardDisplay.HideInfo();
         }
     }

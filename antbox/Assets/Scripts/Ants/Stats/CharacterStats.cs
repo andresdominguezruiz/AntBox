@@ -127,7 +127,7 @@ public class CharacterStats : MonoBehaviour
             manager.OtherAvailableTargets.Remove(this.transform);
         } 
         item.RemoveSelectableItem();
-        IsEndOfGame();
+        AntsTool.IsEndOfGame();
         Destroy(this.gameObject);
     }
 
@@ -208,40 +208,25 @@ public class CharacterStats : MonoBehaviour
     public void Eat(ContainerData container){
         if(container.FOOD_CONTAINER>0){
             container.FOOD_CONTAINER--;
-            if(MaxHunger<ActualHunger+container.foodValue){
+            if(MaxHunger<ActualHunger+container.FoodValue){
                 SetActualHunger(MaxHunger);
             }
             else{
-                SetActualHunger(ActualHunger+container.foodValue);
+                SetActualHunger(ActualHunger+container.FoodValue);
             }
         }
     }
     public void Drink(ContainerData container){
         if(container.WATER_CONTAINER>0){
             container.WATER_CONTAINER--;
-            if(MaxThirst<ActualThirst+container.waterValue){
+            if(MaxThirst<ActualThirst+container.WaterValue){
                 SetActualThirst(MaxThirst);
             }
             else{
-                SetActualThirst(ActualThirst+container.waterValue);
+                SetActualThirst(ActualThirst+container.WaterValue);
             }
         }
     }
-
-    public void IsEndOfGame(){
-        QueenStats queenStats=this.gameObject.GetComponent<QueenStats>();
-        AntStats[] allAnts=FindObjectsOfType<AntStats>(false);
-        if((queenStats!=null && queenStats.isDead==true) || (allAnts.Length==1 && allAnts[0].isDead==true)){
-            foreach(AntStats ant in allAnts){
-                ant.KillAnt();
-            }
-            LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex+1);
-        }
-    }
-
-
-
-
     public void CheckHP(){
         if(ActualHP<=0 || MaxHP==0){
             ActualHP=0;

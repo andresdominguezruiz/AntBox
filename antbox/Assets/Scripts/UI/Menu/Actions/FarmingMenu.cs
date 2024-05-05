@@ -30,7 +30,6 @@ public class FarmingMenu : MonoBehaviour
                 farm.antsWorkingInFarm.Remove(selectedAnt);
                 selectedAnt.GetComponent<AntStats>().DoNothing();
                 selectedAnt.GetComponent<NavMeshAgent>().SetDestination(selectedAnt.transform.position);
-                Debug.Log("He cancelado, ahora su estado es "+selectedAnt.GetComponent<AntStats>().GetAction());
                 break;
             }
         }
@@ -40,6 +39,7 @@ public class FarmingMenu : MonoBehaviour
     
     public void StartFarmingMenu()
     {
+        Time.timeScale=0f;
         this.Agent=selectedAnt.GetComponent<NavMeshAgent>();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
         if(anyCardDisplay!=null){
@@ -107,7 +107,7 @@ public class FarmingMenu : MonoBehaviour
     // Update is called once per frame
     public void FinishFarmingMenu()
     {
-        
+        Time.timeScale=1f;
         this.Agent=null;
         HideStateOfFarms();
         farmMenu.SetActive(false);

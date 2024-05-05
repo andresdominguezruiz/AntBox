@@ -77,6 +77,20 @@ public class SelectableItem : MonoBehaviour
         return list;
     }
 
+    public static List<SelectableItem> GetItemsByTargetType(TargetType target){
+        List<SelectableItem> items=new List<SelectableItem>();
+        foreach(SelectableItem item in SelectableItems){
+            if((target.Equals(TargetType.ANT) && item.Type.Equals(ItemType.ANT)) ||
+             (target.Equals(TargetType.FARM) && item.Type.Equals(ItemType.FARM)) ||
+             (target.Equals(TargetType.QUEEN) && item.Type.Equals(ItemType.QUEEN)) ||
+             (target.Equals(TargetType.ANTHILL) &&
+              (item.Type.Equals(ItemType.ANT) || item.Type.Equals(ItemType.QUEEN)))){
+                items.Add(item);
+              }
+        }
+        return items;
+    }
+
     //solo dejar esos tipos porque este método lo usan los enemigos, no los aliados
     public List<Transform> GetItemsByTarget(TargetType target){
         List<Transform> items=new List<Transform>();
@@ -303,6 +317,7 @@ public class SelectableItem : MonoBehaviour
                 AttackMenu attack=AttackMenu.GetComponent<AttackMenu>();
                 attack.SetSelectedItem(this.gameObject,ItemUI==null);
             }
+            Debug.Log("NUMBER:"+SelectableItems.Count);
             foreach(SelectableItem item in SelectableItems){
                 if(item!=this){
                     item.IsSelected=false;

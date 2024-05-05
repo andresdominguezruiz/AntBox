@@ -44,14 +44,14 @@ public class StatisticsOfGame : MonoBehaviour
         }
         ContainerData containerData=FindObjectOfType<ContainerData>();
         if(containerData!=null){
-            Player.Instance.SaveCards(containerData.cardsInHand);
+            Player.Instance.SaveCards(containerData.CardsInHand);
         }
-        DestroyItems();
+        DestroyItemsAndEnemies();
         LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex+2);
         Player.Instance.helpCounter=0;
     }
     public void DestroyItems(){
-        SelectableItem[] items=FindObjectsOfType<SelectableItem>(false);
+        SelectableItem[] items=FindObjectsOfType<SelectableItem>(true);
         foreach(SelectableItem item in items){
             item.RemoveSelectableItem();
             Destroy(item.gameObject);
@@ -96,11 +96,16 @@ public class StatisticsOfGame : MonoBehaviour
         OptimalNest optimal=new OptimalNest(number,optimalType,level);
         return optimal;
     }
-    public void ResetData(){
+
+    public void DestroyItemsAndEnemies(){
+        DestroyItems();
         NestManager nestManager=FindObjectOfType<NestManager>();
         if(nestManager!=null){
             nestManager.ResetEnemies();
         }
+    }
+    public void ResetData(){
+        DestroyItemsAndEnemies();
         counterOfExams=0;
         counterOfPassedExams=0;
         counterOfFailedExams=0;
@@ -111,7 +116,6 @@ public class StatisticsOfGame : MonoBehaviour
         actualLevel=0;
         colorIndex=0;
         timeSpeed=0;
-        DestroyItems();
         Player.Instance.ResetPlayerData();
     }
 }

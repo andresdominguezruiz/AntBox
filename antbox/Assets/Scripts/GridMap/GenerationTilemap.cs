@@ -422,7 +422,8 @@ public class GenerationTilemap : MonoBehaviour
     void CreateRandomPath()
     {
         int exit=width/2;
-        Vector3Int actualTile=new Vector3Int(exit, height, 0);
+        //height-1 para no quitar la apertura del hormiguero
+        Vector3Int actualTile=new Vector3Int(exit, height-1, 0);
         dirtMap.SetTile(actualTile,null);
         path.Add(actualTile);
         for(int i=0;i<3;i++){

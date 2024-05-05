@@ -33,6 +33,7 @@ public class DigMenu : MonoBehaviour
 
     public void StartDigMenu()
     {
+        Time.timeScale=0f;
         GenerationTilemap generationTilemap=FindFirstObjectByType<GenerationTilemap>();
         generationTilemap.BakeMap();
         this.agent=selectedAnt.GetComponent<NavMeshAgent>();
@@ -167,7 +168,7 @@ public class DigMenu : MonoBehaviour
     // Update is called once per frame
     public void FinishDigMenu()
     {
-        
+        Time.timeScale=1f;
         this.agent=null;
         RollBackDirtTiles();
         areMoreRutes=false;

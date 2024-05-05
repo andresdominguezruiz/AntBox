@@ -144,17 +144,17 @@ public class TileData
         Tile tile=null;
         if(TileType.Equals(TileType.DIRT)){
             if(ActualResistance<MaxResistance && ActualResistance>= MaxResistance*2/4f){
-                tile=ContainerData.diggingDirtTile1;
+                tile=ContainerData.DiggingDirtTile1;
             }else if(ActualResistance< MaxResistance*2/4f && ActualResistance>= MaxResistance*1/4f){
-                tile=ContainerData.diggingDirtTile2;
+                tile=ContainerData.DiggingDirtTile2;
             }else if(ActualResistance<MaxResistance*1/4f && ActualResistance>=0f){
-                tile=ContainerData.diggingDirtTile3;
+                tile=ContainerData.DiggingDirtTile3;
             }else if(ActualResistance>=MaxResistance){
-                tile=ContainerData.dirtTile;
+                tile=ContainerData.DirtTile;
             }
         }else if(TileType.Equals(TileType.STONE)){
             //TODO:Sprites al minar
-            tile=ContainerData.stoneTile;
+            tile=ContainerData.StoneTile;
 
         }
         return tile;

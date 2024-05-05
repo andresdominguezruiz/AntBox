@@ -25,6 +25,7 @@ public class MoveMenu : MonoBehaviour
 
     public void StartMoveMenu()
     {
+        Time.timeScale=0f;
         this.Agent=selectedAnt.GetComponent<NavMeshAgent>();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
         if(anyCardDisplay!=null){
@@ -62,6 +63,7 @@ public class MoveMenu : MonoBehaviour
     // Update is called once per frame
     public void FinishMoveMenu()
     {
+        Time.timeScale=1f;
         this.Agent=null;
         moveMenu.SetActive(false);
         if(selectedAnt!=null){

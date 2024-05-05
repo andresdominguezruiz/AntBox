@@ -86,6 +86,7 @@ public class Clock : MonoBehaviour
         }else{
             GoBackToNothingEvent();
         }
+        ProcessExam();
         UpdateMessageOfConsoleByEvent();
     }
 

@@ -34,7 +34,8 @@ public class Card : ScriptableObject {
     public double GetComplexityOfCard(double complexityLevelOfGame){
         double result=complexityLevelOfGame;
         if(Type.Equals(CardType.POWER_UP)){
-            result+=StatisticsOfGame.Instance.counterOfPassedExams;
+            result+=StatisticsOfGame.Instance.counterOfPassedExams; //Esto permitirá de que tras superar
+            //examenes, la dificultad de las cartas incremente
             foreach(Action action in Actions){
                 result+=action.GetComplexityOfAction();
             }

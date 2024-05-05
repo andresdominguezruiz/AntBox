@@ -52,6 +52,7 @@ public class MultipleFarmingMenu : MonoBehaviour
     }
 
     public void InitMultipleFarmingMenu(FarmStats farm){
+        Time.timeScale=0f;
         if(farm.CanAntWorkInHere()){
             selectedFarm=farm;
             this.gameObject.SetActive(true);
@@ -100,6 +101,7 @@ public class MultipleFarmingMenu : MonoBehaviour
     }
 
     public void FinishMultipleFarmingMenu(bool confirmedAction){
+        Time.timeScale=1f;
         if(selectedFarm.CanAntWorkInHere()){
             if(confirmedAction){
                 SendAntsToFarm();

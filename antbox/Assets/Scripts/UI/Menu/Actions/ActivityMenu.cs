@@ -106,7 +106,7 @@ public class ActivityMenu : MonoBehaviour
         DestroyAllLights();
         this.gameObject.SetActive(false);
         ContainerData containerData=FindObjectOfType<ContainerData>();
-        containerData.ProcessEvaluation(evaluation,isBoss,applyDamageToEnemies);
+        containerData.StartProcessEvaluation(evaluation,isBoss,applyDamageToEnemies);
         isBoss=false;
         applyDamageToEnemies=false;
     }
