@@ -14,10 +14,14 @@ public class Player : MonoBehaviour
     public List<Card> cardsInHand=new List<Card>();
     [SerializeField] private float minimunComplexity=0.5f;
 
+    private static void SetInstance(Player player){
+        Player.Instance=player;
+    }
+
 
     private void Awake(){
         if(Player.Instance==null){
-            Player.Instance=this;
+            SetInstance(this);
             DontDestroyOnLoad(this.gameObject);
         }else{
             Destroy(this.gameObject);
@@ -26,7 +30,7 @@ public class Player : MonoBehaviour
 
     public void SaveCards(List<CardDisplay> containerCards){
         foreach(CardDisplay cardDisplay in containerCards){
-            cardsInHand.Add(cardDisplay.card);
+            cardsInHand.Add(cardDisplay.Card);
         }
     }
 
@@ -62,10 +66,12 @@ public class Player : MonoBehaviour
     }
 
     public void AddComplexity(float value){
-        if(complexityLevelOfGame+value>=minimunComplexity) complexityLevelOfGame+=value;
+        if(complexityLevelOfGame+value>=minimunComplexity){
+            complexityLevelOfGame+=value;
+        }
     }
 
     public void ProcessUpdateEffectOfAction(Action actualAction){
-        playerPassives.Add(actualAction.playerEffect);
+        playerPassives.Add(actualAction.PlayerEffect);
     }
 }

@@ -6,11 +6,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum EventType{
-    NOTHING,WINTER,SUMMER,EXAM
+    NOTHING,WINTER,SUMMER,EXAM,HORDE
 }
 public class Clock : MonoBehaviour
 {
     public float timeLastFrame;
+    private NestManager nestManager;
     public EventType eventType=EventType.NOTHING;
     private System.Random random = new System.Random();
 
@@ -22,7 +23,7 @@ public class Clock : MonoBehaviour
     [SerializeField] private Sprite[] states=new Sprite[24];
 
 
-    public static int growingTime=24; //Cada t tiempo real, se considera un día
+    readonly static int growingTime=24; //Cada t tiempo real, se considera un día
 
     private int counterOfSecons=0;
 
@@ -40,6 +41,7 @@ public class Clock : MonoBehaviour
     {
         eventTypeText.text=eventType.ToString();
         UpdateTimer();
+        nestManager=FindObjectOfType<NestManager>();
     }
 
     // Update is called once per frame
@@ -64,21 +66,37 @@ public class Clock : MonoBehaviour
     void FinishPastEventAndIniciateNewEvent(){
         if(eventType.Equals(EventType.NOTHING)){
             double v=random.NextDouble();
-            if((v<=0.5 && !processedEvents.Contains(EventType.WINTER))
-             || (processedEvents.Contains(EventType.SUMMER) && !processedEvents.Contains(EventType.WINTER))){
+            if((v<=0.33 && !processedEvents.Contains(EventType.WINTER))
+             || (processedEvents.Contains(EventType.SUMMER) 
+             && !processedEvents.Contains(EventType.WINTER) && processedEvents.Contains(EventType.HORDE))){
                 ProcessWinter();
-            }else if((v>0.5 && !processedEvents.Contains(EventType.SUMMER)) 
-            || (processedEvents.Contains(EventType.WINTER) && !processedEvents.Contains(EventType.SUMMER))){
+            }else if((v>0.33 && v<=0.66 && !processedEvents.Contains(EventType.SUMMER)) 
+            || (processedEvents.Contains(EventType.WINTER)
+             && !processedEvents.Contains(EventType.SUMMER) && processedEvents.Contains(EventType.HORDE))){
                 ProcessSummer();
-            }else{
+            }else if((v>0.66 && !processedEvents.Contains(EventType.HORDE)) ||
+            (processedEvents.Contains(EventType.SUMMER) 
+             && processedEvents.Contains(EventType.WINTER) && !processedEvents.Contains(EventType.HORDE))){
+                ProcessHorde();
+            }
+            else{
                 processedEvents=new List<EventType>();
                 ProcessExam();
             }
         }else{
             GoBackToNothingEvent();
         }
-        //ProcessExam(); //DECLARAR LINEA PARA TESTEAR EXAMEN
+        ProcessExam();
         UpdateMessageOfConsoleByEvent();
+    }
+
+    public void ProcessHorde(){
+        eventType=EventType.HORDE;
+        processedEvents.Add(eventType);
+        dayCounterText.color=Color.magenta;
+        eventTypeText.color=Color.magenta;
+        consoleText.color=Color.magenta;
+        nestManager.SpawnEnemiesForHorde();
     }
 
     public void UpdateMessageOfConsoleByEvent(){
@@ -91,6 +109,8 @@ public class Clock : MonoBehaviour
         }
         else if(eventType.Equals(EventType.EXAM)){
             messageOfEvent="Prepare for the exam";
+        }else if(eventType.Equals(EventType.HORDE)){
+            messageOfEvent="A horde of enemies is coming!!";
         }
         DigMenu digMenu=FindObjectOfType<DigMenu>(false);
         FarmingMenu farmingMenu=FindObjectOfType<FarmingMenu>(false);

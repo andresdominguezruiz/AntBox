@@ -22,7 +22,7 @@ MonoBehaviour:
     destination: 1
     farmEffects: []
     containerEffects:
-    - containerEffect: 0
+    - containerEffect: 1
       multiplicatorValue: 2
       sumValue: 0
     characterEffects: []

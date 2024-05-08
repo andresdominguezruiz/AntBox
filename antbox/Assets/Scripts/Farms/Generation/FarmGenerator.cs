@@ -81,8 +81,12 @@ public class FarmGenerator : MonoBehaviour
     }
     public void PlaceNewFarmInPosition(Vector3Int position,bool placeWaterFarm){
         Tilemap map=dirtMap.GetComponent<Tilemap>();
-        if(placeWaterFarm) PlaceWaterFarm(map,position);
-        else PlaceFoodFarm(map,position);
+        if(placeWaterFarm){
+            PlaceWaterFarm(map,position);
+        }
+        else{
+            PlaceFoodFarm(map,position);
+        }
         availablePath.Remove(position);
         DestroyAroundFarmAndAddCoverage(position,map);
     }
@@ -106,7 +110,7 @@ public class FarmGenerator : MonoBehaviour
         //, DE ESTA FORMA CADA COBERTURA DE CADA GRANJA SE DISTINGUE EN LA INTERFAZ
         bool res=true;
         Tilemap map=dirtMap.GetComponent<Tilemap>();
-        TileBase stone=FindObjectOfType<ContainerData>().stoneTile;
+        TileBase stone=FindObjectOfType<ContainerData>().StoneTile;
         QueenStats queen=FindObjectOfType<QueenStats>(false);
         foreach(Vector3Int pos in myCoverage){
             if(coveredPositions.Contains(pos) || stone.Equals(map.GetTile(pos)) ||
@@ -125,7 +129,7 @@ public class FarmGenerator : MonoBehaviour
         newWaterFarm.GetComponent<FarmStats>().InitWaterFarm(false,random);
         newWaterFarm.GetComponentInChildren<UIFarmManager>(true).UpdateCanvasWithFarmStats(newWaterFarm.GetComponent<FarmStats>());
         newWaterFarm.AddComponent<SelectableItem>();
-        newWaterFarm.GetComponent<SelectableItem>().InitSelectableItem(availablePath,map,null,null,null,ItemType.FARM,null);
+        newWaterFarm.GetComponent<SelectableItem>().InitSelectableItem(availablePath,map,ItemType.FARM);
         waterFarms.Add(newWaterFarm);
         newWaterFarm.SetActive(true);
     }
@@ -137,7 +141,7 @@ public class FarmGenerator : MonoBehaviour
         newFoodFarm.GetComponent<FarmStats>().InitFoodFarm(false,random);
         newFoodFarm.GetComponentInChildren<UIFarmManager>(true).UpdateCanvasWithFarmStats(newFoodFarm.GetComponent<FarmStats>());
         newFoodFarm.AddComponent<SelectableItem>();
-        newFoodFarm.GetComponent<SelectableItem>().InitSelectableItem(availablePath,map,null,null,null,ItemType.FARM,null);
+        newFoodFarm.GetComponent<SelectableItem>().InitSelectableItem(availablePath,map,ItemType.FARM);
         foodFarms.Add(newFoodFarm);
         newFoodFarm.SetActive(true);
     }

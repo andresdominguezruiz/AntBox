@@ -5,19 +5,27 @@ using UnityEngine.UI;
 
 public class BarManager : MonoBehaviour
 {
-    public Slider slider;
-    public Gradient gradient;
-    public Image fill;
+    [SerializeField]
+    private Slider slider;
 
+    [SerializeField]
+    private Gradient gradient;
+    
+    [SerializeField]
+    private Image fill;
+
+    public Slider Slider { get => slider; set => slider = value; }
+    public Gradient Gradient { get => gradient; set => gradient = value; }
+    public Image Fill { get => fill; set => fill = value; }
 
     public void SetMaxBarValue(int value){
-        slider.maxValue=value;
-        slider.value=value;
-        fill.color=gradient.Evaluate(1f);
+        Slider.maxValue=value;
+        Slider.value=value;
+        Fill.color=Gradient.Evaluate(1f);
     }
 
     public void SetBarValue(int value){
-        slider.value=value;
-        fill.color=gradient.Evaluate(slider.normalizedValue);
+        Slider.value=value;
+        Fill.color=Gradient.Evaluate(Slider.normalizedValue);
     }
 }

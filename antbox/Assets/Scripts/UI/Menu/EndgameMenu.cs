@@ -18,11 +18,12 @@ public class EndgameMenu : MonoBehaviour
 
 
     public void NewGame(){
-        if(StatisticsOfGame.Instance!=null){
-            StatisticsOfGame.Instance.ResetData();   
-        }
         LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex-1);
         PauseMenu.isPaused=false;
+        if(StatisticsOfGame.Instance!=null){
+            Debug.Log("hoaaaaaa");
+            StatisticsOfGame.Instance.ResetData();   
+        }
     }
 
     public void GoToInitialMenu(){

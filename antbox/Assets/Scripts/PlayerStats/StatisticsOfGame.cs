@@ -18,9 +18,13 @@ public class StatisticsOfGame : MonoBehaviour
     public int colorIndex=0;
     public int timeSpeed=0;
 
+    private static void SetInstance(StatisticsOfGame game){
+        StatisticsOfGame.Instance=game;
+    }
+
     private void Awake(){
         if(StatisticsOfGame.Instance==null){
-            StatisticsOfGame.Instance=this;
+            SetInstance(this);
             DontDestroyOnLoad(this.gameObject);
         }
         else{
@@ -40,14 +44,14 @@ public class StatisticsOfGame : MonoBehaviour
         }
         ContainerData containerData=FindObjectOfType<ContainerData>();
         if(containerData!=null){
-            Player.Instance.SaveCards(containerData.cardsInHand);
+            Player.Instance.SaveCards(containerData.CardsInHand);
         }
-        DestroyItems();
+        DestroyItemsAndEnemies();
         LevelLoader.Instance.StartNewLevel(SceneManager.GetActiveScene().buildIndex+2);
         Player.Instance.helpCounter=0;
     }
     public void DestroyItems(){
-        SelectableItem[] items=FindObjectsOfType<SelectableItem>(false);
+        SelectableItem[] items=FindObjectsOfType<SelectableItem>(true);
         foreach(SelectableItem item in items){
             item.RemoveSelectableItem();
             Destroy(item.gameObject);
@@ -58,9 +62,15 @@ public class StatisticsOfGame : MonoBehaviour
         int number=1;
         int level=1;
         //Pick max enemy level
-        if(actualLevel>=0 && actualLevel<4) level=2;
-        else if(actualLevel>=4 && actualLevel<8) level=4;
-        else if(actualLevel>=8) level=10;
+        if(actualLevel>=0 && actualLevel<4){
+            level=2;
+        }
+        else if(actualLevel>=4 && actualLevel<8){
+            level=4;
+        }
+        else if(actualLevel>=8){
+            level=10;
+        }
 
         //Pick type and number
         if((actualLevel>=0 && actualLevel<2 && randomValue<0.5) ||
@@ -86,9 +96,16 @@ public class StatisticsOfGame : MonoBehaviour
         OptimalNest optimal=new OptimalNest(number,optimalType,level);
         return optimal;
     }
-    public void ResetData(){
+
+    public void DestroyItemsAndEnemies(){
+        DestroyItems();
         NestManager nestManager=FindObjectOfType<NestManager>();
-        if(nestManager!=null) 
+        if(nestManager!=null){
+            nestManager.ResetEnemies();
+        }
+    }
+    public void ResetData(){
+        DestroyItemsAndEnemies();
         counterOfExams=0;
         counterOfPassedExams=0;
         counterOfFailedExams=0;
@@ -99,7 +116,6 @@ public class StatisticsOfGame : MonoBehaviour
         actualLevel=0;
         colorIndex=0;
         timeSpeed=0;
-        DestroyItems();
         Player.Instance.ResetPlayerData();
     }
 }

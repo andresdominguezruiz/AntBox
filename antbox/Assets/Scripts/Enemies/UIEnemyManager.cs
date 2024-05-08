@@ -6,52 +6,82 @@ using UnityEngine;
 
 public class UIEnemyManager : MonoBehaviour
 {
-    public GameObject infoCanvas;
-    public TextMeshProUGUI hpText;
-    public TextMeshProUGUI nameText;
-    public TextMeshProUGUI damageText;
-    public TextMeshProUGUI attackSpeedText;
-    public TextMeshProUGUI criticsText;
-    public Image icon;
-    public EnemyStats enemyStats;
+
+    [SerializeField]
+    private GameObject infoCanvas;
+
+    [SerializeField]
+    private TextMeshProUGUI hpText;
+
+    [SerializeField]
+    private TextMeshProUGUI nameText;
+
+    [SerializeField]
+    private TextMeshProUGUI damageText;
+
+    [SerializeField]
+    private TextMeshProUGUI attackSpeedText;
+
+    [SerializeField]
+    private TextMeshProUGUI criticsText;
+
+    [SerializeField]
+    private Image icon;
+
+    [SerializeField]
+    private EnemyStats enemyStats;
+
+    public GameObject InfoCanvas { get => infoCanvas; set => infoCanvas = value; }
+    public TextMeshProUGUI HpText { get => hpText; set => hpText = value; }
+    public TextMeshProUGUI NameText { get => nameText; set => nameText = value; }
+    public TextMeshProUGUI DamageText { get => damageText; set => damageText = value; }
+    public TextMeshProUGUI AttackSpeedText { get => attackSpeedText; set => attackSpeedText = value; }
+    public TextMeshProUGUI CriticsText { get => criticsText; set => criticsText = value; }
+    public Image Icon { get => icon; set => icon = value; }
+    public EnemyStats EnemyStats { get => enemyStats; set => enemyStats = value; }
 
     void Start(){
-        enemyStats=this.gameObject.GetComponentInParent<EnemyStats>();
-        if(enemyStats!=null) StartCanvasWithEnemyStats(enemyStats);
+        EnemyStats=this.gameObject.GetComponentInParent<EnemyStats>();
+        if(EnemyStats!=null){
+            StartCanvasWithEnemyStats(EnemyStats);
+        }
     }
 
 
 
     void Update(){
-        if(enemyStats!=null) UpdateCanvasWithEnemyStats(enemyStats);
+        if(EnemyStats!=null){
+            UpdateCanvasWithEnemyStats(EnemyStats);
+        }
     }
     public void ShowInfo(){
-        infoCanvas.gameObject.SetActive(true);
+        InfoCanvas.gameObject.SetActive(true);
     }
     public void UpdateAndShowInfo()
     {
-        UpdateCanvasWithEnemyStats(enemyStats);
+        UpdateCanvasWithEnemyStats(EnemyStats);
         ShowInfo();
     }
 
     public void UpdateCanvasWithEnemyStats(EnemyStats stats){
-        hpText.text="HP:"+stats.actualHP+"/"+stats.enemy.maxHP;
+        HpText.text="HP:"+stats.ActualHP+"/"+stats.Enemy.MaxHP;
     }
 
     public void StartCanvasWithEnemyStats(EnemyStats stats){
-        icon.sprite=stats.enemy.enemySprite;
-        hpText.text="HP:"+stats.actualHP+"/"+stats.enemy.maxHP;
-        nameText.text="Name:"+stats.enemy.name;
-        damageText.text="Damage:"+stats.enemy.battleStats.damage;
-        attackSpeedText.text="Attack speed:"+stats.enemy.battleStats.attackSpeed;
-        criticsText.text="Critical Effects:";
-        foreach(CriticalEffects critical in stats.enemy.battleStats.criticalEffects)
-            criticsText.text+="-"+critical;
+        Icon.sprite=stats.Enemy.EnemySprite;
+        HpText.text="HP:"+stats.ActualHP+"/"+stats.Enemy.MaxHP;
+        NameText.text="Name:"+stats.Enemy.name;
+        DamageText.text="Damage:"+stats.Enemy.BattleStats.Damage;
+        AttackSpeedText.text="Attack speed:"+stats.Enemy.BattleStats.AttackSpeed;
+        CriticsText.text="Critical Effects:";
+        foreach(CriticalEffects critical in stats.Enemy.BattleStats.CriticalEffects){
+            CriticsText.text+="-"+critical;
+        }
     }
 
 
     public void HideInfo()
     {
-        infoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
+        InfoCanvas.gameObject.SetActive(false); // Oculta el Canvas.
     }
 }

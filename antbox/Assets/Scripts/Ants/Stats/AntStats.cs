@@ -55,7 +55,6 @@ public class AntStats : CharacterStats
     [SerializeField] private int recoverSpeed;
 
     public BattleStats battleStats;
-    //TODO: Cuando tengamos juego base, mejorar stats para que cada hormiga sea buena en algo
 
     public float GetFarmingSpeed(){
         return farmingSpeed;
@@ -63,34 +62,54 @@ public class AntStats : CharacterStats
 
     public void SetFarmingSpeed(float speed){
         farmingSpeed=speed;
-        if(speed>(float)MAX_FARMING_SPEED*2/100) farmingSpeed=(float)MAX_FARMING_SPEED*2/100;
-        else if(speed<(float)MIN_FARMING_SPEED/(2*100)) farmingSpeed=(float)MIN_FARMING_SPEED/(2*100);
+        if(speed>(float)MAX_FARMING_SPEED*2/100){
+            farmingSpeed=(float)MAX_FARMING_SPEED*2/100;
+        }
+        else if(speed<(float)MIN_FARMING_SPEED/(2*100)){
+            farmingSpeed=(float)MIN_FARMING_SPEED/(2*100);
+        }
     }
     public void SetDiggingSpeed(float speed){
         diggingSpeed=speed;
-        if(speed>(float)MAX_DIGGING_SPEED*2/100) diggingSpeed=(float)MAX_DIGGING_SPEED*2/100;
-        else if(speed<(float)MIN_DIGGING_SPEED/(2*100)) diggingSpeed=(float)MIN_DIGGING_SPEED/(2*100);
+        if(speed>(float)MAX_DIGGING_SPEED*2/100){
+            diggingSpeed=(float)MAX_DIGGING_SPEED*2/100;
+        }
+        else if(speed<(float)MIN_DIGGING_SPEED/(2*100)){
+            diggingSpeed=(float)MIN_DIGGING_SPEED/(2*100);
+        }
     }
 
     public void SetRecoverSpeed(int speed){
         recoverSpeed=speed;
-        if(speed>MAX_RECOVER_SPEED*2) recoverSpeed=MAX_RECOVER_SPEED*2;
-        else if(speed<MIN_RECOVER_SPEED/2) recoverSpeed=MIN_RECOVER_SPEED/2;
+        if(speed>MAX_RECOVER_SPEED*2){
+            recoverSpeed=MAX_RECOVER_SPEED*2;
+        }
+        else if(speed<MIN_RECOVER_SPEED/2){
+            recoverSpeed=MIN_RECOVER_SPEED/2;
+        }
     }
 
     public void CancelAntAction(){
-        if(this.GetAction().Equals(ActualAction.FARMING)) StopFarming();
-        else if(this.GetAction().Equals(ActualAction.DIGGING)) StopDigging();
-        else if(this.GetAction().Equals(ActualAction.SLEEPING)) StopSleeping();
-        else if(this.GetAction().Equals(ActualAction.ATTACKING)) StopAttacking();
+        if(this.GetAction().Equals(ActualAction.FARMING)){
+            StopFarming();
+        }
+        else if(this.GetAction().Equals(ActualAction.DIGGING)){
+            StopDigging();
+        }
+        else if(this.GetAction().Equals(ActualAction.SLEEPING)){
+            StopSleeping();
+        }
+        else if(this.GetAction().Equals(ActualAction.ATTACKING)){
+            StopAttacking();
+        }
     }
 
     public void StopAttacking(){
         BattleMovement battleMovement=this.GetComponent<BattleMovement>();
         if(battleMovement!=null) {
-            battleMovement.killingMode=false;
-            battleMovement.battleManager.inBattle=false;
-            battleMovement.agent.SetDestination(this.gameObject.transform.position);
+            battleMovement.KillingMode=false;
+            battleMovement.BattleManager.inBattle=false;
+            battleMovement.Agent.SetDestination(this.gameObject.transform.position);
         }
         this.DoNothing();
     }
@@ -121,7 +140,6 @@ public class AntStats : CharacterStats
                 this.DoNothing();
                 this.gameObject.GetComponent<NavMeshAgent>().isStopped=false;
                 this.gameObject.GetComponent<NavMeshAgent>().SetDestination(this.gameObject.transform.position);
-                Debug.Log("He cancelado, ahora su estado es "+this.GetAction());
                 break;
             }
         }
@@ -132,12 +150,21 @@ public class AntStats : CharacterStats
         this.DoNothing();
     }
 
+    public void StartAttackingWithoutTarget(){
+        BattleMovement battleMovement=this.GetComponent<BattleMovement>();
+        if(battleMovement!=null){
+            battleMovement.KillingMode=true;
+            battleMovement.BattleManager.inBattle=true;
+            action=ActualAction.ATTACKING;
+        }
+    }
+
     public void StartAttacking(Transform firstTarget){
         BattleMovement battleMovement=this.GetComponent<BattleMovement>();
         if(battleMovement!=null){
-            battleMovement.killingMode=true;
-            battleMovement.actualTarget=firstTarget;
-            battleMovement.battleManager.inBattle=true;
+            battleMovement.KillingMode=true;
+            battleMovement.ActualTarget=firstTarget;
+            battleMovement.BattleManager.inBattle=true;
             action=ActualAction.ATTACKING;
         }
 
@@ -158,7 +185,7 @@ public class AntStats : CharacterStats
     }
 
     public string GetEnergyText(){
-        return maxEnergy.ToString()+"/"+actualEnergy.ToString();
+        return actualEnergy.ToString()+"/"+maxEnergy.ToString();
     }
 
     public float GetDiggingSpeed(){
@@ -167,20 +194,38 @@ public class AntStats : CharacterStats
 
 
     public void SetEnergy(int energy){
-        if(energy<0) actualEnergy=0;
-        else if(energy>maxEnergy) actualEnergy=maxEnergy;
-        else actualEnergy=energy;
+        if(energy<0){
+            actualEnergy=0;
+        }
+        else if(energy>maxEnergy){
+            actualEnergy=maxEnergy;
+        }
+        else{
+            actualEnergy=energy;
+        }
     }
     public void SetMaxEnergy(int energy){
-        if(energy<MIN_ENERGY/2) maxEnergy=MIN_ENERGY/2;
-        else if(energy>MAX_ENERGY*2) maxEnergy=MAX_ENERGY*2;
-        else maxEnergy=energy;
+        if(energy<MIN_ENERGY/2){
+            maxEnergy=MIN_ENERGY/2;
+        }
+        else if(energy>MAX_ENERGY*2){
+            maxEnergy=MAX_ENERGY*2;
+        }
+        else{
+            maxEnergy=energy;
+        }
     }
 
     public void ApplyEnergyCost(int cost){
-        if(!GetClockOfGame().eventType.Equals(EventType.SUMMER) || cost<0)SetEnergy(actualEnergy-cost);
-        else SetEnergy(actualEnergy-2*cost);
-        allBarsManager.energyBar.SetBarValue(actualEnergy);
+        if(!GetClockOfGame().eventType.Equals(EventType.SUMMER) || cost<0){
+            SetEnergy(actualEnergy-cost);
+        }
+        else {
+            SetEnergy(actualEnergy-2*cost);
+        }
+        if(AllBarsManager!=null && AllBarsManager.EnergyBar!=null){
+            AllBarsManager.EnergyBar.SetBarValue(actualEnergy);
+        }
 
     }
     public void InitAntStats(System.Random random){
@@ -192,12 +237,16 @@ public class AntStats : CharacterStats
     }
 
     private void Start(){
-        this.timeLastFrame=0f;
-        this.allBarsManager=this.gameObject.GetComponentInChildren<AllBarsManager>();
-        allBarsManager.healthBar.SetMaxBarValue(GetMaxHP());
-        allBarsManager.energyBar.SetMaxBarValue(GetMaxEnergy());
-        allBarsManager.hungerBar.SetMaxBarValue(GetMaxHunger());
-        allBarsManager.thirstBar.SetMaxBarValue(GetMaxThirst());
+        this.TimeLastFrame=0f;
+        if(AllBarsManager==null){
+            this.AllBarsManager = this.gameObject.GetComponentInChildren<AllBarsManager>();
+        }
+        if(AllBarsManager!=null){
+            AllBarsManager.HealthBar.SetMaxBarValue(GetMaxHP());
+            AllBarsManager.EnergyBar.SetMaxBarValue(GetMaxEnergy());
+            AllBarsManager.HungerBar.SetMaxBarValue(GetMaxHunger());
+            AllBarsManager.ThirstBar.SetMaxBarValue(GetMaxThirst());
+        }
     }
 
     public void InitOtherVariables(){

@@ -24,12 +24,7 @@ public class DigMenu : MonoBehaviour
     private HashSet<Vector3Int> excavablePath;
     private Vector3Int selectedDestructableTile;
     private List<Vector3Int> routes=new List<Vector3Int>();
-    public float minX=-6f;
-    public float maxX=8f;
-    public float minY=-4f;
-    public float maxY=4f;
 
-    public float speed=0.5f;
 
     public bool areMoreRutes=false;
     public bool isSelectingDestructableTile=false;
@@ -38,19 +33,21 @@ public class DigMenu : MonoBehaviour
 
     public void StartDigMenu()
     {
+        Time.timeScale=0f;
         GenerationTilemap generationTilemap=FindFirstObjectByType<GenerationTilemap>();
         generationTilemap.BakeMap();
         this.agent=selectedAnt.GetComponent<NavMeshAgent>();
         selectedAnt.GetComponentInChildren<UIManager>(true).HideInfo();
         CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        if(anyCardDisplay!=null){
+            anyCardDisplay.MakeEveryCardUnselectableAndUnselected();
+        }
         digMenu.gameObject.SetActive(true);
         consoleText.text=selectedAnt.name+"-Select the start of your excavation";
         selectedAnt.GetComponent<SelectableItem>().MakeEveryoneUnselectable();
         excavablePath=FindObjectOfType<GenerationTilemap>().GetExcavableTiles();
         PreparingSelectableTiles();
         isSelectingDestructableTile=true;
-        Debug.Log(excavablePath.Count);
     }
     //ESTE MÉTODO DEVUELVE LAS POSICIONES EXCAVABLES SELECCIONABLES
     public void PreparingSelectableTiles(){
@@ -81,7 +78,9 @@ public class DigMenu : MonoBehaviour
     }
 
     void Update(){
-        if(this.agent==null || this.agent.gameObject.IsDestroyed()) FinishDigMenu();
+        if(this.agent==null || this.agent.gameObject==null){
+            FinishDigMenu();
+        }
         if(!PauseMenu.isPaused){
             if(Input.GetMouseButtonDown(0) && !areMoreRutes){
                 SelectStart();
@@ -95,7 +94,7 @@ public class DigMenu : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
-        if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
+        if((mousePos.x>=MenuTool.MinX && mousePos.x<=MenuTool.MaxX) && (mousePos.y>=MenuTool.MinY && mousePos.y<=MenuTool.MaxY) && 
             (hit.collider!=null && hit.collider.CompareTag("Dirt"))){
                 Vector3Int selectedTile=destructableMap.WorldToCell(mousePos);
                 if(routes.Contains(selectedTile)){
@@ -113,10 +112,9 @@ public class DigMenu : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);//hit== null cuando no choque con nada
-            if((mousePos.x>=minX && mousePos.x<=maxX) && (mousePos.y>=minY && mousePos.y<=maxY) && 
+            if((mousePos.x>=MenuTool.MinX && mousePos.x<=MenuTool.MaxX) && (mousePos.y>=MenuTool.MinY && mousePos.y<=MenuTool.MaxY) && 
             (hit.collider!=null && hit.collider.CompareTag("Dirt"))){
                 Vector3Int selectedTile=destructableMap.WorldToCell(mousePos);
-                Debug.Log(selectedTile);
                 selectedDestructableTile=selectedTile;
                 if(excavablePath.Contains(selectedTile)){
                     isSelectingDestructableTile=false;
@@ -126,7 +124,11 @@ public class DigMenu : MonoBehaviour
                     }else{
                         //GetCellCenterWorld te devuelve el PUNTO EXACTO DEL CENTRO DE UNA CELDA
                         this.agent.SetDestination(destructableMap.GetCellCenterWorld(availableRutes[0]));
-                        selectedAnt.GetComponent<AntStats>().StartDigging();
+                        AntStats antStats=selectedAnt.GetComponent<AntStats>();
+                        if(antStats!=null){
+                            antStats.CancelAntAction();
+                            antStats.StartDigging();
+                        }
                         selectedAnt.GetComponent<ExcavationMovement>().InitExcavation(selectedDestructableTile,availableRutes[0]);
                         FinishDigMenu();
                     }
@@ -166,7 +168,7 @@ public class DigMenu : MonoBehaviour
     // Update is called once per frame
     public void FinishDigMenu()
     {
-        
+        Time.timeScale=1f;
         this.agent=null;
         RollBackDirtTiles();
         areMoreRutes=false;
@@ -175,17 +177,7 @@ public class DigMenu : MonoBehaviour
         digMenu.SetActive(false);
         if(selectedAnt!=null){
             selectedAnt.GetComponentInChildren<UIManager>(true).ShowInfo();
-            selectedAnt.GetComponent<SelectableItem>().MakeEveryoneSelectable();
-        }else{
-            SelectableItem item=FindObjectOfType<SelectableItem>(false);
-            item.MakeEveryoneSelectable();
         }
-        Clock clock=FindObjectOfType<Clock>();
-        if(clock!=null){
-            clock.UpdateMessageOfConsoleByEvent();
-            consoleText.text=clock.messageOfEvent;
-        }
-        CardDisplay anyCardDisplay=FindObjectOfType<CardDisplay>();
-        if(anyCardDisplay!=null) anyCardDisplay.MakeEveryCardSelectable();
+        ContainerData.EnableGameAfterAction(consoleText);
     }
 }

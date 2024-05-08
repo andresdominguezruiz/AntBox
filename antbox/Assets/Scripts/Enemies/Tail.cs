@@ -5,54 +5,98 @@ using UnityEngine.AI;
 
 public class Tail : MonoBehaviour
 {
-    public int length;
-    public LineRenderer lineRenderer;
-    public Vector3[] segmentPoses;
-    public Vector3[] segmentVelocity;
-    public float smoothSpeed;
-    public float wiggleSpeed;
-    public float wiggleMagnitude;
-    public Transform wiggleDir;
-    public float trailSpeed;
-    private NavMeshAgent head;
-    public GameObject[] bodyParts;
-    public GameObject bodyPart;
+    [SerializeField]
+    private int length;
 
-    public Transform targetDir;
-    public float targetDistance;
+    [SerializeField]
+    private LineRenderer lineRenderer;
+
+    [SerializeField]
+    private Vector3[] segmentPoses;
+
+    [SerializeField]
+    private Vector3[] segmentVelocity;
+
+    [SerializeField]
+    private float smoothSpeed;
+
+    [SerializeField]
+    private float wiggleSpeed;
+
+    [SerializeField]
+    private float wiggleMagnitude;
+
+    [SerializeField]
+    private Transform wiggleDir;
+
+    [SerializeField]
+    private float trailSpeed;
+
+    [SerializeField]
+    private NavMeshAgent head;
+
+    [SerializeField]
+    private GameObject[] bodyParts;
+
+    [SerializeField]
+    private GameObject bodyPart;
+
+    [SerializeField]
+    private Transform targetDir;
+
+    [SerializeField]
+    private float targetDistance;
+
+    [SerializeField]
     private EnemyStats enemyStats;
+
+    public int Length { get => length; set => length = value; }
+    public LineRenderer LineRenderer { get => lineRenderer; set => lineRenderer = value; }
+    public Vector3[] SegmentPoses { get => segmentPoses; set => segmentPoses = value; }
+    public Vector3[] SegmentVelocity { get => segmentVelocity; set => segmentVelocity = value; }
+    public float SmoothSpeed { get => smoothSpeed; set => smoothSpeed = value; }
+    public float WiggleSpeed { get => wiggleSpeed; set => wiggleSpeed = value; }
+    public float WiggleMagnitude { get => wiggleMagnitude; set => wiggleMagnitude = value; }
+    public Transform WiggleDir { get => wiggleDir; set => wiggleDir = value; }
+    public float TrailSpeed { get => trailSpeed; set => trailSpeed = value; }
+    public NavMeshAgent Head { get => head; set => head = value; }
+    public GameObject[] BodyParts { get => bodyParts; set => bodyParts = value; }
+    public GameObject BodyPart { get => bodyPart; set => bodyPart = value; }
+    public Transform TargetDir { get => targetDir; set => targetDir = value; }
+    public float TargetDistance { get => targetDistance; set => targetDistance = value; }
+    public EnemyStats EnemyStats { get => enemyStats; set => enemyStats = value; }
 
     // Start is called before the first frame update
     void Start()
     {
-        enemyStats=this.gameObject.GetComponentInParent<EnemyStats>();
-        lineRenderer.positionCount=length;
-        segmentPoses=new Vector3[length];
-        segmentVelocity=new Vector3[length];
-        head=this.gameObject.GetComponentInParent<NavMeshAgent>();
-        bodyParts=new GameObject[length];
-        bodyParts[0]=bodyPart;
-        for(int i=0;i<length;i++){
+        EnemyStats=this.gameObject.GetComponentInParent<EnemyStats>();
+        LineRenderer.positionCount=Length;
+        SegmentPoses=new Vector3[Length];
+        SegmentVelocity=new Vector3[Length];
+        Head=this.gameObject.GetComponentInParent<NavMeshAgent>();
+        BodyParts=new GameObject[Length];
+        BodyParts[0]=BodyPart;
+        for(int i=0;i<Length;i++){
             if(i!=0){
-                GameObject newBodyPart=Instantiate(bodyPart,bodyPart.transform.position,Quaternion.identity,bodyPart.transform.parent);
-                bodyParts[i]=newBodyPart;
+                GameObject newBodyPart=Instantiate(BodyPart,BodyPart.transform.position,Quaternion.identity,BodyPart.transform.parent);
+                BodyParts[i]=newBodyPart;
             }
-            bodyParts[i].GetComponent<SpriteRenderer>().sprite=enemyStats.enemy.enemyBodySprite;
+            BodyParts[i].GetComponent<SpriteRenderer>().sprite=EnemyStats.Enemy.EnemyBodySprite;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        wiggleDir.localRotation=Quaternion.Euler(0,0,Mathf.Sin(Time.time*wiggleSpeed)*wiggleMagnitude);
-        targetDir=head.transform;
-        segmentPoses[0]=targetDir.position;
-        for(int i=1;i< segmentPoses.Length;i++){
-            Vector3 targetPos=segmentPoses[i-1]+(segmentPoses[i]-segmentPoses[i-1]).normalized*targetDistance;
-            segmentPoses[i]= Vector3
-            .SmoothDamp(segmentPoses[i],targetPos,ref segmentVelocity[i],smoothSpeed+i/trailSpeed);
-            bodyParts[i-1].transform.position=segmentPoses[i];
+        WiggleDir.localRotation=Quaternion.Euler(0,0,Mathf.Sin(Time.time*WiggleSpeed)*WiggleMagnitude);
+        TargetDir=Head.transform;
+        SegmentPoses[0]=TargetDir.position;
+        for(int i=1;i< SegmentPoses.Length;i++){
+            Vector3 targetPos=SegmentPoses[i-1]+(SegmentPoses[i]-SegmentPoses[i-1]).normalized*TargetDistance;
+            SegmentPoses[i]= Vector3
+            .SmoothDamp(SegmentPoses[i],targetPos,ref SegmentVelocity[i],SmoothSpeed+i/TrailSpeed);
+            BodyParts[i-1].transform.position=SegmentPoses[i];
         }
-        lineRenderer.SetPositions(segmentPoses);
+        LineRenderer.SetPositions(SegmentPoses);
     }
 }

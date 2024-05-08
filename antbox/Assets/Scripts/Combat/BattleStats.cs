@@ -9,20 +9,41 @@ public enum StartBattleType{
 [System.Serializable]
 public class BattleStats
 {
-    public bool isEnemy=false;
-    public float attackSpeed;
-    public int damage;
-    public double criticalProbability;
-    public double missProbability;
-    public StartBattleType startBattleType=StartBattleType.WAITER;
-    public List<CriticalEffects> criticalEffects=new List<CriticalEffects>();
+    [SerializeField]
+    private bool isEnemy = false;
+
+    [SerializeField]
+    private float attackSpeed;
+
+    [SerializeField]
+    private int damage;
+
+    [SerializeField]
+    private double criticalProbability;
+
+    [SerializeField]
+    private double missProbability;
+
+    [SerializeField]
+    private StartBattleType startBattleType = StartBattleType.WAITER;
+
+    [SerializeField]
+    private List<CriticalEffects> criticalEffects = new List<CriticalEffects>();
+
+    public bool IsEnemy { get => isEnemy; set => isEnemy = value; }
+    public float AttackSpeed { get => attackSpeed; set => attackSpeed = value; }
+    public int Damage { get => damage; set => damage = value; }
+    public double CriticalProbability { get => criticalProbability; set => criticalProbability = value; }
+    public double MissProbability { get => missProbability; set => missProbability = value; }
+    public StartBattleType StartBattleType { get => startBattleType; set => startBattleType = value; }
+    public List<CriticalEffects> CriticalEffects { get => criticalEffects; set => criticalEffects = value; }
 
     public BattleStats(bool isEnemy,int damage,int speed,int miss,int critical){
-        this.isEnemy=isEnemy;
-        this.damage=damage;
-        attackSpeed=(float)(speed*1.0/100.0);
-        criticalProbability=critical*1.0/100.0;
-        missProbability=miss*1.0/100.0;
+        this.IsEnemy=isEnemy;
+        this.Damage=damage;
+        AttackSpeed=(float)(speed*1.0/100.0);
+        CriticalProbability=critical*1.0/100.0;
+        MissProbability=miss*1.0/100.0;
     }
     
 }

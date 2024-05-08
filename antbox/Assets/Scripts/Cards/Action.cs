@@ -12,7 +12,7 @@ public enum InteractionType{
     ANY,ALL,CHOOSE,NONE
 }
 public enum Destination{
-    ANT,CONTAINER,WATER_FARM,FOOD_FARM,QUEEN,FARM,ANTHILL,PLAYER
+    ANT,CONTAINER,WATER_FARM,FOOD_FARM,QUEEN,FARM,ANTHILL,PLAYER,HORDE
 }
 
 public enum UpdateEffectOnPlayer{
@@ -39,28 +39,51 @@ public enum UpdateEffectOnContainer{
 //esta clase desde su interfaz
 public class Action
 {
-    public int uses=1;
-    public ActionType type;
-    public Destination destination;
-    public List<FarmEffect> farmEffects=new List<FarmEffect>();
-    public List<ContainerEffect> containerEffects=new List<ContainerEffect>();
+    [SerializeField]
+    private int uses=1;
 
-    public List<CharacterEffect> characterEffects=new List<CharacterEffect>();
-    public UpdateEffectOnPlayer playerEffect=UpdateEffectOnPlayer.NONE;
-    public InteractionType interactionType=InteractionType.NONE;
+    [SerializeField]
+    private ActionType type;
+
+    [SerializeField]
+    private Destination destination;
+
+    [SerializeField]
+    private List<FarmEffect> farmEffects=new List<FarmEffect>();
+
+    [SerializeField]
+    private List<ContainerEffect> containerEffects=new List<ContainerEffect>();
+
+    [SerializeField]
+    private List<CharacterEffect> characterEffects=new List<CharacterEffect>();
+
+    [SerializeField]
+    private UpdateEffectOnPlayer playerEffect=UpdateEffectOnPlayer.NONE;
+
+    [SerializeField]
+    private InteractionType interactionType=InteractionType.NONE;
+
+    public int Uses { get => uses; set => uses = value; }
+    public ActionType Type { get => type; set => type = value; }
+    public Destination Destination { get => destination; set => destination = value; }
+    public List<FarmEffect> FarmEffects { get => farmEffects; set => farmEffects = value; }
+    public List<ContainerEffect> ContainerEffects { get => containerEffects; set => containerEffects = value; }
+    public List<CharacterEffect> CharacterEffects { get => characterEffects; set => characterEffects = value; }
+    public UpdateEffectOnPlayer PlayerEffect { get => playerEffect; set => playerEffect = value; }
+    public InteractionType InteractionType { get => interactionType; set => interactionType = value; }
 
     public bool NoNeedToChooseItemToApplyUpdateAction(){
-        return this.interactionType.Equals(InteractionType.ALL) || this.interactionType.Equals(InteractionType.ANY);
+        return this.InteractionType.Equals(InteractionType.ALL) || this.InteractionType.Equals(InteractionType.ANY);
     }
 
 
     public double GetComplexityOfAction(){
         double result=0.0;
-        for(int i=0;i<uses;i++){
-            if(!type.Equals(ActionType.UPDATE)){
-                result+=0.5;
+        for(int i=0;i<Uses;i++){
+            if(!Type.Equals(ActionType.UPDATE)){
+                result+=1.5;
             }else{
-                result+=destination.Equals(Destination.PLAYER)?1.0:0.2*(containerEffects.Count+characterEffects.Count+farmEffects.Count);
+                result+=Destination.Equals(Destination.PLAYER)?1.5:0.35*(ContainerEffects.Count+CharacterEffects.Count+FarmEffects.Count);
             }
         }
         return result;

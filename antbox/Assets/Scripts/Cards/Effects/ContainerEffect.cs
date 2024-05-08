@@ -7,6 +7,12 @@ public class ContainerEffect
 {
     public UpdateEffectOnContainer containerEffect=UpdateEffectOnContainer.NONE;
 
-    public int multiplicatorValue=1;
-    public float sumValue=0f;
+    [SerializeField]
+    private int multiplicatorValue = 1;
+
+    [SerializeField]
+    private float sumValue = 0f;
+
+    public int MultiplicatorValue { get => multiplicatorValue; set => multiplicatorValue = value; }
+    public float SumValue { get => sumValue; set => sumValue = value; }
 }
