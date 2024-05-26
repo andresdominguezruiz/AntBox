@@ -317,7 +317,6 @@ public class SelectableItem : MonoBehaviour
                 AttackMenu attack=AttackMenu.GetComponent<AttackMenu>();
                 attack.SetSelectedItem(this.gameObject,ItemUI==null);
             }
-            Debug.Log("NUMBER:"+SelectableItems.Count);
             foreach(SelectableItem item in SelectableItems){
                 if(item!=this){
                     item.IsSelected=false;

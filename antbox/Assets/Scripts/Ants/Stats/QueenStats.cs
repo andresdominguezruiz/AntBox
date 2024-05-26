@@ -12,6 +12,8 @@ public class QueenStats : CharacterStats
         this.TimeLastFrame=0f;
         this.AllBarsManager=this.gameObject.GetComponentInChildren<AllBarsManager>();
         AllBarsManager.HealthBar.SetMaxBarValue(GetMaxHP());
+        AllBarsManager.HungerBar.SetMaxBarValue(GetMaxHunger());
+        AllBarsManager.ThirstBar.SetMaxBarValue(GetMaxThirst());
     }
 
 }

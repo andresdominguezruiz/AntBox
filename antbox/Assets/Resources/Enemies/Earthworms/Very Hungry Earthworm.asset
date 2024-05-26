@@ -17,7 +17,7 @@ MonoBehaviour:
   enemySprite: {fileID: -1337148116, guid: a6e791e42805a7546a55764f81283a72, type: 3}
   enemyBodySprite: {fileID: -1931342783, guid: a6e791e42805a7546a55764f81283a72, type: 3}
   enemyLevel: 4
-  resources: 5
+  resources: 15
   maxHP: 150
   battleStats:
     isEnemy: 1
